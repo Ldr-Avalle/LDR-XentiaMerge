@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Your own server",
+            "name": "BC2400_Xentia_Merge",
             "request": "launch",
             "type": "al",
             "environmentType": "OnPrem",
