@@ -1,0 +1,50 @@
+{
+    "name": "Reglas LiderIT",
+    "rules": [
+        {
+            "id": "AA0005",
+            "action": "None",
+            "justification": "Es mejor indicar Begin..End"
+        },
+        {
+            "id": "AA0072",
+            "action": "None",
+            "justification": "Sin sufijos"
+        },
+        {
+            "id": "AA0137",
+            "action": "Error",
+            "justification": "El estandard solo da aviso, mejor error para evitar dejar basura"
+        },
+        {
+            "id": "AA0008",
+            "action": "None",
+            "justification": "No es necesario () al final de los métodos RESET, FindSet, TODAY, ..."
+        },
+        {
+            "id": "AA0018",
+            "action": "None"
+        },
+        {
+            "id": "AA0021",
+            "action": "None",
+            "justification": "No es necesario ordenar la declaración de variables"
+        },
+        {
+            "id": "AA0074",
+            "action": "None",
+            "justification": "No es necesario sufijo en variables de tipo texto"
+        },
+        {
+            "id": "AA0214",
+            "action": "None",
+            "justification": "Bug"
+        },
+        {
+            "id": "AA0218",
+            "action": "None",
+            "justification": "Migracion"
+        }
+
+    ]
+}

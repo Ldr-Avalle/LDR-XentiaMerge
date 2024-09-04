@@ -1,23 +1,23 @@
 {
   "id": "81e558f3-3423-4ae6-97bd-1a5561410122",
-  "name": "xentia-merge",
-  "publisher": "Default Publisher",
-  "version": "1.0.0.0",
-  "brief": "",
-  "description": "",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
+  "name": "Xentia",
+  "publisher": "LiderIT",
+  "version": "24.0.0.0",
+  "brief":  "Funcionalidad base",
+  "description":  "Funcionalidad base",
+  "privacyStatement":  "http://www.liderit.es",
+  "EULA":  "http://www.liderit.es",
+  "help":  "http://www.liderit.es",
+  "url":  "http://www.liderit.es",
+  "logo":  "logo.png",
   "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "25.0.0.0",
+  "application": "24.0.0.0",
   "idRanges": [
     {
-      "from": 50100,
-      "to": 50149
+      "from": 50000,
+      "to": 50250
     }
   ],
   "resourceExposurePolicy": {
@@ -25,7 +25,7 @@
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
   },
-  "runtime": "14.0",
+  "runtime": "13.0",
   "features": [
     "NoImplicitWith"
   ]
