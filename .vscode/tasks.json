@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Formatear con Prettier",
+            "type": "shell",
+            "command": "${command:prettier.format}",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Convert Id to Name",
+            "type": "process",
+            "command": "${command:azALDevTools.ConvertProjectObjectIdsToNames}",
+            "problemMatcher": []
+        }
+    ]
+}

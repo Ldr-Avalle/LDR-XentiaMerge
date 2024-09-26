@@ -1,0 +1,1419 @@
+tableextension 50227 SalesLine_LDR extends " "Sales Line" "
+{
+    // IZERTIS 310317 OVM
+    //   New Fields
+    //     Serial No.    ,50000
+    //     On Deposit    ,50001
+    //   New Code
+    //     Include Last Line
+    //     Control Error Type
+    //     Assing Deposit
+    //     Assing Value
+    //     Assing Qty
+    //     Test Error Serial No
+    //   Modify Property
+    //     Description  ,11, Change Zise 50 to 70
+    //     Description 2,12, Change Zise 50 to 70
+    fields
+    {
+        modify(Description)
+        {
+            //Unsupported feature: Property Modification (Data type) on "Description(Field 11)".
+            Description = 'SERCABLE';
+        }
+        modify("Description 2")
+        {
+            //Unsupported feature: Property Modification (Data type) on ""Description 2"(Field 12)".
+            Description = 'SERCABLE';
+        }
+        modify("Shortcut Dimension 1 Code")
+        {
+            TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(1));
+        }
+        modify("Shortcut Dimension 2 Code")
+        {
+            TableRelation = "Dimension Value".Code WHERE (Global Dimension No.=CONST(2));
+        }
+        modify("Gen. Bus. Posting Group")
+        {
+            Caption = 'Gen. Bus. Posting Group';
+        }
+        modify("Gen. Prod. Posting Group")
+        {
+            Caption = 'Gen. Prod. Posting Group';
+        }
+        modify("Area")
+        {
+            Caption = 'Area';
+        }
+        modify("VAT Bus. Posting Group")
+        {
+            Caption = 'VAT Bus. Posting Group';
+        }
+        modify("VAT Prod. Posting Group")
+        {
+            Caption = 'VAT Prod. Posting Group';
+        }
+        modify("Job Contract Entry No.")
+        {
+            Caption = 'Job Contract Entry No.';
+        }
+        //Unsupported feature: Code Modification on ""No."(Field 6).OnValidate".
+        //trigger "(Field 6)()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TestJobPlanningLine;
+            TestStatusOpen;
+            CheckItemAvailable(FIELDNO("No."));
+            #4..87
+                  END;
+                  Description := Item.Description;
+                  "Description 2" := Item."Description 2";
+                  GetUnitCost;
+                  "Allow Invoice Disc." := Item."Allow Invoice Disc.";
+                  "Units per Parcel" := Item."Units per Parcel";
+            #94..189
+            END;
+            UpdateItemCrossRef;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..90
+                  //Begin --IZERTIS 310317 Assing Deposit
+                  "On Deposit" := Item."On Deposit";
+                  //End --IZERTIS 310317 Assing Deposit
+            #91..192
+            //Begin --IZERTIS 310317 Assing Value
+            {SalesHeader.GET("Document Type","Document No.");
+            IF SalesHeader.FIND THEN
+                  UserDim.existsUser(SalesHeader."Assigned User ID");
+                  IF UserDim.FIND THEN
+                    "Location Code" := UserDim."Location Code";}
+            //CARLOS COSME - por defecto una unidad
+            //001
+            gbldimensiones.RESET;
+            gbldimensiones.SETRANGE(gbldimensiones.Usuario,USERID);
+            IF gbldimensiones.FINDFIRST THEN
+            Proyecto:= gbldimensiones."Project Dimension Value";
+            //001
+            //001
+            gbldimensiones.SETRANGE(gbldimensiones.Usuario,USERID);
+            IF gbldimensiones.FINDFIRST THEN
+               "Location Code":= gbldimensiones."Location Code";
+            //001
+            //Proyecto := UserDim.getProjectDim(USERID);//130612 Esto solo para euskaltel //001
+            IF (Proyecto='EUSKALTEL')AND NOT( Item."On Deposit")  THEN BEGIN
+            //001
+              //VALIDATE(Quantity, 1);
+            //001
+              "Unit Price" := "Unit Cost (LCY)";
+              "Line Amount" := 0;
+            END;
+            //End --IZERTIS 310317 Assing Value
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Shipment Date"(Field 10).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TestStatusOpen;
+            WhseValidateSourceLine.SalesLineVerifyChange(Rec,xRec);
+            IF CurrFieldNo <> 0 THEN
+              AddOnIntegrMgt.CheckReceiptOrderStatus(Rec);
+            #6..33
+              "Planned Shipment Date" := CalcPlannedShptDate(FIELDNO("Shipment Date"));
+            IF NOT PlannedDeliveryDateCalculated THEN
+              "Planned Delivery Date" := CalcPlannedDeliveryDate(FIELDNO("Shipment Date"));
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            TestStatusOpen;
+            #3..36
+            */
+        //end;
+        //Unsupported feature: Code Modification on "Quantity(Field 15).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TestJobPlanningLine;
+            TestStatusOpen;
+            #4..81
+              "VAT Base Amount" := 0;
+            END;
+            UpdatePrePaymentAmounts;
+            CheckWMS;
+            CALCFIELDS("Reserved Qty. (Base)");
+            VALIDATE("Reserved Qty. (Base)");
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            //Begin --IZERTIS 310317 Assing Qty
+            //CARLOS COSME - los productos con n´Š¢ de serie solo se pueden vender de 1 en 1
+            //001
+            {IF Type = Type::Item THEN BEGIN
+              Item.GET("No.");
+              IF Item."Item Tracking Code" <> '' THEN
+                Quantity := 1;
+            END;}
+            //001
+            //End --IZERTIS 310317 Assing Qty
+            #1..84
+            //--IZERTIS 310317 Add Condition
+            SetDefaultQuantity;
+            IF ("Document Type" = "Document Type"::Invoice) AND ("Prepayment %" <> 0) THEN
+            #85..90
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Line Discount Amount"(Field 28).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            GetSalesHeader;
+            "Line Discount Amount" := ROUND("Line Discount Amount",Currency."Amount Rounding Precision");
+            TestJobPlanningLine;
+            TestStatusOpen;
+            TESTFIELD(Quantity);
+            IF xRec."Line Discount Amount" <> "Line Discount Amount" THEN
+              UpdateLineDiscPct;
+            "Inv. Discount Amount" := 0;
+            "Inv. Disc. Amount to Invoice" := 0;
+            "Pmt. Disc. Given Amount" := 0;
+            UpdateAmounts;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..6
+              IF ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision") <> 0 THEN
+                "Line Discount %" :=
+                  ROUND(
+                    "Line Discount Amount" / ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision") * 100,
+                    0.00001)
+              ELSE
+                "Line Discount %" := 0;
+            #8..11
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Drop Shipment"(Field 73).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TESTFIELD("Document Type","Document Type"::Order);
+            TESTFIELD(Type,Type::Item);
+            TESTFIELD("Quantity Shipped",0);
+            TESTFIELD("Job No.",'');
+            TESTFIELD("Qty. to Asm. to Order (Base)",0);
+            IF "Drop Shipment" THEN
+              TESTFIELD("Special Order",FALSE);
+            CheckAssocPurchOrder(FIELDCAPTION("Drop Shipment"));
+            IF "Special Order" THEN
+              Reserve := Reserve::Never
+            ELSE
+              IF "Drop Shipment" THEN BEGIN
+                Reserve := Reserve::Never;
+                VALIDATE(Quantity,Quantity);
+                IF "Drop Shipment" THEN BEGIN
+                  EVALUATE("Outbound Whse. Handling Time",'<0D>');
+                  EVALUATE("Shipping Time",'<0D>');
+                  UpdateDates;
+                  "Bin Code" := '';
+                END;
+              END ELSE
+                SetReserveWithoutPurchasingCode;
+            CheckItemAvailable(FIELDNO("Drop Shipment"));
+            AddOnIntegrMgt.CheckReceiptOrderStatus(Rec);
+            IF (xRec."Drop Shipment" <> "Drop Shipment") AND (Quantity <> 0) THEN BEGIN
+              IF NOT "Drop Shipment" THEN BEGIN
+                InitQtyToAsm;
+                AutoAsmToOrder;
+                UpdateWithWarehouseShip
+              END ELSE
+                InitQtyToShip;
+              WhseValidateSourceLine.SalesLineVerifyChange(Rec,xRec);
+              IF NOT FullReservedQtyIsForAsmToOrder THEN
+                ReserveSalesLine.VerifyChange(Rec,xRec);
+            END;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..11
+            IF "Drop Shipment" THEN BEGIN
+              Reserve := Reserve::Never;
+              VALIDATE(Quantity,Quantity);
+              IF "Drop Shipment" THEN BEGIN
+                EVALUATE("Outbound Whse. Handling Time",'<0D>');
+                EVALUATE("Shipping Time",'<0D>');
+                UpdateDates;
+                "Bin Code" := '';
+              END;
+            END ELSE BEGIN
+              GetItem;
+              IF Item.Reserve = Item.Reserve::Optional THEN BEGIN
+                GetSalesHeader;
+                Reserve := SalesHeader.Reserve;
+              END ELSE
+                Reserve := Item.Reserve;
+              IF "Special Order" THEN
+                Reserve := Reserve::Never;
+            END;
+            IF "Drop Shipment" THEN
+              "Bin Code" := '';
+            #26..40
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""VAT Prod. Posting Group"(Field 90).OnValidate".
+        //trigger  Posting Group"(Field 90)()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TestStatusOpen;
+            IF "Prepmt. Amt. Inv." <> 0 THEN
+              ERROR(CannotChangeVATGroupWithPrepmInvErr);
+            VATPostingSetup.GET("VAT Bus. Posting Group","VAT Prod. Posting Group");
+            "VAT Difference" := 0;
+            "EC Difference" := 0;
+            #7..23
+                END;
+            END;
+            IF SalesHeader."Prices Including VAT" AND (Type IN [Type::Item,Type::Resource]) THEN
+              VALIDATE("Unit Price",
+                ROUND(
+                  "Unit Price" * (100 + "VAT %" + "EC %") / (100 + xRec."VAT %" + xRec."EC %"),
+                  Currency."Unit-Amount Rounding Precision"));
+            UpdateAmounts;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            TestStatusOpen;
+            #4..26
+              "Unit Price" :=
+                ROUND(
+                  "Unit Price" * (100 + "VAT %" + "EC %") / (100 + xRec."VAT %" + xRec."EC %"),
+                  Currency."Unit-Amount Rounding Precision");
+            UpdateAmounts;
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Blanket Order Line No."(Field 98).OnValidate".
+        //trigger "(Field 98)()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TESTFIELD("Quantity Shipped",0);
+            IF "Blanket Order Line No." <> 0 THEN BEGIN
+              SalesLine2.GET("Document Type"::"Blanket Order","Blanket Order No.","Blanket Order Line No.");
+              SalesLine2.TESTFIELD(Type,Type);
+              SalesLine2.TESTFIELD("No.","No.");
+              SalesLine2.TESTFIELD("Bill-to Customer No.","Bill-to Customer No.");
+              SalesLine2.TESTFIELD("Sell-to Customer No.","Sell-to Customer No.");
+              VALIDATE("Variant Code",SalesLine2."Variant Code");
+              VALIDATE("Location Code",SalesLine2."Location Code");
+              VALIDATE("Unit of Measure Code",SalesLine2."Unit of Measure Code");
+              VALIDATE("Unit Price",SalesLine2."Unit Price");
+              VALIDATE("Line Discount %",SalesLine2."Line Discount %");
+            END;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..7
+            #9..13
+            */
+        //end;
+        //Unsupported feature: Code Insertion (VariableCollection) on ""Line Amount"(Field 103).OnValidate".
+        //trigger (Variable: Item)()
+        //Parameters and return type have not been exported.
+        //begin
+            /*
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Line Amount"(Field 103).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TESTFIELD(Type);
+            TESTFIELD(Quantity);
+            TESTFIELD("Unit Price");
+            GetSalesHeader;
+            "Line Amount" := ROUND("Line Amount",Currency."Amount Rounding Precision");
+            VALIDATE(
+              "Line Discount Amount",ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision") - "Line Amount");
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            //Begin --IZERTIS 310317 Test Error Serial No
+            //CARLOS COSME - no dejo informar importe si el producto tiene seguimiento y no tiene n´Š¢ serie
+            //soluciona el problema de importes err´Š¢neos al cambiar el coste a partir del n´Š¢ de serie al obligar a meter antes el n´Š¢ series
+            {IF (Type = Type::Item) THEN BEGIN
+              Item.GET("No.");
+              IF (Item."Item Tracking Code" <> '') THEN
+                TESTFIELD("Serial No.");
+            END;}
+            //End --IZERTIS 310317 Test Error Serial No
+            #1..7
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Cross-Reference No."(Field 5705).OnValidate".
+        //trigger "(Field 5705)()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            GetSalesHeader;
+            "Sell-to Customer No." := SalesHeader."Sell-to Customer No.";
+            ReturnedCrossRef.INIT;
+            IF "Cross-Reference No." <> '' THEN BEGIN
+              DistIntegration.ICRLookupSalesItem(Rec,ReturnedCrossRef,CurrFieldNo <> 0);
+              IF "No." <> ReturnedCrossRef."Item No." THEN
+                VALIDATE("No.",ReturnedCrossRef."Item No.");
+              IF ReturnedCrossRef."Variant Code" <> '' THEN
+            #9..21
+            UpdateUnitPrice(FIELDNO("Cross-Reference No."));
+            UpdateICPartner;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..4
+              DistIntegration.ICRLookupSalesItem(Rec,ReturnedCrossRef);
+            #6..24
+            */
+        //end;
+        //Unsupported feature: Code Modification on ""Purchasing Code"(Field 5711).OnValidate".
+        //trigger OnValidate()
+        //Parameters and return type have not been exported.
+        //>>>> ORIGINAL CODE:
+        //begin
+            /*
+            TestStatusOpen;
+            TESTFIELD(Type,Type::Item);
+            CheckAssocPurchOrder(FIELDCAPTION(Type));
+            #4..8
+                TESTFIELD("Qty. to Asm. to Order (Base)",0);
+                CALCFIELDS("Reserved Qty. (Base)");
+                TESTFIELD("Reserved Qty. (Base)",0);
+                ReserveSalesLine.VerifyChange(Rec,xRec);
+                IF (Quantity <> 0) AND (Quantity = "Quantity Shipped") THEN
+                  ERROR(SalesLineCompletelyShippedErr);
+                Reserve := Reserve::Never;
+            #17..20
+                  UpdateDates;
+                  "Bin Code" := '';
+                END;
+              END ELSE
+                SetReserveWithoutPurchasingCode;
+            END ELSE BEGIN
+              "Drop Shipment" := FALSE;
+              "Special Order" := FALSE;
+              SetReserveWithoutPurchasingCode;
+            END;
+            IF ("Purchasing Code" <> xRec."Purchasing Code") AND
+            #33..46
+              END;
+              UpdateDates;
+            END;
+            */
+        //end;
+        //>>>> MODIFIED CODE:
+        //begin
+            /*
+            #1..11
+            #14..23
+              END;
+            #26..28
+              GetItem;
+              IF Item.Reserve = Item.Reserve::Optional THEN BEGIN
+                GetSalesHeader;
+                Reserve := SalesHeader.Reserve;
+              END ELSE
+                Reserve := Item.Reserve;
+            #30..49
+            */
+        //end;
+        //Unsupported feature: Deletion (FieldCollection) on ""Copied From Posted Doc."(Field 6610)".
+        field(50000;"Serial No.";Code[20])
+        {
+            Description = 'SERCABLE';
+            trigger OnValidate()
+            var
+                ReservationEntry: Record 337;
+                ReservationEntry2: Record 337;
+                Item: Record 27;
+                SalesLine: Record 37;
+                ItemLdgEntry: Record 32;
+                Text0001: Label 'El n´Š¢mero de serie especificado no se encuentra disponible';
+                PurchRcptLine: Record 121;
+                QtyToApply: Integer;
+            begin
+                //compruebo que el producto tiene n´Š¢ seguimiento
+                TESTFIELD(Type, Type::Item);
+                TESTFIELD("Serial No.");
+                Item.GET("No.");
+                Item.TESTFIELD("Item Tracking Code");
+                //compruebo que no existe en otra l´Š¢nea no registrada
+                IF ("Document Type" IN ["Document Type"::Invoice]) THEN BEGIN
+                  SalesLine.RESET;
+                  SalesLine.SETFILTER("Serial No.", '%1', "Serial No.");
+                  IF SalesLine.FINDFIRST THEN ERROR('Ya existe el n´Š¢ de serie en la factura %1', SalesLine."Document No.")
+                END;
+                //Informo el Line No. si a´Š¢n no est´Š¢ insertado el registro para mantener trazabilidad con ReservationEntry
+                SalesLine.RESET;
+                SalesLine.SETFILTER("Document No.", '%1', "Document No.");
+                IF SalesLine.FINDLAST THEN "Line No." := SalesLine."Line No." + 10000
+                ELSE "Line No." := 10000;
+                //Hago el movimiento de reserva, creo o modifico si ya existe
+                ReservationEntry.RESET;
+                IF ("Serial No." <> '') THEN BEGIN
+                  IF (xRec."Serial No." = '') THEN BEGIN
+                      ReservationEntry.INIT;
+                      IF ReservationEntry2.FINDLAST THEN ReservationEntry."Entry No." := ReservationEntry2."Entry No." + 1
+                      ELSE ReservationEntry."Entry No." := 1;
+                      ReservationEntry."Item No." := "No.";
+                      ReservationEntry."Location Code" := "Location Code";
+                      ReservationEntry."Reservation Status" := ReservationEntry."Reservation Status"::Prospect;
+                      ReservationEntry."Creation Date" := TODAY;
+                      ReservationEntry."Source Type" := 37;
+                      ReservationEntry."Source ID" := "Document No.";
+                      ReservationEntry."Source Ref. No." := "Line No.";
+                      ReservationEntry."Serial No." :="Serial No.";
+                      ReservationEntry."Created By" := USERID;
+                      ReservationEntry."Qty. per Unit of Measure" := 1;
+                      IF ("Document Type" IN ["Document Type"::Invoice,"Document Type"::Order]) THEN BEGIN
+                         QtyToApply := -1;
+                         ReservationEntry.Positive := FALSE;
+                         ReservationEntry."Source Subtype" := 2;
+                         ReservationEntry."Shipment Date" := "Shipment Date";
+                         ReservationEntry."Qty. to Handle (Base)" := QtyToApply;
+                         ReservationEntry."Qty. to Invoice (Base)" := QtyToApply;
+                      END ELSE BEGIN
+                        QtyToApply := 1;
+                        ReservationEntry.Positive := TRUE;
+                        ReservationEntry."Source Subtype" := 3;
+                        ReservationEntry."Expected Receipt Date" := TODAY;
+                        ReservationEntry."Qty. to Handle (Base)" := 1;
+                        ReservationEntry."Qty. to Invoice (Base)" := 1;
+                      END;
+                      ReservationEntry.Quantity := QtyToApply;
+                      ReservationEntry."Quantity (Base)" := QtyToApply;
+                      ReservationEntry."Item Tracking" := ReservationEntry."Item Tracking"::"Serial No.";
+                      IF ReservationEntry.INSERT THEN ;
+                  END ELSE BEGIN
+                      ReservationEntry.SETFILTER("Source ID", '%1', "Document No.");
+                      ReservationEntry.SETFILTER("Source Ref. No.", '%1', "Line No.");
+                      IF ReservationEntry.FINDFIRST THEN BEGIN
+                         ReservationEntry."Serial No." := "Serial No.";
+                         ReservationEntry.MODIFY;
+                      END;
+                  END;
+                  //traigo el coste del producto
+                  IF ("Document Type" IN ["Document Type"::Invoice]) THEN BEGIN
+                    ItemLdgEntry.SETFILTER("Item No.", '%1', "No.");
+                    ItemLdgEntry.SETFILTER("Location Code", '%1', "Location Code");
+                    ItemLdgEntry.SETFILTER("Serial No.", '%1', "Serial No.");
+                    ItemLdgEntry.SETFILTER("Remaining Quantity", '%1', 1);
+                    IF ItemLdgEntry.FINDFIRST = FALSE THEN ERROR(Text0001)
+                    ELSE BEGIN
+                       PurchRcptLine.SETFILTER("Document No.", '%1', ItemLdgEntry."Document No.");
+                       PurchRcptLine.SETFILTER("Line No.", '%1', ItemLdgEntry."Document Line No.");
+                       IF PurchRcptLine.FINDFIRST THEN BEGIN
+                         VALIDATE("Unit Cost", PurchRcptLine."Unit Cost");
+                         VALIDATE("Unit Cost (LCY)", PurchRcptLine."Unit Cost");
+                          "Unit Price" := PurchRcptLine."Unit Cost"; //no hago validate para que no machaque el importe l´Š¢nea ya introducido
+                       END;
+                    END;
+                  END;
+                END;
+            end;
+        }
+        field(50001;"On Deposit";Boolean)
+        {
+            Description = 'SERCABLE';
+        }
+    }
+    //Unsupported feature: Code Modification on "OnDelete".
+    //trigger OnDelete()
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        TestStatusOpen;
+        IF NOT StatusCheckSuspended AND (SalesHeader.Status = SalesHeader.Status::Released) AND
+           (Type IN [Type::"G/L Account",Type::"Charge (Item)",Type::Resource])
+        #4..17
+        IF ("Document Type" = "Document Type"::Order) AND (Quantity <> "Quantity Invoiced") THEN
+          TESTFIELD("Prepmt. Amt. Inv.","Prepmt Amt Deducted");
+        CleanDropShipmentFields;
+        CleanSpecialOrderFieldsAndCheckAssocPurchOrder;
+        NonstockItemMgt.DelNonStockSales(Rec);
+        IF "Document Type" = "Document Type"::"Blanket Order" THEN BEGIN
+        #26..59
+          SalesCommentLine.DELETEALL;
+        IF ("Line No." <> 0) AND ("Attached to Line No." = 0) THEN BEGIN
+          SalesLine2.COPY(Rec);
+          IF SalesLine2.FIND('<>') THEN BEGIN
+            SalesLine2.VALIDATE("Recalculate Invoice Disc.",TRUE);
+            SalesLine2.MODIFY;
+          END;
+        #68..70
+          DeferralUtilities.DeferralCodeOnDelete(
+            DeferralUtilities.GetSalesDeferralDocType,'','',
+            "Document Type","Document No.","Line No.");
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..20
+        CheckAssocPurchOrder('');
+        #23..62
+          SalesLine2.RESET;
+          SalesLine2.SETRANGE("Document Type","Document Type");
+          SalesLine2.SETRANGE("Document No.","Document No.");
+          SalesLine2.SETFILTER("Line No.",'<>%1',"Line No.");
+          IF SalesLine2.FINDFIRST THEN BEGIN
+        #65..73
+        */
+    //end;
+    //Unsupported feature: Code Insertion (VariableCollection) on "OnInsert".
+    //trigger (Variable: SalesLine)()
+    //Parameters and return type have not been exported.
+    //begin
+        /*
+        */
+    //end;
+    //Unsupported feature: Code Modification on "OnInsert".
+    //trigger OnInsert()
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        TestStatusOpen;
+        IF Quantity <> 0 THEN
+          ReserveSalesLine.VerifyQuantity(Rec,xRec);
+        #4..7
+            ERROR(Text056,SalesHeader."Shipping Advice");
+        IF ("Deferral Code" <> '') AND (GetDeferralAmount <> 0) THEN
+          UpdateDeferralAmounts;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..10
+        //Begin --IZERTIS 310317 Include Last Line
+        //CARLOS COSME - las l´Š¢neas nuevas siempre al final por el problema con los n´Š¢ serie
+        SalesLine.SETFILTER("Document No.", '%1', "Document No.");
+         IF SalesLine.FINDLAST THEN
+           "Line No." := SalesLine."Line No." + 10000
+         ELSE
+           "Line No." := 10000;
+        //End --IZERTIS 310317 Include Last Line
+        */
+    //end;
+    //Unsupported feature: Code Insertion (VariableCollection) on "OnModify".
+    //trigger (Variable: UserDims)()
+    //Parameters and return type have not been exported.
+    //begin
+        /*
+        */
+    //end;
+    //Unsupported feature: Code Modification on "OnModify".
+    //trigger OnModify()
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF ("Document Type" = "Document Type"::"Blanket Order") AND
+           ((Type <> xRec.Type) OR ("No." <> xRec."No."))
+        THEN BEGIN
+        #4..13
+        IF ((Quantity <> 0) OR (xRec.Quantity <> 0)) AND ItemExists(xRec."No.") AND NOT FullReservedQtyIsForAsmToOrder THEN
+          ReserveSalesLine.VerifyChange(Rec,xRec);
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..16
+        //Begin --IZERTIS 310317 Control Error Type
+        //CARLOS COSME
+        IF UserDims.existsUser(USERID) THEN
+           IF NOT (Type IN [Type::Item, Type::"Charge (Item)"]) THEN
+             FIELDERROR(Type);
+        //End --IZERTIS 310317 Control Error Type
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdateUnitPrice(PROCEDURE 2)".
+    //procedure UpdateUnitPrice();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF (CalledByFieldNo <> CurrFieldNo) AND (CurrFieldNo <> 0) THEN
+          EXIT;
+        #4..6
+        CASE Type OF
+          Type::Item,Type::Resource:
+            BEGIN
+              IF NOT ("Copied From Posted Doc." AND IsCreditDocType) THEN
+                PriceCalcMgt.FindSalesLineLineDisc(SalesHeader,Rec);
+              PriceCalcMgt.FindSalesLinePrice(SalesHeader,Rec,CalledByFieldNo);
+            END;
+        END;
+        IF "Copied From Posted Doc." AND IsCreditDocType AND ("Appl.-from Item Entry" <> 0) THEN
+          IF xRec."Unit Price" <> "Unit Price" THEN
+            IF GUIALLOWED THEN
+              ShowMessageOnce(STRSUBSTNO(UnitPriceChangedMsg,Type,"No."));
+        VALIDATE("Unit Price");
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..9
+              PriceCalcMgt.FindSalesLineLineDisc(SalesHeader,Rec);
+        #12..14
+        VALIDATE("Unit Price");
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdatePrepmtSetupFields(PROCEDURE 102)".
+    //procedure UpdatePrepmtSetupFields();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF ("Prepayment %" <> 0) AND (Type <> Type::" ") THEN BEGIN
+          TESTFIELD("Document Type","Document Type"::Order);
+          TESTFIELD("No.");
+        #4..12
+            VATPostingSetup.TESTFIELD("VAT Calculation Type","VAT Calculation Type");
+          END ELSE
+            CLEAR(VATPostingSetup);
+          IF ("Prepayment VAT %" <> 0) AND ("Prepayment VAT %" <> VATPostingSetup."VAT %") AND ("Prepmt. Amt. Inv." <> 0) THEN
+            ERROR(CannotChangePrepmtAmtDiffVAtPctErr);
+          "Prepayment VAT %" := VATPostingSetup."VAT %";
+          "Prepayment EC %" := VATPostingSetup."EC %";
+          "Prepmt. VAT Calc. Type" := VATPostingSetup."VAT Calculation Type";
+        #21..26
+          END;
+          "Prepayment Tax Group Code" := GLAcc."Tax Group Code";
+        END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..15
+        #18..29
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdateAmounts(PROCEDURE 3)".
+    //procedure UpdateAmounts();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF Type = Type::" " THEN
+          EXIT;
+        GetSalesHeader;
+        VATBaseAmount := "VAT Base Amount";
+        "Recalculate Invoice Disc." := TRUE;
+        #6..49
+                // a write transaction may have been started
+                ("Qty. per Unit of Measure" <> xRec."Qty. per Unit of Measure")) AND // ...continued condition
+           ("Document Type" <= "Document Type"::Invoice) AND
+           (("Outstanding Amount" + "Shipped Not Invoiced") > 0) AND
+           (CurrFieldNo <> FIELDNO("Blanket Order No.")) AND
+           (CurrFieldNo <> FIELDNO("Blanket Order Line No."))
+        THEN
+          CustCheckCreditLimit.SalesLineCheck(Rec);
+        #59..66
+          UpdateDeferralAmounts;
+          LineAmountChanged := FALSE;
+        END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        IF CurrFieldNo <> FIELDNO("Allow Invoice Disc.") THEN
+          TESTFIELD(Type);
+        #3..52
+           (("Outstanding Amount" + "Shipped Not Invoiced") > 0)
+        #56..69
+        */
+    //end;
+    //Unsupported feature: Variable Insertion (Variable: CalledByDateField) (VariableCollection) on "CheckItemAvailable(PROCEDURE 4)".
+    //Unsupported feature: Code Modification on "CheckItemAvailable(PROCEDURE 4)".
+    //procedure CheckItemAvailable();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF Reserve = Reserve::Always THEN
+          EXIT;
+        #4..15
+           ("Job Contract Entry No." = 0) AND
+           NOT (Nonstock OR "Special Order")
+        THEN BEGIN
+          IF ItemCheckAvail.SalesLineCheck(Rec) THEN
+            ItemCheckAvail.RaiseUpdateInterruptedError;
+        END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..18
+          CalledByDateField :=
+            CalledByFieldNo IN [FIELDNO("Shipment Date"),FIELDNO("Requested Delivery Date"),FIELDNO("Promised Delivery Date"),
+                                FIELDNO("Planned Shipment Date"),FIELDNO("Planned Delivery Date")];
+          IF ItemCheckAvail.SalesLineCheck(Rec,CalledByDateField) THEN
+            ItemCheckAvail.RaiseUpdateInterruptedError;
+        END;
+        */
+    //end;
+    //Unsupported feature: Code Modification on "ValidateShortcutDimCode(PROCEDURE 29)".
+    //procedure ValidateShortcutDimCode();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        DimMgt.ValidateShortcutDimValues(FieldNumber,ShortcutDimCode,"Dimension Set ID");
+        VerifyItemLineDim;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        DimMgt.ValidateShortcutDimValues(FieldNumber,ShortcutDimCode,"Dimension Set ID");
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdateItemChargeAssgnt(PROCEDURE 5807)".
+    //procedure UpdateItemChargeAssgnt();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF "Document Type" = "Document Type"::"Blanket Order" THEN
+          EXIT;
+        CALCFIELDS("Qty. Assigned","Qty. to Assign");
+        IF ABS("Quantity Invoiced") > ABS(("Qty. Assigned" + "Qty. to Assign")) THEN
+          ERROR(Text055,FIELDCAPTION("Quantity Invoiced"),FIELDCAPTION("Qty. Assigned"),FIELDCAPTION("Qty. to Assign"));
+        #7..10
+        ItemChargeAssgntSales.SETRANGE("Document Line No.","Line No.");
+        ItemChargeAssgntSales.CALCSUMS("Qty. to Assign");
+        TotalQtyToAssign := ItemChargeAssgntSales."Qty. to Assign";
+        IF (CurrFieldNo <> 0) AND (Amount <> xRec.Amount) AND
+           NOT ((Quantity <> xRec.Quantity) AND (TotalQtyToAssign = 0))
+        THEN BEGIN
+          ItemChargeAssgntSales.SETFILTER("Qty. Assigned",'<>0');
+          IF NOT ItemChargeAssgntSales.ISEMPTY THEN
+            ERROR(Text026,
+        #20..22
+        IF ItemChargeAssgntSales.FINDSET THEN BEGIN
+          GetSalesHeader;
+          TotalAmtToAssign := CalcTotalAmtToAssign(TotalQtyToAssign);
+          REPEAT
+            ShareOfVAT := 1;
+            IF SalesHeader."Prices Including VAT" THEN
+        #30..46
+          UNTIL ItemChargeAssgntSales.NEXT = 0;
+          CALCFIELDS("Qty. to Assign");
+        END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #4..13
+        IF (CurrFieldNo <> 0) AND (Amount <> xRec.Amount) THEN BEGIN
+        #17..25
+          IF SalesHeader."Prices Including VAT" THEN
+            TotalAmtToAssign :=
+              ROUND(("Line Amount" - "Inv. Discount Amount") / (1 + "VAT %" / 100) - "VAT Difference",
+                Currency."Amount Rounding Precision")
+          ELSE
+            TotalAmtToAssign := "Line Amount" - "Inv. Discount Amount";
+        #27..49
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdateVATOnLines(PROCEDURE 36)".
+    //procedure UpdateVATOnLines();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF QtyType = QtyType::Shipping THEN
+          EXIT;
+        IF SalesHeader."Currency Code" = '' THEN
+        #4..132
+                      "EC Difference" := ROUND(ECDifference,Currency."Amount Rounding Precision");
+                    END;
+                  END;
+                  IF QtyType = QtyType::General THEN
+                    UpdateBaseAmounts(NewAmount,ROUND(NewAmountIncludingVAT,Currency."Amount Rounding Precision"),NewVATBaseAmount);
+                  InitOutstanding;
+                  IF Type = Type::"Charge (Item)" THEN
+                    UpdateItemChargeAssgnt;
+        #141..151
+              END;
+            UNTIL NEXT = 0;
+        END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..135
+                  IF QtyType = QtyType::General THEN BEGIN
+                    Amount := NewAmount;
+                    "Amount Including VAT" := ROUND(NewAmountIncludingVAT,Currency."Amount Rounding Precision");
+                    "VAT Base Amount" := NewVATBaseAmount;
+                  END;
+        #138..154
+        */
+    //end;
+    //Unsupported feature: Code Modification on "CalcVATAmountLines(PROCEDURE 35)".
+    //procedure CalcVATAmountLines();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF SalesHeader."Currency Code" = '' THEN
+          Currency.InitRoundingPrecision
+        ELSE
+          Currency.GET(SalesHeader."Currency Code");
+        VATAmountLine.DELETEALL;
+        WITH SalesLine DO BEGIN
+          SETRANGE("Document Type",SalesHeader."Document Type");
+          SETRANGE("Document No.",SalesHeader."No.");
+          IF FINDSET THEN
+            REPEAT
+              IF NOT ZeroAmountLine(QtyType) THEN BEGIN
+                IF (Type = Type::"G/L Account") AND NOT "Prepayment Line" THEN
+                  RoundingLineInserted :=
+                    (("No." = GetCPGInvRoundAcc(SalesHeader)) AND "System-Created Entry") OR RoundingLineInserted;
+                IF "VAT Calculation Type" IN
+                   ["VAT Calculation Type"::"Reverse Charge VAT","VAT Calculation Type"::"Sales Tax"]
+                THEN
+                  BEGIN
+                  "VAT %" := 0;
+                  "EC %" := 0;
+                END;
+                IF NOT VATAmountLine.GET(
+                     "VAT Identifier","VAT Calculation Type","Tax Group Code",FALSE,"Line Amount" >= 0)
+                THEN BEGIN
+                  VATAmountLine.INIT;
+                  VATAmountLine."VAT Identifier" := "VAT Identifier";
+                  VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                  VATAmountLine."Tax Group Code" := "Tax Group Code";
+                  VATPostingSetup.GET("VAT Bus. Posting Group","VAT Prod. Posting Group");
+                  VATAmountLine."EC %" := VATPostingSetup."EC %";
+                  VATAmountLine."VAT %" := "VAT %";
+                  VATAmountLine.Modified := TRUE;
+                  VATAmountLine.Positive := "Line Amount" >= 0;
+                  VATAmountLine.INSERT;
+                END;
+                CASE QtyType OF
+                  QtyType::General:
+                    BEGIN
+                      VATAmountLine.Quantity := VATAmountLine.Quantity + "Quantity (Base)";
+                      VATAmountLine."Line Amount" := VATAmountLine."Line Amount" + "Line Amount";
+                      IF "Allow Invoice Disc." THEN
+                        VATAmountLine."Inv. Disc. Base Amount" :=
+                          VATAmountLine."Inv. Disc. Base Amount" + "Line Amount";
+                      VATAmountLine."Invoice Discount Amount" :=
+                        VATAmountLine."Invoice Discount Amount" + "Inv. Discount Amount";
+                      VATAmountLine."Pmt. Disc. Given Amount" :=
+                        VATAmountLine."Pmt. Disc. Given Amount" + "Pmt. Disc. Given Amount";
+                      VATAmountLine."Line Discount Amount" := VATAmountLine."Line Discount Amount" + "Line Discount Amount";
+                      VATAmountLine."VAT Difference" := VATAmountLine."VAT Difference" + "VAT Difference";
+                      VATAmountLine."EC Difference" := VATAmountLine."EC Difference" + "EC Difference";
+                      IF "Prepayment Line" THEN
+                        VATAmountLine."Includes Prepayment" := TRUE;
+                      VATAmountLine.MODIFY;
+                    END;
+                  QtyType::Invoicing:
+                    BEGIN
+                      CASE TRUE OF
+                        ("Document Type" IN ["Document Type"::Order,"Document Type"::Invoice]) AND
+                        (NOT SalesHeader.Ship) AND SalesHeader.Invoice AND (NOT "Prepayment Line"):
+                          BEGIN
+                            IF "Shipment No." = '' THEN BEGIN
+                              QtyToHandle := GetAbsMin("Qty. to Invoice","Qty. Shipped Not Invoiced");
+                              VATAmountLine.Quantity :=
+                                VATAmountLine.Quantity + GetAbsMin("Qty. to Invoice (Base)","Qty. Shipped Not Invd. (Base)");
+                            END ELSE BEGIN
+                              QtyToHandle := "Qty. to Invoice";
+                              VATAmountLine.Quantity := VATAmountLine.Quantity + "Qty. to Invoice (Base)";
+                            END;
+                          END;
+                        ("Document Type" IN ["Document Type"::"Return Order","Document Type"::"Credit Memo"]) AND
+                        (NOT SalesHeader.Receive) AND SalesHeader.Invoice:
+                          BEGIN
+                            IF "Return Receipt No." = '' THEN BEGIN
+                              QtyToHandle := GetAbsMin("Qty. to Invoice","Return Qty. Rcd. Not Invd.");
+                              VATAmountLine.Quantity :=
+                                VATAmountLine.Quantity + GetAbsMin("Qty. to Invoice (Base)","Ret. Qty. Rcd. Not Invd.(Base)");
+                            END ELSE BEGIN
+                              QtyToHandle := "Qty. to Invoice";
+                              VATAmountLine.Quantity := VATAmountLine.Quantity + "Qty. to Invoice (Base)";
+                            END;
+                          END;
+                        ELSE
+                          BEGIN
+                          QtyToHandle := "Qty. to Invoice";
+                          VATAmountLine.Quantity := VATAmountLine.Quantity + "Qty. to Invoice (Base)";
+                        END;
+                      END;
+                      AmtToHandle := GetLineAmountToHandleInclPrepmt(QtyToHandle);
+                      IF SalesHeader."Invoice Discount Calculation" <> SalesHeader."Invoice Discount Calculation"::Amount THEN
+                        VATAmountLine.SumLine(
+                          AmtToHandle,ROUND("Inv. Discount Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision"),
+                          ROUND("Pmt. Disc. Given Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision"),
+                          "VAT Difference","EC Difference","Allow Invoice Disc.","Prepayment Line")
+                      ELSE
+                        VATAmountLine.SumLine(
+                          AmtToHandle,"Inv. Disc. Amount to Invoice",
+                          ROUND("Pmt. Disc. Given Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision"),
+                          "VAT Difference","EC Difference","Allow Invoice Disc.","Prepayment Line");
+                    END;
+                  QtyType::Shipping:
+                    BEGIN
+                      IF "Document Type" IN
+                         ["Document Type"::"Return Order","Document Type"::"Credit Memo"]
+                      THEN BEGIN
+                        QtyToHandle := "Return Qty. to Receive";
+                        VATAmountLine.Quantity := VATAmountLine.Quantity + "Return Qty. to Receive (Base)";
+                      END ELSE BEGIN
+                        QtyToHandle := "Qty. to Ship";
+                        VATAmountLine.Quantity := VATAmountLine.Quantity + "Qty. to Ship (Base)";
+                      END;
+                      AmtToHandle := GetLineAmountToHandleInclPrepmt(QtyToHandle);
+                      VATAmountLine.SumLine(
+                        AmtToHandle,ROUND("Inv. Discount Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision"),
+                        ROUND("Pmt. Disc. Given Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision"),
+                        "VAT Difference","EC Difference","Allow Invoice Disc.","Prepayment Line");
+                    END;
+                END;
+                TotalVATAmount := TotalVATAmount + "Amount Including VAT" - Amount;
+              END;
+            UNTIL NEXT = 0;
+        END;
+        WITH VATAmountLine DO
+          IF FINDSET THEN
+            REPEAT
+              IF (PrevVatAmountLine."VAT Identifier" <> "VAT Identifier") OR
+                 (PrevVatAmountLine."VAT Calculation Type" <> "VAT Calculation Type") OR
+                 (PrevVatAmountLine."Tax Group Code" <> "Tax Group Code") OR
+                 (PrevVatAmountLine."Use Tax" <> "Use Tax")
+              THEN
+                PrevVatAmountLine.INIT;
+              IF SalesHeader."Prices Including VAT" AND NOT ("VAT %" = 0) THEN BEGIN
+                CASE "VAT Calculation Type" OF
+                  "VAT Calculation Type"::"Normal VAT",
+                  "VAT Calculation Type"::"No taxable VAT":
+                    BEGIN
+                      "VAT+EC Base" :=
+                        ROUND(
+                          ("Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount") /
+                          (1 + ("VAT %" + "EC %") / 100),
+                          Currency."Amount Rounding Precision") - "VAT Difference";
+                      "VAT Amount" :=
+                        "VAT Difference" +
+                        ROUND(
+                          PrevVatAmountLine."VAT Amount" +
+                          ("Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount" -
+                           "VAT+EC Base" - "VAT Difference") /
+                          ("VAT %" + "EC %") * "VAT %" * (1 - SalesHeader."VAT Base Discount %" / 100)
+                          ,
+                          Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                      "EC Amount" :=
+                        "EC Difference" +
+                        ROUND(
+                          ("Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount" -
+                           "VAT+EC Base") / ("VAT %" + "EC %") * "EC %" * (1 - SalesHeader."VAT Base Discount %" / 100),
+                          Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                      "Amount Including VAT+EC" := "VAT+EC Base" + "VAT Amount" + "EC Amount";
+                      IF Positive THEN
+                        PrevVatAmountLine.INIT
+                      ELSE BEGIN
+                        PrevVatAmountLine := VATAmountLine;
+                        PrevVatAmountLine."VAT Amount" :=
+                          ("Line Amount" - "Invoice Discount Amount" - "VAT+EC Base" - "VAT Difference") *
+                          (1 - SalesHeader."VAT Base Discount %" / 100);
+                        PrevVatAmountLine."VAT Amount" :=
+                          PrevVatAmountLine."VAT Amount" -
+                          ROUND(PrevVatAmountLine."VAT Amount",Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                      END;
+                    END;
+                  "VAT Calculation Type"::"Reverse Charge VAT":
+                    BEGIN
+                      "VAT+EC Base" :=
+                        ROUND(
+                          "Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount",
+                          Currency."Amount Rounding Precision");
+                      "VAT Amount" := 0;
+                      "EC Amount" := 0;
+                      "Amount Including VAT+EC" := "VAT+EC Base" ;
+                    END;
+                  "VAT Calculation Type"::"Full VAT":
+                    BEGIN
+                      "VAT+EC Base" := 0;
+                      "VAT Amount" := "VAT Difference" + "Line Amount" - "Invoice Discount Amount";
+                      "Amount Including VAT+EC" := "VAT Amount";
+                    END;
+                  "VAT Calculation Type"::"Sales Tax":
+                    BEGIN
+                      "Amount Including VAT+EC" := "Line Amount" - "Invoice Discount Amount";
+                      "VAT+EC Base" :=
+                        ROUND(
+                          SalesTaxCalculate.ReverseCalculateTax(
+                            SalesHeader."Tax Area Code","Tax Group Code",SalesHeader."Tax Liable",
+                            SalesHeader."Posting Date","Amount Including VAT+EC",Quantity,SalesHeader."Currency Factor"),
+                          Currency."Amount Rounding Precision");
+                      "VAT Amount" := "VAT Difference" + "Amount Including VAT+EC" - "VAT+EC Base";
+                      IF "VAT Amount" <> 0 THEN
+                        TotalAmountForTax := TotalAmountForTax + "Amount Including VAT+EC";
+                      IF "VAT+EC Base" = 0 THEN
+                        BEGIN
+                        "VAT %" := 0;
+                        "EC %" := 0;
+                      END
+                      ELSE
+                        BEGIN
+                        "VAT %" := ROUND(100 * "VAT Amount" / "VAT+EC Base",0.000001);
+                        "EC %" := ROUND(100 * "EC Amount" / "VAT+EC Base",0.000001);
+                      END;
+                    END;
+                END;
+              END ELSE
+                CASE "VAT Calculation Type" OF
+                  "VAT Calculation Type"::"No taxable VAT",
+                  "VAT Calculation Type"::"Normal VAT":
+                    BEGIN
+                      "VAT+EC Base" := "Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount";
+                      "VAT Amount" :=
+                        "VAT Difference" +
+                        ROUND(
+                          PrevVatAmountLine."VAT Amount" +
+                          "VAT+EC Base" * "VAT %" / 100 * (1 - SalesHeader."VAT Base Discount %" / 100),
+                          Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                      "EC Amount" :=
+                        "EC Difference" +
+                        ROUND(
+                          "VAT+EC Base" * "EC %" / 100 * (1 - SalesHeader."VAT Base Discount %" / 100),
+                          Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                      "Amount Including VAT+EC" := "Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount"
+                        + "VAT Amount" + "EC Amount";
+                      IF Positive THEN
+                        PrevVatAmountLine.INIT
+                      ELSE
+                        IF NOT "Includes Prepayment" THEN BEGIN
+                          PrevVatAmountLine := VATAmountLine;
+                          PrevVatAmountLine."VAT Amount" :=
+                            "VAT+EC Base" * "VAT %" / 100 * (1 - SalesHeader."VAT Base Discount %" / 100);
+                          PrevVatAmountLine."VAT Amount" :=
+                            PrevVatAmountLine."VAT Amount" -
+                            ROUND(PrevVatAmountLine."VAT Amount",Currency."Amount Rounding Precision",Currency.VATRoundingDirection);
+                        END;
+                    END;
+                  "VAT Calculation Type"::"Reverse Charge VAT":
+                    BEGIN
+                      "VAT+EC Base" := "Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount";
+                      "VAT Amount" := 0;
+                      "EC Amount" := 0;
+                      "Amount Including VAT+EC" := "VAT+EC Base" ;
+                    END;
+                  "VAT Calculation Type"::"Full VAT":
+                    BEGIN
+                      "VAT+EC Base" := 0;
+                      "VAT Amount" := "VAT Difference" + "Line Amount" - "Invoice Discount Amount";
+                      "Amount Including VAT+EC" := "VAT Amount";
+                    END;
+                  "VAT Calculation Type"::"Sales Tax":
+                    BEGIN
+                      "VAT+EC Base" := "Line Amount" - "Invoice Discount Amount" - "Pmt. Disc. Given Amount";
+                      "VAT Amount" :=
+                        SalesTaxCalculate.CalculateTax(
+                          SalesHeader."Tax Area Code","Tax Group Code",SalesHeader."Tax Liable",
+                          SalesHeader."Posting Date","VAT+EC Base",Quantity,SalesHeader."Currency Factor");
+                      "Amount Including VAT+EC" := "VAT+EC Base" + "VAT Amount" + "EC Amount";
+                      IF "VAT Amount" <> 0 THEN
+                        TotalAmountForTax := TotalAmountForTax + "Amount Including VAT+EC";
+                    END;
+                END;
+              IF RoundingLineInserted THEN
+                TotalVATAmount := TotalVATAmount - "VAT Amount";
+              "Calculated VAT Amount" := "VAT Amount" - "VAT Difference";
+              "Calculated EC Amount" := "EC Amount" - "EC Difference";
+              MODIFY;
+            UNTIL NEXT = 0;
+        IF RoundingLineInserted AND (TotalVATAmount <> 0) THEN
+          IF VATAmountLine.GET(SalesLine."VAT Identifier",SalesLine."VAT Calculation Type",
+               SalesLine."Tax Group Code",FALSE,SalesLine."Line Amount" >= 0)
+          THEN BEGIN
+            VATAmountLine."VAT Amount" := VATAmountLine."VAT Amount" + TotalVATAmount;
+            VATAmountLine."Amount Including VAT+EC" := VATAmountLine."Amount Including VAT+EC" + TotalVATAmount;
+            VATAmountLine."Calculated VAT Amount" := VATAmountLine."Calculated VAT Amount" + TotalVATAmount;
+            VATAmountLine.MODIFY;
+          END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..32
+                  VATAmountLine."VAT %" := VATPostingSetup."VAT %";
+        #34..89
+                      VATAmountLine."Line Amount" :=
+                        VATAmountLine."Line Amount" + GetLineAmountToHandle(QtyToHandle);
+                      IF "Allow Invoice Disc." THEN
+                        VATAmountLine."Inv. Disc. Base Amount" :=
+                          VATAmountLine."Inv. Disc. Base Amount" + GetLineAmountToHandle(QtyToHandle);
+                      IF SalesHeader."Invoice Discount Calculation" <> SalesHeader."Invoice Discount Calculation"::Amount THEN
+                        VATAmountLine."Invoice Discount Amount" :=
+                          VATAmountLine."Invoice Discount Amount" +
+                          ROUND("Inv. Discount Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision")
+                      ELSE
+                        VATAmountLine."Invoice Discount Amount" :=
+                          VATAmountLine."Invoice Discount Amount" + "Inv. Disc. Amount to Invoice";
+                      VATAmountLine."Pmt. Disc. Given Amount" :=
+                        VATAmountLine."Pmt. Disc. Given Amount" +
+                        ROUND("Pmt. Disc. Given Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision");
+                      VATAmountLine."Line Discount Amount" := VATAmountLine."Line Discount Amount" + "Line Discount Amount";
+                      VATAmountLine."VAT Difference" := VATAmountLine."VAT Difference" + "VAT Difference";
+                      VATAmountLine."EC Difference" := VATAmountLine."EC Difference" + "EC Difference";
+                      IF "Prepayment Line" THEN
+                        VATAmountLine."Includes Prepayment" := TRUE;
+                      VATAmountLine.MODIFY;
+        #101..112
+                      VATAmountLine."Line Amount" :=
+                        VATAmountLine."Line Amount" + GetLineAmountToHandle(QtyToHandle);
+                      IF "Allow Invoice Disc." THEN
+                        VATAmountLine."Inv. Disc. Base Amount" :=
+                          VATAmountLine."Inv. Disc. Base Amount" + GetLineAmountToHandle(QtyToHandle);
+                      VATAmountLine."Invoice Discount Amount" :=
+                        VATAmountLine."Invoice Discount Amount" +
+                        ROUND("Inv. Discount Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision");
+                      VATAmountLine."Pmt. Disc. Given Amount" :=
+                        VATAmountLine."Pmt. Disc. Given Amount" +
+                        ROUND("Pmt. Disc. Given Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision");
+                      VATAmountLine."Line Discount Amount" := VATAmountLine."Line Discount Amount" + "Line Discount Amount";
+                      VATAmountLine."VAT Difference" := VATAmountLine."VAT Difference" + "VAT Difference";
+                      VATAmountLine."EC Difference" := VATAmountLine."EC Difference" + "EC Difference";
+                      IF "Prepayment Line" THEN
+                        VATAmountLine."Includes Prepayment" := TRUE;
+                      VATAmountLine.MODIFY;
+        #118..284
+        */
+    //end;
+    //Unsupported feature: Code Modification on "CalcPrepaymentToDeduct(PROCEDURE 63)".
+    //procedure CalcPrepaymentToDeduct();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF ("Qty. to Invoice" <> 0) AND ("Prepmt. Amt. Inv." <> 0) THEN BEGIN
+          GetSalesHeader;
+          IF ("Prepayment %" = 100) AND NOT IsFinalInvoice THEN
+            "Prepmt Amt to Deduct" := GetLineAmountToHandle("Qty. to Invoice")
+          ELSE
+            "Prepmt Amt to Deduct" :=
+              ROUND(
+                ("Prepmt. Amt. Inv." - "Prepmt Amt Deducted") *
+                "Qty. to Invoice" / (Quantity - "Quantity Invoiced"),Currency."Amount Rounding Precision")
+        END ELSE
+          "Prepmt Amt to Deduct" := 0
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        //IF ("Qty. to Invoice" <> 0) AND ("Prepmt. Amt. Inv." <> 0) THEN BEGIN -->original 2016
+        // -->nuevo
+        IF (Quantity - "Quantity Invoiced") <> 0 THEN BEGIN
+        // <--nuevo
+          GetSalesHeader;
+          //IF ("Prepayment %" = 100) AND NOT IsFinalInvoice THEN -->original 2016
+            //"Prepmt Amt to Deduct" := GetLineAmountToHandle("Qty. to Invoice") -->original 2016
+          // -->nuevo
+          IF SalesHeader."Prices Including VAT" THEN
+            "Prepmt Amt to Deduct" :=
+              ROUND(
+                ROUND((("Prepmt. Amt. Inv." - "Prepmt Amt Deducted") * "Qty. to Invoice" / (Quantity - "Quantity Invoiced")) /
+                (1 + ("VAT %" / 100)),Currency."Amount Rounding Precision") * (1 + ("VAT %" / 100)),
+                Currency."Amount Rounding Precision")
+          // <--nuevo
+        #5..11
+        */
+    //end;
+    //Unsupported feature: Code Modification on "GetLineAmountToHandle(PROCEDURE 117)".
+    //procedure GetLineAmountToHandle();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF "Line Discount %" = 100 THEN
+          EXIT(0);
+        GetSalesHeader;
+        IF "Prepmt Amt to Deduct" = 0 THEN
+          LineAmount := ROUND(QtyToHandle * "Unit Price",Currency."Amount Rounding Precision")
+        ELSE BEGIN
+          LineAmount := ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision");
+          LineAmount := ROUND(QtyToHandle * LineAmount / Quantity,Currency."Amount Rounding Precision");
+        END;
+        IF QtyToHandle <> Quantity THEN
+          LineDiscAmount := ROUND(LineAmount * "Line Discount %" / 100,Currency."Amount Rounding Precision")
+        ELSE
+          LineDiscAmount := "Line Discount Amount";
+        EXIT(LineAmount - LineDiscAmount);
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..4
+        LineAmount := ROUND(QtyToHandle * "Unit Price",Currency."Amount Rounding Precision");
+        LineDiscAmount := ROUND("Line Discount Amount" * QtyToHandle / Quantity,Currency."Amount Rounding Precision");
+        EXIT(LineAmount - LineDiscAmount);
+        */
+    //end;
+    //Unsupported feature: Code Modification on "UpdateICPartner(PROCEDURE 78)".
+    //procedure UpdateICPartner();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF SalesHeader."Send IC Document" AND
+           (SalesHeader."IC Direction" = SalesHeader."IC Direction"::Outgoing) AND
+           (SalesHeader."Bill-to IC Partner Code" <> '')
+        #4..24
+                  ICPartner."Outbound Sales Item No. Type"::"Internal No.",
+                  ICPartner."Outbound Sales Item No. Type"::"Cross Reference":
+                    BEGIN
+                      IF ICPartner."Outbound Sales Item No. Type" = ICPartner."Outbound Sales Item No. Type"::"Internal No." THEN
+                        VALIDATE("IC Partner Ref. Type","IC Partner Ref. Type"::Item)
+                      ELSE
+                        VALIDATE("IC Partner Ref. Type","IC Partner Ref. Type"::"Cross Reference");
+                      ItemCrossReference.SETRANGE("Cross-Reference Type",ItemCrossReference."Cross-Reference Type"::Customer);
+                      ItemCrossReference.SETRANGE("Cross-Reference Type No.","Sell-to Customer No.");
+                      ItemCrossReference.SETRANGE("Item No.","No.");
+                      ItemCrossReference.SETRANGE("Variant Code","Variant Code");
+                      ItemCrossReference.SETRANGE("Unit of Measure","Unit of Measure Code");
+                      IF ItemCrossReference.FINDFIRST THEN
+                        "IC Partner Reference" := ItemCrossReference."Cross-Reference No."
+                      ELSE
+                        "IC Partner Reference" := "No.";
+                    END;
+                END;
+              END;
+        #44..52
+                "IC Partner Reference" := Resource."IC Partner Purch. G/L Acc. No.";
+              END;
+          END;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        #1..27
+        #32..36
+                      IF ItemCrossReference.FINDFIRST THEN BEGIN
+                        VALIDATE("IC Partner Ref. Type","IC Partner Ref. Type"::"Cross Reference");
+                        "IC Partner Reference" := ItemCrossReference."Cross-Reference No.";
+                      END ELSE BEGIN
+                        "IC Partner Ref. Type" := "IC Partner Ref. Type"::Item;
+                        "IC Partner Reference" := "No.";
+                      END;
+        #41..55
+        */
+    //end;
+    //Unsupported feature: Code Modification on "VerifyItemLineDim(PROCEDURE 87)".
+    //procedure VerifyItemLineDim();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+        /*
+        IF IsShippedReceivedItemDimChanged THEN
+          ConfirmShippedReceivedItemDimChange;
+        */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+        /*
+        IF ("Dimension Set ID" <> xRec."Dimension Set ID") AND (Type = Type::Item) THEN
+          IF ("Qty. Shipped Not Invoiced" <> 0) OR ("Return Rcd. Not Invd." <> 0) THEN
+            IF NOT CONFIRM(Text053,TRUE,TABLECAPTION) THEN
+              ERROR(Text054);
+        */
+    //end;
+    local procedure setTrackingUnitCost("Document Type": Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order";"Document No.": Code[20];"Line No.": Integer;"Serial No.": Code[20])
+    var
+        SalesSetup: Record 311;
+        Item: Record 27;
+        SalesLine: Record 37;
+        ItemLdgEntry: Record 32;
+    begin
+        SalesSetup.GET;
+        IF SalesSetup."Automat. Tracking Unit Cost" THEN
+           IF SalesLine.GET("Document Type", "Document No.", "Line No.") THEN
+              IF ((SalesLine.Type = SalesLine.Type::Item) AND (SalesLine.Quantity = 1)) THEN BEGIN
+                 ItemLdgEntry.SETFILTER("Item No.", '%1', SalesLine."No.");
+                 ItemLdgEntry.SETFILTER("Serial No.", '%1', "Serial No.");
+                 IF ItemLdgEntry.FINDFIRST THEN BEGIN
+                    SalesLine.VALIDATE("Appl.-to Item Entry", ItemLdgEntry."Entry No.");
+                    SalesLine.MODIFY;
+                 END;
+              END;
+    end;
+    //Unsupported feature: Deletion (VariableCollection) on "CalcVATAmountLines(PROCEDURE 35).AmtToHandle(Variable 1015)".
+    var
+        Proyecto: Code[10];
+        UserDim: Record 50000;
+    var
+        SalesSetup: Record 311;
+        Item: Record 27;
+    var
+        Item: Record 27;
+    var
+        SalesLine: Record 37;
+    var
+        UserDims: Record 50000;
+    //Unsupported feature: Property Modification (TextConstString) on "Text042(Variable 1055)".
+    //var
+        //>>>> ORIGINAL VALUE:
+        //Text042 : ENU=When posting the Applied to Ledger Entry %1 will be opened first;ESP=Al registrar, se abrir´Š¢ primero Liq. por mov. producto %1;
+        //Variable type has not been exported.
+        //>>>> MODIFIED VALUE:
+        //Text042 : ENU=When posting the Applied to Ledger Entry %1 will be opened first;ESP=Al registrar Liq. por mov. contable, %1 se abrir´Š¢ primero;
+        //Variable type has not been exported.
+    var
+        gbldimensiones: Record 50000;
+}

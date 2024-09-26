@@ -1,0 +1,202 @@
+tableextension 50153 Vendor_LDR extends Vendor
+{
+    fields
+    {
+        modify("Gen. Bus. Posting Group")
+        {
+            Caption = 'Gen. Bus. Posting Group';
+        }
+        modify("VAT Bus. Posting Group")
+        {
+            Caption = 'VAT Bus. Posting Group';
+        }
+        //Unsupported feature: Property Insertion (Numeric) on ""Creditor No."(Field 170)".
+        modify("Pay-to No. of Return Orders")
+        {
+            Caption = 'Pay-to No. of Return Orders';
+        }
+        //Unsupported feature: Deletion on ""Purchaser Code"(Field 29).OnValidate".
+        //Unsupported feature: Deletion on "Blocked(Field 39).OnValidate".
+        //Unsupported feature: Deletion (FieldCollection) on ""EORI Number"(Field 93)".
+        //Unsupported feature: Deletion (FieldCollection) on ""Privacy Blocked"(Field 150)".
+        //Unsupported feature: Deletion on ""Lead Time Calculation"(Field 5790).OnValidate".
+        field(50004; "Retenci´Š¢n"; Decimal)
+        {
+            DecimalPlaces = 3 : 3;
+            Description = 'SERCABLE';
+        }
+        field(50005; "No.Cuenta"; Text[20])
+        {
+            Description = 'SERCABLE';
+            TableRelation = "G/L Account".No.;
+        }
+        field(50705; "Excluir del 347"; Boolean)
+        {
+            Description = 'SERCABLE';
+        }
+    }
+    //Unsupported feature: Code Modification on "OnDelete".
+    //trigger OnDelete()
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    MoveEntries.MoveVendorEntries(Rec);
+    IF AppManagement.AccessToCartera THEN
+    #4..22
+    ItemCrossReference.DELETEALL;
+    PurchOrderLine.SETCURRENTKEY("Document Type","Pay-to Vendor No.");
+    PurchOrderLine.SETRANGE("Pay-to Vendor No.","No.");
+    IF PurchOrderLine.FINDFIRST THEN
+      ERROR(
+    #29..68
+    PurchPrepmtPct.DELETEALL(TRUE);
+    VATRegistrationLogMgt.DeleteVendorLog(Rec);
+    CompanyInformation.CheckDeleteIntrastatContact(CompanyInformation."Intrastat Contact Type"::Vendor,"No.");
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    #1..25
+    PurchOrderLine.SETFILTER(
+      "Document Type",'%1|%2',
+      PurchOrderLine."Document Type"::Order,
+      PurchOrderLine."Document Type"::"Return Order");
+    #26..71
+    */
+    //end;
+    //Unsupported feature: Code Modification on "OnInsert".
+    //trigger OnInsert()
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    IF "No." = '' THEN BEGIN
+      PurchSetup.GET;
+      PurchSetup.TESTFIELD("Vendor Nos.");
+    #4..14
+    DimMgt.UpdateDefaultDim(
+      DATABASE::Vendor,"No.",
+      "Global Dimension 1 Code","Global Dimension 2 Code");
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    #1..17
+                      //Begin --IZERTIS 310317 Assing Const Country
+    //izertis 220213
+    "Country/Region Code" := 'ES';
+                      //End --IZERTIS 310317 Assing Const Country
+    */
+    //end;
+    //Unsupported feature: Code Modification on "OnModify".
+    //trigger OnModify()
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    "Last Date Modified" := TODAY;
+    IF IsContactUpdateNeeded THEN BEGIN
+      MODIFY;
+      UpdateContFromVend.OnModify(Rec);
+      IF NOT FIND THEN BEGIN
+        RESET;
+        IF FIND THEN;
+      END;
+    END;
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    "Last Date Modified" := TODAY;
+    IF (Name <> xRec.Name) OR
+       ("Search Name" <> xRec."Search Name") OR
+       ("Name 2" <> xRec."Name 2") OR
+       (Address <> xRec.Address) OR
+       ("Address 2" <> xRec."Address 2") OR
+       (City <> xRec.City) OR
+       ("Phone No." <> xRec."Phone No.") OR
+       ("Telex No." <> xRec."Telex No.") OR
+       ("Territory Code" <> xRec."Territory Code") OR
+       ("Currency Code" <> xRec."Currency Code") OR
+       ("Language Code" <> xRec."Language Code") OR
+       ("Purchaser Code" <> xRec."Purchaser Code") OR
+       ("Country/Region Code" <> xRec."Country/Region Code") OR
+       ("Fax No." <> xRec."Fax No.") OR
+       ("Telex Answer Back" <> xRec."Telex Answer Back") OR
+       ("VAT Registration No." <> xRec."VAT Registration No.") OR
+       ("Post Code" <> xRec."Post Code") OR
+       (County <> xRec.County) OR
+       ("E-Mail" <> xRec."E-Mail") OR
+       ("Home Page" <> xRec."Home Page")
+    THEN BEGIN
+    #4..10
+    */
+    //end;
+    //Unsupported feature: Code Modification on "CheckBlockedVendOnDocs(PROCEDURE 4)".
+    //procedure CheckBlockedVendOnDocs();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    IF Vend2."Privacy Blocked" THEN
+      VendPrivacyBlockedErrorMessage(Vend2,Transaction);
+    IF Vend2.Blocked = Vend2.Blocked::All THEN
+      VendBlockedErrorMessage(Vend2,Transaction);
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    IF Vend2.Blocked = Vend2.Blocked::All THEN
+      VendBlockedErrorMessage(Vend2,Transaction);
+    */
+    //end;
+    //Unsupported feature: Code Modification on "CheckBlockedVendOnJnls(PROCEDURE 5)".
+    //procedure CheckBlockedVendOnJnls();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    WITH Vend2 DO BEGIN
+      IF "Privacy Blocked" THEN
+        VendPrivacyBlockedErrorMessage(Vend2,Transaction);
+      IF (Blocked = Blocked::All) OR
+         (Blocked = Blocked::Payment) AND (DocType = DocType::Payment)
+      THEN
+        VendBlockedErrorMessage(Vend2,Transaction);
+    END;
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    WITH Vend2 DO BEGIN
+    #5..9
+    */
+    //end;
+    //Unsupported feature: Code Modification on "CalcOverDueBalance(PROCEDURE 8)".
+    //procedure CalcOverDueBalance();
+    //Parameters and return type have not been exported.
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    VendLedgEntryRemainAmtQuery.SETRANGE(Vendor_No,"No.");
+    VendLedgEntryRemainAmtQuery.SETRANGE(IsOpen,TRUE);
+    VendLedgEntryRemainAmtQuery.SETFILTER(Due_Date,'<%1',WORKDATE);
+    VendLedgEntryRemainAmtQuery.OPEN;
+    IF VendLedgEntryRemainAmtQuery.READ THEN
+      OverDueBalance := -VendLedgEntryRemainAmtQuery.Sum_Remaining_Amt_LCY;
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    #1..6
+      OverDueBalance := VendLedgEntryRemainAmtQuery.Sum_Remaining_Amt_LCY;
+    */
+    //end;
+    var
+        Text1100000: Label 'Payment Discount (VAT Adjustment)';
+        VendVatRegNo: Record 23;
+}

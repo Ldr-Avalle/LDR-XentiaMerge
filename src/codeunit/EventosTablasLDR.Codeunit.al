@@ -112,4 +112,76 @@ codeunit 50000 "EventosTablas_LDR"
         Rec.Validate("VAT Registration No.", Rec."No.");
     end;
     #endregion
+
+    #region table 21 "Cust. Ledger Entry"	
+    [EventSubscriber(ObjectType::Table, Database::"Cust. Ledger Entry", 'OnAfterModifyEvent', '', true, true)]
+    local procedure OnAfterModifyCustomer(var Rec: Record "Cust. Ledger Entry"; RunTrigger: Boolean)
+    var
+        GenJnlPostPreview: Codeunit "Gen. Jnl.-Post Preview";
+    begin
+        //GenJnlPostPreview.ModifyCustLedgEntry(Rec); //TODO: Revisar como va hecha la función de la llamada
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Cust. Ledger Entry", OnAfterCopyCustLedgerEntryFromGenJnlLine, '', false, false)]
+    local procedure "Cust. Ledger Entry_OnAfterCopyCustLedgerEntryFromGenJnlLine"(var CustLedgerEntry: Record "Cust. Ledger Entry"; GenJournalLine: Record "Gen. Journal Line")
+    begin
+        //CustLedgerEntry.FacturaFin := GenJournalLine.FacturaFin; //TODO: Quitar comentario después de añadir campo a la línea de diario
+    end;
+    #endregion
+
+    #region table 23 "Vendor"
+    [EventSubscriber(ObjectType::Table, Database::Vendor, OnBeforeCheckOutstandingPurchaseDocuments, '', false, false)]
+    local procedure Vendor_OnBeforeCheckOutstandingPurchaseDocuments(Vendor: Record Vendor; var IsHandled: Boolean)
+    var
+        PurchOrderLine: Record "Purchase Line";
+        Text000: Label 'No puedes eliminar %1 %2 porque hay al menos una Compra %3 pendiente para este proveedor.';
+    begin
+        PurchOrderLine.SetCurrentKey("Document Type", "Pay-to Vendor No.");
+        PurchOrderLine.SetFilter("Document Type", '%1|%2', PurchOrderLine."Document Type"::Order, PurchOrderLine."Document Type"::"Return Order");
+        PurchOrderLine.SetRange("Pay-to Vendor No.", Vendor."No.");
+        if PurchOrderLine.FindFirst() then
+            Error(Text000, Vendor.TableCaption, Vendor."No.", PurchOrderLine."Document Type");
+    end;
+    #endregion
+
+    #region table 5940 "Service Item"
+    [EventSubscriber(ObjectType::Table, Database::"Service Item", 'OnAfterValidateEvent', 'Description', true, true)]
+    local procedure OnAfterValidateDescription(var Rec: Record "Service Item"; var xRec: Record "Service Item"; CurrFieldNo: Integer)
+    begin
+        Rec.CheckUniqueNameConditions();
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Service Item", OnBeforeServItemLinesExistErr, '', false, false)]
+    local procedure "Service Item_OnBeforeServItemLinesExistErr"(var ServiceItem: Record "Service Item"; ChangedFieldName: Text[100]; var IsHandled: Boolean)
+    var
+        ServiceItemLine: Record "Service Item Line";
+        Text016: Label 'No puede modificar el %1 porque existen ofertas/pedidos servicio pendientes relacionados con él.';
+    begin
+        ServiceItemLine.Reset();
+        ServiceItemLine.SetCurrentKey("Service Item No.");
+        ServiceItemLine.SetRange("Service Item No.", ServiceItem."No.");
+        if ServiceItemLine.FindFirst() then
+            Error(Text016, ChangedFieldName);
+        IsHandled := true;
+    end;
+
+    #endregion
+
+    #region table 7000002 "Cartera Doc."
+    [EventSubscriber(ObjectType::Table, Database::"Cartera Doc.", 'OnBeforeInsertEvent', '', true, true)]
+    local procedure OnBeforeInsertCarteraDoc(var Rec: Record "Cartera Doc."; RunTrigger: Boolean)
+    begin
+        if Rec.Type = Rec.Type::Payable then
+            Rec.Type_LDR := Rec.Type_LDR::Empty;
+        Rec.Modify(false);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Cartera Doc.", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertCarteraDoc(var Rec: Record "Cartera Doc."; RunTrigger: Boolean)
+    begin
+        if Rec.Type = Rec.Type::Empty then
+            Rec.Type_LDR := Rec.Type_LDR::Payable;
+        Rec.Modify(false);
+    end;
+    #endregion
 }
