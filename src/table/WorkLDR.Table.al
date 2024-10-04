@@ -1,8 +1,8 @@
 table 50012 Work_LDR
 {
     Caption = 'Obra';
-    DrillDownPageID = "Works List_LDR";
-    LookupPageID = "Works List_LDR";
+    DrillDownPageID = "Works List";
+    LookupPageID = "Works List";
 
     fields
     {

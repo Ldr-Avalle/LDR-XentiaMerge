@@ -1,7 +1,7 @@
 table 90005 ContractCP_LDR
 {
     Caption = 'Contrato';
-    LookupPageID = "Contract List_LDR";
+    LookupPageID = "Contract List";
 
     fields
     {

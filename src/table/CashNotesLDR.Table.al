@@ -1,7 +1,7 @@
 table 50002 "Cash Notes_LDR"
 {
     Caption = 'Anotaciones Caja';
-    LookupPageID = "Cash Note List_LDR";
+    LookupPageID = "Cash Note List";
 
     fields
     {

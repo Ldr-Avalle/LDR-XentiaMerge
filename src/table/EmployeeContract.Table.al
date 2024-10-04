@@ -1,8 +1,8 @@
 table 50004 "Employee Contract"
 {
     Caption = 'Contrato empleado';
-    DrillDownPageID = "Employee Contracts List_LDR";
-    LookupPageID = "Employee Contracts List_LDR";
+    DrillDownPageID = "Employee Contracts List";
+    LookupPageID = "Employee Contracts List";
 
     fields
     {
@@ -127,7 +127,7 @@ table 50004 "Employee Contract"
                     end;
                 end else if Confirm(Text0002) then begin
                     EmployeeIntHist.Setfilter("Employee No.", '%1', Employee);
-                    Page.Runmodal(Page::"Employee internal historic_LDR", EmployeeIntHist);
+                    Page.Runmodal(Page::"Employee internal historic", EmployeeIntHist);
                 end;
             end;
         }
