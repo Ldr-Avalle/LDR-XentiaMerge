@@ -144,6 +144,50 @@ codeunit 50000 "EventosTablas_LDR"
     end;
     #endregion
 
+    #region table 5207 "Employee Absence"
+    [EventSubscriber(ObjectType::Table, Database::"Employee Absence", 'OnAfterInsertEvent', '', true, true)]
+    local procedure OnAfterInsertEmployeeAbsence(var Rec: Record "Employee Absence"; RunTrigger: Boolean)
+    var
+        EmployeeAbsence: Record "Employee Absence";
+    begin
+        EmployeeAbsence.SetFilter("Employee No.", '%1', Rec."Employee No.");
+        if EmployeeAbsence.FindLast() then
+            Rec."Entry No." := EmployeeAbsence."Entry No." + 1
+        else
+            Rec."Entry No." := 1;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Employee Absence", 'OnBeforeValidateEvent', 'Employee No.', true, true)]
+    local procedure OnBeforeValidatePrivacyBlocked(var Rec: Record "Employee Absence"; var xRec: Record "Employee Absence"; CurrFieldNo: Integer)
+    var
+        Employee: Record Employee;
+    begin
+        Employee.Get(Rec."Employee No.");
+        if Employee."Privacy Blocked" then begin
+            Employee."Privacy Blocked" := false;
+            Employee.Modify(false);
+
+            Rec."Privacy Blocked_LDR" := true;
+            Rec.Modify(false);
+        end;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Employee Absence", 'OnAfterValidateEvent', 'Employee No.', true, true)]
+    local procedure OnAfterValidatePrivacyBlocked(var Rec: Record "Employee Absence"; var xRec: Record "Employee Absence"; CurrFieldNo: Integer)
+    var
+        Employee: Record Employee;
+    begin
+        if Rec."Privacy Blocked_LDR" then begin
+            Employee.Get(Rec."Employee No.");
+            Employee."Privacy Blocked" := true;
+            Employee.Modify(false);
+
+            Rec."Privacy Blocked_LDR" := false;
+            Rec.Modify(false);
+        end;
+    end;
+    #endregion
+
     #region table 5940 "Service Item"
     [EventSubscriber(ObjectType::Table, Database::"Service Item", 'OnAfterValidateEvent', 'Description', true, true)]
     local procedure OnAfterValidateDescription(var Rec: Record "Service Item"; var xRec: Record "Service Item"; CurrFieldNo: Integer)
@@ -173,7 +217,7 @@ codeunit 50000 "EventosTablas_LDR"
     begin
         if Rec.Type = Rec.Type::Payable then
             Rec.Type_LDR := Rec.Type_LDR::Empty;
-        Rec.Modify(false);
+        //Rec.Modify(false);
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Cartera Doc.", 'OnAfterInsertEvent', '', true, true)]
@@ -181,7 +225,7 @@ codeunit 50000 "EventosTablas_LDR"
     begin
         if Rec.Type = Rec.Type::Empty then
             Rec.Type_LDR := Rec.Type_LDR::Payable;
-        Rec.Modify(false);
+        //Rec.Modify(false);
     end;
     #endregion
 }
