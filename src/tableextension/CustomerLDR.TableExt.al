@@ -1,6 +1,5 @@
-tableextension 50003 Customer_LDR extends Customer
+tableextension 50003 "Customer_LDR" extends Customer
 {
-    //TODO: Revisar tabla entera
     fields
     {
         modify("No.")
@@ -71,7 +70,7 @@ tableextension 50003 Customer_LDR extends Customer
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
             OptionCaption = ', 02: NIF-IVA,03: Pasaporte,04: Documento oficial deidentificación expedido por el país o territorio de residencia,05: Certificado de residencia, 06: Otro documento probatorio';
-            OptionMembers = ,02,03,04,05,06;
+            OptionMembers = ,"NIF-IVA",Pasaporte,"Documento oficial deidentificación expedido por el país o territorio de residencia","Certificado de residencia","Otro documento probatorio";
         }
         field(50707; ID_LDR; Code[20])
         {

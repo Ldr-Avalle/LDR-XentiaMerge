@@ -1,8 +1,8 @@
 table 50014 Agreement_LDR
 {
     Caption = 'Convenio';
-    DrillDownPageID = "Agreement List_LDR";
-    LookupPageID = "Agreement List_LDR";
+    DrillDownPageID = "Agreement List";
+    LookupPageID = "Agreement List";
 
     fields
     {

@@ -245,10 +245,10 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
             Caption = 'Purchasing Code';
             TableRelation = Purchasing;
         }
-        field(5707; "Product Group Code"; Code[10])
+        field(5707; "Product Group Code"; Code[10]) //TODO:REVISAR
         {
             Caption = 'Product Group Code';
-            TableRelation = "Product Group".Code where("Item Category Code" = field("Item Category Code"));
+            //TableRelation = "Product Group".Code where("Item Category Code" = field("Item Category Code"));
         }
         field(5740; "Transfer Order No."; Code[20])
         {
@@ -376,24 +376,24 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
             Caption = 'Service Order No.';
             DataClassification = ToBeClassified;
         }
-        field(6500; "Serial No."; Code[20])
+        field(6500; "Serial No."; Code[20]) //TODO:AÑADIR PROCEDURE
         {
             Caption = 'Serial No.';
             DataClassification = ToBeClassified;
 
             trigger OnLookup()
             begin
-                ItemTrackingMgt.LookupLotSerialNoInfo("Item No.", "Variant Code", 0, "Serial No.");
+                //ItemTrackingMgt.LookupLotSerialNoInfo("Item No.", "Variant Code", 0, "Serial No.");
             end;
         }
-        field(6501; "Lot No."; Code[20])
+        field(6501; "Lot No."; Code[20]) //TODO:AÑADIR PROCEDURE
         {
             Caption = 'Lot No.';
             DataClassification = ToBeClassified;
 
             trigger OnLookup()
             begin
-                ItemTrackingMgt.LookupLotSerialNoInfo("Item No.", "Variant Code", 1, "Lot No.");
+                //ItemTrackingMgt.LookupLotSerialNoInfo("Item No.", "Variant Code", 1, "Lot No.");
             end;
         }
         field(6502; "Warranty Date"; Date)
@@ -597,11 +597,11 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
           ("Invoiced Quantity" < 0));
     end;
 
-    procedure UpdateItemTracking()
+    procedure UpdateItemTracking() //TODO:AÑADIR PROCEDURE
     var
         ItemTrackingMgt: Codeunit 6500;
     begin
-        "Item Tracking" := ItemTrackingMgt.ItemTrackingOption("Lot No.", "Serial No.");
+        //"Item Tracking" := ItemTrackingMgt.ItemTrackingOption("Lot No.", "Serial No.");
     end;
 
     procedure GetUnitCostLCY(): Decimal
