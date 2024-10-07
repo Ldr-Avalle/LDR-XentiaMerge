@@ -2,7 +2,7 @@ table 50003 "Cash Arch_LDR"
 {
     Caption = 'Arqueo caja';
     DataCaptionFields = Title;
-    LookupPageID = "Cash Arch List_LDR";
+    LookupPageID = "Cash Arch List";
 
     fields
     {
