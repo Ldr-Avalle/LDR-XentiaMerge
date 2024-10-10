@@ -1,22 +1,22 @@
 report 50007 "Test Sales Inv"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Test Sales Inv.rdlc';
+    RDLCLayout = './src/layout/Test Sales Inv.rdlc';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table112)
+        dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING(No.)
+            DataItemTableView = SORTING("No.")
                                 ORDER(Ascending);
             RequestFilterFields = "No.";
-            column(SalesInvHeader_No;"No.")
+            column(SalesInvHeader_No; "No.")
             {
             }
-            dataitem(DataItem1000000001;Table113)
+            dataitem("Sales Invoice Line"; "Sales Invoice Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(Document No.,Line No.)
+                DataItemLink = "Document No." = FIELD("No.");
+                DataItemTableView = SORTING("Document No.", "Line No.")
                                     ORDER(Ascending);
             }
         }

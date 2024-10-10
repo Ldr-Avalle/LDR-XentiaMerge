@@ -1,15 +1,15 @@
 report 50006 "Contract clearance"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Contract clearance.rdlc';
+    RDLCLayout = './src/layout/Contract clearance.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table50005)
+        dataitem("G/L Register CP"; "G/L Register CP_LDR")
         {
-            dataitem(DataItem1000000001;Table50006)
+            dataitem("Contract lines"; "Contract lines_LDR")
             {
-                DataItemLink = Contract=FIELD(No.);
+                DataItemLink = Contract = FIELD("No.");
             }
         }
     }

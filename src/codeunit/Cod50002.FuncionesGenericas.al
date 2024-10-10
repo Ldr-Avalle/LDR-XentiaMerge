@@ -553,4 +553,16 @@ codeunit 50002 FuncionesGenericas
             CRMSalesorder.Modify();
         end;
     end;
+
+    procedure TBAIActivated(): Boolean;
+    var
+        TBAIAlava: Record "TBAI Alava2_LDR";
+    begin
+        TBAIAlava.SetRange(TipoRegistro, TBAIAlava.TipoRegistro::"Configuración");
+        if TBAIAlava.FindSet() then
+            exit(TBAIAlava.C_Activar)
+        else
+            exit(false);
+    end;
+
 }

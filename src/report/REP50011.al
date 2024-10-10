@@ -1,13 +1,13 @@
 report 50011 Delete
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Delete.rdlc';
+    RDLCLayout = './src/layout/Delete.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table2000000026)
+        dataitem(Integer; Integer)
         {
-            DataItemTableView = WHERE(Number=CONST(1));
+            DataItemTableView = WHERE(Number = CONST(1));
 
             trigger OnPostDataItem()
             begin

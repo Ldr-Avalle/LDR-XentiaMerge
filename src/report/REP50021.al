@@ -1,160 +1,160 @@
 report 50021 "Abono Venta Actin"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Abono Venta Actin.rdlc';
-    Permissions = TableData 7190=rimd;
+    RDLCLayout = './src/layout/Abono Venta Actin.rdl';
+    Permissions = TableData 7190 = rimd;
     PreviewMode = PrintLayout;
 
     dataset
     {
-        dataitem(DataItem1000000000;Table114)
+        dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
         {
-            DataItemTableView = SORTING(No.);
-            RequestFilterFields = "No.","Sell-to Customer No.","No. Printed";
+            DataItemTableView = SORTING("No.");
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
-            column(No_SalesInvHdr;"No.")
+            column(No_SalesInvHdr; "No.")
             {
             }
-            column(PaymentTermsDescription;PaymentTerms.Description)
+            column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
-            column(ShipmentMethodDescription;ShipmentMethod.Description)
+            column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
-            column(PaymentMethodDescription;PaymentMethod.Description)
+            column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
-            column(CompanyInfo_Picture;CompanyInfo.Picture)
+            column(CompanyInfo_Picture; CompanyInfo.Picture)
             {
             }
-            column(CompanyInfo_Name;CompanyInfo.Name)
+            column(CompanyInfo_Name; CompanyInfo.Name)
             {
             }
-            column(CompanyInfo_VATRegistrationNo;CompanyInfo."VAT Registration No.")
+            column(CompanyInfo_VATRegistrationNo; CompanyInfo."VAT Registration No.")
             {
             }
-            column(CompanyInfo_Address;CompanyInfo.Address)
+            column(CompanyInfo_Address; CompanyInfo.Address)
             {
             }
-            column(CompanyInfo_Address2;CompanyInfo."Address 2")
+            column(CompanyInfo_Address2; CompanyInfo."Address 2")
             {
             }
-            column(CompanyInfo_PhoneNo;CompanyInfo."Phone No.")
+            column(CompanyInfo_PhoneNo; CompanyInfo."Phone No.")
             {
             }
-            column(UserID;UserDims.ShopAddress("Sales Cr.Memo Header"."User ID"))
+            column(UserID; UserDims.ShopAddress("Sales Cr.Memo Header"."User ID"))
             {
             }
-            column(CompanyInfo_PostCode;CompanyInfo."Post Code")
+            column(CompanyInfo_PostCode; CompanyInfo."Post Code")
             {
             }
-            column(recordC_PostCode;recordC."Post Code")
+            column(recordC_PostCode; recordC."Post Code")
             {
             }
-            column(recordC_City;recordC.City)
+            column(recordC_City; recordC.City)
             {
             }
-            column(recordC_VATRegistrationNo;recordC."VAT Registration No.")
+            column(recordC_VATRegistrationNo; recordC."VAT Registration No.")
             {
             }
-            column(SalesCrMemoHeader_DueDate;"Sales Cr.Memo Header"."Due Date")
+            column(SalesCrMemoHeader_DueDate; "Sales Cr.Memo Header"."Due Date")
             {
             }
-            column(SalesCrMemoHeader_DocumentDate;FORMAT("Sales Cr.Memo Header"."Document Date",0,4))
+            column(SalesCrMemoHeader_DocumentDate; FORMAT("Sales Cr.Memo Header"."Document Date", 0, 4))
             {
             }
-            column(recordC_PhoneNo;recordC."Phone No.")
+            column(recordC_PhoneNo; recordC."Phone No.")
             {
             }
-            column(SalesCrMemoHeader_BilltoName;"Sales Cr.Memo Header"."Bill-to Name")
+            column(SalesCrMemoHeader_BilltoName; "Sales Cr.Memo Header"."Bill-to Name")
             {
             }
-            column(SalesCrMemoHeader_BilltoAddress;"Sales Cr.Memo Header"."Bill-to Address")
+            column(SalesCrMemoHeader_BilltoAddress; "Sales Cr.Memo Header"."Bill-to Address")
             {
             }
-            column(SalesCrMemoHeader_No;"Sales Cr.Memo Header"."No.")
+            column(SalesCrMemoHeader_No; "Sales Cr.Memo Header"."No.")
             {
             }
-            column(SalesCrMemHeaderAmount;"Sales Cr.Memo Header".Amount)
+            column(SalesCrMemHeaderAmount; "Sales Cr.Memo Header".Amount)
             {
             }
-            column(SalesCrMemoHeaderAmountIncludingVAT;"Sales Cr.Memo Header"."Amount Including VAT")
+            column(SalesCrMemoHeaderAmountIncludingVAT; "Sales Cr.Memo Header"."Amount Including VAT")
             {
             }
-            column(CompanyInfo_City;CompanyInfo.City)
+            column(CompanyInfo_City; CompanyInfo.City)
             {
             }
-            column(CompanyInfo_County;CompanyInfo.County)
+            column(CompanyInfo_County; CompanyInfo.County)
             {
             }
-            column(CompanyInfo_Mercantilregister;CompanyInfo."Mercantil register")
+            column(CompanyInfo_Mercantilregister; CompanyInfo."Mercantil register")
             {
             }
-            column(CompanyInfo_Hoja;CompanyInfo.Hoja)
+            column(CompanyInfo_Hoja; CompanyInfo.Hoja)
             {
             }
-            column(CompanyInfo_Folio;CompanyInfo.Folio)
+            column(CompanyInfo_Folio; CompanyInfo.Folio)
             {
             }
-            column(CompanyInfo_Section;CompanyInfo.Section)
+            column(CompanyInfo_Section; CompanyInfo.Section)
             {
             }
-            column(CompanyInfo_Tomo;CompanyInfo.Tomo)
+            column(CompanyInfo_Tomo; CompanyInfo.Tomo)
             {
             }
-            column(CompanyInfo_Libro;CompanyInfo.Book)
+            column(CompanyInfo_Libro; CompanyInfo.Book)
             {
             }
-            dataitem(DataItem1000000001;Table115)
+            dataitem("Sales Cr.Memo Line"; "Sales Cr.Memo Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(Document No.,Line No.);
-                column(VATAmtLineVATCalcType;VATAmountLine."VAT Calculation Type")
+                DataItemLink = "Document No." = FIELD("No.");
+                DataItemTableView = SORTING("Document No.", "Line No.");
+                column(VATAmtLineVATCalcType; VATAmountLine."VAT Calculation Type")
                 {
                 }
-                column(PaymentMethod_Description;PaymentMethod.Description)
+                column(PaymentMethod_Description; PaymentMethod.Description)
                 {
                 }
-                column(PaymentTerms_Description;PaymentTerms.Description)
+                column(PaymentTerms_Description; PaymentTerms.Description)
                 {
                 }
-                column(subtotal;subtotal)
+                column(subtotal; subtotal)
                 {
                 }
-                column(totalIva;totalIva)
+                column(totalIva; totalIva)
                 {
                 }
-                column(total;total)
+                column(total; total)
                 {
                 }
-                column(SalesCrMemoLine_Quantity;"Sales Cr.Memo Line".Quantity)
+                column(SalesCrMemoLine_Quantity; "Sales Cr.Memo Line".Quantity)
                 {
                 }
-                column(SalesCrMemoLine_Description;"Sales Cr.Memo Line".Description)
+                column(SalesCrMemoLine_Description; "Sales Cr.Memo Line".Description)
                 {
                 }
-                column(SalesCrMemoLine_UnitPrice;"Sales Cr.Memo Line"."Unit Price")
+                column(SalesCrMemoLine_UnitPrice; "Sales Cr.Memo Line"."Unit Price")
                 {
                 }
-                column(SalesCrMemoLine_LineAmount;"Sales Cr.Memo Line"."Line Amount")
+                column(SalesCrMemoLine_LineAmount; "Sales Cr.Memo Line"."Line Amount")
                 {
                 }
-                column(SalesPurchPerson_Name;SalesPurchPerson.Name)
+                column(SalesPurchPerson_Name; SalesPurchPerson.Name)
                 {
                 }
-                column(SalesPurchPerson_PhoneNo;SalesPurchPerson."Phone No.")
+                column(SalesPurchPerson_PhoneNo; SalesPurchPerson."Phone No.")
                 {
                 }
-                column(SalesCrMemoLine_VATporc;"Sales Cr.Memo Line"."VAT %")
+                column(SalesCrMemoLine_VATporc; "Sales Cr.Memo Line"."VAT %")
                 {
                 }
-                column(VerCampo;VerCampo)
+                column(VerCampo; VerCampo)
                 {
                 }
-                column(SalesCrMemoLine_Amount;"Sales Cr.Memo Line".Amount)
+                column(SalesCrMemoLine_Amount; "Sales Cr.Memo Line".Amount)
                 {
                 }
-                column(SalesCrMemoLine_AmountIncludingVAT;"Sales Cr.Memo Line"."Amount Including VAT")
+                column(SalesCrMemoLine_AmountIncludingVAT; "Sales Cr.Memo Line"."Amount Including VAT")
                 {
                 }
 
@@ -165,9 +165,9 @@ report 50021 "Abono Venta Actin"
                     total := subtotal + totalIva;
 
                     IF "Sales Cr.Memo Line".Type = "Sales Cr.Memo Line".Type::" " THEN
-                      VerCampo := FALSE
+                        VerCampo := FALSE
                     ELSE
-                      VerCampo:= TRUE;
+                        VerCampo := TRUE;
                 end;
             }
 
@@ -208,7 +208,7 @@ report 50021 "Abono Venta Actin"
         totalIva := 0;
         total := 0;
 
-        Userdimension:= UserDims.ShopAddress("Sales Cr.Memo Header"."User ID");
+        Userdimension := UserDims.ShopAddress("Sales Cr.Memo Header"."User ID");
     end;
 
     var
@@ -231,9 +231,9 @@ report 50021 "Abono Venta Actin"
         SegManagement: Codeunit "5051";
         SalesShipmentBuffer: Record "7190" temporary;
         PostedShipmentDate: Date;
-        CustAddr: array [8] of Text[50];
-        ShipToAddr: array [8] of Text[50];
-        CompanyAddr: array [8] of Text[50];
+        CustAddr: array[8] of Text[50];
+        ShipToAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
         OrderNoText: Text[30];
         SalesPersonText: Text[30];
         VATNoText: Text[30];

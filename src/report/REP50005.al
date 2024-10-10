@@ -1,15 +1,15 @@
 report 50005 "Contract exportation"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Contract exportation.rdlc';
+    RDLCLayout = './src/layout/Contract exportation.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table50005)
+        dataitem("G/L Register CP"; "G/L Register CP_LDR")
         {
-            dataitem(DataItem1000000001;Table50006)
+            dataitem("Contract lines"; "Contract lines_LDR")
             {
-                DataItemLink = Contract=FIELD(No.);
+                DataItemLink = Contract = FIELD("No.");
             }
         }
     }
@@ -41,20 +41,20 @@ report 50005 "Contract exportation"
         TemplateName: Text[100];
     begin
         winCont := 1;
-        Win.OPEN('#1##################\'+
-                 '#2##################\'+
+        Win.OPEN('#1##################\' +
+                 '#2##################\' +
                  '@3@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 
         TemplateName := 'PlantillaExportacionTelecable.xlsx';
 
         Excel.crearExcel(FALSE);
-        IF FILE.EXISTS('C:\'+TemplateName) THEN FILE.ERASE('C:\'+TemplateName);
-        FILE.COPY('\\NavSercable\Compartida\'+TemplateName, 'C:\'+TemplateName);
-        Excel.abrirExcel('C:\'+TemplateName);
+        IF FILE.EXISTS('C:\' + TemplateName) THEN FILE.ERASE('C:\' + TemplateName);
+        FILE.COPY('\\NavSercable\Compartida\' + TemplateName, 'C:\' + TemplateName);
+        Excel.abrirExcel('C:\' + TemplateName);
     end;
 
     var
-        Excel: Record "50013";
+        Excel: Record "Exp. Excel";
         Win: Dialog;
         winCont: Integer;
         winRef: Integer;

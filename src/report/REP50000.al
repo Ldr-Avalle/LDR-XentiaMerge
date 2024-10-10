@@ -5,13 +5,14 @@ report 50000 Services
 
     dataset
     {
-        dataitem(DataItem1000000000; Table50002)
+        dataitem("Cash Notes_LDR"; "Cash Notes_LDR")
         {
             RequestFilterFields = "Code", Date, "User ID", Description;
             column(CompanyName; COMPANYNAME)
             {
             }
-            dataitem(DataItem1000000001; Table50001)
+            //TODO: no exite la tabla 50001
+            /*dataitem(DataItem1000000001; Table50001)
             {
                 DataItemLink = Field1 = FIELD(User ID);
                 DataItemTableView = SORTING(Field1);
@@ -37,7 +38,7 @@ report 50000 Services
                         end;
                     }
                 }
-            }
+            }*/
         }
     }
 

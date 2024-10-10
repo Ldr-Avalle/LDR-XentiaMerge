@@ -1,161 +1,161 @@
 report 50001 "Factura venta TPV"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Factura venta TPV.rdlc';
-    Permissions = TableData 7190=rimd;
+    RDLCLayout = './src/layout/Factura venta TPV.rdl';
+    Permissions = TableData 7190 = rimd;
 
     dataset
     {
-        dataitem(DataItem1000000000;Table112)
+        dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING(No.);
-            RequestFilterFields = "No.","Sell-to Customer No.","No. Printed";
+            DataItemTableView = SORTING("No.");
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
-            column(No_SalesInvHdr;"No.")
+            column(No_SalesInvHdr; "No.")
             {
             }
-            column(PaymentTermsDescription;PaymentTerms.Description)
+            column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
-            column(ShipmentMethodDescription;ShipmentMethod.Description)
+            column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
-            column(PaymentMethodDescription;PaymentMethod.Description)
+            column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
-            column(CompanyInfo_Picture;CompanyInfo.Picture)
+            column(CompanyInfo_Picture; CompanyInfo.Picture)
             {
             }
-            column(CompanyInfo_Name;CompanyInfo.Name)
+            column(CompanyInfo_Name; CompanyInfo.Name)
             {
             }
-            column(CompanyInfo_VATRegistrationNo;CompanyInfo."VAT Registration No.")
+            column(CompanyInfo_VATRegistrationNo; CompanyInfo."VAT Registration No.")
             {
             }
-            column(CompanyInfo_Address;CompanyInfo.Address)
+            column(CompanyInfo_Address; CompanyInfo.Address)
             {
             }
-            column(CompanyInfo_Address2;CompanyInfo."Address 2")
+            column(CompanyInfo_Address2; CompanyInfo."Address 2")
             {
             }
-            column(CompanyInfo_PhoneNo;CompanyInfo."Phone No.")
+            column(CompanyInfo_PhoneNo; CompanyInfo."Phone No.")
             {
             }
-            column(UserID;UserDims.ShopAddress("Sales Invoice Header"."User ID"))
+            column(UserID; UserDims.ShopAddress("Sales Invoice Header"."User ID"))
             {
             }
-            column(CompanyInfo_PostCode;CompanyInfo."Post Code")
+            column(CompanyInfo_PostCode; CompanyInfo."Post Code")
             {
             }
-            column(SalesInvoiceHeader_BilltoName;"Sales Invoice Header"."Bill-to Name")
+            column(SalesInvoiceHeader_BilltoName; "Sales Invoice Header"."Bill-to Name")
             {
             }
-            column(SalesInvoiceHeader_BilltoAddress;"Sales Invoice Header"."Bill-to Address")
+            column(SalesInvoiceHeader_BilltoAddress; "Sales Invoice Header"."Bill-to Address")
             {
             }
-            column(recordC_PostCode;recordC."Post Code")
+            column(recordC_PostCode; recordC."Post Code")
             {
             }
-            column(recordC_City;recordC.City)
+            column(recordC_City; recordC.City)
             {
             }
-            column(recordC_VATRegistrationNo;recordC."VAT Registration No.")
+            column(recordC_VATRegistrationNo; recordC."VAT Registration No.")
             {
             }
-            column(SalesInvoiceHeader_DueDate;"Sales Invoice Header"."Due Date")
+            column(SalesInvoiceHeader_DueDate; "Sales Invoice Header"."Due Date")
             {
             }
-            column(SalesInvoiceHeader_Amount;"Sales Invoice Header".Amount)
+            column(SalesInvoiceHeader_Amount; "Sales Invoice Header".Amount)
             {
             }
-            dataitem(DataItem1000000001;Table113)
+            dataitem("Sales Invoice Line"; "Sales Invoice Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(Document No.,Line No.);
-                column(LineAmt_SalesInvoiceLine;"Line Amount")
+                DataItemLink = "Document No." = FIELD("No.");
+                DataItemTableView = SORTING("Document No.", "Line No.");
+                column(LineAmt_SalesInvoiceLine; "Line Amount")
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 1;
                 }
-                column(Description_SalesInvLine;Description)
+                column(Description_SalesInvLine; Description)
                 {
                 }
-                column(No_SalesInvoiceLine;"No.")
+                column(No_SalesInvoiceLine; "No.")
                 {
                 }
-                column(Quantity_SalesInvoiceLine;Quantity)
+                column(Quantity_SalesInvoiceLine; Quantity)
                 {
                 }
-                column(UOM_SalesInvoiceLine;"Unit of Measure")
+                column(UOM_SalesInvoiceLine; "Unit of Measure")
                 {
                 }
-                column(UnitPrice_SalesInvLine;"Unit Price")
+                column(UnitPrice_SalesInvLine; "Unit Price")
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 2;
                 }
-                column(LineDisc_SalesInvoiceLine;"Line Discount %")
+                column(LineDisc_SalesInvoiceLine; "Line Discount %")
                 {
                 }
-                column(VATIdent_SalesInvLine;"VAT Identifier")
+                column(VATIdent_SalesInvLine; "VAT Identifier")
                 {
                 }
-                column(PostedShipmentDate;FORMAT(PostedShipmentDate))
+                column(PostedShipmentDate; FORMAT(PostedShipmentDate))
                 {
                 }
-                column(Type_SalesInvoiceLine;FORMAT("Sales Invoice Line".Type))
+                column(Type_SalesInvoiceLine; FORMAT("Sales Invoice Line".Type))
                 {
                 }
-                column(InvDiscountAmount;-"Inv. Discount Amount")
+                column(InvDiscountAmount; -"Inv. Discount Amount")
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 1;
                 }
-                column(SalesInvoiceLineAmount;Amount)
+                column(SalesInvoiceLineAmount; Amount)
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 1;
                 }
-                column(AmountIncludingVATAmount;"Amount Including VAT" - Amount)
+                column(AmountIncludingVATAmount; "Amount Including VAT" - Amount)
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 1;
                 }
-                column(Amount_SalesInvoiceLineIncludingVAT;"Amount Including VAT")
+                column(Amount_SalesInvoiceLineIncludingVAT; "Amount Including VAT")
                 {
                     AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATAmtText;VATAmountLine.VATAmountText)
+                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText)
                 {
                 }
-                column(TotalExclVATText;TotalExclVATText)
+                column(TotalExclVATText; TotalExclVATText)
                 {
                 }
-                column(TotalInclVATText;TotalInclVATText)
+                column(TotalInclVATText; TotalInclVATText)
                 {
                 }
-                column(VATBaseDisc_SalesInvHdr;"Sales Invoice Header"."VAT Base Discount %")
+                column(VATBaseDisc_SalesInvHdr; "Sales Invoice Header"."VAT Base Discount %")
                 {
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATCalcType;VATAmountLine."VAT Calculation Type")
+                column(VATAmtLineVATCalcType; VATAmountLine."VAT Calculation Type")
                 {
                 }
-                column(LineNo_SalesInvoiceLine;"Line No.")
+                column(LineNo_SalesInvoiceLine; "Line No.")
                 {
                 }
-                column(PaymentMethod_Description;PaymentMethod.Description)
+                column(PaymentMethod_Description; PaymentMethod.Description)
                 {
                 }
-                column(PaymentTerms_Description;PaymentTerms.Description)
+                column(PaymentTerms_Description; PaymentTerms.Description)
                 {
                 }
-                dataitem("N´Š¢meros de serie";Table32)
+                dataitem("Item Ledger Entry"; "Item Ledger Entry")
                 {
-                    DataItemLink = Item No.=FIELD(No.);
-                    DataItemTableView = SORTING(Item No.,Posting Date);
-                    column(ItemLedgEntry_SerialNo;ItemLedgEntry."Serial No.")
+                    DataItemLink = "Item No." = FIELD("No.");
+                    DataItemTableView = SORTING("Item No.", "Posting Date");
+                    column(ItemLedgEntry_SerialNo; ItemLedgEntry."Serial No.")
                     {
                     }
 
@@ -170,11 +170,11 @@ report 50001 "Factura venta TPV"
                     begin
 
                         IF "Sales Invoice Line"."Shipment No." <> '' THEN BEGIN
-                           "N´Š¢meros de serie".SETRANGE("Document No.", "Sales Invoice Line"."Shipment No.");
-                           "N´Š¢meros de serie".SETRANGE("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
+                            "Item Ledger Entry".SETRANGE("Document No.", "Sales Invoice Line"."Shipment No.");
+                            "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
                         END ELSE BEGIN
-                           "N´Š¢meros de serie".SETRANGE("External Document No.", "Sales Invoice Header"."External Document No.");
-                           "N´Š¢meros de serie".SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
+                            "Item Ledger Entry".SETRANGE("External Document No.", "Sales Invoice Header"."External Document No.");
+                            "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
                         END;
                     end;
                 }
@@ -187,12 +187,12 @@ report 50001 "Factura venta TPV"
             begin
 
                 IF ImpFactNoAbonadas THEN BEGIN
-                   SalesCrMemoHeader.SETFILTER("Corrected Invoice No.", '%1', "No.");
-                   IF SalesCrMemoHeader.COUNT > 0 THEN CurrReport.SKIP;
+                    SalesCrMemoHeader.SETFILTER("Corrected Invoice No.", '%1', "No.");
+                    IF SalesCrMemoHeader.COUNT > 0 THEN CurrReport.SKIP;
                 END;
 
-                IF PaymentMethod.GET("Payment Method Code") THEN ;
-                IF PaymentTerms.GET("Payment Terms Code") THEN ;
+                IF PaymentMethod.GET("Payment Method Code") THEN;
+                IF PaymentTerms.GET("Payment Terms Code") THEN;
 
                 CALCFIELDS(Amount, "Amount Including VAT");
 
@@ -208,7 +208,7 @@ report 50001 "Factura venta TPV"
         {
             area(content)
             {
-                field(ImpFactNoAbonadas;ImpFactNoAbonadas)
+                field(ImpFactNoAbonadas; ImpFactNoAbonadas)
                 {
                     Caption = 'Solo imprimir Facturas no Abonadas';
                 }
@@ -253,9 +253,9 @@ report 50001 "Factura venta TPV"
         SegManagement: Codeunit "5051";
         SalesShipmentBuffer: Record "7190" temporary;
         PostedShipmentDate: Date;
-        CustAddr: array [8] of Text[50];
-        ShipToAddr: array [8] of Text[50];
-        CompanyAddr: array [8] of Text[50];
+        CustAddr: array[8] of Text[50];
+        ShipToAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
         OrderNoText: Text[30];
         SalesPersonText: Text[30];
         VATNoText: Text[30];

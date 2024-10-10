@@ -1,334 +1,305 @@
 report 50002 "Factura venta"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Factura venta.rdlc';
-    Permissions = TableData 7190=rimd;
+    RDLCLayout = './src/layout/Factura venta.rdl';
+    Permissions = tabledata "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
 
     dataset
     {
-        dataitem(DataItem1000000000;Table112)
+        dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING(No.);
-            RequestFilterFields = "No.","Sell-to Customer No.","No. Printed";
+            DataItemTableView = sorting("No.");
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
-            column(No_SalesInvHdr;"No.")
+            column(No_SalesInvHdr; "No.")
             {
             }
-            column(PaymentTermsDescription;PaymentTerms.Description)
+            column(PaymentTermsDescription; PaymentTerms.Description)
             {
             }
-            column(ShipmentMethodDescription;ShipmentMethod.Description)
+            column(ShipmentMethodDescription; ShipmentMethod.Description)
             {
             }
-            column(PaymentMethodDescription;PaymentMethod.Description)
+            column(PaymentMethodDescription; PaymentMethod.Description)
             {
             }
-            column(CompanyInfo_Picture;CompanyInfo.Picture)
+            column(CompanyInfo_Picture; CompanyInfo.Picture)
             {
             }
-            column(TBAI_activated;TBAI_activated)
+            column(TBAI_activated; TBAI_activated)
             {
             }
-            column(TBAIQR_IMAGE;"Sales Invoice Header".TBAIQRBlob)
+            column(TBAIQR_IMAGE; "Sales Invoice Header".TBAIQRBlob)
             {
             }
-            column(TBAIQR_StringValue;"Sales Invoice Header".R_Identificador_TBAI)
+            column(TBAIQR_StringValue; "Sales Invoice Header".R_Identificador_TBAI)
             {
             }
-            column(CompanyInfo_Name;CompanyInfo.Name)
+            column(CompanyInfo_Name; CompanyInfo.Name)
             {
             }
-            column(CompanyInfo_VATRegistrationNo;CompanyInfo."VAT Registration No.")
+            column(CompanyInfo_VATRegistrationNo; CompanyInfo."VAT Registration No.")
             {
             }
-            column(CompanyInfo_Address;CompanyInfo.Address)
+            column(CompanyInfo_Address; CompanyInfo.Address)
             {
             }
-            column(CompanyInfo_Address2;CompanyInfo."Address 2")
+            column(CompanyInfo_Address2; CompanyInfo."Address 2")
             {
             }
-            column(CompanyInfo_PhoneNo;CompanyInfo."Phone No.")
+            column(CompanyInfo_PhoneNo; CompanyInfo."Phone No.")
             {
             }
-            column(UserID;UserDims.ShopAddress("Sales Invoice Header"."User ID"))
+            column(UserID; UserDims.ShopAddress("Sales Invoice Header"."User ID"))
             {
             }
-            column(CompanyInfo_PostCode;CompanyInfo."Post Code")
+            column(CompanyInfo_PostCode; CompanyInfo."Post Code")
             {
             }
-            column(imgreports;CompanyInfo.imgReports)
+            column(imgreports; CompanyInfo.imgReports)
             {
             }
-            column(SalesInvoiceHeader_BilltoName;"Sales Invoice Header"."Bill-to Name")
+            column(SalesInvoiceHeader_BilltoName; "Sales Invoice Header"."Bill-to Name")
             {
             }
-            column(SalesInvoiceHeader_BilltoAddress;"Sales Invoice Header"."Bill-to Address")
+            column(SalesInvoiceHeader_BilltoAddress; "Sales Invoice Header"."Bill-to Address")
             {
             }
-            column(recordC_PostCode;recordC."Post Code")
+            column(recordC_PostCode; recordC."Post Code")
             {
             }
-            column(recordC_City;recordC.City)
+            column(recordC_City; recordC.City)
             {
             }
-            column(recordC_VATRegistrationNo;recordC."VAT Registration No.")
+            column(recordC_VATRegistrationNo; recordC."VAT Registration No.")
             {
             }
-            column(SalesInvoiceHeader_DueDate;"Sales Invoice Header"."Due Date")
+            column(SalesInvoiceHeader_DueDate; "Sales Invoice Header"."Due Date")
             {
             }
-            column(DocumentDate;"Sales Invoice Header"."Document Date")
+            column(DocumentDate; "Sales Invoice Header"."Document Date")
             {
             }
-            column(SalesInvoiceHeader_Amount;"Sales Invoice Header".Amount)
+            column(SalesInvoiceHeader_Amount; "Sales Invoice Header".Amount)
             {
             }
-            column(SalesInvoiceHeader_AmountIncludingVAT;"Sales Invoice Header"."Amount Including VAT")
+            column(SalesInvoiceHeader_AmountIncludingVAT; "Sales Invoice Header"."Amount Including VAT")
             {
             }
-            column(SalesInvoiceHeader_PostingDate;"Sales Invoice Header"."Posting Date")
+            column(SalesInvoiceHeader_PostingDate; "Sales Invoice Header"."Posting Date")
             {
             }
-            column(CompanyInfo_City;CompanyInfo.City)
+            column(CompanyInfo_City; CompanyInfo.City)
             {
             }
-            column(CompanyInfo_County;CompanyInfo.County)
+            column(CompanyInfo_County; CompanyInfo.County)
             {
             }
-            column(CompanyInfo_Mercantilregister;CompanyInfo."Mercantil register")
+            column(CompanyInfo_Mercantilregister; CompanyInfo."Mercantil register")
             {
             }
-            column(CompanyInfo_Hoja;CompanyInfo.Hoja)
+            column(CompanyInfo_Hoja; CompanyInfo.Hoja)
             {
             }
-            column(CompanyInfo_Folio;CompanyInfo.Folio)
+            column(CompanyInfo_Folio; CompanyInfo.Folio)
             {
             }
-            column(CompanyInfo_Section;CompanyInfo.Section)
+            column(CompanyInfo_Section; CompanyInfo.Section)
             {
             }
-            column(CompanyInfo_Tomo;CompanyInfo.Tomo)
+            column(CompanyInfo_Tomo; CompanyInfo.Tomo)
             {
             }
-            column(CompanyInfo_Libro;CompanyInfo.Book)
+            column(CompanyInfo_Libro; CompanyInfo.Book)
             {
             }
-            dataitem(DataItem1000000001;Table113)
+            dataitem("Sales Invoice Line"; "Sales Invoice Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(Document No.,Line No.);
-                column(LineAmt_SalesInvoiceLine;"Line Amount")
+                DataItemLink = "Document No." = field("No.");
+                DataItemTableView = sorting("Document No.", "Line No.");
+                column(LineAmt_SalesInvoiceLine; "Line Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(Description_SalesInvLine;Description)
+                column(Description_SalesInvLine; Description)
                 {
                 }
-                column(No_SalesInvoiceLine;"No.")
+                column(No_SalesInvoiceLine; "No.")
                 {
                 }
-                column(Quantity_SalesInvoiceLine;Quantity)
+                column(Quantity_SalesInvoiceLine; Quantity)
                 {
                 }
-                column(UOM_SalesInvoiceLine;"Unit of Measure")
+                column(UOM_SalesInvoiceLine; "Unit of Measure")
                 {
                 }
-                column(UnitPrice_SalesInvLine;"Unit Price")
+                column(UnitPrice_SalesInvLine; "Unit Price")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 2;
                 }
-                column(LineDisc_SalesInvoiceLine;"Line Discount %")
+                column(LineDisc_SalesInvoiceLine; "Line Discount %")
                 {
                 }
-                column(VATIdent_SalesInvLine;"VAT Identifier")
+                column(VATIdent_SalesInvLine; "VAT Identifier")
                 {
                 }
-                column(PostedShipmentDate;FORMAT(PostedShipmentDate))
+                column(PostedShipmentDate; Format(PostedShipmentDate))
                 {
                 }
-                column(Type_SalesInvoiceLine;FORMAT("Sales Invoice Line".Type))
+                column(Type_SalesInvoiceLine; Format("Sales Invoice Line".Type))
                 {
                 }
-                column(InvDiscountAmount;-"Inv. Discount Amount")
+                column(InvDiscountAmount; -"Inv. Discount Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(SalesInvoiceLineAmount;Amount)
+                column(SalesInvoiceLineAmount; Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(AmountIncludingVATAmount;"Amount Including VAT" - Amount)
+                column(AmountIncludingVATAmount; "Amount Including VAT" - Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(Amount_SalesInvoiceLineIncludingVAT;"Amount Including VAT")
+                column(Amount_SalesInvoiceLineIncludingVAT; "Amount Including VAT")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATAmtText;VATAmountLine.VATAmountText)
+                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText())
                 {
                 }
-                column(TotalExclVATText;TotalExclVATText)
+                column(TotalExclVATText; TotalExclVATText)
                 {
                 }
-                column(TotalInclVATText;TotalInclVATText)
+                column(TotalInclVATText; TotalInclVATText)
                 {
                 }
-                column(VATBaseDisc_SalesInvHdr;"Sales Invoice Header"."VAT Base Discount %")
+                column(VATBaseDisc_SalesInvHdr; "Sales Invoice Header"."VAT Base Discount %")
                 {
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATCalcType;VATAmountLine."VAT Calculation Type")
+                column(VATAmtLineVATCalcType; VATAmountLine."VAT Calculation Type")
                 {
                 }
-                column(LineNo_SalesInvoiceLine;"Line No.")
+                column(LineNo_SalesInvoiceLine; "Line No.")
                 {
                 }
-                column(PaymentMethod_Description;PaymentMethod.Description)
+                column(PaymentMethod_Description; PaymentMethod.Description)
                 {
                 }
-                column(PaymentTerms_Description;PaymentTerms.Description)
+                column(PaymentTerms_Description; PaymentTerms.Description)
                 {
                 }
-                column(SalesInvoiceLine_VATBaseAmount;"Sales Invoice Line"."VAT Base Amount")
+                column(SalesInvoiceLine_VATBaseAmount; "Sales Invoice Line"."VAT Base Amount")
                 {
                 }
-                column(BankData;BankData)
+                column(BankData; BankData)
                 {
                 }
-                column(SalesInvoiceLineVATPORC;"Sales Invoice Line"."VAT %")
+                column(SalesInvoiceLineVATPORC; "Sales Invoice Line"."VAT %")
                 {
                 }
-                column(VerCampo;VerCampo)
+                column(VerCampo; VerCampo)
                 {
                 }
-                column(ImporteIva;VATAmountLine."VAT Amount")
+                column(ImporteIva; VATAmountLine."VAT Amount")
                 {
                 }
-                column(SalesInvoiceLine_Amount;"Sales Invoice Line".Amount)
+                column(SalesInvoiceLine_Amount; "Sales Invoice Line".Amount)
                 {
                 }
-                column(SalesInvoiceLine_AmountIncludingVAT;"Sales Invoice Line"."Amount Including VAT")
+                column(SalesInvoiceLine_AmountIncludingVAT; "Sales Invoice Line"."Amount Including VAT")
                 {
                 }
-                column(SalesInvoiceLine_VATIdentifier;"Sales Invoice Line"."VAT Identifier")
+                column(SalesInvoiceLine_VATIdentifier; "Sales Invoice Line"."VAT Identifier")
                 {
                 }
-                dataitem("SeriesNo.";Table32)
+                dataitem("Item Ledger Entry"; "Item Ledger Entry")
                 {
-                    DataItemLink = Item No.=FIELD(No.),
-                                   Document No.=FIELD(Document No.),
-                                   Document Line No.=FIELD(Line No.);
-                    column(ItemLedgEntry_SerialNo;"SeriesNo."."Serial No.")
+                    DataItemLink = "Item No." = field("No."),
+                                   "Document No." = field("Document No."),
+                                   "Document Line No." = field("Line No.");
+                    column(ItemLedgEntry_SerialNo; "Item Ledger Entry"."Serial No.")
                     {
                     }
-                    column(MostrarSerie;MostrarSerie)
+                    column(MostrarSerie; MostrarSerie)
                     {
                     }
 
                     trigger OnAfterGetRecord()
                     begin
-                        //IF "Serial No." = '' THEN CurrReport.SKIP;    //ctv
-
-                        //-->ctv
-                        //MostrarSerie := TRUE;
-                        IF "SeriesNo."."Serial No." <>'' THEN
-                          MostrarSerie := TRUE
-                        ELSE
-                          MostrarSerie := FALSE;
-                        //<--ctv
+                        if "Item Ledger Entry"."Serial No." <> '' then
+                            MostrarSerie := true
+                        else
+                            MostrarSerie := false;
                     end;
 
                     trigger OnPreDataItem()
                     begin
 
-                        IF "Sales Invoice Line"."Shipment No." <> '' THEN BEGIN
-                           "SeriesNo.".SETRANGE("Document No.", "Sales Invoice Line"."Shipment No.");
-                           "SeriesNo.".SETRANGE("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
-                         END ELSE BEGIN
-                           IF "Sales Invoice Line"."Job No." = '' THEN BEGIN
-                          "SeriesNo.".SETRANGE("Item No.", "Sales Invoice Line"."No.");
-                          "SeriesNo.".SETRANGE("Posting Date","Sales Invoice Line"."Shipment Date");
-                          "SeriesNo.".SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
-                           END ELSE BEGIN
-                           "SeriesNo.".SETRANGE("Job No.", "Sales Invoice Line"."Job No.");
-                           "SeriesNo.".SETRANGE("Job Task No.", "Sales Invoice Line"."Job Task No.");
-                           "SeriesNo.".SETRANGE("Item No.", "Sales Invoice Line"."No.");
-                           //"SeriesNo.".SETRANGE("Job Contract Entry No.", "Sales Invoice Line"."Job Contract Entry No.");
-
-                           END;
-                        END;
+                        if "Sales Invoice Line"."Shipment No." <> '' then begin
+                            "Item Ledger Entry".SetRange("Document No.", "Sales Invoice Line"."Shipment No.");
+                            "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
+                        end else
+                            if "Sales Invoice Line"."Job No." = '' then begin
+                                "Item Ledger Entry".SetRange("Item No.", "Sales Invoice Line"."No.");
+                                "Item Ledger Entry".SetRange("Posting Date", "Sales Invoice Line"."Shipment Date");
+                                "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Line No.");
+                            end else begin
+                                "Item Ledger Entry".SetRange("Job No.", "Sales Invoice Line"."Job No.");
+                                "Item Ledger Entry".SetRange("Job Task No.", "Sales Invoice Line"."Job Task No.");
+                                "Item Ledger Entry".SetRange("Item No.", "Sales Invoice Line"."No.");
+                            end;
                     end;
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::" " THEN
-                      VerCampo := FALSE
-                    ELSE
-                      VerCampo:= TRUE;
+                    if "Sales Invoice Line".Type = "Sales Invoice Line".Type::" " then
+                        VerCampo := false
+                    else
+                        VerCampo := true;
                 end;
             }
 
             trigger OnAfterGetRecord()
             var
-                rec21: Record "21";
-                SalesCrMemoHeader: Record "114";
+                rec21: Record "Cust. Ledger Entry";
+                SalesCrMemoHeader: Record "Sales Cr.Memo Header";
             begin
-                //<TBAI_AL_01
                 "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
-                IF TBAIManagement.TBAIActivated THEN
-                TBAI_activated := FALSE
-                ELSE
-                  TBAI_activated := TRUE;
-                //TBAI_AL_01/>
-                
-                IF ImpFactNoAbonadas THEN BEGIN
-                   SalesCrMemoHeader.SETFILTER("Corrected Invoice No.", '%1', "No.");
-                   IF SalesCrMemoHeader.COUNT > 0 THEN CurrReport.SKIP;
-                END;
-                
-                IF PaymentMethod.GET("Payment Method Code") THEN ;
-                IF PaymentTerms.GET("Payment Terms Code") THEN ;
-                
-                CALCFIELDS(Amount, "Amount Including VAT");
-                
-                recordC.GET("Bill-to Customer No.");
-                
-                //muestro los datos de bancos  //Silvia 040213
-                PaymentMethod.GET("Payment Method Code");
-                IF "Payment Method Code" = CompanyInfo."Bank Code" THEN BEGIN
-                
-                BankData := CompanyInfo.CCC1 + ' / ' +CompanyInfo.CCC2  + ' / ' + CompanyInfo.CCC3
-                /*END ELSE IF "Payment Method Code" = CompanyInfo."C´Š¢digo de Recibo" THEN BEGIN
-                Customer.CALCFIELDS("N´Š¢mero Cuenta Descripci´Š¢n");
-                BankData := Customer."N´Š¢mero Cuenta Descripci´Š¢n";*/
-                                           END;
-                
-                /*IF LogInteraction THEN
-                  IF NOT CurrReport.PREVIEW THEN BEGIN
-                    IF "Bill-to Contact No." <> '' THEN
-                      SegManagement.LogDocument(
-                        4,"No.",0,0,DATABASE::Contact,"Bill-to Contact No.","Salesperson Code",
-                        "Campaign No.","Posting Description",'')
-                    ELSE
-                      SegManagement.LogDocument(
-                        4,"No.",0,0,DATABASE::Customer,"Bill-to Customer No.","Salesperson Code",
-                        "Campaign No.","Posting Description",'');
-                  END;*/
+                if funcionesGenericas.TBAIActivated() then
+                    TBAI_activated := false
+                else
+                    TBAI_activated := true;
 
+                if ImpFactNoAbonadas then begin
+                    SalesCrMemoHeader.SetFilter("Corrected Invoice No.", '%1', "No.");
+                    if SalesCrMemoHeader.Count > 0 then CurrReport.Skip();
+                end;
+
+                if PaymentMethod.Get("Payment Method Code") then;
+                if PaymentTerms.Get("Payment Terms Code") then;
+
+                CalcFields(Amount, "Amount Including VAT");
+
+                recordC.Get("Bill-to Customer No.");
+
+                PaymentMethod.Get("Payment Method Code");
+                if "Payment Method Code" = CompanyInfo."Bank Code" then
+                    BankData := CompanyInfo.CCC1 + ' / ' + CompanyInfo.CCC2 + ' / ' + CompanyInfo.CCC3;
             end;
 
             trigger OnPreDataItem()
             begin
-                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);//<TBAI_AL_01
+                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
             end;
         }
     }
@@ -338,9 +309,9 @@ report 50002 "Factura venta"
 
         layout
         {
-            area(content)
+            area(Content)
             {
-                field(ImpFactNoAbonadas;ImpFactNoAbonadas)
+                field(ImpFactNoAbonadas; ImpFactNoAbonadas)
                 {
                     Caption = 'Solo imprimir Facturas no Abonadas';
                 }
@@ -351,16 +322,6 @@ report 50002 "Factura venta"
         {
         }
 
-        trigger OnInit()
-        begin
-            //LogInteractionEnable := TRUE;
-        end;
-
-        trigger OnOpenPage()
-        begin
-            //InitLogInteraction;
-            //LogInteractionEnable := LogInteraction;
-        end;
     }
 
     labels
@@ -369,44 +330,38 @@ report 50002 "Factura venta"
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
+        GLSetup.Get();
+        CompanyInfo.Get();
+        SalesSetup.Get();
 
-        CompanyInfo.CALCFIELDS(Picture, "Reports Image");
-        CompanyInfo.CALCFIELDS(CompanyInfo.imgReports);
-        "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);//<TBAI_AL_01
-    end;
-
-    trigger OnPreReport()
-    begin
-        //IF NOT CurrReport.USEREQUESTPAGE THEN
-          //InitLogInteraction;
+        CompanyInfo.CalcFields(Picture, "Reports Image");
+        CompanyInfo.CalcFields(CompanyInfo.imgReports);
+        "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
     end;
 
     var
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        CompanyInfo1: Record "79";
-        CompanyInfo2: Record "79";
-        SalesSetup: Record "311";
-        Cust: Record "18";
-        VATAmountLine: Record "290" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        Language: Record "8";
-        CurrExchRate: Record "330";
-        SalesInvCountPrinted: Codeunit "315";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        SalesShipmentBuffer: Record "7190" temporary;
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        CompanyInfo1: Record "Company Information";
+        CompanyInfo2: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Cust: Record Customer;
+        VATAmountLine: Record "VAT Amount Line" temporary;
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        Language: Record Language;
+        CurrExchRate: Record "Currency Exchange Rate";
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
-        CustAddr: array [8] of Text[50];
-        ShipToAddr: array [8] of Text[50];
-        CompanyAddr: array [8] of Text[50];
+        CustAddr: array[8] of Text[50];
+        ShipToAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
         OrderNoText: Text[30];
         SalesPersonText: Text[30];
         VATNoText: Text[30];
@@ -434,14 +389,14 @@ report 50002 "Factura venta"
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "325";
-        PaymentMethod: Record "289";
-        recordC: Record "18";
-        recordSIH: Record "112";
-        ItemTrackingMgt: Codeunit "6500";
-        ItemLedgEntry: Record "32" temporary;
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
+        ItemLedgEntry: Record "Item Ledger Entry" temporary;
         ImpFactNoAbonadas: Boolean;
-        UserDims: Record "50000";
+        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';
@@ -461,20 +416,8 @@ report 50002 "Factura venta"
         DisplayAssemblyInformation: Boolean;
         VerCampo: Boolean;
         TBAI_activated: Boolean;
-        TBAIManagement: Codeunit "10700";
-
-    procedure InitLogInteraction()
-    begin
-        //LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
-    end;
-
-    procedure InitializeRequest(NewNoOfCopies: Integer;NewShowInternalInfo: Boolean;NewLogInteraction: Boolean;DisplayAsmInfo: Boolean)
-    begin
-        /*NoOfCopies := NewNoOfCopies;
-        ShowInternalInfo := NewShowInternalInfo;
-        LogInteraction := NewLogInteraction;
-        DisplayAssemblyInformation := DisplayAsmInfo;*/
-
-    end;
+        //TODO: lo he metido en funciones genericas
+        //TBAIManagement: Codeunit "10700";
+        funcionesGenericas: Codeunit FuncionesGenericas;
 }
 
