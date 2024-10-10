@@ -3,30 +3,30 @@ codeunit 50003 "renumerar asientos"
     Permissions = tabledata "G/L Entry" = rimd;
 
     trigger OnRun()
-    VAR
-        GLEntry: Record 17;
-    BEGIN
+    var
+        GLEntry: Record "G/L Entry";
+    begin
         //Editar Movs contabilidad:
 
-        GLEntry.GET(587290);
+        GLEntry.Get(587290);
         GLEntry."G/L Account No." := '540000000';
-        GLEntry.MODIFY;
+        GLEntry.Modify();
 
-        GLEntry.GET(769282);
+        GLEntry.Get(769282);
         GLEntry."G/L Account No." := '540000000';
-        GLEntry.MODIFY;
+        GLEntry.Modify();
 
-        GLEntry.GET(845615);
+        GLEntry.Get(845615);
         GLEntry."G/L Account No." := '540000000';
-        GLEntry.MODIFY;
+        GLEntry.Modify();
 
-        GLEntry.GET(845618);
+        GLEntry.Get(845618);
         GLEntry."G/L Account No." := '540000000';
-        GLEntry.MODIFY;
+        GLEntry.Modify();
 
 
 
-        MESSAGE('ok');
+        Message('ok');
         /*
         CLEAR(r45);
         r45.SETRANGE("No.",139430,178711);
@@ -80,5 +80,5 @@ codeunit 50003 "renumerar asientos"
         VentanaNotificacion.CLOSE;
         MESSAGE('ok');
         */
-    END;
+    end;
 }

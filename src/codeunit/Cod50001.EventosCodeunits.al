@@ -1,6 +1,6 @@
 codeunit 50001 EventosCodeunits
 {
-    #region Sales-Post
+    #region codeunit 80 Sales-Post
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforePostSalesDoc, '', false, false)]
     local procedure OnBeforePostSalesDoc(var SalesHeader: Record "Sales Header")
     var
@@ -26,7 +26,7 @@ codeunit 50001 EventosCodeunits
                     Item2.Get(SalesLine2."No.");
                     if Item2."Item Tracking Code" <> '' then
                         Error(Text0001Lbl, SalesHeader."Sell-to Customer No.");
-                until SalesLine2.Next = 0;
+                until SalesLine2.Next() = 0;
         end;
         if (SalesHeader."Document Type" = SalesHeader."Document Type"::"Credit Memo") then
             SalesHeader.TestField("Payment Method Code");
@@ -43,11 +43,11 @@ codeunit 50001 EventosCodeunits
             repeat
                 if StrLen(SalesLine2."No.") < 12 then
                     Error(Text0003Lbl, SalesLine2."No.");
-            until SalesLine2.Next = 0;
+            until SalesLine2.Next() = 0;
     end;
     #endregion
 
-    #region Sales Post Invoice Events
+    #region codeunit 825 Sales Post Invoice Events
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Post Invoice Events", OnAfterSetApplyToDocNo, '', false, false)]
     local procedure OnAfterSetApplyToDocNo(SalesHeader: Record "Sales Header"; var GenJournalLine: Record "Gen. Journal Line")
     begin
@@ -55,7 +55,7 @@ codeunit 50001 EventosCodeunits
     end;
     #endregion
 
-    #region Sales-Post
+    #region codeunit 80 Sales-Post
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterPostSalesDoc, '', false, false)]
     local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
     var
@@ -63,11 +63,10 @@ codeunit 50001 EventosCodeunits
     begin
         FuncionesGenericas.AddPostedSalesDocumentToCRMAccountWall(SalesHeader);
         FuncionesGenericas.SetCRMSalesOrderStatusToInvoiced(SalesHeader);
-
     end;
     #endregion
 
-    #region Sales-Post
+    #region codeunit 80 Sales-Post
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostItemJnlLineOnAfterPrepareItemJnlLine, '', false, false)]
     local procedure OnPostItemJnlLineOnAfterPrepareItemJnlLine(SalesHeader: Record "Sales Header"; var ItemJournalLine: Record "Item Journal Line")
     begin
@@ -75,7 +74,7 @@ codeunit 50001 EventosCodeunits
     end;
     #endregion
 
-    #region Sales Post Invoice Events
+    #region codeunit 825 Sales Post Invoice Events
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Post Invoice Events", OnPostLedgerEntryOnBeforeGenJnlPostLine, '', false, false)]
     local procedure OnPostLedgerEntryOnBeforeGenJnlPostLine(SalesHeader: Record "Sales Header"; var GenJnlLine: Record "Gen. Journal Line")
     begin
@@ -83,7 +82,7 @@ codeunit 50001 EventosCodeunits
     end;
     #endregion
 
-    #region Purch.-Post
+    #region codeunit 90 Purch.-Post
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post", OnBeforePostPurchaseDoc, '', false, false)]
     local procedure OnBeforePostPurchaseDoc(var PurchaseHeader: Record "Purchase Header")
     var
@@ -97,12 +96,11 @@ codeunit 50001 EventosCodeunits
             repeat
                 if StrLen(PurchLine2."No.") < 12 then
                     Error(Text0003Lbl, PurchaseHeader."No.");
-            until PurchLine2.Next = 0;
+            until PurchLine2.Next() = 0;
     end;
     #endregion
 
-    //OnConfirmPostPurchaseDocumentOnBeforePurchaseOrderGetPurchaseInvoicePostingPolicy
-    #region Posting Selection Management
+    #region codeunit 99 Posting Selection Management
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Posting Selection Management", OnConfirmPostPurchaseDocumentOnBeforePurchaseOrderGetPurchaseInvoicePostingPolicy, '', false, false)]
     local procedure OnConfirmPostPurchaseDocumentOnBeforePurchaseOrderGetPurchaseInvoicePostingPolicy(var PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean)
     var
@@ -112,21 +110,19 @@ codeunit 50001 EventosCodeunits
     begin
         case true of
             not PurchaseHeader.Receive and not PurchaseHeader.Invoice:
-                begin
-                    if UserDims.existsUser(UserId) then begin
-                        Selection := StrMenu(Text000xLbl, 3);
-                        IsHandled := true;
-                        if Selection <> 0 then begin
-                            PurchaseHeader.Receive := Selection in [1, 3];
-                            PurchaseHeader.Invoice := Selection in [2, 3];
-                        end;
+                if UserDims.existsUser(UserId) then begin
+                    Selection := StrMenu(Text000xLbl, 3);
+                    IsHandled := true;
+                    if Selection <> 0 then begin
+                        PurchaseHeader.Receive := Selection in [1, 3];
+                        PurchaseHeader.Invoice := Selection in [2, 3];
                     end;
                 end;
         end;
     end;
     #endregion
 
-    #region Posting Selection Management
+    #region codeunit 99 Posting Selection Management
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Posting Selection Management", OnConfirmPostPurchaseDocumentOnBeforePurchaseReturnOrderGetPurchaseInvoicePostingPolicy, '', false, false)]
     local procedure OnConfirmPostPurchaseDocumentOnBeforePurchaseReturnOrderGetPurchaseInvoicePostingPolicy(var IsHandled: Boolean; var PurchaseHeader: Record "Purchase Header")
     var
@@ -136,21 +132,19 @@ codeunit 50001 EventosCodeunits
     begin
         case true of
             not PurchaseHeader.Ship and not PurchaseHeader.Invoice:
-                begin
-                    if UserDims.existsUser(UserId) then begin
-                        Selection := StrMenu(Text002xLbl, 3);
-                        IsHandled := true;
-                        if Selection <> 0 then begin
-                            PurchaseHeader.Ship := Selection in [1, 3];
-                            PurchaseHeader.Invoice := Selection in [2, 3];
-                        end;
+                if UserDims.existsUser(UserId) then begin
+                    Selection := StrMenu(Text002xLbl, 3);
+                    IsHandled := true;
+                    if Selection <> 0 then begin
+                        PurchaseHeader.Ship := Selection in [1, 3];
+                        PurchaseHeader.Invoice := Selection in [2, 3];
                     end;
                 end;
         end;
     end;
     #endregion
 
-    #region Cust. Entry-Edit
+    #region codeunit 103 Cust. Entry-Edit
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Cust. Entry-Edit", OnBeforeCustLedgEntryModify, '', false, false)]
     local procedure OnBeforeCustLedgEntryModify(FromCustLedgEntry: Record "Cust. Ledger Entry"; var CustLedgEntry: Record "Cust. Ledger Entry")
     begin
@@ -158,7 +152,7 @@ codeunit 50001 EventosCodeunits
     end;
     #endregion
 
-    #region DimensionManagement
+    #region codeunit 408 DimensionManagement
     [EventSubscriber(ObjectType::Codeunit, Codeunit::DimensionManagement, OnAfterDefaultDimObjectNoWithoutGlobalDimsList, '', false, false)]
     local procedure OnAfterDefaultDimObjectNoWithoutGlobalDimsList(var TempAllObjWithCaption: Record AllObjWithCaption temporary; sender: Codeunit DimensionManagement)
     begin
@@ -169,7 +163,7 @@ codeunit 50001 EventosCodeunits
 
 
 /*
-#region aaa
+#region codeunit a aaa
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"aaa", OnAfterInsertLine, '', false, false)]
     local procedure OnAfterInsertLine()
     begin    

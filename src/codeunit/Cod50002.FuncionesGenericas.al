@@ -1,7 +1,7 @@
 codeunit 50002 FuncionesGenericas
 {
     /*
-    TODO: cod 50005
+    TODO: cod 50005 no pasar
     VAR
         txtFileDialog: Label 'Selecciona el fichero excel de MRW.';
         TxtExtensions: Label 'Los fichero Excel de MRW tienen las extensiones (%1), el fichero "%2" seleccionado tiene la siguiente extensión errónea "%3".';
@@ -478,79 +478,79 @@ codeunit 50002 FuncionesGenericas
         EXIT(CuentaGastosDesplazamiento)
     END;
 */
-    PROCEDURE AddPostedSalesDocumentToCRMAccountWall(SalesHeader: Record 36);
-    VAR
-        Customer: Record 18;
-        CRMIntegrationManagement: Codeunit 5330;
-        CRMSetupDefaults: Codeunit 5334;
+    procedure AddPostedSalesDocumentToCRMAccountWall(SalesHeader: Record "Sales Header");
+    var
+        Customer: Record Customer;
+        CRMIntegrationManagement: Codeunit "CRM Integration Management";
+        CRMSetupDefaults: Codeunit "CRM Setup Defaults";
         CRMDocumentHasBeenPostedMsgLbl: Label '%1 ''%2'' se ha registrado.';
-    BEGIN
-        IF NOT CRMSetupDefaults.GetAddPostedSalesDocumentToCRMAccountWallConfig THEN
-            EXIT;
-        IF NOT CRMIntegrationManagement.IsCRMIntegrationEnabled THEN
-            EXIT;
-        IF NOT (SalesHeader."Document Type" IN [SalesHeader."Document Type"::Order, SalesHeader."Document Type"::Invoice]) THEN
-            EXIT;
+    begin
+        if not CRMSetupDefaults.GetAddPostedSalesDocumentToCRMAccountWallConfig() then
+            exit;
+        if not CRMIntegrationManagement.IsCRMIntegrationEnabled() then
+            exit;
+        if not (SalesHeader."Document Type" in [SalesHeader."Document Type"::Order, SalesHeader."Document Type"::Invoice]) then
+            exit;
 
-        Customer.GET(SalesHeader."Sell-to Customer No.");
-        AddPostToCRMEntityWall(Customer.RECORDID, STRSUBSTNO(CRMDocumentHasBeenPostedMsgLbl, SalesHeader."Document Type", SalesHeader."No."));
-    END;
+        Customer.Get(SalesHeader."Sell-to Customer No.");
+        AddPostToCRMEntityWall(Customer.RecordId, StrSubstNo(CRMDocumentHasBeenPostedMsgLbl, SalesHeader."Document Type", SalesHeader."No."));
+    end;
 
-    PROCEDURE AddPostToCRMEntityWall(TargetRecordID: RecordID; Message: Text);
-    VAR
-        CRMPost: Record 5344;
-        EntityID: GUID;
+    procedure AddPostToCRMEntityWall(TargetRecordID: RecordId; Message: Text);
+    var
+        CRMPost: Record "CRM Post";
+        EntityID: Guid;
         EntityTypeName: Text;
-    BEGIN
-        IF NOT GetCRMEntityIdAndTypeName(TargetRecordID, EntityID, EntityTypeName) THEN
-            EXIT;
+    begin
+        if not GetCRMEntityIdAndTypeName(TargetRecordID, EntityID, EntityTypeName) then
+            exit;
 
-        CLEAR(CRMPost);
-        EVALUATE(CRMPost.RegardingObjectTypeCode, EntityTypeName);
+        Clear(CRMPost);
+        Evaluate(CRMPost.RegardingObjectTypeCode, EntityTypeName);
         CRMPost.RegardingObjectId := EntityID;
-        CRMPost.Text := COPYSTR(Message, 1, MAXSTRLEN(CRMPost.Text));
+        CRMPost.Text := CopyStr(Message, 1, MaxStrLen(CRMPost.Text));
         CRMPost.Source := CRMPost.Source::AutoPost;
         CRMPost.Type := CRMPost.Type::Status;
-        CRMPost.INSERT;
-    END;
+        CRMPost.Insert();
+    end;
 
-    PROCEDURE GetCRMEntityIdAndTypeName(DestinationRecordID: RecordID; VAR EntityID: GUID; VAR EntityTypeName: Text): Boolean;
-    VAR
-        CRMIntegrationRecord: Record 5331;
-    BEGIN
-        IF NOT CRMIntegrationRecord.FindIDFromRecordID(DestinationRecordID, EntityID) THEN
-            EXIT(FALSE);
+    procedure GetCRMEntityIdAndTypeName(DestinationRecordID: RecordId; var EntityID: Guid; var EntityTypeName: Text): Boolean;
+    var
+        CRMIntegrationRecord: Record "CRM Integration Record";
+    begin
+        if not CRMIntegrationRecord.FindIDFromRecordID(DestinationRecordID, EntityID) then
+            exit(false);
 
-        EntityTypeName := GetCRMEntityTypeName(DestinationRecordID.TABLENO);
-        EXIT(TRUE);
-    END;
+        EntityTypeName := GetCRMEntityTypeName(DestinationRecordID.TableNo);
+        exit(true);
+    end;
 
-    LOCAL PROCEDURE GetCRMEntityTypeName(TableId: Integer): Text;
-    VAR
-        TempNameValueBuffer: Record 823 temporary;
-        CRMSetupDefaults: Codeunit 5334;
+    local procedure GetCRMEntityTypeName(TableId: Integer): Text;
+    var
+        TempNameValueBuffer: Record "Name/Value Buffer" temporary;
+        CRMSetupDefaults: Codeunit "CRM Setup Defaults";
         UnableToResolveCRMEntityNameFrmTableIDErrLbl: Label 'La aplicación no est  diseñada para integrar la tabla %1 con Dynamics CRM.';
-    BEGIN
+    begin
         CRMSetupDefaults.GetTableIDCRMEntityNameMapping(TempNameValueBuffer);
-        TempNameValueBuffer.SETRANGE(Value, FORMAT(TableId));
-        IF TempNameValueBuffer.FINDFIRST THEN
-            EXIT(TempNameValueBuffer.Name);
-        ERROR(UnableToResolveCRMEntityNameFrmTableIDErrLbl, TableId);
-    END;
+        TempNameValueBuffer.SetRange(Value, Format(TableId));
+        if TempNameValueBuffer.FindFirst() then
+            exit(TempNameValueBuffer.Name);
+        Error(UnableToResolveCRMEntityNameFrmTableIDErrLbl, TableId);
+    end;
 
-    PROCEDURE SetCRMSalesOrderStatusToInvoiced(SalesHeader: Record 36);
-    VAR
-        CRMSalesorder: Record 5353;
+    procedure SetCRMSalesOrderStatusToInvoiced(SalesHeader: Record "Sales Header");
+    var
+        CRMSalesorder: Record "CRM Salesorder";
         CRMIntegrationManagement: Codeunit "CRM Integration Management";
-    BEGIN
-        IF NOT CRMIntegrationManagement.IsCRMIntegrationEnabled THEN
-            EXIT;
+    begin
+        if not CRMIntegrationManagement.IsCRMIntegrationEnabled() then
+            exit;
 
-        CRMSalesorder.SETRANGE(OrderNumber, SalesHeader."External Document No.");
-        IF CRMSalesorder.FINDFIRST THEN BEGIN
+        CRMSalesorder.SetRange(OrderNumber, SalesHeader."External Document No.");
+        if CRMSalesorder.FindFirst() then begin
             CRMSalesorder.StateCode := CRMSalesorder.StateCode::Invoiced;
             CRMSalesorder.StatusCode := CRMSalesorder.StatusCode::Invoiced;
-            CRMSalesorder.MODIFY;
-        END;
-    END;
+            CRMSalesorder.Modify();
+        end;
+    end;
 }
