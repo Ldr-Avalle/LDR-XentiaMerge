@@ -1,4 +1,4 @@
-tableextension 50096 GLAccount_LDR extends "G/L Account"
+tableextension 50096 "GLAccount_LDR" extends "G/L Account"
 {
     fields
     {
