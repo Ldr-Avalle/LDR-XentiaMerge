@@ -14,20 +14,20 @@ page 50011 "Service components"
                 field(Component; Rec.Component)
                 {
                     ApplicationArea = All;
-                    Caption = 'Component', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Component', Comment = 'ESP="Componente"';
+                    ToolTip = 'Especifica el componente';
                 }
                 field("Component description"; Rec."Component description")
                 {
                     ApplicationArea = All;
-                    Caption = 'Component description', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Component description', Comment = 'ESP="Descripción comp."';
+                    ToolTip = 'Especifica la descripción comp.';
                 }
                 field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;
-                    Caption = 'Quantity', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Quantity', Comment = 'ESP="Cantidad"';
+                    ToolTip = 'Especifica la cantidad';
                 }
             }
         }

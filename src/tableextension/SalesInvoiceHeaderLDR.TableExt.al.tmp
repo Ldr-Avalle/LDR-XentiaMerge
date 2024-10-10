@@ -1,0 +1,356 @@
+tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
+{
+    DataCaptionFields = "Customer Type";
+
+    fields
+    {
+        modify("Gen. Bus. Posting Group")
+        {
+            Caption = 'Gen. Bus. Posting Group';
+        }
+        modify("Area")
+        {
+            Caption = 'Area';
+        }
+        modify("VAT Bus. Posting Group")
+        {
+            Caption = 'VAT Bus. Posting Group';
+        }
+        modify("Cust. Ledger Entry No.")
+        {
+            Caption = 'Cust. Ledger Entry No.';
+        }
+        modify("Invoice Type")
+        {
+            OptionCaption = 'F1 Invoice,F2 Simplified Invoice,F3 Invoice issued to replace simplified invoices,F4 Invoice summary entry';
+        }
+        field(50000; "Descuento en factura"; Decimal)
+        {
+            CalcFormula = sum("Sales Invoice Line"."Inv. Discount Amount" where("Document No." = field("No.")));
+            Description = 'SERCABLE';
+            FieldClass = FlowField;
+        }
+        field(50001; "Descuento en factura %"; Decimal)
+        {
+            CalcFormula = lookup("Cust. Invoice Disc."."Discount %" where(Code = field(Bill-to Customer No.)));
+            Description = 'SERCABLE';
+            FieldClass = FlowField;
+        }
+        field(50002; "Pmt. Disc. Given Amount"; Decimal)
+        {
+            CalcFormula = sum("Sales Invoice Line"."Pmt. Discount Amount" where("Document No." = field("No.")));
+            Description = 'SERCABLE';
+            FieldClass = FlowField;
+        }
+        field(50004; InvoiceType; Option)
+        {
+            Caption = 'Tipo de factura';
+            Description = 'SERCABLE';
+            OptionMembers = OO,CO,OC,CC;
+            trigger OnValidate()
+            var
+                Text0001: Label 'A copy can''t be requeasted without the original invoice signed.\Path: %1';
+                Text0002: Label 'Original invoice digitally signed.\Path %1';
+            begin
+            end;
+        }
+        field(50005; "Customer Type"; Option)
+        {
+            Caption = 'Tipo de cliente ';
+            Description = 'Borrar, está en la ficha del cliente';
+            OptionMembers = ,"Física"," Jurídica";
+        }
+        field(50006; "Start Date"; Date)
+        {
+            Description = 'SERCABLE';
+        }
+        field(50007; "End Date"; Date)
+        {
+            Description = 'SERCABLE';
+        }
+        field(50008; "Posting Hour"; Time)
+        {
+            Description = 'TBAI_AL_01';
+        }
+        field(50009; "Factura Simplificada"; Option)
+        {
+            Caption = 'Factura Simplificada';
+            Description = 'TBAI_AL_01 factura simplificada';
+            OptionCaption = 'No,Sí';
+            OptionMembers = N,S;
+        }
+        field(50010; "Factura Simplificada Sustituci"; Option)
+        {
+            Caption = 'Factura emitida en sustitución de factura simplificada';
+            Description = 'TBAI_AL_01 factura emitida en sustitución de factura simplificada';
+            OptionCaption = 'No,Sí';
+            OptionMembers = N,S;
+        }
+        field(50011; "Factura 3 o dest"; Option)
+        {
+            Caption = 'Factura emitida por tercero o por destinatario';
+            Description = 'TBAI_AL_01 Factura emitida por tercero o por destinatario';
+            OptionCaption = 'No,Sí, T Factura emitida por tercero o tercera, D Factura emitida por el destinatario o la destinataria de la operación.';
+            OptionMembers = N,S,T,D;
+        }
+        field(50012; "varios destinatarios"; Option)
+        {
+            Caption = 'Varios destinatarios';
+            Description = 'TBAI_AL_01 varios destinatarios';
+            OptionCaption = 'No,Sí';
+            OptionMembers = N,S;
+        }
+        field(50013; "factura rectificativa"; Option)
+        {
+            Caption = 'Factura rectificativa';
+            Description = 'TBAI_AL_01 factura rectificativafactura rectificativa tipo';
+            OptionCaption = ' ,R1 Factura rectificativa: error fundado en derecho y Art. 80 Uno, Dos y Seis de la Norma Foral del IVA, R2 Factura rectificativa: art´Š¢culo 80 Tres de la Norma Foral del IVA ,R3 Factura rectificativa: art´Š¢culo 80 Cuatro de la Norma Foral del IVA ,R4 Factura rectificativa: Resto, R5 Factura rectificativa en facturas simplificadas';
+            OptionMembers = " ",R1,R2,R3,R4,R5;
+        }
+        field(50014; "factura rectificativa tipo"; Option)
+        {
+            Caption = 'Factura rectificativa tipo';
+            Description = 'TBAI_AL_01 factura rectificativa tipo';
+            OptionCaption = ',S  Por sustitución, I  Por diferencias ';
+            OptionMembers = ,S,I;
+        }
+        field(50015; BaseRectificada; Decimal)
+        {
+            Caption = 'Base Rectificada';
+            Description = 'TBAI_AL_01 ImporteRectificacionSustitutiva BaseRectificada';
+        }
+        field(50016; CuotaRectificada; Decimal)
+        {
+            Caption = 'Cuota Rectificada';
+            Description = 'TBAI_AL_01 ImporteRectificacionSustitutiva CuotaRectificada';
+        }
+        field(50017; CuotaRecargoRectificada; Decimal)
+        {
+            Caption = 'Cuota Recargo Rectificada';
+            Description = 'TBAI_AL_01 ImporteRectificacionSustitutiva CuotaRecargoRectificada';
+        }
+        field(50018; ClaveRegimenIvaOpTrascendencia; Option)
+        {
+            Caption = 'Clave Regimen Iva Op Trascendencia';
+            Description = 'TBAI_AL_01 ClaveRegimenIvaOpTrascendencia';
+            OptionCaption = '01 Operación de régimen general y cualquier otro supuesto que no está recogido en los siguientes valores. ,02 Exportación.,03 Operaciones a las que se aplique el r´Š¢gimen especial de bienes usados, objetos de arte, antig´Š¢edades y objetos de colecci´Š¢n. ,04 R´Š¢gimen especial del oro de inversi´Š¢n. ,05 R´Š¢gimen especial de las agencias de viajes. ,06 R´Š¢gimen especial grupo de entidades en IVA (Nivel Avanzado). ,07 R´Š¢gimen especial del criterio de caja. ,08 Operaciones sujetas al IPSI  / IGIC (Impuesto sobre la Producci´Š¢n, los Servicios y la Importaci´Š¢n  / Impuesto General Indirecto Canario). ,09 Facturaci´Š¢n de las prestaciones de servicios de agencias de viaje que act´Š¢an como mediadoras en nombre y por cuenta ajena (disposici´Š¢n adicional 3´Š¢ del Reglamento de Facturaci´Š¢n)  ,10 Cobros por cuenta de terceros o terceras de honorarios profesionales o de derechos derivados de la propiedad industrial, de autor u otros por cuenta de sus socios, socias, asociados, asociadas, colegiados o colegiadas efectuados por sociedades, asociaciones, colegios profesionales u otras entidades que realicen estas funciones de cobro. ,11 Operaciones de arrendamiento de local de negocio sujetos a retenci´Š¢n. ,12 Operaciones de arrendamiento de local de negocio no sujetos a retenci´Š¢n. ,13 Operaciones de arrendamiento de local de negocio sujetas y no sujetas a retenci´Š¢n. ,14 Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administraci´Š¢n P´Š¢blica. ,15 Factura con IVA pendiente de devengo en operaciones de tracto sucesivo. ,51 Operaciones en recargo  de equivalencia.,52 Operaciones en  r´Š¢gimen simplificado. ,53 Operaciones realizadas por personas o entidades que no tengan la consideraci´Š¢n de empresarios, empresarias o profesionales a efectos del IVA';
+            OptionMembers = "01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","51","52","53";
+        }
+        field(50019; DocNoTBAI; Code[20])
+        {
+            Caption = 'No. Documento TBAI';
+            Description = 'TBAI_AL_01 No. Documento TBAI';
+        }
+        field(50020; "No. SeriesTBAI"; Code[10])
+        {
+            Caption = 'No. Series TBAI';
+            Description = 'TBAI_AL_01';
+            Editable = true;
+            TableRelation = "No. Series";
+        }
+        field(50021; TBAIQRBlob; Blob)
+        {
+            Description = 'TBAI_AL_01 QRBLOB';
+        }
+        field(50022; R_Identificador_TBAI; Text[100])
+        {
+            Caption = 'Identificador TBAI';
+            Description = 'TBAI_AL_01 identificador tbai';
+        }
+        field(50023; TBAI_Sended; Boolean)
+        {
+            Caption = 'Enviada a TBAI';
+            Description = 'TBAI_AL_01 identificador tbai';
+        }
+        field(50024; TipoRegistro; Option)
+        {
+            Caption = 'Tipo Registro TBAI';
+            Description = 'TBAI_AL_01';
+            OptionCaption = ' ,Envío, Anulación';
+            OptionMembers = " ","Envío","Anulación";
+        }
+        field(50025; QR_CodeString; Text[200])
+        {
+            Description = 'TBAI_AL_01';
+        }
+        field(50099; FacturaFin; Code[20])
+        {
+        }
+        field(50100; SendToTicketBAI; Boolean)
+        {
+            Caption = 'Enviar Factura a Ticket BAI';
+            Description = 'TBAI_AL_01';
+        }
+    }
+    keys
+    {
+        key(Key14; "Document Date", "No.")
+        {
+        }
+        key(Ke15; "VAT Bus. Posting Group")
+        {
+        }
+    }
+
+    procedure PrintRecords(ShowRequestForm: Boolean)
+    var
+        TempDocumentSendingProfile: Record "Document Sending Profile" temporary;
+        ReportDistributionManagement: Codeunit "Report Distribution Management";
+    begin
+        TempDocumentSendingProfile.Init();
+        if ShowRequestForm then
+            TempDocumentSendingProfile.Printer := TempDocumentSendingProfile.Printer::"Yes (Prompt for Settings)"
+        else
+            TempDocumentSendingProfile.Printer := TempDocumentSendingProfile.Printer::"Yes (Use Default Settings)";
+        TempDocumentSendingProfile.Insert();
+        ReportDistributionManagement.SendDocumentReport(TempDocumentSendingProfile, Rec);
+    end;
+
+    local procedure IsSingleCustomerSelected(): Boolean
+    var
+        SelectedCount: Integer;
+        CustomerCount: Integer;
+        BillToCustomerNoFilter: Text;
+    begin
+        SelectedCount := Count;
+        if SelectedCount < 1 then
+            exit(false);
+        if SelectedCount = 1 then
+            exit(true);
+        BillToCustomerNoFilter := GetFilter("Bill-to Customer No.");
+        SetRange("Bill-to Customer No.", "Bill-to Customer No.");
+        CustomerCount := Count;
+        SetFilter("Bill-to Customer No.", BillToCustomerNoFilter);
+        exit(SelectedCount = CustomerCount);
+    end;
+
+    procedure CreateFacturae(Sign: Boolean; Send: Boolean) InvPath: Text[200]
+    var
+        CompanyInfo: Record "Company Information";
+        Customer: Record Customer;
+        Mail: Codeunit Mail;
+        ExportFile: File;
+        OStream: OutStream;
+        InvoiceNo: Text[30];
+        InvoicePath: Text[200];
+        SignedInvPath: Text[200];
+        err: Integer;
+        Text0001: Label 'Invoice %1 already signed. Path: %2';
+        Text0002: Label 'Invoice %1 has not an original invoice signed.';
+        Text0003: Label 'An error has ocurred.\Ask your administrator (Shell %1)';
+        Text0004: Label 'Facturae not allowed for customer %1';
+        Text0005: Label 'An error has ocurred.\Ask your administrator (Shell %1)';
+    begin
+        SetFilter("No.", '%1', "No.");
+        Customer.Get("Bill-to Customer No.");
+        CompanyInfo.Get();
+        CompanyInfo.TestField("XML Files path");
+        InvoiceNo := DelChr("No.", '=', '/');
+        InvoicePath := CompanyInfo."XML Files path" + InvoiceNo + '.xml';
+        if Customer."Facturae Type" = Customer."Facturae Type"::fe31 then begin
+            ExportFile.CREATE(InvoicePath);
+            ExportFile.CREATEOUTSTREAM(OStream);
+            Xmlport.Export(50040, OStream, Rec);
+            ExportFile.CLOSE
+        end else if Customer."Facturae Type" = Customer."Facturae Type"::fe32 then begin
+            ExportFile.CREATE(InvoicePath);
+            ExportFile.CREATEOUTSTREAM(OStream);
+            Xmlport.Export(50010, OStream, Rec);
+            ExportFile.CLOSE;
+        end;
+        err := SHELL(CompanyInfo."Facturae Chipbip path", '"' + CompanyInfo."Digital Cert. Name" + '"',
+                   '"' + InvoicePath + '"', '"' + InvoicePath + '"', Format(Customer."Facturae Type"), 'nosign');
+        if err <> 0 then Error(Text0005, err);
+        if Sign then begin
+            if not Customer."Facturae allowed" then Error(Text0004, Customer."No." + ' ' + Customer.Name);
+            CompanyInfo.TestField("OO Files Path");
+            CompanyInfo.TestField("CO Files Path");
+            CompanyInfo.TestField("Facturae Chipbip path");
+            CompanyInfo.TestField("Digital Cert. Name");
+            if InvoiceType in [InvoiceType::OO, InvoiceType::OC] then
+                SignedInvPath := CompanyInfo."OO Files Path" + InvoiceNo + 'Signed.xml'
+            else
+                SignedInvPath := CompanyInfo."CO Files Path" + InvoiceNo + 'Copy.xml';
+            if File.EXISTS(SignedInvPath) = false then begin
+                err := SHELL(CompanyInfo."Facturae Chipbip path", '"' + CompanyInfo."Digital Cert. Name" + '"',
+                       '"' + InvoicePath + '"', '"' + SignedInvPath + '"', Format(Customer."Facturae Type"), 'sign');
+                if err <> 0 then Error(Text0003, err);
+            end;
+            if CompanyInfo."Delete XML file" then File.ERASE(InvoicePath);
+        end;
+        if Send then
+            if Sign then
+                Mail.NewMessage(Customer."E-Mail", '', 'Factura: ' + "No.", 'Documento adjunto ' + "No." + 'Signed.xml', SignedInvPath, '', true)
+            else
+                Mail.NewMessage(Customer."E-Mail", '', 'Factura: ' + "No.", 'Documento adjunto ' + "No." + '.xml', InvoicePath, '', true);
+        if Sign then
+            exit(SignedInvPath)
+        else
+            exit(InvoicePath);
+    end;
+
+    procedure CreatePdf(Send: Boolean) PdfPath: Text[200]
+    var
+        CompanyInfo: Record "Company Information";
+        PrinterSelection: Record "Printer Selection";
+        SalesInvHeader: Record "Sales Invoice Header";
+        Customer: Record Customer;
+        Mail: Codeunit Mail;
+        CreationPathPrev: Text[200];
+        CreationPath: Text[200];
+        FileNamePrev: Text[200];
+        FileName: Text[200];
+        ReportNo: Integer;
+        Subject: Text[200];
+    begin
+        CompanyInfo.Get();
+        CompanyInfo.TestField("PDF Printer Name");
+        CompanyInfo.TestField("PDF AutoSave Path");
+        ReportNo := 50002;
+        PrinterSelection.Init();
+        PrinterSelection."User ID" := UserId;
+        PrinterSelection."Report ID" := ReportNo;
+        PrinterSelection."Printer Name" := CompanyInfo."PDF Printer Name";
+        PrinterSelection.Insert();
+        SalesInvHeader.SetFilter("No.", '%1', "No.");
+        Report.RunModal(ReportNo, false, false, SalesInvHeader);
+        Customer.Get("Bill-to Customer No.");
+        if PrinterSelection.Get(UserId, ReportNo) then PrinterSelection.Delete();
+        Sleep(3000);
+        FileNamePrev := UserId + '.pdf';
+        FileName := DelChr("No.", '=', '/') + '.pdf';
+        Subject := "No.";
+        CreationPathPrev := CompanyInfo."PDF AutoSave Path" + FileNamePrev;
+        CreationPath := CompanyInfo."PDF AutoSave Path" + FileName;
+        if File.EXISTS(CreationPath) then File.ERASE(CreationPath);
+        File.RENAME(CreationPathPrev, CreationPath);
+        if Send then Mail.NewMessage(Customer."E-Mail", '', 'Factura: ' + Subject, 'Documento adjunto ' + FileName, CreationPath, '', true);
+        exit(CreationPath);
+    end;
+
+    procedure CreateSendFacturaePdf()
+    var
+        SMTPSetup: Record "SMTP Mail Setup";
+        SMTP: Codeunit "400";
+        CompanyInfo: Record "Company Information";
+        Customer: Record Customer;
+        FacturaPath: Text[200];
+        PdfPath: Text[200];
+        Text0001: Label 'Email sent to %1';
+    begin
+        SMTPSetup.Get();
+        Customer.Get("Bill-to Customer No.");
+        Customer.TestField("E-Mail");
+        CompanyInfo.Get();
+        SMTP.CreateMessage(CompanyInfo.Name, CompanyInfo."E-Mail", Customer."E-Mail",
+                           'Factura electr´Š¢nica',
+                           'Adjunto ficheros de factura', false);
+        SMTP.AddAttachment(CreateFacturae(true, false), '');
+        SMTP.AddAttachment(CreatePdf(false), '');
+        SMTP.Send;
+        Message(Text0001, Customer."E-Mail");
+    end;
+
+    var
+        PostSalesLinesDelete: Codeunit "PostSales-Delete";
+}

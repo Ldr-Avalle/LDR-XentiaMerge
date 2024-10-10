@@ -36,8 +36,8 @@ page 50006 "Cash Note List"
                 field("User ID"; Rec."User ID")
                 {
                     ApplicationArea = All;
-                    Caption = 'User ID', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'User ID', Comment = 'ESP="Id. usuario"';
+                    ToolTip = 'Especifica el id. usuario';
                 }
             }
         }

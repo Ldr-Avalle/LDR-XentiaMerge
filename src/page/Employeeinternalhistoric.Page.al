@@ -15,44 +15,44 @@ page 50009 "Employee internal historic"
                 field("Employee No."; Rec."Employee No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Employee No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Employee No.', Comment = 'ESP="Empleado"';
+                    ToolTip = 'Especifica el empleado';
                 }
                 field("Start Date"; Rec."Start Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Start Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Start Date', Comment = 'ESP="Fecha inicio"';
+                    ToolTip = 'Especifica la fecha de inicio';
                 }
                 field(Project; Rec.Project)
                 {
                     ApplicationArea = All;
-                    Caption = 'Project', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Project', Comment = 'ESP="Proyecto"';
+                    ToolTip = 'Especifica el proyecto';
                 }
                 field("Production Ud."; Rec."Production Ud.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Production Ud.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Production Ud.', Comment = 'ESP="Ud. Producción"';
+                    ToolTip = 'Especifica la ud. producción';
                 }
                 field(Segmento; Rec.Segmento)
                 {
                     ApplicationArea = All;
-                    Caption = 'Segmento', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Segmento', Comment = 'ESP="Segmento"';
+                    ToolTip = 'Especifica el segmento';
                 }
                 field(County; Rec.County)
                 {
                     ApplicationArea = All;
-                    Caption = 'County', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'County', Comment = 'ESP="Provincia"';
+                    ToolTip = 'Especifica la provincia';
                 }
                 field("End Date"; Rec."End Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'End Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'End Date', Comment = 'ESP="Fecha fin"';
+                    ToolTip = 'Especifica la fecha fin';
                 }
             }
         }
