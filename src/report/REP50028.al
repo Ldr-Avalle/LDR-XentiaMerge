@@ -2,40 +2,40 @@ report 50028 Pagos
 {
     // - Respecto del informe "Pagos vencidos banco" en este se tienen en cuenta facturas y abonos y en el otro solo facturas
     DefaultLayout = RDLC;
-    RDLCLayout = './Pagos.rdlc';
+    RDLCLayout = './src/layout/Pagos.rdl';
 
 
     dataset
     {
-        dataitem(DataItem1000000000;Table23)
+        dataitem(Vendor; Vendor)
         {
             RequestFilterFields = "No.";
             RequestFilterHeading = 'Proveedor';
-            column(Vendor_No;Vendor."No.")
+            column(Vendor_No; Vendor."No.")
             {
             }
-            column(Vendor_Name;Vendor.Name)
+            column(Vendor_Name; Vendor.Name)
             {
             }
-            column(importeDeudaVto;importeDeudaVto)
+            column(importeDeudaVto; importeDeudaVto)
             {
             }
-            column(fechaFacturaVto;fechaFacturaVto)
+            column(fechaFacturaVto; fechaFacturaVto)
             {
             }
-            column(nombreFormaPago;nombreFormaPago)
+            column(nombreFormaPago; nombreFormaPago)
             {
             }
-            column(importeDeudasVto;importeDeudasVto)
+            column(importeDeudasVto; importeDeudasVto)
             {
             }
-            column(recCI_Picture;recCI.Picture)
+            column(recCI_Picture; recCI.Picture)
             {
             }
-            column(fechaVtoDesde;fechaVtoDesde)
+            column(fechaVtoDesde; fechaVtoDesde)
             {
             }
-            column(fechaVtoHasta;fechaVtoHasta)
+            column(fechaVtoHasta; fechaVtoHasta)
             {
             }
 
@@ -49,33 +49,33 @@ report 50028 Pagos
                 rec25.SETFILTER("Document Type", '%1|%2|%3', rec25."Document Type"::Invoice, rec25."Document Type"::Bill,
                       rec25."Document Type"::"Credit Memo");
                 IF ((fechaVtoDesde <> 0D) AND (fechaVtoHasta <> 0D)) THEN
-                   rec25.SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
+                    rec25.SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
                 ELSE BEGIN
-                   IF (fechaVtoDesde <> 0D) THEN
-                      rec25.SETFILTER("Due Date", '>%1', fechaVtoDesde)
-                   ELSE
-                      rec25.SETFILTER("Due Date", '<%1', fechaVtoHasta);
+                    IF (fechaVtoDesde <> 0D) THEN
+                        rec25.SETFILTER("Due Date", '>%1', fechaVtoDesde)
+                    ELSE
+                        rec25.SETFILTER("Due Date", '<%1', fechaVtoHasta);
                 END;
                 rec25.SETRANGE(Open, TRUE);
                 IF rec25.FINDFIRST THEN BEGIN
-                   //recupero los datos de la 1´Š¢ factura vencida
-                   fechaFacturaVto := rec25."Posting Date";
-                   nombreFormaPago := '';
-                   IF rec122.GET(rec25."Document No.") THEN
-                      IF rec289.GET(rec122."Payment Method Code") THEN nombreFormaPago := rec289.Description;
-                
-                   //recupero el importe de todas las facturas vencidas
-                   REPEAT
-                      rec25.CALCFIELDS("Remaining Amt. (LCY)");
-                      importeDeudaVto := importeDeudaVto + rec25."Remaining Amt. (LCY)";
-                   UNTIL rec25.NEXT = 0;
+                    //recupero los datos de la 1´Š¢ factura vencida
+                    fechaFacturaVto := rec25."Posting Date";
+                    nombreFormaPago := '';
+                    IF rec122.GET(rec25."Document No.") THEN
+                        IF rec289.GET(rec122."Payment Method Code") THEN nombreFormaPago := rec289.Description;
+
+                    //recupero el importe de todas las facturas vencidas
+                    REPEAT
+                        rec25.CALCFIELDS("Remaining Amt. (LCY)");
+                        importeDeudaVto := importeDeudaVto + rec25."Remaining Amt. (LCY)";
+                    UNTIL rec25.NEXT = 0;
                 END;
-                
+
                 IF importeDeudaVto = 0 THEN
-                   CurrReport.SKIP
+                    CurrReport.SKIP
                 ELSE BEGIN
-                   importeDeudasVto := importeDeudasVto + importeDeudaVto;
-                   /*IF expExcel THEN insertarLineaResumen;*/
+                    importeDeudasVto := importeDeudasVto + importeDeudaVto;
+                    /*IF expExcel THEN insertarLineaResumen;*/
                 END;
 
             end;
@@ -91,53 +91,53 @@ report 50028 Pagos
                 importeDeudasVto := 0;
             end;
         }
-        dataitem("Vendor Detalle";Table23)
+        dataitem("Vendor Detalle"; Vendor)
         {
             PrintOnlyIfDetail = true;
             RequestFilterHeading = '.';
-            column(VendorDetalle_No;"Vendor Detalle"."No.")
+            column(VendorDetalle_No; "Vendor Detalle"."No.")
             {
             }
-            column(rec289_Description;rec289.Description)
+            column(rec289_Description; rec289.Description)
             {
             }
-            column(VendorDetalle_Name;"Vendor Detalle".Name)
+            column(VendorDetalle_Name; "Vendor Detalle".Name)
             {
             }
-            column(VendorDetalle_PhoneNo;"Vendor Detalle"."Phone No.")
+            column(VendorDetalle_PhoneNo; "Vendor Detalle"."Phone No.")
             {
             }
-            dataitem("Vendor Ledger Entry Detalle";Table25)
+            dataitem("Vendor Ledger Entry Detalle"; "Vendor Ledger Entry")
             {
                 RequestFilterHeading = '.';
-                column(VendorLedgerEntryDetalle_DocumentNo;"Vendor Ledger Entry Detalle"."Document No.")
+                column(VendorLedgerEntryDetalle_DocumentNo; "Vendor Ledger Entry Detalle"."Document No.")
                 {
                 }
-                column(VendorLedgerEntryDetalle_DocumentDate;"Vendor Ledger Entry Detalle"."Document Date")
+                column(VendorLedgerEntryDetalle_DocumentDate; "Vendor Ledger Entry Detalle"."Document Date")
                 {
                 }
-                column(nFacturaProveedor;nFacturaProveedor)
+                column(nFacturaProveedor; nFacturaProveedor)
                 {
                 }
-                column(VendorLedgerEntryDetalle_DueDate;"Vendor Ledger Entry Detalle"."Due Date")
+                column(VendorLedgerEntryDetalle_DueDate; "Vendor Ledger Entry Detalle"."Due Date")
                 {
                 }
-                column(VendorLedgerEntryDetalle_AmountLCY;"Vendor Ledger Entry Detalle"."Amount (LCY)")
+                column(VendorLedgerEntryDetalle_AmountLCY; "Vendor Ledger Entry Detalle"."Amount (LCY)")
                 {
                 }
-                column(totalProveedor;totalProveedor)
+                column(totalProveedor; totalProveedor)
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
                     IF rec122.GET("Document No.") THEN
-                       nFacturaProveedor := rec122."Vendor Invoice No."
+                        nFacturaProveedor := rec122."Vendor Invoice No."
                     ELSE
-                       nFacturaProveedor := Description;
-                    
+                        nFacturaProveedor := Description;
+
                     totalProveedor := totalProveedor + "Amount (LCY)";
-                    
+
                     /*IF (expExcel AND (COUNT > 0)) THEN insertarLineaDetalle;*/
 
                 end;
@@ -155,15 +155,15 @@ report 50028 Pagos
                     SETRANGE("Vendor No.", "Vendor Detalle"."No.");
                     SETFILTER("Document Type", '%1|%2|%3', "Document Type"::Invoice, "Document Type"::Bill, "Document Type"::"Credit Memo");
                     IF ((fechaVtoDesde <> 0D) AND (fechaVtoHasta <> 0D)) THEN
-                       SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
+                        SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
                     ELSE BEGIN
-                       IF (fechaVtoDesde <> 0D) THEN
-                          SETFILTER("Due Date", '>%1', fechaVtoDesde)
-                       ELSE
-                          SETFILTER("Due Date", '<%1', fechaVtoHasta);
+                        IF (fechaVtoDesde <> 0D) THEN
+                            SETFILTER("Due Date", '>%1', fechaVtoDesde)
+                        ELSE
+                            SETFILTER("Due Date", '<%1', fechaVtoHasta);
                     END;
                     SETRANGE(Open, TRUE);
-                    
+
                     /*IF (expExcel AND (COUNT > 0)) THEN insertarCabeceraDetalle;*/
 
                 end;
@@ -171,7 +171,7 @@ report 50028 Pagos
 
             trigger OnAfterGetRecord()
             begin
-                IF rec289.GET("Payment Method Code") THEN ;
+                IF rec289.GET("Payment Method Code") THEN;
                 totalProveedor := 0;
             end;
 
@@ -193,11 +193,11 @@ report 50028 Pagos
         {
             area(content)
             {
-                field(fechaVtoDesde;fechaVtoDesde)
+                field(fechaVtoDesde; fechaVtoDesde)
                 {
                     Caption = 'Vencido desde';
                 }
-                field(fechaVtoHasta;fechaVtoHasta)
+                field(fechaVtoHasta; fechaVtoHasta)
                 {
                     Caption = 'Vencido hasta';
                 }
@@ -215,7 +215,7 @@ report 50028 Pagos
 
     trigger OnInitReport()
     begin
-        recCI.CALCFIELDS(Picture,"Reports Image");
+        recCI.CALCFIELDS(Picture, "Reports Image");
     end;
 
     trigger OnPostReport()

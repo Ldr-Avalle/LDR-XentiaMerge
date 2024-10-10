@@ -1,12 +1,12 @@
 report 50029 "17vs45"
 {
-    Permissions = TableData 45=rimd,
-                  TableData 50029=rimd;
+    Permissions = TableData 45 = rimd,
+                  TableData 50029 = rimd;
     ProcessingOnly = true;
 
     dataset
     {
-        dataitem(DataItem1000000000;Table45)
+        dataitem("G/L Register"; "G/L Register")
         {
 
             trigger OnAfterGetRecord()
@@ -17,7 +17,7 @@ report 50029 "17vs45"
             begin
 
                 i += 1;
-                v.UPDATE(1,ROUND(i/n*10000,1));
+                v.UPDATE(1, ROUND(i / n * 10000, 1));
 
                 //regContenedorCP.TRANSFERFIELDS("G/L Register");
                 //regContenedorCP.INSERT;
@@ -32,13 +32,13 @@ report 50029 "17vs45"
             begin
 
                 n := COUNT;
-                v.OPEN('@1@@@@@@@@@@@@@@@@@@@\'+
+                v.OPEN('@1@@@@@@@@@@@@@@@@@@@\' +
                        '@2@@@@@@@@@@@@@@@@@@@');
             end;
         }
-        dataitem(DataItem1000000001;Table17)
+        dataitem("G/L Entry"; "G/L Entry")
         {
-            DataItemTableView = SORTING(Transaction No.);
+            DataItemTableView = SORTING("Transaction No.");
 
             trigger OnAfterGetRecord()
             var
@@ -46,7 +46,7 @@ report 50029 "17vs45"
             begin
 
                 i += 1;
-                v.UPDATE(2,ROUND(i/n*10000,1));
+                v.UPDATE(2, ROUND(i / n * 10000, 1));
 
 
                 t45."No." := "Transaction No.";
@@ -58,7 +58,7 @@ report 50029 "17vs45"
                 SETRANGE("Transaction No.");
 
                 t45."To Entry No." := "G/L Entry"."Entry No.";
-                t45."Creation Date" := TraeFechaCreacion(t45."From Entry No.",t45."To Entry No.","G/L Entry");
+                t45."Creation Date" := TraeFechaCreacion(t45."From Entry No.", t45."To Entry No.", "G/L Entry");
                 t45."Source Code" := "G/L Entry"."Source Code";
                 t45."User ID" := "G/L Entry"."User ID";
                 t45."Journal Batch Name" := "G/L Entry"."Journal Batch Name";
@@ -116,7 +116,7 @@ report 50029 "17vs45"
         regMovIva.SETRANGE("Document No.", "G/L Entry"."Document No.");
         regMovIva.SETRANGE("Posting Date", "G/L Entry"."Posting Date");
         IF regMovIva.FIND('-') THEN
-          EXIT(regMovIva."Entry No.");
+            EXIT(regMovIva."Entry No.");
 
         EXIT(0);
     end;
@@ -131,31 +131,29 @@ report 50029 "17vs45"
         regMovIva.SETRANGE("Document No.", "G/L Entry"."Document No.");
         regMovIva.SETRANGE("Posting Date", "G/L Entry"."Posting Date");
         IF regMovIva.FIND('+') THEN
-          EXIT(regMovIva."Entry No.");
+            EXIT(regMovIva."Entry No.");
     end;
 
-    local procedure TraeFechaCreacion(desde: Integer;hasta: Integer;regMovCont: Record "17"): Date
+    local procedure TraeFechaCreacion(desde: Integer; hasta: Integer; regMovCont: Record "17"): Date
     var
         regContenedorCP: Record "50005";
     begin
 
         regContenedorCP.RESET;
         regContenedorCP.SETCURRENTKEY("From Entry No.");
-        regContenedorCP.SETRANGE("From Entry No.",desde);
-        regContenedorCP.SETRANGE("To Entry No.",hasta);
-        IF NOT regContenedorCP.FIND('-') THEN
-        BEGIN
-          regContenedorCP.SETRANGE("To Entry No.");
-          IF NOT regContenedorCP.FIND('-') THEN
-          BEGIN
-            regContenedorCP.RESET;
-            regContenedorCP.SETCURRENTKEY("To Entry No.");
-            regContenedorCP.SETRANGE("From Entry No.");
-            regContenedorCP.SETRANGE("To Entry No.",hasta);
-            IF NOT regContenedorCP.FIND('-') THEN
-              EXIT(0D);
-        //      ERROR('%1-%2',desde,hasta);
-          END;
+        regContenedorCP.SETRANGE("From Entry No.", desde);
+        regContenedorCP.SETRANGE("To Entry No.", hasta);
+        IF NOT regContenedorCP.FIND('-') THEN BEGIN
+            regContenedorCP.SETRANGE("To Entry No.");
+            IF NOT regContenedorCP.FIND('-') THEN BEGIN
+                regContenedorCP.RESET;
+                regContenedorCP.SETCURRENTKEY("To Entry No.");
+                regContenedorCP.SETRANGE("From Entry No.");
+                regContenedorCP.SETRANGE("To Entry No.", hasta);
+                IF NOT regContenedorCP.FIND('-') THEN
+                    EXIT(0D);
+                //      ERROR('%1-%2',desde,hasta);
+            END;
         END;
 
         EXIT(regContenedorCP."Creation Date");

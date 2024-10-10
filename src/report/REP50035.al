@@ -1,113 +1,113 @@
 report 50035 "Libro Facturas recibidas"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Libro Facturas recibidas.rdlc';
+    RDLCLayout = './src/layout/Libro Facturas recibidas.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table122)
+        dataitem("Purch. Inv. Header"; "Purch. Inv. Header")
         {
-            DataItemTableView = SORTING(Document Date,No.)
+            DataItemTableView = SORTING("Document Date", "No.")
                                 ORDER(Ascending);
-            RequestFilterFields = "Posting Date","Document Date","Due Date";
-            column(recordCI_Picture;recordCI.Picture)
+            RequestFilterFields = "Posting Date", "Document Date", "Due Date";
+            column(recordCI_Picture; recordCI.Picture)
             {
             }
-            column(totalBaseFacturas2;totalBaseFacturas2)
+            column(totalBaseFacturas2; totalBaseFacturas2)
             {
             }
-            column(totalIvaFacturas2;totalIvaFacturas2)
+            column(totalIvaFacturas2; totalIvaFacturas2)
             {
             }
-            column(TotalFacturas2;totalBaseFacturas2 +totalIvaFacturas2)
+            column(TotalFacturas2; totalBaseFacturas2 + totalIvaFacturas2)
             {
             }
-            column(totalBaseFacturas4;totalBaseFacturas4)
+            column(totalBaseFacturas4; totalBaseFacturas4)
             {
             }
-            column(totalIvaFacturas4;totalIvaFacturas4)
+            column(totalIvaFacturas4; totalIvaFacturas4)
             {
             }
-            column(TotalFacturas4;totalBaseFacturas4 +totalIvaFacturas4)
+            column(TotalFacturas4; totalBaseFacturas4 + totalIvaFacturas4)
             {
             }
-            column(totalBaseFacturas3;totalBaseFacturas3)
+            column(totalBaseFacturas3; totalBaseFacturas3)
             {
             }
-            column(totalIvaFacturas3;totalIvaFacturas3)
+            column(totalIvaFacturas3; totalIvaFacturas3)
             {
             }
-            column(totalBaseFacturas5;totalBaseFacturas5)
+            column(totalBaseFacturas5; totalBaseFacturas5)
             {
             }
-            column(totalIvaFacturas5;totalIvaFacturas5)
+            column(totalIvaFacturas5; totalIvaFacturas5)
             {
             }
-            column(totalBaseFacturas6;totalBaseFacturas6)
+            column(totalBaseFacturas6; totalBaseFacturas6)
             {
             }
-            column(totalIvaFacturas6;totalIvaFacturas6)
+            column(totalIvaFacturas6; totalIvaFacturas6)
             {
             }
-            column(totalBaseFacturas7;totalBaseFacturas7)
+            column(totalBaseFacturas7; totalBaseFacturas7)
             {
             }
-            column(totalIvaFacturas7;totalIvaFacturas7)
+            column(totalIvaFacturas7; totalIvaFacturas7)
             {
             }
-            column(totalBaseFacturas8;totalBaseFacturas8)
+            column(totalBaseFacturas8; totalBaseFacturas8)
             {
             }
-            column(totalIvaFacturas8;totalIvaFacturas8)
+            column(totalIvaFacturas8; totalIvaFacturas8)
             {
             }
-            column(totalBaseFacturas9;totalBaseFacturas9)
+            column(totalBaseFacturas9; totalBaseFacturas9)
             {
             }
-            column(totalIvaFacturas9;totalIvaFacturas9)
+            column(totalIvaFacturas9; totalIvaFacturas9)
             {
             }
-            column(totalBaseFacturas;totalBaseFacturas)
+            column(totalBaseFacturas; totalBaseFacturas)
             {
             }
-            column(totalIvaFacturas;totalIvaFacturas)
+            column(totalIvaFacturas; totalIvaFacturas)
             {
             }
-            column(recordCI_Name;recordCI.Name)
+            column(recordCI_Name; recordCI.Name)
             {
             }
-            column(recordCI_Address;recordCI.Address)
+            column(recordCI_Address; recordCI.Address)
             {
             }
-            column(recordCI_Address2;recordCI."Address 2")
+            column(recordCI_Address2; recordCI."Address 2")
             {
             }
-            dataitem(DataItem1000000001;Table123)
+            dataitem("Purch. Inv. Line"; "Purch. Inv. Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(VAT Prod. Posting Group)
+                DataItemLink = "Document No." = FIELD("No.");
+                DataItemTableView = SORTING("VAT Prod. Posting Group")
                                     ORDER(Ascending)
-                                    WHERE(Type=FILTER(<>' '));
+                                    WHERE(Type = FILTER(<> ' '));
                 RequestFilterFields = "VAT Prod. Posting Group";
-                column(PurchInvHeader_No;PurchInvHeader."No.")
+                column(PurchInvHeader_No; PurchInvHeader."No.")
                 {
                 }
-                column(PurchInvHeader_DocumentDate;PurchInvHeader."Document Date")
+                column(PurchInvHeader_DocumentDate; PurchInvHeader."Document Date")
                 {
                 }
-                column(PurchInvHeader_PaytoName;PurchInvHeader."Pay-to Name")
+                column(PurchInvHeader_PaytoName; PurchInvHeader."Pay-to Name")
                 {
                 }
-                column(PurchInvLine_VATProdPostingGroup;"Purch. Inv. Line"."VAT Prod. Posting Group")
+                column(PurchInvLine_VATProdPostingGroup; "Purch. Inv. Line"."VAT Prod. Posting Group")
                 {
                 }
-                column(PurchInvLine_VATBaseAmount;"Purch. Inv. Line"."VAT Base Amount")
+                column(PurchInvLine_VATBaseAmount; "Purch. Inv. Line"."VAT Base Amount")
                 {
                 }
-                column(TotalIva;(("Purch. Inv. Line"."VAT %" * "Purch. Inv. Line"."VAT Base Amount")/100))
+                column(TotalIva; (("Purch. Inv. Line"."VAT %" * "Purch. Inv. Line"."VAT Base Amount") / 100))
                 {
                 }
-                column(PurchInvHeader_AmountIncludingVAT;PurchInvHeader."Amount Including VAT")
+                column(PurchInvHeader_AmountIncludingVAT; PurchInvHeader."Amount Including VAT")
                 {
                 }
 
@@ -115,268 +115,270 @@ report 50035 "Libro Facturas recibidas"
                 begin
                     //esto me sirve para mostrar los datos de la cabecera solo en la primera l´Š¢nea de cada grupo de iva (exento, iva16...)
                     IF ("Document No." <> numeroAnterior) THEN BEGIN
-                       PurchInvHeader.GET("Purch. Inv. Line"."Document No.");
-                       PurchInvHeader.CALCFIELDS("Amount Including VAT");
-                    END ELSE CLEAR(PurchInvHeader);
+                        PurchInvHeader.GET("Purch. Inv. Line"."Document No.");
+                        PurchInvHeader.CALCFIELDS("Amount Including VAT");
+                    END ELSE
+                        CLEAR(PurchInvHeader);
                     numeroAnterior := "Document No.";
 
                     totalBaseFacturas := totalBaseFacturas + "VAT Base Amount";
-                    totalIvaFacturas := totalIvaFacturas + (("VAT %" * "VAT Base Amount")/100);
+                    totalIvaFacturas := totalIvaFacturas + (("VAT %" * "VAT Base Amount") / 100);
                 end;
 
                 trigger OnPostDataItem()
                 begin
-                    PurchLine.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA21');
+                    PurchLine.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA21');
                     IF PurchLine.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas2 := totalBaseFacturas2 +PurchLine."VAT Base Amount";
-                    totalIvaFacturas2 := totalIvaFacturas2 + ((PurchLine."VAT %" * PurchLine."VAT Base Amount")/100);
-                     UNTIL PurchLine.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas2 := totalBaseFacturas2 + PurchLine."VAT Base Amount";
+                            totalIvaFacturas2 := totalIvaFacturas2 + ((PurchLine."VAT %" * PurchLine."VAT Base Amount") / 100);
+                        UNTIL PurchLine.NEXT = 0;
 
 
-                    PurchLine2.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine2.SETFILTER("VAT Prod. Posting Group",'%1','EXENTO' );
+                    PurchLine2.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine2.SETFILTER("VAT Prod. Posting Group", '%1', 'EXENTO');
                     //PurchLine2.SETFILTER("VAT Base Amount",'>%1',0 );
                     IF PurchLine2.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas3 := totalBaseFacturas3 +PurchLine2."VAT Base Amount";
-                    totalIvaFacturas3 := totalIvaFacturas3 + ((PurchLine2."VAT %" * PurchLine2."VAT Base Amount")/100);
-                     UNTIL PurchLine2.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas3 := totalBaseFacturas3 + PurchLine2."VAT Base Amount";
+                            totalIvaFacturas3 := totalIvaFacturas3 + ((PurchLine2."VAT %" * PurchLine2."VAT Base Amount") / 100);
+                        UNTIL PurchLine2.NEXT = 0;
 
-                    PurchLine3.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine3.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA10');
+                    PurchLine3.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine3.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA10');
                     IF PurchLine3.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas4 := totalBaseFacturas4 +PurchLine3."VAT Base Amount";
-                    totalIvaFacturas4 := totalIvaFacturas4 + ((PurchLine3."VAT %" * PurchLine3."VAT Base Amount")/100);
-                     UNTIL PurchLine3.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas4 := totalBaseFacturas4 + PurchLine3."VAT Base Amount";
+                            totalIvaFacturas4 := totalIvaFacturas4 + ((PurchLine3."VAT %" * PurchLine3."VAT Base Amount") / 100);
+                        UNTIL PurchLine3.NEXT = 0;
 
 
-                    PurchLine4.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine4.SETFILTER("VAT Prod. Posting Group",'%1','NO IVA' );
+                    PurchLine4.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine4.SETFILTER("VAT Prod. Posting Group", '%1', 'NO IVA');
                     IF PurchLine4.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas5 := totalBaseFacturas5 +PurchLine4."VAT Base Amount";
-                    totalIvaFacturas5 := totalIvaFacturas5 + ((PurchLine4."VAT %" * PurchLine4."VAT Base Amount")/100);
-                     UNTIL PurchLine4.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas5 := totalBaseFacturas5 + PurchLine4."VAT Base Amount";
+                            totalIvaFacturas5 := totalIvaFacturas5 + ((PurchLine4."VAT %" * PurchLine4."VAT Base Amount") / 100);
+                        UNTIL PurchLine4.NEXT = 0;
 
-                    PurchLine5.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine5.SETFILTER("VAT Prod. Posting Group",'%1', 'BI21');
+                    PurchLine5.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine5.SETFILTER("VAT Prod. Posting Group", '%1', 'BI21');
                     IF PurchLine5.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas6 := totalBaseFacturas6 +PurchLine5."VAT Base Amount";
-                    totalIvaFacturas6 := totalIvaFacturas6 + ((PurchLine5."VAT %" * PurchLine5."VAT Base Amount")/100);
-                     UNTIL PurchLine5.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas6 := totalBaseFacturas6 + PurchLine5."VAT Base Amount";
+                            totalIvaFacturas6 := totalIvaFacturas6 + ((PurchLine5."VAT %" * PurchLine5."VAT Base Amount") / 100);
+                        UNTIL PurchLine5.NEXT = 0;
 
 
-                    PurchLine6.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine6.SETFILTER("VAT Prod. Posting Group",'%1','IVA18' );
+                    PurchLine6.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine6.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA18');
                     IF PurchLine6.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas7 := totalBaseFacturas7 +PurchLine6."VAT Base Amount";
-                    totalIvaFacturas7:= totalIvaFacturas7 + ((PurchLine6."VAT %" * PurchLine6."VAT Base Amount")/100);
-                     UNTIL PurchLine6.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas7 := totalBaseFacturas7 + PurchLine6."VAT Base Amount";
+                            totalIvaFacturas7 := totalIvaFacturas7 + ((PurchLine6."VAT %" * PurchLine6."VAT Base Amount") / 100);
+                        UNTIL PurchLine6.NEXT = 0;
 
-                    PurchLine7.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine7.SETFILTER("VAT Prod. Posting Group",'%1','IVA4' );
+                    PurchLine7.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine7.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA4');
                     IF PurchLine7.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas8 := totalBaseFacturas8 +PurchLine7."VAT Base Amount";
-                    totalIvaFacturas8:= totalIvaFacturas8 + ((PurchLine7."VAT %" * PurchLine7."VAT Base Amount")/100);
-                     UNTIL PurchLine7.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas8 := totalBaseFacturas8 + PurchLine7."VAT Base Amount";
+                            totalIvaFacturas8 := totalIvaFacturas8 + ((PurchLine7."VAT %" * PurchLine7."VAT Base Amount") / 100);
+                        UNTIL PurchLine7.NEXT = 0;
 
-                    PurchLine8.SETFILTER("Document No.",'%1', "Document No.");
-                    PurchLine8.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA8');
+                    PurchLine8.SETFILTER("Document No.", '%1', "Document No.");
+                    PurchLine8.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA8');
                     IF PurchLine8.FINDFIRST THEN
-                    REPEAT
-                    totalBaseFacturas9 := totalBaseFacturas9 +PurchLine8."VAT Base Amount";
-                    totalIvaFacturas9 := totalIvaFacturas9 + ((PurchLine8."VAT %" * PurchLine8."VAT Base Amount")/100);
-                     UNTIL PurchLine8.NEXT=0;
+                        REPEAT
+                            totalBaseFacturas9 := totalBaseFacturas9 + PurchLine8."VAT Base Amount";
+                            totalIvaFacturas9 := totalIvaFacturas9 + ((PurchLine8."VAT %" * PurchLine8."VAT Base Amount") / 100);
+                        UNTIL PurchLine8.NEXT = 0;
                 end;
             }
 
             trigger OnPreDataItem()
             begin
-                totalIvaFacturas  := 0;
+                totalIvaFacturas := 0;
                 totalBaseFacturas := 0;
             end;
         }
-        dataitem(DataItem1000000002;Table124)
+        dataitem("Purch. Cr. Memo Hdr."; "Purch. Cr. Memo Hdr.")
         {
-            DataItemTableView = SORTING(Document Date,No.)
+            DataItemTableView = SORTING("Document Date", "No.")
                                 ORDER(Ascending);
-            column(totalBaseAbonos2;totalBaseAbonos2)
+            column(totalBaseAbonos2; totalBaseAbonos2)
             {
             }
-            column(totalIvaAbonos2;totalIvaAbonos2)
+            column(totalIvaAbonos2; totalIvaAbonos2)
             {
             }
-            column(TotalAbonos2;totalBaseAbonos2+totalIvaAbonos2)
+            column(TotalAbonos2; totalBaseAbonos2 + totalIvaAbonos2)
             {
             }
-            column(totalBaseAbonos4;totalBaseAbonos4)
+            column(totalBaseAbonos4; totalBaseAbonos4)
             {
             }
-            column(totalIvaAbonos4;totalIvaAbonos4)
+            column(totalIvaAbonos4; totalIvaAbonos4)
             {
             }
-            column(TotalAbonos4;totalBaseAbonos4+totalIvaAbonos4)
+            column(TotalAbonos4; totalBaseAbonos4 + totalIvaAbonos4)
             {
             }
-            column(totalBaseAbonos3;totalBaseAbonos3)
+            column(totalBaseAbonos3; totalBaseAbonos3)
             {
             }
-            column(totalIvaAbonos3;totalIvaAbonos3)
+            column(totalIvaAbonos3; totalIvaAbonos3)
             {
             }
-            column(totalBaseAbonos5;totalBaseAbonos5)
+            column(totalBaseAbonos5; totalBaseAbonos5)
             {
             }
-            column(totalIvaAbonos5;totalIvaAbonos5)
+            column(totalIvaAbonos5; totalIvaAbonos5)
             {
             }
-            column(totalBaseAbonos6;totalBaseAbonos6)
+            column(totalBaseAbonos6; totalBaseAbonos6)
             {
             }
-            column(totalIvaAbonos6;totalIvaAbonos6)
+            column(totalIvaAbonos6; totalIvaAbonos6)
             {
             }
-            column(totalBaseAbonos7;totalBaseAbonos7)
+            column(totalBaseAbonos7; totalBaseAbonos7)
             {
             }
-            column(totalIvaAbonos7;totalIvaAbonos7)
+            column(totalIvaAbonos7; totalIvaAbonos7)
             {
             }
-            column(totalBaseAbonos8;totalBaseAbonos8)
+            column(totalBaseAbonos8; totalBaseAbonos8)
             {
             }
-            column(totalIvaAbonos8;totalIvaAbonos8)
+            column(totalIvaAbonos8; totalIvaAbonos8)
             {
             }
-            column(totalBaseAbonos9;totalBaseAbonos9)
+            column(totalBaseAbonos9; totalBaseAbonos9)
             {
             }
-            column(totalIvaAbonos9;totalIvaAbonos9)
+            column(totalIvaAbonos9; totalIvaAbonos9)
             {
             }
-            column(totalBaseAbonos;totalBaseAbonos)
+            column(totalBaseAbonos; totalBaseAbonos)
             {
             }
-            column(totalIvaAbonos;totalIvaAbonos)
+            column(totalIvaAbonos; totalIvaAbonos)
             {
             }
-            dataitem(DataItem1000000003;Table125)
+            dataitem("Purch. Cr. Memo Line"; "Purch. Cr. Memo Line")
             {
-                DataItemLink = Document No.=FIELD(No.);
-                DataItemTableView = SORTING(VAT Prod. Posting Group)
+                DataItemLink = "Document No." = FIELD("No.");
+                DataItemTableView = SORTING("VAT Prod. Posting Group")
                                     ORDER(Ascending)
-                                    WHERE(Type=FILTER(<>' '));
-                column(PurchMemoHeader_No;PurchMemoHeader."No.")
+                                    WHERE(Type = FILTER(<> ' '));
+                column(PurchMemoHeader_No; PurchMemoHeader."No.")
                 {
                 }
-                column(PurchMemoHeader_DocumentDate;PurchMemoHeader."Document Date")
+                column(PurchMemoHeader_DocumentDate; PurchMemoHeader."Document Date")
                 {
                 }
-                column(PurchMemoHeader_PaytoName;PurchMemoHeader."Pay-to Name")
+                column(PurchMemoHeader_PaytoName; PurchMemoHeader."Pay-to Name")
                 {
                 }
-                column(PurchCrMemoLine_VATProdPostingGroup;"Purch. Cr. Memo Line"."VAT Prod. Posting Group")
+                column(PurchCrMemoLine_VATProdPostingGroup; "Purch. Cr. Memo Line"."VAT Prod. Posting Group")
                 {
                 }
-                column(PurchCrMemoLine_VATBaseAmount;"Purch. Cr. Memo Line"."VAT Base Amount")
+                column(PurchCrMemoLine_VATBaseAmount; "Purch. Cr. Memo Line"."VAT Base Amount")
                 {
                 }
-                column(TotalIvaAbonosLin;(("Purch. Cr. Memo Line"."VAT %" * "Purch. Cr. Memo Line"."VAT Base Amount")/100))
+                column(TotalIvaAbonosLin; (("Purch. Cr. Memo Line"."VAT %" * "Purch. Cr. Memo Line"."VAT Base Amount") / 100))
                 {
                 }
-                column(PurchMemoHeader_AmountIncludingVAT;PurchMemoHeader."Amount Including VAT")
+                column(PurchMemoHeader_AmountIncludingVAT; PurchMemoHeader."Amount Including VAT")
                 {
                 }
 
                 trigger OnPostDataItem()
                 begin
 
-                    CRLine.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA21');
+                    CRLine.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA21');
                     IF CRLine.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos2 := totalBaseAbonos2 +CRLine."VAT Base Amount";
-                    totalIvaAbonos2 := totalIvaAbonos2 + ((CRLine."VAT %" * CRLine."VAT Base Amount")/100);
-                     UNTIL CRLine.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos2 := totalBaseAbonos2 + CRLine."VAT Base Amount";
+                            totalIvaAbonos2 := totalIvaAbonos2 + ((CRLine."VAT %" * CRLine."VAT Base Amount") / 100);
+                        UNTIL CRLine.NEXT = 0;
 
 
-                    CRLine2.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine2.SETFILTER("VAT Prod. Posting Group",'%1','EXENTO' );
+                    CRLine2.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine2.SETFILTER("VAT Prod. Posting Group", '%1', 'EXENTO');
                     //CRLine2.SETFILTER("VAT Base Amount",'>%1',0 );
                     IF CRLine2.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos3 := totalBaseAbonos3 +CRLine2."VAT Base Amount";
-                    totalIvaAbonos3 := totalIvaAbonos3 + ((CRLine2."VAT %" * CRLine2."VAT Base Amount")/100);
-                     UNTIL CRLine2.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos3 := totalBaseAbonos3 + CRLine2."VAT Base Amount";
+                            totalIvaAbonos3 := totalIvaAbonos3 + ((CRLine2."VAT %" * CRLine2."VAT Base Amount") / 100);
+                        UNTIL CRLine2.NEXT = 0;
 
-                    CRLine3.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine3.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA10');
+                    CRLine3.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine3.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA10');
                     IF CRLine3.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos4 := totalBaseAbonos4 +CRLine3."VAT Base Amount";
-                    totalIvaAbonos4 := totalIvaAbonos4 + ((CRLine3."VAT %" * CRLine3."VAT Base Amount")/100);
-                     UNTIL CRLine3.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos4 := totalBaseAbonos4 + CRLine3."VAT Base Amount";
+                            totalIvaAbonos4 := totalIvaAbonos4 + ((CRLine3."VAT %" * CRLine3."VAT Base Amount") / 100);
+                        UNTIL CRLine3.NEXT = 0;
 
 
-                    CRLine4.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine4.SETFILTER("VAT Prod. Posting Group",'%1','NO IVA' );
+                    CRLine4.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine4.SETFILTER("VAT Prod. Posting Group", '%1', 'NO IVA');
                     IF CRLine4.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos5 := totalBaseAbonos5 +CRLine4."VAT Base Amount";
-                    totalIvaAbonos5 := totalIvaAbonos5 + ((CRLine4."VAT %" * CRLine4."VAT Base Amount")/100);
-                     UNTIL CRLine4.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos5 := totalBaseAbonos5 + CRLine4."VAT Base Amount";
+                            totalIvaAbonos5 := totalIvaAbonos5 + ((CRLine4."VAT %" * CRLine4."VAT Base Amount") / 100);
+                        UNTIL CRLine4.NEXT = 0;
 
-                    CRLine5.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine5.SETFILTER("VAT Prod. Posting Group",'%1', 'BI21');
+                    CRLine5.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine5.SETFILTER("VAT Prod. Posting Group", '%1', 'BI21');
                     IF CRLine5.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos6 := totalBaseAbonos6 +CRLine5."VAT Base Amount";
-                    totalIvaAbonos6 := totalIvaAbonos6 + ((CRLine5."VAT %" * CRLine5."VAT Base Amount")/100);
-                     UNTIL CRLine5.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos6 := totalBaseAbonos6 + CRLine5."VAT Base Amount";
+                            totalIvaAbonos6 := totalIvaAbonos6 + ((CRLine5."VAT %" * CRLine5."VAT Base Amount") / 100);
+                        UNTIL CRLine5.NEXT = 0;
 
 
-                    CRLine6.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine6.SETFILTER("VAT Prod. Posting Group",'%1','IVA18' );
+                    CRLine6.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine6.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA18');
                     IF CRLine6.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos7 := totalBaseAbonos7 +CRLine6."VAT Base Amount";
-                    totalIvaAbonos7:= totalIvaAbonos7 + ((CRLine6."VAT %" * CRLine6."VAT Base Amount")/100);
-                     UNTIL CRLine6.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos7 := totalBaseAbonos7 + CRLine6."VAT Base Amount";
+                            totalIvaAbonos7 := totalIvaAbonos7 + ((CRLine6."VAT %" * CRLine6."VAT Base Amount") / 100);
+                        UNTIL CRLine6.NEXT = 0;
 
-                    CRLine7.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine7.SETFILTER("VAT Prod. Posting Group",'%1','IVA4' );
+                    CRLine7.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine7.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA4');
                     IF CRLine7.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos8 := totalBaseAbonos8 +CRLine7."VAT Base Amount";
-                    totalIvaAbonos8:= totalIvaAbonos8 + ((CRLine7."VAT %" * CRLine7."VAT Base Amount")/100);
-                     UNTIL CRLine7.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos8 := totalBaseAbonos8 + CRLine7."VAT Base Amount";
+                            totalIvaAbonos8 := totalIvaAbonos8 + ((CRLine7."VAT %" * CRLine7."VAT Base Amount") / 100);
+                        UNTIL CRLine7.NEXT = 0;
 
-                    CRLine8.SETFILTER("Document No.",'%1', "Document No.");
-                    CRLine8.SETFILTER("VAT Prod. Posting Group",'%1', 'IVA8');
+                    CRLine8.SETFILTER("Document No.", '%1', "Document No.");
+                    CRLine8.SETFILTER("VAT Prod. Posting Group", '%1', 'IVA8');
                     IF CRLine8.FINDFIRST THEN
-                    REPEAT
-                    totalBaseAbonos9 := totalBaseAbonos9 +CRLine8."VAT Base Amount";
-                    totalIvaAbonos9 := totalIvaAbonos9 + ((CRLine8."VAT %" * CRLine8."VAT Base Amount")/100);
-                     UNTIL CRLine8.NEXT=0;
+                        REPEAT
+                            totalBaseAbonos9 := totalBaseAbonos9 + CRLine8."VAT Base Amount";
+                            totalIvaAbonos9 := totalIvaAbonos9 + ((CRLine8."VAT %" * CRLine8."VAT Base Amount") / 100);
+                        UNTIL CRLine8.NEXT = 0;
                 end;
 
                 trigger OnPreDataItem()
                 begin
                     //esto me sirve para mostrar los datos de la cabecera solo en la primera l´Š¢nea de cada grupo de iva (exento, iva16...)
                     IF ("Document No." <> numeroAnterior) THEN BEGIN
-                       PurchMemoHeader.GET("Purch. Cr. Memo Line"."Document No.");
-                       PurchMemoHeader.CALCFIELDS("Amount Including VAT");
-                    END ELSE CLEAR(PurchMemoHeader);
+                        PurchMemoHeader.GET("Purch. Cr. Memo Line"."Document No.");
+                        PurchMemoHeader.CALCFIELDS("Amount Including VAT");
+                    END ELSE
+                        CLEAR(PurchMemoHeader);
                     numeroAnterior := "Document No.";
 
                     totalBaseAbonos := totalBaseAbonos + "VAT Base Amount";
-                    totalIvaAbonos := totalIvaAbonos + (("VAT %" * "VAT Base Amount")/100);
+                    totalIvaAbonos := totalIvaAbonos + (("VAT %" * "VAT Base Amount") / 100);
                 end;
             }
 
@@ -384,7 +386,7 @@ report 50035 "Libro Facturas recibidas"
             begin
                 CurrReport.NEWPAGE;
 
-                totalIvaAbonos  := 0;
+                totalIvaAbonos := 0;
                 totalBaseAbonos := 0;
 
                 "Purch. Inv. Header".COPYFILTER("Posting Date", "Posting Date");

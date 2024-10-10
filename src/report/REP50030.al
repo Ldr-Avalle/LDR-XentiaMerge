@@ -1,22 +1,22 @@
 report 50030 "Test 17vs45"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Test 17vs45.rdlc';
+    RDLCLayout = './src/layout/Test 17vs45.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000001;Table45)
+        dataitem("G/L Register"; "G/L Register")
         {
-            column(No_GLRegister;"G/L Register"."No.")
+            column(No_GLRegister; "G/L Register"."No.")
             {
             }
-            column(FromEntryNo_GLRegister;"G/L Register"."From Entry No.")
+            column(FromEntryNo_GLRegister; "G/L Register"."From Entry No.")
             {
             }
-            column(ToEntryNo_GLRegister;"G/L Register"."To Entry No.")
+            column(ToEntryNo_GLRegister; "G/L Register"."To Entry No.")
             {
             }
-            column(salto;Salto)
+            column(salto; Salto)
             {
             }
 
@@ -26,14 +26,14 @@ report 50030 "Test 17vs45"
                 regMovCont.SETCURRENTKEY("Transaction No.");
                 regMovCont.SETRANGE("Transaction No.", "G/L Register"."No.");
                 IF regMovCont.FINDSET THEN BEGIN
-                  primer := regMovCont."Entry No.";
-                  regMovCont.FINDLAST;
-                  ultimo := regMovCont."Entry No.";
-                
-                  IF (ultimo - primer + 1) = regMovCont.COUNT THEN
-                    CurrReport.SKIP;
+                    primer := regMovCont."Entry No.";
+                    regMovCont.FINDLAST;
+                    ultimo := regMovCont."Entry No.";
+
+                    IF (ultimo - primer + 1) = regMovCont.COUNT THEN
+                        CurrReport.SKIP;
                 END;
-                
+
                 /*
                 regMovCont.SETRANGE("Entry No.","From Entry No.","To Entry No.");
                 IF regMovCont.FIND('-') THEN
