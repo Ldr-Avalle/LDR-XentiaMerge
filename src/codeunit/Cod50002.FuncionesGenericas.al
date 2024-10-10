@@ -1,5 +1,7 @@
 codeunit 50002 FuncionesGenericas
 {
+    /*
+    TODO: cod 50005
     VAR
         txtFileDialog: Label 'Selecciona el fichero excel de MRW.';
         TxtExtensions: Label 'Los fichero Excel de MRW tienen las extensiones (%1), el fichero "%2" seleccionado tiene la siguiente extensión errónea "%3".';
@@ -474,5 +476,81 @@ codeunit 50002 FuncionesGenericas
             EXIT(CuentaGastosOtrosArrendamientos);
 
         EXIT(CuentaGastosDesplazamiento)
+    END;
+*/
+    PROCEDURE AddPostedSalesDocumentToCRMAccountWall(SalesHeader: Record 36);
+    VAR
+        Customer: Record 18;
+        CRMIntegrationManagement: Codeunit 5330;
+        CRMSetupDefaults: Codeunit 5334;
+        CRMDocumentHasBeenPostedMsgLbl: Label '%1 ''%2'' se ha registrado.';
+    BEGIN
+        IF NOT CRMSetupDefaults.GetAddPostedSalesDocumentToCRMAccountWallConfig THEN
+            EXIT;
+        IF NOT CRMIntegrationManagement.IsCRMIntegrationEnabled THEN
+            EXIT;
+        IF NOT (SalesHeader."Document Type" IN [SalesHeader."Document Type"::Order, SalesHeader."Document Type"::Invoice]) THEN
+            EXIT;
+
+        Customer.GET(SalesHeader."Sell-to Customer No.");
+        AddPostToCRMEntityWall(Customer.RECORDID, STRSUBSTNO(CRMDocumentHasBeenPostedMsgLbl, SalesHeader."Document Type", SalesHeader."No."));
+    END;
+
+    PROCEDURE AddPostToCRMEntityWall(TargetRecordID: RecordID; Message: Text);
+    VAR
+        CRMPost: Record 5344;
+        EntityID: GUID;
+        EntityTypeName: Text;
+    BEGIN
+        IF NOT GetCRMEntityIdAndTypeName(TargetRecordID, EntityID, EntityTypeName) THEN
+            EXIT;
+
+        CLEAR(CRMPost);
+        EVALUATE(CRMPost.RegardingObjectTypeCode, EntityTypeName);
+        CRMPost.RegardingObjectId := EntityID;
+        CRMPost.Text := COPYSTR(Message, 1, MAXSTRLEN(CRMPost.Text));
+        CRMPost.Source := CRMPost.Source::AutoPost;
+        CRMPost.Type := CRMPost.Type::Status;
+        CRMPost.INSERT;
+    END;
+
+    PROCEDURE GetCRMEntityIdAndTypeName(DestinationRecordID: RecordID; VAR EntityID: GUID; VAR EntityTypeName: Text): Boolean;
+    VAR
+        CRMIntegrationRecord: Record 5331;
+    BEGIN
+        IF NOT CRMIntegrationRecord.FindIDFromRecordID(DestinationRecordID, EntityID) THEN
+            EXIT(FALSE);
+
+        EntityTypeName := GetCRMEntityTypeName(DestinationRecordID.TABLENO);
+        EXIT(TRUE);
+    END;
+
+    LOCAL PROCEDURE GetCRMEntityTypeName(TableId: Integer): Text;
+    VAR
+        TempNameValueBuffer: Record 823 temporary;
+        CRMSetupDefaults: Codeunit 5334;
+        UnableToResolveCRMEntityNameFrmTableIDErrLbl: Label 'La aplicación no est  diseñada para integrar la tabla %1 con Dynamics CRM.';
+    BEGIN
+        CRMSetupDefaults.GetTableIDCRMEntityNameMapping(TempNameValueBuffer);
+        TempNameValueBuffer.SETRANGE(Value, FORMAT(TableId));
+        IF TempNameValueBuffer.FINDFIRST THEN
+            EXIT(TempNameValueBuffer.Name);
+        ERROR(UnableToResolveCRMEntityNameFrmTableIDErrLbl, TableId);
+    END;
+
+    PROCEDURE SetCRMSalesOrderStatusToInvoiced(SalesHeader: Record 36);
+    VAR
+        CRMSalesorder: Record 5353;
+        CRMIntegrationManagement: Codeunit "CRM Integration Management";
+    BEGIN
+        IF NOT CRMIntegrationManagement.IsCRMIntegrationEnabled THEN
+            EXIT;
+
+        CRMSalesorder.SETRANGE(OrderNumber, SalesHeader."External Document No.");
+        IF CRMSalesorder.FINDFIRST THEN BEGIN
+            CRMSalesorder.StateCode := CRMSalesorder.StateCode::Invoiced;
+            CRMSalesorder.StatusCode := CRMSalesorder.StatusCode::Invoiced;
+            CRMSalesorder.MODIFY;
+        END;
     END;
 }

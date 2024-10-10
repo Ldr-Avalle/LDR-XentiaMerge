@@ -10,37 +10,41 @@ codeunit 50001 EventosCodeunits
         Text0003Lbl: Label 'Los códigos de producto deben ser de al menos 12 caracteres. Producto %1';
     begin
 
-        IF ((SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice) AND (SalesHeader."Sell-to Customer No." = '0')) THEN BEGIN
-            //SalesLine2.SETFILTER("Document Type", '%1', SalesHeader."Document Type"::Invoice);
-            //SalesLine2.SETFILTER("Document No.", '%1', SalesHeader."No.");
-            //SalesLine2.SETFILTER(Type, '%1', SalesLine2.Type::Item);
-            //IF SalesLine2.FINDFIRST THEN
+        if ((SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice) and (SalesHeader."Sell-to Customer No." = '0')) then begin
+            //TODO: codigo original
+            /*
+                        SalesLine2.SETFILTER("Document Type", '%1', SalesHeader."Document Type"::Invoice);
+                        SalesLine2.SETFILTER("Document No.", '%1', SalesHeader."No.");
+                        SalesLine2.SETFILTER(Type, '%1', SalesLine2.Type::Item);
+                        IF SalesLine2.FINDFIRST THEN
+            */
             SalesLine2.SetRange("Document Type", SalesHeader."Document Type"::Invoice);
             SalesLine2.SetRange("Document No.", SalesHeader."No.");
             SalesLine2.SetRange(Type, SalesLine2.Type::Item);
-            IF SalesLine2.FindSet() THEN
-                REPEAT
-                    Item2.GET(SalesLine2."No.");
-                    IF Item2."Item Tracking Code" <> '' THEN
-                        ERROR(Text0001Lbl, SalesHeader."Sell-to Customer No.");
-                UNTIL SalesLine2.NEXT = 0;
+            if SalesLine2.FindSet() then
+                repeat
+                    Item2.Get(SalesLine2."No.");
+                    if Item2."Item Tracking Code" <> '' then
+                        Error(Text0001Lbl, SalesHeader."Sell-to Customer No.");
+                until SalesLine2.Next = 0;
         end;
-        IF (SalesHeader."Document Type" = SalesHeader."Document Type"::"Credit Memo") THEN
-            SalesHeader.TESTFIELD("Payment Method Code");
-
-        //SalesLine2.SETFILTER("Document Type", '%1', SalesHeader."Document Type");
-        //SalesLine2.SETFILTER("Document No.", '%1', SalesHeader."No.");
-        //SalesLine2.SETFILTER(Type, '%1', SalesLine2.Type::Item);
-        //IF SalesLine2.FINDFIRST THEN
+        if (SalesHeader."Document Type" = SalesHeader."Document Type"::"Credit Memo") then
+            SalesHeader.TestField("Payment Method Code");
+        /*
+                SalesLine2.SETFILTER("Document Type", '%1', SalesHeader."Document Type");
+                SalesLine2.SETFILTER("Document No.", '%1', SalesHeader."No.");
+                SalesLine2.SETFILTER(Type, '%1', SalesLine2.Type::Item);
+                IF SalesLine2.FINDFIRST THEN
+        */
         SalesLine2.SetRange("Document Type", SalesHeader."Document Type");
         SalesLine2.SetRange("Document No.", SalesHeader."No.");
         SalesLine2.SetRange(Type, SalesLine2.Type::Item);
-        IF SalesLine2.FindSet() THEN
-            REPEAT
-                IF STRLEN(SalesLine2."No.") < 12 THEN
-                    ERROR(Text0003Lbl, SalesLine2."No.");
-            UNTIL SalesLine2.NEXT = 0;
-    END;
+        if SalesLine2.FindSet() then
+            repeat
+                if StrLen(SalesLine2."No.") < 12 then
+                    Error(Text0003Lbl, SalesLine2."No.");
+            until SalesLine2.Next = 0;
+    end;
     #endregion
 
     #region Sales Post Invoice Events
@@ -54,9 +58,11 @@ codeunit 50001 EventosCodeunits
     #region Sales-Post
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterPostSalesDoc, '', false, false)]
     local procedure OnAfterPostSalesDoc(var SalesHeader: Record "Sales Header")
+    var
+        FuncionesGenericas: Codeunit FuncionesGenericas;
     begin
-        CRMIntegrationManagement.AddPostedSalesDocumentToCRMAccountWall(SalesHeader);
-        CRMIntegrationManagement.SetCRMSalesOrderStatusToInvoiced(SalesHeader);
+        FuncionesGenericas.AddPostedSalesDocumentToCRMAccountWall(SalesHeader);
+        FuncionesGenericas.SetCRMSalesOrderStatusToInvoiced(SalesHeader);
 
     end;
     #endregion
@@ -87,11 +93,11 @@ codeunit 50001 EventosCodeunits
         PurchLine2.SetRange("Document Type", PurchaseHeader."Document Type");
         PurchLine2.SetRange("Document No.", PurchaseHeader."No.");
         PurchLine2.SetRange(Type, PurchLine2.Type::Item);
-        IF PurchLine2.FindSet() THEN
-            REPEAT
-                IF STRLEN(PurchLine2."No.") < 12 THEN
-                    ERROR(Text0003Lbl, PurchaseHeader."No.");
-            UNTIL PurchLine2.NEXT = 0;
+        if PurchLine2.FindSet() then
+            repeat
+                if StrLen(PurchLine2."No.") < 12 then
+                    Error(Text0003Lbl, PurchaseHeader."No.");
+            until PurchLine2.Next = 0;
     end;
     #endregion
 
@@ -107,9 +113,9 @@ codeunit 50001 EventosCodeunits
         case true of
             not PurchaseHeader.Receive and not PurchaseHeader.Invoice:
                 begin
-                    IF UserDims.existsUser(USERID) THEN begin
-                        Selection := STRMENU(Text000xLbl, 3);
-                        IsHandled := TRUE;
+                    if UserDims.existsUser(UserId) then begin
+                        Selection := StrMenu(Text000xLbl, 3);
+                        IsHandled := true;
                         if Selection <> 0 then begin
                             PurchaseHeader.Receive := Selection in [1, 3];
                             PurchaseHeader.Invoice := Selection in [2, 3];
@@ -131,9 +137,9 @@ codeunit 50001 EventosCodeunits
         case true of
             not PurchaseHeader.Ship and not PurchaseHeader.Invoice:
                 begin
-                    IF UserDims.existsUser(USERID) THEN begin
-                        Selection := STRMENU(Text002xLbl, 3);
-                        IsHandled := TRUE;
+                    if UserDims.existsUser(UserId) then begin
+                        Selection := StrMenu(Text002xLbl, 3);
+                        IsHandled := true;
                         if Selection <> 0 then begin
                             PurchaseHeader.Ship := Selection in [1, 3];
                             PurchaseHeader.Invoice := Selection in [2, 3];
@@ -153,7 +159,7 @@ codeunit 50001 EventosCodeunits
     #endregion
 
     #region DimensionManagement
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"DimensionManagement", OnAfterDefaultDimObjectNoWithoutGlobalDimsList, '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::DimensionManagement, OnAfterDefaultDimObjectNoWithoutGlobalDimsList, '', false, false)]
     local procedure OnAfterDefaultDimObjectNoWithoutGlobalDimsList(var TempAllObjWithCaption: Record AllObjWithCaption temporary; sender: Codeunit DimensionManagement)
     begin
         sender.DefaultDimInsertTempObject(TempAllObjWithCaption, Database::User);
