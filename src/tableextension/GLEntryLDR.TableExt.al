@@ -1,4 +1,4 @@
-tableextension 50121 GLEntry_LDR extends "G/L Entry"
+tableextension 50121 "GLEntry_LDR" extends "G/L Entry"
 {
     fields
     {
