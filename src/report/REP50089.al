@@ -1,7 +1,9 @@
+//todo: por ahora el tbai queda exlcluido de la migracion
+/*
 report 50089 GeneraFacturaTbai
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './GeneraFacturaTbai.rdlc';
+    RDLCLayout = './src/layout/GeneraFacturaTbai.rdl';
 
     dataset
     {
@@ -16,7 +18,7 @@ report 50089 GeneraFacturaTbai
             {
                 field(gblNumFactura;gblNumFactura)
                 {
-                    Caption = 'N´Š¢ factura';
+                    Caption = 'Nº factura';
                 }
             }
         }
@@ -49,45 +51,12 @@ report 50089 GeneraFacturaTbai
         //  IF SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice THEN BEGIN
             SalesInvoiceHeader.RESET;
             CLEAR(SalesInvoiceHeader);
-            IF SalesInvoiceHeader.GET(SalesInvHdrNo) THEN BEGIN
-        /*
-              IF SalesHeader.SendToTicketBAI THEN BEGIN
-                SalesInvoiceHeader.SendToTicketBAI := SalesHeader.SendToTicketBAI;
-                SalesInvoiceHeader."Factura Simplificada" := SalesHeader."Factura Simplificada";
-                cdu.NosSeriesTbai(SalesInvoiceHeader.DocNoTBAI,SalesInvoiceHeader."No. SeriesTBAI");
-                SalesInvoiceHeader.MODIFY(FALSE);
-        */
+            IF SalesInvoiceHeader.GET(SalesInvHdrNo) THEN BEGIN       
                 cdu.MakeXMLTicketBAI_FacturaEnvio(SalesInvoiceHeader);//TBAI_AL_01
               END;
         //    END;
-        //  END;
-        
-        /*
-          IF SalesHeader."Document Type" = SalesHeader."Document Type"::"Credit Memo" THEN BEGIN
-            SalesCrMemoHeader.RESET;
-            CLEAR(SalesCrMemoHeader);
-            SalesInvoiceHeader.RESET;
-            CLEAR(SalesInvoiceHeader);
-            IF SalesCrMemoHeader.GET(SalesCrMemoHdrNo) THEN BEGIN
-              IF SalesHeader.SendToTicketBAI THEN BEGIN
-                SalesInvoiceHeader.SendToTicketBAI := SalesHeader.SendToTicketBAI;
-                IF SalesCrMemoHeader."Applies-to Doc. Type" = SalesCrMemoHeader."Applies-to Doc. Type"::Invoice THEN BEGIN
-                  IF SalesInvoiceHeader.GET(SalesCrMemoHeader."Applies-to Doc. No.") THEN BEGIN
-                    SalesInvoiceHeader.TBAI_Sended := FALSE;
-                    SalesInvoiceHeader.MODIFY(FALSE);
-                    MakeXMLTicketBAI_FacturaAnulacion(SalesInvoiceHeader);//TBAI_AL_01
-                    Anulaci´Š¢nPorAbono_ModifyTBAIValues_SalesCrMemoHEADER(SalesCrMemoHeader,SalesInvoiceHeader);
-                  END;
-                END;
-              END;
-        
-            END;
-          END;
-        
-        
-        END;
-        */
+        //  END;                
 
     end;
 }
-
+*/

@@ -1,57 +1,57 @@
-report 50086 "Control vencim. mayore 85 d´Š¢as"
+report 50086 "Control vencim. mayore 85 dias"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Control vencim. mayore 85 d´Š¢as.rdlc';
+    RDLCLayout = './src/layout/Control vencim. mayore 85 dias.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table25)
+        dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
         {
-            DataItemTableView = SORTING(Vendor No.,Open,Positive,Due Date,Currency Code);
-            RequestFilterFields = "Vendor No.","Posting Date","Due Date";
-            column(VendorLedgerEntryVendorNo;"Vendor Ledger Entry"."Vendor No.")
+            DataItemTableView = SORTING("Vendor No.", Open, Positive, "Due Date", "Currency Code");
+            RequestFilterFields = "Vendor No.", "Posting Date", "Due Date";
+            column(VendorLedgerEntryVendorNo; "Vendor Ledger Entry"."Vendor No.")
             {
             }
-            column(CompanyInfoName;CompanyInfo.Name)
+            column(CompanyInfoName; CompanyInfo.Name)
             {
             }
-            column(PageConstFORMATCurrReportPAGENO;PageConst + ' ' + FORMAT(CurrReport.PAGENO))
+            column(PageConstFORMATCurrReportPAGENO; PageConst + ' ' + FORMAT(CurrReport.PAGENO))
             {
             }
-            dataitem(DataItem1000000001;Table23)
+            dataitem(Vendor; Vendor)
             {
-                DataItemLink = No.=FIELD(Vendor No.);
-                column(VendorLedgerEntryDocumentType;"Vendor Ledger Entry"."Document Type")
+                DataItemLink = "No." = FIELD("Vendor No.");
+                column(VendorLedgerEntryDocumentType; "Vendor Ledger Entry"."Document Type")
                 {
                 }
-                column(VendorLedgerEntryDocumentNo;"Vendor Ledger Entry"."Document No.")
+                column(VendorLedgerEntryDocumentNo; "Vendor Ledger Entry"."Document No.")
                 {
                 }
-                column(VendorLedgerEntryName;"Vendor Ledger Entry".Name)
+                column(VendorLedgerEntryName; "Vendor Ledger Entry".Name)
                 {
                 }
-                column(VendorLedgerEntryPostingDate;"Vendor Ledger Entry"."Posting Date")
+                column(VendorLedgerEntryPostingDate; "Vendor Ledger Entry"."Posting Date")
                 {
                 }
-                column(VendorLedgerEntryAmount;"Vendor Ledger Entry".Amount)
+                column(VendorLedgerEntryAmount; "Vendor Ledger Entry".Amount)
                 {
                 }
-                column(VendorLedgerEntryDueDate;"Vendor Ledger Entry"."Due Date")
+                column(VendorLedgerEntryDueDate; "Vendor Ledger Entry"."Due Date")
                 {
                 }
-                column(total0a85;total0a85)
+                column(total0a85; total0a85)
                 {
                 }
-                column(total86a180;total86a180)
+                column(total86a180; total86a180)
                 {
                 }
-                column(total0a85Mastotal86a180; total0a85 +total86a180)
+                column(total0a85Mastotal86a180; total0a85 + total86a180)
                 {
                 }
-                column(total0a85Entretotal0a85Mastotal86a180Por100;((total0a85 )/(total0a85 +total86a180))*100)
+                column(total0a85Entretotal0a85Mastotal86a180Por100; ((total0a85) / (total0a85 + total86a180)) * 100)
                 {
                 }
-                column(total86a180Entretotal0a85Mastotal86a180Por100;((total86a180)/(total0a85 +total86a180))*100)
+                column(total86a180Entretotal0a85Mastotal86a180Por100; ((total86a180) / (total0a85 + total86a180)) * 100)
                 {
                 }
             }
@@ -61,16 +61,17 @@ report 50086 "Control vencim. mayore 85 d´Š¢as"
                 diasDif := "Due Date" - "Posting Date";
                 CALCFIELDS(Amount);
 
-                          IF (diasDif<= 60) THEN total0a85 := total0a85 + Amount
-                         ELSE IF ((diasDif >= 61) AND (diasDif < 2000)) THEN total86a180 := total86a180 + Amount;
-                  total := total + Amount;
+                IF (diasDif <= 60) THEN
+                    total0a85 := total0a85 + Amount
+                ELSE IF ((diasDif >= 61) AND (diasDif < 2000)) THEN total86a180 := total86a180 + Amount;
+                total := total + Amount;
             end;
 
             trigger OnPreDataItem()
             begin
                 LastFieldNo := FIELDNO("Vendor No.");
                 LastFieldNo := FIELDNO("Entry No.");
-                SETFILTER("Document Type", '%1|%2',"Document Type"::"Credit Memo","Document Type"::Invoice);
+                SETFILTER("Document Type", '%1|%2', "Document Type"::"Credit Memo", "Document Type"::Invoice);
 
 
                 total0a85 := 0;

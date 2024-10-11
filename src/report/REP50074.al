@@ -1,59 +1,59 @@
 report 50074 IDI2
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './IDI2.rdlc';
+    RDLCLayout = './src/layout/IDI2.rdl';
 
     dataset
     {
-        dataitem(IDI_LDR; IDI_LDR)
+        dataitem(IDI; IDI_LDR)
         {
-            CalcFields = Name, First Family Name, Second Family Name;
-            DataItemTableView = SORTING(Employee, A´Š¢o, Mes)
+            CalcFields = Name, "First Family Name", "Second Family Name";
+            DataItemTableView = SORTING(Employee, "Año", Mes)
                                 ORDER(Ascending);
-            RequestFilterFields = "A´Š¢o", Mes, Employee;
+            RequestFilterFields = "Año", Mes, Employee;
             column(CompanyInfoPicture; CompanyInfo.Picture)
             {
             }
             column(CompanyInfoAddress; CompanyInfo.Address)
             {
             }
-            column(IDiAnio; IDi.A´Š¢o)
+            column(IDiAnio; IDi."Año")
             {
             }
-            column(IDiMes;IDi.Mes)
+            column(IDiMes; IDi.Mes)
             {
             }
-            column(IDiEmployee;IDi.Employee)
+            column(IDiEmployee; IDi.Employee)
             {
             }
-            column(IDiName;IDi.Name)
+            column(IDiName; IDi.Name)
             {
             }
-            column(IDiFirstFamilyName;IDi."First Family Name")
+            column(IDiFirstFamilyName; IDi."First Family Name")
             {
             }
-            column(IDiSecondFamilyName;IDi."Second Family Name")
+            column(IDiSecondFamilyName; IDi."Second Family Name")
             {
             }
-            column(IDiCosteHorajust;IDi."Coste/Hora just.")
+            column(IDiCosteHorajust; IDi."Coste/Hora just.")
             {
             }
-            column(IDiEmployee2;IDi.Employee)
+            column(IDiEmployee2; IDi.Employee)
             {
             }
-            column(IDiName2;IDi.Name)
+            column(IDiName2; IDi.Name)
             {
             }
-            column(IDiFirstFamilyName2;IDi."First Family Name")
+            column(IDiFirstFamilyName2; IDi."First Family Name")
             {
             }
-            column(IDiSecondFamilyName2;IDi."Second Family Name")
+            column(IDiSecondFamilyName2; IDi."Second Family Name")
             {
             }
-            column(IDiCosteHorajust2;IDi."Coste/Hora just.")
+            column(IDiCosteHorajust2; IDi."Coste/Hora just.")
             {
             }
-            column(IDiCosteHorajust3;IDi."Coste/Hora just.")
+            column(IDiCosteHorajust3; IDi."Coste/Hora just.")
             {
             }
 

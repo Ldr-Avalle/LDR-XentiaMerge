@@ -1,4 +1,4 @@
-report 50091 "Registrar justificaci´Š¢n"
+report 50091 "Registrar justificacion"
 {
     // Errors
     //   - 1: Horas justificadas no informadas
@@ -15,9 +15,9 @@ report 50091 "Registrar justificaci´Š¢n"
 
     dataset
     {
-        dataitem(DataItem1000000000;Table50027)
+        dataitem(IDI; IDI_LDR)
         {
-            RequestFilterFields = Proyecto,"A´Š¢o",Mes;
+            RequestFilterFields = Proyecto, "Año", Mes;
 
             trigger OnAfterGetRecord()
             var
@@ -32,34 +32,34 @@ report 50091 "Registrar justificaci´Š¢n"
                 IF "Coste/Hora just." = 0 THEN Errors[2] += 1;
 
                 //Errors 3
-                IF "Horas just." > JobSetup."M´Š¢x. IDi hours per month" THEN Errors[3] += 1;
+                IF "Horas just." > JobSetup."Max. IDI hours per month" THEN Errors[3] += 1;
 
                 //Errors 4
                 IF "Justification register date" <> 0D THEN Errors[4] += 1;
 
                 //Warnings 1
                 IDi2.SETFILTER(Employee, '%1', IDi.Employee);
-                IDi2.SETFILTER(A´Š¢o, '%1', IDi.A´Š¢o);
+                IDi2.SETFILTER("Año", '%1', IDi."Año");
                 IDi2.SETFILTER(Mes, '%1', IDi.Mes);
                 IF IDi2.FINDFIRST THEN
-                  REPEAT
-                    Hours += IDi2."Horas just.";
-                  UNTIL IDi2.NEXT = 0;
-                IF Hours > JobSetup."M´Š¢x. IDi hours per month" THEN Warnings[1] += 1;
+                    REPEAT
+                        Hours += IDi2."Horas just.";
+                    UNTIL IDi2.NEXT = 0;
+                IF Hours > JobSetup."Max. IDi hours per month" THEN Warnings[1] += 1;
 
                 //Warnings 2
                 IF EmpTerminated = FALSE THEN BEGIN
-                  Employee.GET(IDi.Employee);
-                  IF Employee."Termination Date" <= "Justification date" THEN EmpTerminated := TRUE;
+                    Employee.GET(IDi.Employee);
+                    IF Employee."Termination Date" <= "Justification date" THEN EmpTerminated := TRUE;
                 END;
 
                 //Warnings 3
                 IF "Horas just." > "Horas present." THEN Warnings[3] += 1;
 
                 IF OnlyCheck = FALSE THEN BEGIN
-                  "Justification date" := JustificationDate;
-                  "Justification register date" := TODAY;
-                  MODIFY;
+                    "Justification date" := JustificationDate;
+                    "Justification register date" := TODAY;
+                    MODIFY;
                 END;
             end;
 
@@ -71,15 +71,17 @@ report 50091 "Registrar justificaci´Š¢n"
             begin
                 ErrorsExists := FALSE;
                 FOR i := 1 TO 4 DO BEGIN
-                  IF Errors[i] > 0 THEN ErrorsExists := TRUE;
+                    IF Errors[i] > 0 THEN ErrorsExists := TRUE;
                 END;
 
                 IF ErrorsExists THEN
-                  ERROR(Text0001,Errors[1],Errors[2],JobSetup."M´Š¢x. IDi hours per month",Errors[3],Errors[4],JobSetup."M´Š¢x. IDi hours per month",
-                  Warnings[1],EmpTerminated, Warnings[3])
+                    ERROR(Text0001, Errors[1], Errors[2], JobSetup."Max. IDi hours per month", Errors[3], Errors[4], JobSetup."Max. IDi hours per month",
+                    Warnings[1], EmpTerminated, Warnings[3])
                 ELSE
-                  IF OnlyCheck = FALSE THEN MESSAGE('Todos los registros han sido procesados')
-                  ELSE MESSAGE('Prueba de registro ejecutada. No se han modificado datos');
+                    IF OnlyCheck = FALSE THEN
+                        MESSAGE('Todos los registros han sido procesados')
+                    ELSE
+                        MESSAGE('Prueba de registro ejecutada. No se han modificado datos');
             end;
 
             trigger OnPreDataItem()
@@ -87,14 +89,15 @@ report 50091 "Registrar justificaci´Š¢n"
                 Text0001: Label 'Se continua se registrar´Š¢n como justificados todos los datos de\Proyectos: %1\A´Š¢os: %2\Meses: %3';
             begin
                 JobSetup.GET;
-                JobSetup.TESTFIELD("M´Š¢x. IDi hours per month");
+                JobSetup.TESTFIELD("Max. IDi hours per month");
                 EmpTerminated := FALSE;
 
-                IF (JustificationDate = 0D) OR (IDi.GETFILTER(Proyecto) = '') OR (IDi.GETFILTER(A´Š¢o) = '')
-                   OR (IDi.GETFILTER(Mes) = '') THEN ERROR(Text0001);
+                IF (JustificationDate = 0D) OR (IDi.GETFILTER(Proyecto) = '') OR (IDi.GETFILTER("Año") = '')
+                   OR (IDi.GETFILTER(Mes) = '') THEN
+                    ERROR(Text0001);
 
                 IF OnlyCheck = FALSE THEN
-                  IF CONFIRM(Text0001, FALSE, GETFILTER(Proyecto), GETFILTER(A´Š¢o), GETFILTER(Mes)) = FALSE THEN CurrReport.QUIT;
+                    IF CONFIRM(Text0001, FALSE, GETFILTER(Proyecto), GETFILTER("Año"), GETFILTER(Mes)) = FALSE THEN CurrReport.QUIT;
             end;
         }
     }
@@ -106,11 +109,11 @@ report 50091 "Registrar justificaci´Š¢n"
         {
             area(content)
             {
-                field(JustificationDate;JustificationDate)
+                field(JustificationDate; JustificationDate)
                 {
                     Caption = 'Fecha justificaci´Š¢n';
                 }
-                field(OnlyCheck;OnlyCheck)
+                field(OnlyCheck; OnlyCheck)
                 {
                     Caption = 'Test';
                     ToolTip = 'Ejecutar´Š¢ el proceso de registro de la justificaci´Š¢n, sin hacer realmente el registro. Servir´Š¢ para hacer las comprobacioens previas al mismo.';
@@ -130,10 +133,10 @@ report 50091 "Registrar justificaci´Š¢n"
     var
         JustificationDate: Date;
         OnlyCheck: Boolean;
-        Errors: array [5] of Integer;
-        Warnings: array [5] of Integer;
+        Errors: array[5] of Integer;
+        Warnings: array[5] of Integer;
         JobSetup: Record "315";
         EmpTerminated: Boolean;
-        Text0001: Label 'Debe indicar la fecha de justificaci´Š¢n, as´Š¢ como los filtros para Proyecto, A´Š¢o y Mes.';
+        Text0001: Label 'Debe indicar la fecha de justificación, así como los filtros para Proyecto, Año y Mes.';
 }
 

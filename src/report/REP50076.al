@@ -1,78 +1,78 @@
 report 50076 "location/Item Sales3"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './locationItem Sales3.rdlc';
+    RDLCLayout = './src/layout/locationItem Sales3.rdlc';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table14)
+        dataitem(Location; Location)
         {
-            DataItemTableView = WHERE(ShopCode=FILTER(<>''),
-                                      Global Dimension 1 Code=FILTER(TELECABLE));
+            DataItemTableView = WHERE(ShopCode = FILTER(<> ''),
+                                      "Global Dimension 1 Code" = FILTER('TELECABLE'));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "Global Dimension 1 Code";
-            column(PrintOnlyOnePerPage;PrintOnlyOnePerPage)
+            column(PrintOnlyOnePerPage; PrintOnlyOnePerPage)
             {
             }
-            column(STRSUBSTNOText000PeriodText;STRSUBSTNO(Text000,PeriodText))
+            column(STRSUBSTNOText000PeriodText; STRSUBSTNO(Text000, PeriodText))
             {
             }
-            column(CompanyInfoName;CompanyInfo.Name)
+            column(CompanyInfoName; CompanyInfo.Name)
             {
             }
-            column(LocationCode;Location.Code)
+            column(LocationCode; Location.Code)
             {
             }
-            dataitem(DataItem1000000001;Table27)
+            dataitem(Item; Item)
             {
-                DataItemTableView = WHERE(On Deposit=CONST(Yes));
-                column(ItemVendorItemNo;Item."Vendor Item No.")
+                DataItemTableView = WHERE("On Deposit" = CONST(true));
+                column(ItemVendorItemNo; Item."Vendor Item No.")
                 {
                 }
-                column(ItemDescription;Item.Description)
+                column(ItemDescription; Item.Description)
                 {
                 }
-                column(ItemNo;Item."No.")
+                column(ItemNo; Item."No.")
                 {
                 }
-                column(InvoicedQuantity;InvoicedQuantity)
+                column(InvoicedQuantity; InvoicedQuantity)
                 {
                 }
-                column(SalesAmount;SalesAmount)
+                column(SalesAmount; SalesAmount)
                 {
                 }
-                column(ItemInventory;Item.Inventory)
+                column(ItemInventory; Item.Inventory)
                 {
                 }
-                column(ItemQtyonPurchOrder;Item."Qty. on Purch. Order")
+                column(ItemQtyonPurchOrder; Item."Qty. on Purch. Order")
                 {
                 }
-                column(ItemQuantityreturnsorders;Item."Quantity returns orders")
+                column(ItemQuantityreturnsorders; Item."Quantity returns orders")
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    InvoicedQuantity:=0;
-                    SalesAmount :=0;
+                    InvoicedQuantity := 0;
+                    SalesAmount := 0;
 
                     Item.SETFILTER("Location Filter", '%1', Location.Code);
-                    Item.CALCFIELDS(Inventory,"Qty. on Purch. Order","Quantity returns orders");
+                    Item.CALCFIELDS(Inventory, "Qty. on Purch. Order", "Quantity returns orders");
 
                     ValueEntry.SETRANGE("Item No.", "No.");
                     ValueEntry.SETRANGE("Source Type", ValueEntry."Source Type"::Customer);
                     ValueEntry.SETFILTER("Location Code", '%1', Location.Code);
-                    ValueEntry.SETFILTER("Posting Date",'%1..%2',InitialDate,EndDate);
+                    ValueEntry.SETFILTER("Posting Date", '%1..%2', InitialDate, EndDate);
                     IF ValueEntry.FINDFIRST THEN
-                     REPEAT
-                        InvoicedQuantity+= ValueEntry."Invoiced Quantity" ;
-                        SalesAmount +=ValueEntry."Sales Amount (Actual)";
-                    UNTIL  ValueEntry.NEXT=0;
+                        REPEAT
+                            InvoicedQuantity += ValueEntry."Invoiced Quantity";
+                            SalesAmount += ValueEntry."Sales Amount (Actual)";
+                        UNTIL ValueEntry.NEXT = 0;
 
-                      MakeExcelDataBody;
+                    MakeExcelDataBody;
                 end;
             }
-            dataitem(DataItem1000000002;Table2000000026)
+            dataitem(Integer; Integer)
             {
                 DataItemTableView = SORTING(Number);
 
@@ -130,15 +130,15 @@ report 50076 "location/Item Sales3"
         {
             area(content)
             {
-                field(PrintOnlyOnePerPage;PrintOnlyOnePerPage)
+                field(PrintOnlyOnePerPage; PrintOnlyOnePerPage)
                 {
                     Caption = 'P´Š¢gina nueva por tienda';
                 }
-                field(InitialDate;InitialDate)
+                field(InitialDate; InitialDate)
                 {
                     Caption = 'Fecha inicial';
                 }
-                field(EndDate;EndDate)
+                field(EndDate; EndDate)
                 {
                     Caption = 'Fecha final';
                 }
@@ -162,7 +162,7 @@ report 50076 "location/Item Sales3"
     trigger OnPostReport()
     begin
         IF PrintToExcel THEN
-          CreateExcelbook;
+            CreateExcelbook;
     end;
 
     trigger OnPreReport()
@@ -172,7 +172,7 @@ report 50076 "location/Item Sales3"
         //PeriodText := "Value Entry".GETFILTER("Posting Date");
 
         IF PrintToExcel THEN
-          MakeExcelInfo;
+            MakeExcelInfo;
     end;
 
     var
@@ -209,10 +209,10 @@ report 50076 "location/Item Sales3"
     local procedure CalcProfitPct()
     begin
         WITH ValueEntryBuffer DO BEGIN
-          IF "Sales Amount (Actual)" <> 0 THEN
-            ProfitPct := ROUND(100 * Profit / "Sales Amount (Actual)",0.1)
-          ELSE
-            ProfitPct := 0;
+            IF "Sales Amount (Actual)" <> 0 THEN
+                ProfitPct := ROUND(100 * Profit / "Sales Amount (Actual)", 0.1)
+            ELSE
+                ProfitPct := 0;
         END;
     end;
 

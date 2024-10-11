@@ -1,38 +1,38 @@
 report 50092 "Employees ONO"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Employees ONO.rdlc';
+    RDLCLayout = './src/layout/Employees ONO.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table5200)
+        dataitem(Employee; Employee)
         {
             PrintOnlyIfDetail = true;
-            column(EmployeeNo;Employee."No.")
+            column(EmployeeNo; Employee."No.")
             {
             }
-            column(EmployeeName;Employee.Name)
+            column(EmployeeName; Employee.Name)
             {
             }
-            column(EmployeeFirstFamilyName;Employee."First Family Name")
+            column(EmployeeFirstFamilyName; Employee."First Family Name")
             {
             }
-            column(EmployeeSecondFamilyName;Employee."Second Family Name")
+            column(EmployeeSecondFamilyName; Employee."Second Family Name")
             {
             }
-            dataitem(DataItem1000000001;Table50009)
+            dataitem("Employee internal historic"; "Employee internal historic")
             {
-                DataItemLink = Employee No.=FIELD(No.);
-                DataItemTableView = SORTING(Employee No.,Start Date)
+                DataItemLink = "Employee No." = FIELD("No.");
+                DataItemTableView = SORTING("Employee No.", "Start Date")
                                     ORDER(Descending);
                 RequestFilterFields = "Employee No.";
-                column(EmployeeinternalhistoricProject;"Employee internal historic".Project)
+                column(EmployeeinternalhistoricProject; "Employee internal historic".Project)
                 {
                 }
-                column(EmployeeinternalhistoricCounty;"Employee internal historic".County)
+                column(EmployeeinternalhistoricCounty; "Employee internal historic".County)
                 {
                 }
-                column(EmployeeinternalhistoricSegmento;"Employee internal historic".Segmento)
+                column(EmployeeinternalhistoricSegmento; "Employee internal historic".Segmento)
                 {
                 }
 

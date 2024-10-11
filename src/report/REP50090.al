@@ -1,41 +1,41 @@
 report 50090 "Control albaranes compra"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Control albaranes compra.rdlc';
+    RDLCLayout = './src/layout/Control albaranes compra.rdl';
 
     dataset
     {
-        dataitem("Albar´Š¢n";Table32)
+        dataitem("Albaran"; "Item Ledger Entry")
         {
             PrintOnlyIfDetail = true;
-            RequestFilterFields = "Posting Date","Location Code";
-            dataitem(Factura;Table5802)
+            RequestFilterFields = "Posting Date", "Location Code";
+            dataitem(Factura; "Value Entry")
             {
-                DataItemLink = Item Ledger Entry No.=FIELD(Entry No.);
-                DataItemTableView = SORTING(Document No.);
-                RequestFilterFields = "Document No.","Posting Date";
-                column(FacturaItemNo;Factura."Item No.")
+                DataItemLink = "Item Ledger Entry No." = FIELD("Entry No.");
+                DataItemTableView = SORTING("Document No.");
+                RequestFilterFields = "Document No.", "Posting Date";
+                column(FacturaItemNo; Factura."Item No.")
                 {
                 }
-                column(FacturaPostingDate;Factura."Posting Date")
+                column(FacturaPostingDate; Factura."Posting Date")
                 {
                 }
-                column(AlbaranPostingDate;Albar´Š¢n."Posting Date")
+                column(AlbaranPostingDate; Albaran."Posting Date")
                 {
                 }
-                column(FacturaDocumentNo;Factura."Document No.")
+                column(FacturaDocumentNo; Factura."Document No.")
                 {
                 }
-                column(FacturaDescription;Factura.Description)
+                column(FacturaDescription; Factura.Description)
                 {
                 }
-                column(FacturaCostAmountActual;Factura."Cost Amount (Actual)")
+                column(FacturaCostAmountActual; Factura."Cost Amount (Actual)")
                 {
                 }
-                column(FacturaLocationCode;Factura."Location Code")
+                column(FacturaLocationCode; Factura."Location Code")
                 {
                 }
-                column(TotalCost;TotalCost)
+                column(TotalCost; TotalCost)
                 {
                 }
 
@@ -47,7 +47,7 @@ report 50090 "Control albaranes compra"
 
             trigger OnAfterGetRecord()
             begin
-                TotalCost:=TotalCost + Factura."Cost Amount (Actual)";
+                TotalCost := TotalCost + Factura."Cost Amount (Actual)";
             end;
         }
     }

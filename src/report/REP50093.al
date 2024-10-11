@@ -1,49 +1,49 @@
 report 50093 "Media empleados"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Media empleados.rdlc';
+    RDLCLayout = './src/layout/Media empleados.rdl';
 
     dataset
     {
-        dataitem(Empleado;Table5200)
+        dataitem(Empleado; Employee)
         {
-            DataItemTableView = SORTING(No.);
-            RequestFilterFields = "Global Dimension 1 Code","Work position";
-            column(CompanyInfoName;CompanyInfo.Name)
+            DataItemTableView = SORTING("No.");
+            RequestFilterFields = "Global Dimension 1 Code", "Work position";
+            column(CompanyInfoName; CompanyInfo.Name)
             {
             }
-            dataitem(DataItem1000000001;Table50004)
+            dataitem("Employee Contract"; "Employee Contract")
             {
-                DataItemLink = Employee=FIELD(No.);
-                RequestFilterFields = "Contract type",Segment,Category,Work,"Working center";
-                column(EmployeeContractNo;"Employee Contract"."No.")
+                DataItemLink = Employee = FIELD("No.");
+                RequestFilterFields = "Contract type", Segment, Category, Work, "Working center";
+                column(EmployeeContractNo; "Employee Contract"."No.")
                 {
                 }
-                column(EmpleadoName;Empleado.Name)
+                column(EmpleadoName; Empleado.Name)
                 {
                 }
-                column(EmpleadoFirstFamilyName;Empleado."First Family Name")
+                column(EmpleadoFirstFamilyName; Empleado."First Family Name")
                 {
                 }
-                column(EmpleadoSecondFamilyName;Empleado."Second Family Name")
+                column(EmpleadoSecondFamilyName; Empleado."Second Family Name")
                 {
                 }
-                column(EmployeeContractCategory;"Employee Contract".Category)
+                column(EmployeeContractCategory; "Employee Contract".Category)
                 {
                 }
-                column(EmployeeContractDateofhire;"Employee Contract"."Date of hire")
+                column(EmployeeContractDateofhire; "Employee Contract"."Date of hire")
                 {
                 }
-                column(EmployeeContractExpirationdate;"Employee Contract"."Expiration date")
+                column(EmployeeContractExpirationdate; "Employee Contract"."Expiration date")
                 {
                 }
-                column(EmpleadoGlobalDimension1Code;Empleado."Global Dimension 1 Code")
+                column(EmpleadoGlobalDimension1Code; Empleado."Global Dimension 1 Code")
                 {
                 }
-                column(EmployeeContractWorkingcenter;"Employee Contract"."Working center")
+                column(EmployeeContractWorkingcenter; "Employee Contract"."Working center")
                 {
                 }
-                column(ContractDaysEntreEndDateMenosInitDate1;ContractDays/(EndDate-InitDate+1))
+                column(ContractDaysEntreEndDateMenosInitDate1; ContractDays / (EndDate - InitDate + 1))
                 {
                 }
 
@@ -52,11 +52,15 @@ report 50093 "Media empleados"
                     CurrentContractDays: Integer;
                 begin
                     IF ("Date of hire" < InitDate) THEN
-                      IF ("Expiration date" = 0D) OR ("Expiration date" > EndDate) THEN CurrentContractDays := (EndDate - InitDate)
-                      ELSE CurrentContractDays := ("Expiration date" - InitDate)
+                        IF ("Expiration date" = 0D) OR ("Expiration date" > EndDate) THEN
+                            CurrentContractDays := (EndDate - InitDate)
+                        ELSE
+                            CurrentContractDays := ("Expiration date" - InitDate)
                     ELSE
-                      IF ("Expiration date" = 0D) OR ("Expiration date" > EndDate) THEN CurrentContractDays := (EndDate - "Date of hire")
-                      ELSE CurrentContractDays := ("Expiration date" - "Date of hire");
+                        IF ("Expiration date" = 0D) OR ("Expiration date" > EndDate) THEN
+                            CurrentContractDays := (EndDate - "Date of hire")
+                        ELSE
+                            CurrentContractDays := ("Expiration date" - "Date of hire");
 
                     ContractDays += CurrentContractDays + 1;
                 end;
@@ -71,7 +75,7 @@ report 50093 "Media empleados"
             trigger OnPostDataItem()
             begin
                 //MESSAGE('Media %1\Fecha inicio %2\Fecha fin %3\D´Š¢as periodo %4\D´Š¢as contratos %5',
-                  //ContractDays/((EndDate-InitDate)+1), InitDate, EndDate, ((EndDate-InitDate)+1), ContractDays);
+                //ContractDays/((EndDate-InitDate)+1), InitDate, EndDate, ((EndDate-InitDate)+1), ContractDays);
             end;
 
             trigger OnPreDataItem()
@@ -88,11 +92,11 @@ report 50093 "Media empleados"
         {
             area(content)
             {
-                field(InitDate;InitDate)
+                field(InitDate; InitDate)
                 {
                     Caption = 'Fecha inicio';
                 }
-                field(EndDate;EndDate)
+                field(EndDate; EndDate)
                 {
                     Caption = 'Fecha fin';
                 }

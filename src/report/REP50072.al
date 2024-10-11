@@ -1,7 +1,7 @@
 report 50072 Pedidos
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Pedidos.rdlc';
+    RDLCLayout = './src/layout/Pedidos.rdl';
 
     dataset
     {

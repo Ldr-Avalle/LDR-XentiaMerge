@@ -262,7 +262,7 @@ report 50034 "Oferta venta proforma"
                               //TODO: cambio de variable
                               //VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT+EC Base", VATAmountLine."VAT Amount",
                               //VATAmountLine."EC Amount", VATAmountLine."Pmt. Disc. Given Amount");
-                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Amount", VATAmountLine."EC Amount", VATAmountLine."VAT Amount",
+                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount",
                               VATAmountLine."EC Amount", VATAmountLine."Pmt. Discount Amount");
                         end;
                     }
@@ -278,7 +278,7 @@ report 50034 "Oferta venta proforma"
                                                "Sales Header"."Order Date", "Sales Header"."Currency Code",
                                                //TODO: cambio de variable
                                                //VATAmountLine."VAT+EC Base", "Sales Header"."Currency Factor"));
-                                               VATAmountLine."VAT Amount" + VATAmountLine."EC Amount", "Sales Header"."Currency Factor"));
+                                               VATAmountLine."VAT Base", "Sales Header"."Currency Factor"));
                             VALVATAmountLCY := ROUND(CurrExchRate.ExchangeAmtFCYToLCY(
                                                  "Sales Header"."Order Date", "Sales Header"."Currency Code",
                                                  VATAmountLine."VAT Amount", "Sales Header"."Currency Factor"));
@@ -447,7 +447,7 @@ report 50034 "Oferta venta proforma"
             {
                 field(NoOfCopies; NoOfCopies)
                 {
-                    Caption = 'N´Š¢ copias';
+                    Caption = 'Nº copias';
                 }
                 field(ShowInternalInfo; ShowInternalInfo)
                 {
@@ -466,7 +466,7 @@ report 50034 "Oferta venta proforma"
                 }
                 field(LogInteraction; LogInteraction)
                 {
-                    Caption = 'Log interacci´Š¢n';
+                    Caption = 'Log interacción';
                     Enabled = LogInteractionEnabled;
 
                     trigger OnValidate()

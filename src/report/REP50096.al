@@ -3,452 +3,452 @@ report 50096 "Sales - Credit Memo PRUEBA"
     DefaultLayout = RDLC;
     RDLCLayout = './Sales - Credit Memo PRUEBA.rdlc';
     Caption = 'Sales - Credit Memo';
-    Permissions = TableData 7190=rimd;
+    Permissions = TableData 7190 = rimd;
 
     dataset
     {
-        dataitem(DataItem8098;Table114)
+        dataitem(DataItem8098; Table114)
         {
             DataItemTableView = SORTING(No.);
-            RequestFilterFields = "No.","Sell-to Customer No.","No. Printed";
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Credit Memo';
-            column(No_SalesCrMemoHeader;"No.")
+            column(No_SalesCrMemoHeader; "No.")
             {
             }
-            dataitem(CopyLoop;Table2000000026)
+            dataitem(CopyLoop; Table2000000026)
             {
                 DataItemTableView = SORTING(Number);
-                dataitem(PageLoop;Table2000000026)
+                dataitem(PageLoop; Table2000000026)
                 {
                     DataItemTableView = SORTING(Number)
-                                        WHERE(Number=CONST(1));
-                    column(CompanyInfo2Picture;CompanyInfo2.Picture)
+                                        WHERE(Number = CONST(1));
+                    column(CompanyInfo2Picture; CompanyInfo2.Picture)
                     {
                     }
-                    column(CompanyInfo1Picture;CompanyInfo1.Picture)
+                    column(CompanyInfo1Picture; CompanyInfo1.Picture)
                     {
                     }
-                    column(CompanyInfoPicture;CompanyInfo3.Picture)
+                    column(CompanyInfoPicture; CompanyInfo3.Picture)
                     {
                     }
-                    column(SalesCorrectiveInvCopy;STRSUBSTNO(Text1100001,CopyText))
+                    column(SalesCorrectiveInvCopy; STRSUBSTNO(Text1100001, CopyText))
                     {
                     }
-                    column(CustAddr1;CustAddr[1])
+                    column(CustAddr1; CustAddr[1])
                     {
                     }
-                    column(CompanyAddr1;CompanyAddr[1])
+                    column(CompanyAddr1; CompanyAddr[1])
                     {
                     }
-                    column(CustAddr2;CustAddr[2])
+                    column(CustAddr2; CustAddr[2])
                     {
                     }
-                    column(CompanyAddr2;CompanyAddr[2])
+                    column(CompanyAddr2; CompanyAddr[2])
                     {
                     }
-                    column(CustAddr3;CustAddr[3])
+                    column(CustAddr3; CustAddr[3])
                     {
                     }
-                    column(CompanyAddr3;CompanyAddr[3])
+                    column(CompanyAddr3; CompanyAddr[3])
                     {
                     }
-                    column(CustAddr4;CustAddr[4])
+                    column(CustAddr4; CustAddr[4])
                     {
                     }
-                    column(CompanyAddr4;CompanyAddr[4])
+                    column(CompanyAddr4; CompanyAddr[4])
                     {
                     }
-                    column(CustAddr5;CustAddr[5])
+                    column(CustAddr5; CustAddr[5])
                     {
                     }
-                    column(CompanyInfoPhoneNo;CompanyInfo."Phone No.")
+                    column(CompanyInfoPhoneNo; CompanyInfo."Phone No.")
                     {
                     }
-                    column(CustAddr6;CustAddr[6])
+                    column(CustAddr6; CustAddr[6])
                     {
                     }
-                    column(CompanyInfoHomePage;CompanyInfo."Home Page")
+                    column(CompanyInfoHomePage; CompanyInfo."Home Page")
                     {
                     }
-                    column(CompanyInfoEMail;CompanyInfo."E-Mail")
+                    column(CompanyInfoEMail; CompanyInfo."E-Mail")
                     {
                     }
-                    column(CompanyInfoVATRegNo;CompanyInfo."VAT Registration No.")
+                    column(CompanyInfoVATRegNo; CompanyInfo."VAT Registration No.")
                     {
                     }
-                    column(CompanyInfoGiroNo;CompanyInfo."Giro No.")
+                    column(CompanyInfoGiroNo; CompanyInfo."Giro No.")
                     {
                     }
-                    column(CompanyInfoBankName;CompanyInfo."Bank Name")
+                    column(CompanyInfoBankName; CompanyInfo."Bank Name")
                     {
                     }
-                    column(CompanyInfoBankAccNo;CompanyInfo."Bank Account No.")
+                    column(CompanyInfoBankAccNo; CompanyInfo."Bank Account No.")
                     {
                     }
-                    column(BilltoCustNo_SalesCrMemoHeader;"Sales Cr.Memo Header"."Bill-to Customer No.")
+                    column(BilltoCustNo_SalesCrMemoHeader; "Sales Cr.Memo Header"."Bill-to Customer No.")
                     {
                     }
-                    column(PostDate_SalesCrMemoHeader;FORMAT("Sales Cr.Memo Header"."Posting Date",0,4))
+                    column(PostDate_SalesCrMemoHeader; FORMAT("Sales Cr.Memo Header"."Posting Date", 0, 4))
                     {
                     }
-                    column(VATNoText;VATNoText)
+                    column(VATNoText; VATNoText)
                     {
                     }
-                    column(VATRegNo_SalesCrMemoHeader;"Sales Cr.Memo Header"."VAT Registration No.")
+                    column(VATRegNo_SalesCrMemoHeader; "Sales Cr.Memo Header"."VAT Registration No.")
                     {
                     }
-                    column(SalesPersonText;SalesPersonText)
+                    column(SalesPersonText; SalesPersonText)
                     {
                     }
-                    column(SalesPurchPersonName;SalesPurchPerson.Name)
+                    column(SalesPurchPersonName; SalesPurchPerson.Name)
                     {
                     }
-                    column(AppliedToText;AppliedToText)
+                    column(AppliedToText; AppliedToText)
                     {
                     }
-                    column(ReferenceText;ReferenceText)
+                    column(ReferenceText; ReferenceText)
                     {
                     }
-                    column(YourRef_SalesCrMemoHeader;"Sales Cr.Memo Header"."Your Reference")
+                    column(YourRef_SalesCrMemoHeader; "Sales Cr.Memo Header"."Your Reference")
                     {
                     }
-                    column(CustAddr7;CustAddr[7])
+                    column(CustAddr7; CustAddr[7])
                     {
                     }
-                    column(CustAddr8;CustAddr[8])
+                    column(CustAddr8; CustAddr[8])
                     {
                     }
-                    column(CompanyAddr5;CompanyAddr[5])
+                    column(CompanyAddr5; CompanyAddr[5])
                     {
                     }
-                    column(CompanyAddr6;CompanyAddr[6])
+                    column(CompanyAddr6; CompanyAddr[6])
                     {
                     }
-                    column(DocDate_SalesCrMemoHeader;FORMAT("Sales Cr.Memo Header"."Document Date",0,4))
+                    column(DocDate_SalesCrMemoHeader; FORMAT("Sales Cr.Memo Header"."Document Date", 0, 4))
                     {
                     }
-                    column(PricIncVAT_SalesCrMemoHeader;"Sales Cr.Memo Header"."Prices Including VAT")
+                    column(PricIncVAT_SalesCrMemoHeader; "Sales Cr.Memo Header"."Prices Including VAT")
                     {
                     }
-                    column(ReturnOrderNoText;ReturnOrderNoText)
+                    column(ReturnOrderNoText; ReturnOrderNoText)
                     {
                     }
-                    column(RetOrderNo_SalesCrMemoHeader;"Sales Cr.Memo Header"."Return Order No.")
+                    column(RetOrderNo_SalesCrMemoHeader; "Sales Cr.Memo Header"."Return Order No.")
                     {
                     }
-                    column(PageCaption;PageCaptionCap)
+                    column(PageCaption; PageCaptionCap)
                     {
                     }
-                    column(OutputNo;OutputNo)
+                    column(OutputNo; OutputNo)
                     {
                     }
-                    column(PricInclVAT1_SalesCrMemoHeader;FORMAT("Sales Cr.Memo Header"."Prices Including VAT"))
+                    column(PricInclVAT1_SalesCrMemoHeader; FORMAT("Sales Cr.Memo Header"."Prices Including VAT"))
                     {
                     }
-                    column(VATBaseDiscPct_SalesCrMemoHeader;"Sales Cr.Memo Header"."VAT Base Discount %")
+                    column(VATBaseDiscPct_SalesCrMemoHeader; "Sales Cr.Memo Header"."VAT Base Discount %")
                     {
                     }
-                    column(CorrInvNo_SalesCrMemoHeader;"Sales Cr.Memo Header"."Corrected Invoice No.")
+                    column(CorrInvNo_SalesCrMemoHeader; "Sales Cr.Memo Header"."Corrected Invoice No.")
                     {
                     }
-                    column(CompanyInfoPhoneNoCaption;CompanyInfoPhoneNoCaptionLbl)
+                    column(CompanyInfoPhoneNoCaption; CompanyInfoPhoneNoCaptionLbl)
                     {
                     }
-                    column(CompanyInfoHomePageCaption;CompanyInfoHomePageCaptionLbl)
+                    column(CompanyInfoHomePageCaption; CompanyInfoHomePageCaptionLbl)
                     {
                     }
-                    column(CompanyInfoEMailCaption;CompanyInfoEMailCaptionLbl)
+                    column(CompanyInfoEMailCaption; CompanyInfoEMailCaptionLbl)
                     {
                     }
-                    column(CompanyInfoVATRegistrationNoCaption;CompanyInfoVATRegistrationNoCaptionLbl)
+                    column(CompanyInfoVATRegistrationNoCaption; CompanyInfoVATRegistrationNoCaptionLbl)
                     {
                     }
-                    column(CompanyInfoGiroNoCaption;CompanyInfoGiroNoCaptionLbl)
+                    column(CompanyInfoGiroNoCaption; CompanyInfoGiroNoCaptionLbl)
                     {
                     }
-                    column(CompanyInfoBankNameCaption;CompanyInfoBankNameCaptionLbl)
+                    column(CompanyInfoBankNameCaption; CompanyInfoBankNameCaptionLbl)
                     {
                     }
-                    column(CompanyInfoBankAccountNoCaption;CompanyInfoBankAccountNoCaptionLbl)
+                    column(CompanyInfoBankAccountNoCaption; CompanyInfoBankAccountNoCaptionLbl)
                     {
                     }
-                    column(SalesCrMemoHeaderNoCaption;SalesCrMemoHeaderNoCaptionLbl)
+                    column(SalesCrMemoHeaderNoCaption; SalesCrMemoHeaderNoCaptionLbl)
                     {
                     }
-                    column(SalesCrMemoHeaderPostingDateCaption;SalesCrMemoHeaderPostingDateCaptionLbl)
+                    column(SalesCrMemoHeaderPostingDateCaption; SalesCrMemoHeaderPostingDateCaptionLbl)
                     {
                     }
-                    column(CorrectedInvoiceNoCaption;CorrectedInvoiceNoCaptionLbl)
+                    column(CorrectedInvoiceNoCaption; CorrectedInvoiceNoCaptionLbl)
                     {
                     }
-                    column(DocumentDateCaption;DocumentDateCaptionLbl)
+                    column(DocumentDateCaption; DocumentDateCaptionLbl)
                     {
                     }
-                    column(BilltoCustNo_SalesCrMemoHeaderCaption;"Sales Cr.Memo Header".FIELDCAPTION("Bill-to Customer No."))
+                    column(BilltoCustNo_SalesCrMemoHeaderCaption; "Sales Cr.Memo Header".FIELDCAPTION("Bill-to Customer No."))
                     {
                     }
-                    column(PricIncVAT_SalesCrMemoHeaderCaption;"Sales Cr.Memo Header".FIELDCAPTION("Prices Including VAT"))
+                    column(PricIncVAT_SalesCrMemoHeaderCaption; "Sales Cr.Memo Header".FIELDCAPTION("Prices Including VAT"))
                     {
                     }
-                    column(CACCaption;CACCaptionLbl)
+                    column(CACCaption; CACCaptionLbl)
                     {
                     }
-                    dataitem(DimensionLoop1;Table2000000026)
+                    dataitem(DimensionLoop1; Table2000000026)
                     {
                         DataItemLinkReference = "Sales Cr.Memo Header";
                         DataItemTableView = SORTING(Number)
-                                            WHERE(Number=FILTER(1..));
-                        column(DimText;DimText)
+                                            WHERE(Number = FILTER(1 ..));
+                        column(DimText; DimText)
                         {
                         }
-                        column(Number_IntegerLine;Number)
+                        column(Number_IntegerLine; Number)
                         {
                         }
-                        column(HeaderDimensionsCaption;HeaderDimensionsCaptionLbl)
+                        column(HeaderDimensionsCaption; HeaderDimensionsCaptionLbl)
                         {
                         }
 
                         trigger OnAfterGetRecord()
                         begin
                             IF Number = 1 THEN BEGIN
-                              IF NOT DimSetEntry1.FINDSET THEN
-                                CurrReport.BREAK;
+                                IF NOT DimSetEntry1.FINDSET THEN
+                                    CurrReport.BREAK;
                             END ELSE
-                              IF NOT Continue THEN
-                                CurrReport.BREAK;
+                                IF NOT Continue THEN
+                                    CurrReport.BREAK;
 
                             CLEAR(DimText);
                             Continue := FALSE;
                             REPEAT
-                              OldDimText := DimText;
-                              IF DimText = '' THEN
-                                DimText := STRSUBSTNO('%1 %2',DimSetEntry1."Dimension Code",DimSetEntry1."Dimension Value Code")
-                              ELSE
-                                DimText :=
-                                  STRSUBSTNO(
-                                    '%1, %2 %3',DimText,
-                                    DimSetEntry1."Dimension Code",DimSetEntry1."Dimension Value Code");
-                              IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
-                                DimText := OldDimText;
-                                Continue := TRUE;
-                                EXIT;
-                              END;
+                                OldDimText := DimText;
+                                IF DimText = '' THEN
+                                    DimText := STRSUBSTNO('%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
+                                ELSE
+                                    DimText :=
+                                      STRSUBSTNO(
+                                        '%1, %2 %3', DimText,
+                                        DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
+                                IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                                    DimText := OldDimText;
+                                    Continue := TRUE;
+                                    EXIT;
+                                END;
                             UNTIL DimSetEntry1.NEXT = 0;
                         end;
 
                         trigger OnPreDataItem()
                         begin
                             IF NOT ShowInternalInfo THEN
-                              CurrReport.BREAK;
+                                CurrReport.BREAK;
                         end;
                     }
-                    dataitem(DataItem3364;Table115)
+                    dataitem(DataItem3364; Table115)
                     {
                         DataItemLink = Document No.=FIELD(No.);
                         DataItemLinkReference = "Sales Cr.Memo Header";
-                        DataItemTableView = SORTING(Document No.,Line No.);
-                        column(LineAmt_SalesCrMemoLine;"Line Amount")
+                        DataItemTableView = SORTING(Document No., Line No.);
+                        column(LineAmt_SalesCrMemoLine; "Line Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(Desc_SalesCrMemoLine;Description)
+                        column(Desc_SalesCrMemoLine; Description)
                         {
                         }
-                        column(No_SalesCrMemoLine;"No.")
+                        column(No_SalesCrMemoLine; "No.")
                         {
                         }
-                        column(Qty_SalesCrMemoLine;Quantity)
+                        column(Qty_SalesCrMemoLine; Quantity)
                         {
                         }
-                        column(UOM_SalesCrMemoLine;"Unit of Measure")
+                        column(UOM_SalesCrMemoLine; "Unit of Measure")
                         {
                         }
-                        column(UnitPrice_SalesCrMemoLine;"Unit Price")
+                        column(UnitPrice_SalesCrMemoLine; "Unit Price")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 2;
                         }
-                        column(LineDisc_SalesCrMemoLine;"Line Discount %")
+                        column(LineDisc_SalesCrMemoLine; "Line Discount %")
                         {
                         }
-                        column(VATIdent_SalesCrMemoLine;"VAT Identifier")
+                        column(VATIdent_SalesCrMemoLine; "VAT Identifier")
                         {
                         }
-                        column(PostedReceiptDate;FORMAT(PostedReceiptDate))
+                        column(PostedReceiptDate; FORMAT(PostedReceiptDate))
                         {
                         }
-                        column(Type_SalesCrMemoLine;FORMAT(Type))
+                        column(Type_SalesCrMemoLine; FORMAT(Type))
                         {
                         }
-                        column(NNCTotalLineAmt;NNC_TotalLineAmount)
-                        {
-                            AutoFormatExpression = GetCurrencyCode;
-                            AutoFormatType = 1;
-                        }
-                        column(NNCTotalAmtInclVat;NNC_TotalAmountInclVat)
+                        column(NNCTotalLineAmt; NNC_TotalLineAmount)
                         {
                             AutoFormatExpression = GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(NNCTotalInvDiscAmt;NNC_TotalInvDiscAmount)
+                        column(NNCTotalAmtInclVat; NNC_TotalAmountInclVat)
                         {
                             AutoFormatExpression = GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(NNCTotalAmt;NNC_TotalAmount)
+                        column(NNCTotalInvDiscAmt; NNC_TotalInvDiscAmount)
                         {
                             AutoFormatExpression = GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(InvDiscAmt_SalesCrMemoLine;-"Inv. Discount Amount")
+                        column(NNCTotalAmt; NNC_TotalAmount)
+                        {
+                            AutoFormatExpression = GetCurrencyCode;
+                            AutoFormatType = 1;
+                        }
+                        column(InvDiscAmt_SalesCrMemoLine; -"Inv. Discount Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(PmtDiscAmt_SalesCrMemoLine;-"Pmt. Disc. Given Amount")
+                        column(PmtDiscAmt_SalesCrMemoLine; -"Pmt. Disc. Given Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(TotalExclVATText;TotalExclVATText)
+                        column(TotalExclVATText; TotalExclVATText)
                         {
                         }
-                        column(TotalInclVATText;TotalInclVATText)
+                        column(TotalInclVATText; TotalInclVATText)
                         {
                         }
-                        column(AmtIncVAT_SalesCrMemoLine;"Amount Including VAT")
-                        {
-                            AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
-                            AutoFormatType = 1;
-                        }
-                        column(AmtIncVATAmt_SalesCrMemoLine;"Amount Including VAT" - Amount)
+                        column(AmtIncVAT_SalesCrMemoLine; "Amount Including VAT")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmtText;VATAmountLine.VATAmountText)
-                        {
-                        }
-                        column(Amt_SalesCrMemoLine;Amount)
+                        column(AmtIncVATAmt_SalesCrMemoLine; "Amount Including VAT" - Amount)
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(DocNo_SalesCrMemoLine;"Document No.")
+                        column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText)
                         {
                         }
-                        column(LineNo_SalesCrMemoLine;"Line No.")
+                        column(Amt_SalesCrMemoLine; Amount)
+                        {
+                            AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
+                            AutoFormatType = 1;
+                        }
+                        column(DocNo_SalesCrMemoLine; "Document No.")
                         {
                         }
-                        column(UnitPriceCaption;UnitPriceCaptionLbl)
+                        column(LineNo_SalesCrMemoLine; "Line No.")
                         {
                         }
-                        column(SalesCrMemoLineLineDiscountCaption;SalesCrMemoLineLineDiscountCaptionLbl)
+                        column(UnitPriceCaption; UnitPriceCaptionLbl)
                         {
                         }
-                        column(AmountCaption;AmountCaptionLbl)
+                        column(SalesCrMemoLineLineDiscountCaption; SalesCrMemoLineLineDiscountCaptionLbl)
                         {
                         }
-                        column(PostedReceiptDateCaption;PostedReceiptDateCaptionLbl)
+                        column(AmountCaption; AmountCaptionLbl)
                         {
                         }
-                        column(InvDiscountAmountCaption;InvDiscountAmountCaptionLbl)
+                        column(PostedReceiptDateCaption; PostedReceiptDateCaptionLbl)
                         {
                         }
-                        column(SubtotalCaption;SubtotalCaptionLbl)
+                        column(InvDiscountAmountCaption; InvDiscountAmountCaptionLbl)
                         {
                         }
-                        column(PmtDiscGivenAmountCaption;PmtDiscGivenAmountCaptionLbl)
+                        column(SubtotalCaption; SubtotalCaptionLbl)
                         {
                         }
-                        column(Desc_SalesCrMemoLineCaption;FIELDCAPTION(Description))
+                        column(PmtDiscGivenAmountCaption; PmtDiscGivenAmountCaptionLbl)
                         {
                         }
-                        column(No_SalesCrMemoLineCaption;FIELDCAPTION("No."))
+                        column(Desc_SalesCrMemoLineCaption; FIELDCAPTION(Description))
                         {
                         }
-                        column(Qty_SalesCrMemoLineCaption;FIELDCAPTION(Quantity))
+                        column(No_SalesCrMemoLineCaption; FIELDCAPTION("No."))
                         {
                         }
-                        column(UOM_SalesCrMemoLineCaption;FIELDCAPTION("Unit of Measure"))
+                        column(Qty_SalesCrMemoLineCaption; FIELDCAPTION(Quantity))
                         {
                         }
-                        column(VATIdent_SalesCrMemoLineCaption;FIELDCAPTION("VAT Identifier"))
+                        column(UOM_SalesCrMemoLineCaption; FIELDCAPTION("Unit of Measure"))
                         {
                         }
-                        dataitem("Sales Shipment Buffer";Table2000000026)
+                        column(VATIdent_SalesCrMemoLineCaption; FIELDCAPTION("VAT Identifier"))
+                        {
+                        }
+                        dataitem("Sales Shipment Buffer"; Table2000000026)
                         {
                             DataItemTableView = SORTING(Number);
-                            column(SalesShptBufferPostDate;FORMAT(SalesShipmentBuffer."Posting Date"))
+                            column(SalesShptBufferPostDate; FORMAT(SalesShipmentBuffer."Posting Date"))
                             {
                             }
-                            column(SalesShptBufferQuantity;SalesShipmentBuffer.Quantity)
+                            column(SalesShptBufferQuantity; SalesShipmentBuffer.Quantity)
                             {
-                                DecimalPlaces = 0:5;
+                                DecimalPlaces = 0 : 5;
                             }
-                            column(ReturnReceiptCaption;ReturnReceiptCaptionLbl)
+                            column(ReturnReceiptCaption; ReturnReceiptCaptionLbl)
                             {
                             }
 
                             trigger OnAfterGetRecord()
                             begin
                                 IF Number = 1 THEN
-                                  SalesShipmentBuffer.FIND('-')
+                                    SalesShipmentBuffer.FIND('-')
                                 ELSE
-                                  SalesShipmentBuffer.NEXT;
+                                    SalesShipmentBuffer.NEXT;
                             end;
 
                             trigger OnPreDataItem()
                             begin
-                                SETRANGE(Number,1,SalesShipmentBuffer.COUNT);
+                                SETRANGE(Number, 1, SalesShipmentBuffer.COUNT);
                             end;
                         }
-                        dataitem(DimensionLoop2;Table2000000026)
+                        dataitem(DimensionLoop2; Table2000000026)
                         {
                             DataItemTableView = SORTING(Number)
-                                                WHERE(Number=FILTER(1..));
-                            column(DimText1;DimText)
+                                                WHERE(Number = FILTER(1 ..));
+                            column(DimText1; DimText)
                             {
                             }
-                            column(LineDimensionsCaption;LineDimensionsCaptionLbl)
+                            column(LineDimensionsCaption; LineDimensionsCaptionLbl)
                             {
                             }
 
                             trigger OnAfterGetRecord()
                             begin
                                 IF Number = 1 THEN BEGIN
-                                  IF NOT DimSetEntry2.FIND('-') THEN
-                                    CurrReport.BREAK;
+                                    IF NOT DimSetEntry2.FIND('-') THEN
+                                        CurrReport.BREAK;
                                 END ELSE
-                                  IF NOT Continue THEN
-                                    CurrReport.BREAK;
+                                    IF NOT Continue THEN
+                                        CurrReport.BREAK;
 
                                 CLEAR(DimText);
                                 Continue := FALSE;
                                 REPEAT
-                                  OldDimText := DimText;
-                                  IF DimText = '' THEN
-                                    DimText := STRSUBSTNO('%1 %2',DimSetEntry2."Dimension Code",DimSetEntry2."Dimension Value Code")
-                                  ELSE
-                                    DimText :=
-                                      STRSUBSTNO(
-                                        '%1, %2 %3',DimText,
-                                        DimSetEntry2."Dimension Code",DimSetEntry2."Dimension Value Code");
-                                  IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
-                                    DimText := OldDimText;
-                                    Continue := TRUE;
-                                    EXIT;
-                                  END;
+                                    OldDimText := DimText;
+                                    IF DimText = '' THEN
+                                        DimText := STRSUBSTNO('%1 %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
+                                    ELSE
+                                        DimText :=
+                                          STRSUBSTNO(
+                                            '%1, %2 %3', DimText,
+                                            DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code");
+                                    IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                                        DimText := OldDimText;
+                                        Continue := TRUE;
+                                        EXIT;
+                                    END;
                                 UNTIL (DimSetEntry2.NEXT = 0);
                             end;
 
                             trigger OnPreDataItem()
                             begin
                                 IF NOT ShowInternalInfo THEN
-                                  CurrReport.BREAK;
+                                    CurrReport.BREAK;
 
-                                DimSetEntry2.SETRANGE("Dimension Set ID","Sales Cr.Memo Line"."Dimension Set ID");
+                                DimSetEntry2.SETRANGE("Dimension Set ID", "Sales Cr.Memo Line"."Dimension Set ID");
                             end;
                         }
 
@@ -462,32 +462,32 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             SalesShipmentBuffer.DELETEALL;
                             PostedReceiptDate := 0D;
                             IF Quantity <> 0 THEN
-                              PostedReceiptDate := FindPostedShipmentDate;
+                                PostedReceiptDate := FindPostedShipmentDate;
 
                             IF (Type = Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
-                              "No." := '';
+                                "No." := '';
 
-                            IF VATPostingSetup.GET("Sales Cr.Memo Line"."VAT Bus. Posting Group","Sales Cr.Memo Line"."VAT Prod. Posting Group") THEN BEGIN
-                              VATAmountLine.INIT;
-                              VATAmountLine."VAT Identifier" := "VAT Identifier";
-                              VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                              VATAmountLine."Tax Group Code" := "Tax Group Code";
-                              VATAmountLine."VAT %" := VATPostingSetup."VAT %";
-                              VATAmountLine."EC %" := VATPostingSetup."EC %";
-                              VATAmountLine."VAT+EC Base" := "Sales Cr.Memo Line".Amount;
-                              VATAmountLine."Amount Including VAT+EC" := "Sales Cr.Memo Line"."Amount Including VAT";
-                              VATAmountLine."Line Amount" := "Line Amount";
-                              VATAmountLine."Pmt. Disc. Given Amount" := "Pmt. Disc. Given Amount";
-                              VATAmountLine.SetCurrencyCode("Sales Cr.Memo Header"."Currency Code");
-                              IF "Allow Invoice Disc." THEN
-                                VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
-                              VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
-                              VATAmountLine."VAT Difference" := "VAT Difference";
-                              VATAmountLine."EC Difference" := "EC Difference";
-                              IF "Sales Cr.Memo Header"."Prices Including VAT" THEN
-                                VATAmountLine."Prices Including VAT" := TRUE;
-                              VATAmountLine."VAT Clause Code" := "VAT Clause Code";
-                              VATAmountLine.InsertLine;
+                            IF VATPostingSetup.GET("Sales Cr.Memo Line"."VAT Bus. Posting Group", "Sales Cr.Memo Line"."VAT Prod. Posting Group") THEN BEGIN
+                                VATAmountLine.INIT;
+                                VATAmountLine."VAT Identifier" := "VAT Identifier";
+                                VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                                VATAmountLine."Tax Group Code" := "Tax Group Code";
+                                VATAmountLine."VAT %" := VATPostingSetup."VAT %";
+                                VATAmountLine."EC %" := VATPostingSetup."EC %";
+                                VATAmountLine."VAT+EC Base" := "Sales Cr.Memo Line".Amount;
+                                VATAmountLine."Amount Including VAT+EC" := "Sales Cr.Memo Line"."Amount Including VAT";
+                                VATAmountLine."Line Amount" := "Line Amount";
+                                VATAmountLine."Pmt. Disc. Given Amount" := "Pmt. Disc. Given Amount";
+                                VATAmountLine.SetCurrencyCode("Sales Cr.Memo Header"."Currency Code");
+                                IF "Allow Invoice Disc." THEN
+                                    VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
+                                VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
+                                VATAmountLine."VAT Difference" := "VAT Difference";
+                                VATAmountLine."EC Difference" := "EC Difference";
+                                IF "Sales Cr.Memo Header"."Prices Including VAT" THEN
+                                    VATAmountLine."Prices Including VAT" := TRUE;
+                                VATAmountLine."VAT Clause Code" := "VAT Clause Code";
+                                VATAmountLine.InsertLine;
                             END;
                         end;
 
@@ -499,89 +499,89 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             FirstValueEntryNo := 0;
                             MoreLines := FIND('+');
                             WHILE MoreLines AND (Description = '') AND ("No." = '') AND (Quantity = 0) AND (Amount = 0) DO
-                              MoreLines := NEXT(-1) <> 0;
+                                MoreLines := NEXT(-1) <> 0;
                             IF NOT MoreLines THEN
-                              CurrReport.BREAK;
-                            SETRANGE("Line No.",0,"Line No.");
-                            CurrReport.CREATETOTALS(Amount,"Amount Including VAT","Inv. Discount Amount","Pmt. Disc. Given Amount");
+                                CurrReport.BREAK;
+                            SETRANGE("Line No.", 0, "Line No.");
+                            CurrReport.CREATETOTALS(Amount, "Amount Including VAT", "Inv. Discount Amount", "Pmt. Disc. Given Amount");
                         end;
                     }
-                    dataitem(VATCounter;Table2000000026)
+                    dataitem(VATCounter; Table2000000026)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATAmtLineVATECBase;VATAmountLine."VAT+EC Base")
+                        column(VATAmtLineVATECBase; VATAmountLine."VAT+EC Base")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmt;VATAmountLine."VAT Amount")
+                        column(VATAmtLineVATAmt; VATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineLineAmt;VATAmountLine."Line Amount")
+                        column(VATAmtLineLineAmt; VATAmountLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscBaseAmt;VATAmountLine."Inv. Disc. Base Amount")
+                        column(VATAmtLineInvDiscBaseAmt; VATAmountLine."Inv. Disc. Base Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscAmtPmtDiscAmt;VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Disc. Given Amount")
+                        column(VATAmtLineInvDiscAmtPmtDiscAmt; VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Disc. Given Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineECAmt;VATAmountLine."EC Amount")
+                        column(VATAmtLineECAmt; VATAmountLine."EC Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT;VATAmountLine."VAT %")
+                        column(VATAmtLineVAT; VATAmountLine."VAT %")
                         {
-                            DecimalPlaces = 0:6;
+                            DecimalPlaces = 0 : 6;
                         }
-                        column(VATAmtLineVATIdentifier;VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier; VATAmountLine."VAT Identifier")
                         {
                         }
-                        column(VATAmtLineEC;VATAmountLine."EC %")
+                        column(VATAmtLineEC; VATAmountLine."EC %")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmountLineVATCaption;VATAmountLineVATCaptionLbl)
+                        column(VATAmountLineVATCaption; VATAmountLineVATCaptionLbl)
                         {
                         }
-                        column(VATAmountLineVATECBaseControl105Caption;VATAmountLineVATECBaseControl105CaptionLbl)
+                        column(VATAmountLineVATECBaseControl105Caption; VATAmountLineVATECBaseControl105CaptionLbl)
                         {
                         }
-                        column(VATAmountLineVATAmountControl106Caption;VATAmountLineVATAmountControl106CaptionLbl)
+                        column(VATAmountLineVATAmountControl106Caption; VATAmountLineVATAmountControl106CaptionLbl)
                         {
                         }
-                        column(VATAmountSpecificationCaption;VATAmountSpecificationCaptionLbl)
+                        column(VATAmountSpecificationCaption; VATAmountSpecificationCaptionLbl)
                         {
                         }
-                        column(VATAmountLineVATIdentifierCaption;VATAmountLineVATIdentifierCaptionLbl)
+                        column(VATAmountLineVATIdentifierCaption; VATAmountLineVATIdentifierCaptionLbl)
                         {
                         }
-                        column(VATAmountLineInvDiscBaseAmountControl130Caption;VATAmountLineInvDiscBaseAmountControl130CaptionLbl)
+                        column(VATAmountLineInvDiscBaseAmountControl130Caption; VATAmountLineInvDiscBaseAmountControl130CaptionLbl)
                         {
                         }
-                        column(VATAmountLineLineAmountControl135Caption;VATAmountLineLineAmountControl135CaptionLbl)
+                        column(VATAmountLineLineAmountControl135Caption; VATAmountLineLineAmountControl135CaptionLbl)
                         {
                         }
-                        column(InvandPmtDiscountsCaption;InvandPmtDiscountsCaptionLbl)
+                        column(InvandPmtDiscountsCaption; InvandPmtDiscountsCaptionLbl)
                         {
                         }
-                        column(ECCaption;ECCaptionLbl)
+                        column(ECCaption; ECCaptionLbl)
                         {
                         }
-                        column(ECAmountCaption;ECAmountCaptionLbl)
+                        column(ECAmountCaption; ECAmountCaptionLbl)
                         {
                         }
-                        column(VATAmountLineVATECBaseControl113Caption;VATAmountLineVATECBaseControl113CaptionLbl)
+                        column(VATAmountLineVATECBaseControl113Caption; VATAmountLineVATECBaseControl113CaptionLbl)
                         {
                         }
 
@@ -592,40 +592,40 @@ report 50096 "Sales - Credit Memo PRUEBA"
 
                         trigger OnPreDataItem()
                         begin
-                            SETRANGE(Number,1,VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, VATAmountLine.COUNT);
                             CurrReport.CREATETOTALS(
-                              VATAmountLine."Line Amount",VATAmountLine."Inv. Disc. Base Amount",
-                              VATAmountLine."Invoice Discount Amount",VATAmountLine."VAT+EC Base",VATAmountLine."VAT Amount",
-                              VATAmountLine."EC Amount",VATAmountLine."Pmt. Disc. Given Amount");
+                              VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
+                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT+EC Base", VATAmountLine."VAT Amount",
+                              VATAmountLine."EC Amount", VATAmountLine."Pmt. Disc. Given Amount");
                         end;
                     }
-                    dataitem(VATClauseEntryCounter;Table2000000026)
+                    dataitem(VATClauseEntryCounter; Table2000000026)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATClauseVATIdentifier;VATAmountLine."VAT Identifier")
+                        column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
                         {
                         }
-                        column(VATClauseCode;VATAmountLine."VAT Clause Code")
+                        column(VATClauseCode; VATAmountLine."VAT Clause Code")
                         {
                         }
-                        column(VATClauseDescription;VATClause.Description)
+                        column(VATClauseDescription; VATClause.Description)
                         {
                         }
-                        column(VATClauseDescription2;VATClause."Description 2")
+                        column(VATClauseDescription2; VATClause."Description 2")
                         {
                         }
-                        column(VATClauseAmount;VATAmountLine."VAT Amount")
+                        column(VATClauseAmount; VATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATClausesCaption;VATClausesCap)
+                        column(VATClausesCaption; VATClausesCap)
                         {
                         }
-                        column(VATClauseVATIdentifierCaption;VATAmountLineVATIdentifierCaptionLbl)
+                        column(VATClauseVATIdentifierCaption; VATAmountLineVATIdentifierCaptionLbl)
                         {
                         }
-                        column(VATClauseVATAmtCaption;VATAmountLineVATAmountControl106CaptionLbl)
+                        column(VATClauseVATAmtCaption; VATAmountLineVATAmountControl106CaptionLbl)
                         {
                         }
 
@@ -633,39 +633,39 @@ report 50096 "Sales - Credit Memo PRUEBA"
                         begin
                             VATAmountLine.GetLine(Number);
                             IF NOT VATClause.GET(VATAmountLine."VAT Clause Code") THEN
-                              CurrReport.SKIP;
+                                CurrReport.SKIP;
                             VATClause.TranslateDescription("Sales Cr.Memo Header"."Language Code");
                         end;
 
                         trigger OnPreDataItem()
                         begin
                             CLEAR(VATClause);
-                            SETRANGE(Number,1,VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, VATAmountLine.COUNT);
                             CurrReport.CREATETOTALS(VATAmountLine."VAT Amount");
                         end;
                     }
-                    dataitem(VATCounterLCY;Table2000000026)
+                    dataitem(VATCounterLCY; Table2000000026)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VALSpecLCYHeader;VALSpecLCYHeader)
+                        column(VALSpecLCYHeader; VALSpecLCYHeader)
                         {
                         }
-                        column(VALExchRate;VALExchRate)
+                        column(VALExchRate; VALExchRate)
                         {
                         }
-                        column(VALVATAmtLCY;VALVATAmountLCY)
-                        {
-                            AutoFormatType = 1;
-                        }
-                        column(VALVATBaseLCY;VALVATBaseLCY)
+                        column(VALVATAmtLCY; VALVATAmountLCY)
                         {
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVAT1;VATAmountLine."VAT %")
+                        column(VALVATBaseLCY; VALVATBaseLCY)
                         {
-                            DecimalPlaces = 0:5;
+                            AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATIdentifier1;VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVAT1; VATAmountLine."VAT %")
+                        {
+                            DecimalPlaces = 0 : 5;
+                        }
+                        column(VATAmtLineVATIdentifier1; VATAmountLine."VAT Identifier")
                         {
                         }
 
@@ -674,11 +674,11 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             VATAmountLine.GetLine(Number);
                             VALVATBaseLCY :=
                               VATAmountLine.GetBaseLCY(
-                                "Sales Cr.Memo Header"."Posting Date","Sales Cr.Memo Header"."Currency Code",
+                                "Sales Cr.Memo Header"."Posting Date", "Sales Cr.Memo Header"."Currency Code",
                                 "Sales Cr.Memo Header"."Currency Factor");
                             VALVATAmountLCY :=
                               VATAmountLine.GetAmountLCY(
-                                "Sales Cr.Memo Header"."Posting Date","Sales Cr.Memo Header"."Currency Code",
+                                "Sales Cr.Memo Header"."Posting Date", "Sales Cr.Memo Header"."Currency Code",
                                 "Sales Cr.Memo Header"."Currency Factor");
                         end;
 
@@ -687,68 +687,68 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             IF (NOT GLSetup."Print VAT specification in LCY") OR
                                ("Sales Cr.Memo Header"."Currency Code" = '')
                             THEN
-                              CurrReport.BREAK;
+                                CurrReport.BREAK;
 
-                            SETRANGE(Number,1,VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VALVATBaseLCY,VALVATAmountLCY);
+                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            CurrReport.CREATETOTALS(VALVATBaseLCY, VALVATAmountLCY);
 
                             IF GLSetup."LCY Code" = '' THEN
-                              VALSpecLCYHeader := Text008 + Text009
+                                VALSpecLCYHeader := Text008 + Text009
                             ELSE
-                              VALSpecLCYHeader := Text008 + FORMAT(GLSetup."LCY Code");
+                                VALSpecLCYHeader := Text008 + FORMAT(GLSetup."LCY Code");
 
-                            CurrExchRate.FindCurrency("Sales Cr.Memo Header"."Posting Date","Sales Cr.Memo Header"."Currency Code",1);
-                            CalculatedExchRate := ROUND(1 / "Sales Cr.Memo Header"."Currency Factor" * CurrExchRate."Exchange Rate Amount",0.000001);
-                            VALExchRate := STRSUBSTNO(Text010,CalculatedExchRate,CurrExchRate."Exchange Rate Amount");
+                            CurrExchRate.FindCurrency("Sales Cr.Memo Header"."Posting Date", "Sales Cr.Memo Header"."Currency Code", 1);
+                            CalculatedExchRate := ROUND(1 / "Sales Cr.Memo Header"."Currency Factor" * CurrExchRate."Exchange Rate Amount", 0.000001);
+                            VALExchRate := STRSUBSTNO(Text010, CalculatedExchRate, CurrExchRate."Exchange Rate Amount");
                         end;
                     }
-                    dataitem(Total;Table2000000026)
+                    dataitem(Total; Table2000000026)
                     {
                         DataItemTableView = SORTING(Number)
-                                            WHERE(Number=CONST(1));
+                                            WHERE(Number = CONST(1));
                     }
-                    dataitem(Total2;Table2000000026)
+                    dataitem(Total2; Table2000000026)
                     {
                         DataItemTableView = SORTING(Number)
-                                            WHERE(Number=CONST(1));
-                        column(SelltoCustNo_SalesCrMemoHeader;"Sales Cr.Memo Header"."Sell-to Customer No.")
+                                            WHERE(Number = CONST(1));
+                        column(SelltoCustNo_SalesCrMemoHeader; "Sales Cr.Memo Header"."Sell-to Customer No.")
                         {
                         }
-                        column(ShipToAddr1;ShipToAddr[1])
+                        column(ShipToAddr1; ShipToAddr[1])
                         {
                         }
-                        column(ShipToAddr2;ShipToAddr[2])
+                        column(ShipToAddr2; ShipToAddr[2])
                         {
                         }
-                        column(ShipToAddr3;ShipToAddr[3])
+                        column(ShipToAddr3; ShipToAddr[3])
                         {
                         }
-                        column(ShipToAddr4;ShipToAddr[4])
+                        column(ShipToAddr4; ShipToAddr[4])
                         {
                         }
-                        column(ShipToAddr5;ShipToAddr[5])
+                        column(ShipToAddr5; ShipToAddr[5])
                         {
                         }
-                        column(ShipToAddr6;ShipToAddr[6])
+                        column(ShipToAddr6; ShipToAddr[6])
                         {
                         }
-                        column(ShipToAddr7;ShipToAddr[7])
+                        column(ShipToAddr7; ShipToAddr[7])
                         {
                         }
-                        column(ShipToAddr8;ShipToAddr[8])
+                        column(ShipToAddr8; ShipToAddr[8])
                         {
                         }
-                        column(ShiptoAddressCaption;ShiptoAddressCaptionLbl)
+                        column(ShiptoAddressCaption; ShiptoAddressCaptionLbl)
                         {
                         }
-                        column(SelltoCustNo_SalesCrMemoHeaderCaption;"Sales Cr.Memo Header".FIELDCAPTION("Sell-to Customer No."))
+                        column(SelltoCustNo_SalesCrMemoHeaderCaption; "Sales Cr.Memo Header".FIELDCAPTION("Sell-to Customer No."))
                         {
                         }
 
                         trigger OnPreDataItem()
                         begin
                             IF NOT ShowShippingAddr THEN
-                              CurrReport.BREAK;
+                                CurrReport.BREAK;
                         end;
                     }
                 }
@@ -757,8 +757,8 @@ report 50096 "Sales - Credit Memo PRUEBA"
                 begin
                     CurrReport.PAGENO := 1;
                     IF Number > 1 THEN BEGIN
-                      CopyText := Text004;
-                      OutputNo += 1;
+                        CopyText := Text004;
+                        OutputNo += 1;
                     END;
 
                     NNC_TotalLineAmount := 0;
@@ -770,14 +770,14 @@ report 50096 "Sales - Credit Memo PRUEBA"
                 trigger OnPostDataItem()
                 begin
                     IF NOT CurrReport.PREVIEW THEN
-                      SalesCrMemoCountPrinted.RUN("Sales Cr.Memo Header");
+                        SalesCrMemoCountPrinted.RUN("Sales Cr.Memo Header");
                 end;
 
                 trigger OnPreDataItem()
                 begin
                     NoOfLoops := ABS(NoOfCopies) + 1;
                     CopyText := '';
-                    SETRANGE(Number,1,NoOfLoops);
+                    SETRANGE(Number, 1, NoOfLoops);
                     OutputNo := 1;
                 end;
             }
@@ -787,67 +787,67 @@ report 50096 "Sales - Credit Memo PRUEBA"
                 CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
 
                 IF RespCenter.GET("Responsibility Center") THEN BEGIN
-                  FormatAddr.RespCenter(CompanyAddr,RespCenter);
-                  CompanyInfo."Phone No." := RespCenter."Phone No.";
-                  CompanyInfo."Fax No." := RespCenter."Fax No.";
+                    FormatAddr.RespCenter(CompanyAddr, RespCenter);
+                    CompanyInfo."Phone No." := RespCenter."Phone No.";
+                    CompanyInfo."Fax No." := RespCenter."Fax No.";
                 END ELSE
-                  FormatAddr.Company(CompanyAddr,CompanyInfo);
+                    FormatAddr.Company(CompanyAddr, CompanyInfo);
 
-                DimSetEntry1.SETRANGE("Dimension Set ID","Dimension Set ID");
+                DimSetEntry1.SETRANGE("Dimension Set ID", "Dimension Set ID");
 
                 IF "Return Order No." = '' THEN
-                  ReturnOrderNoText := ''
+                    ReturnOrderNoText := ''
                 ELSE
-                  ReturnOrderNoText := FIELDCAPTION("Return Order No.");
+                    ReturnOrderNoText := FIELDCAPTION("Return Order No.");
                 IF "Salesperson Code" = '' THEN BEGIN
-                  SalesPurchPerson.INIT;
-                  SalesPersonText := '';
+                    SalesPurchPerson.INIT;
+                    SalesPersonText := '';
                 END ELSE BEGIN
-                  SalesPurchPerson.GET("Salesperson Code");
-                  SalesPersonText := Text000;
+                    SalesPurchPerson.GET("Salesperson Code");
+                    SalesPersonText := Text000;
                 END;
                 IF "Your Reference" = '' THEN
-                  ReferenceText := ''
+                    ReferenceText := ''
                 ELSE
-                  ReferenceText := FIELDCAPTION("Your Reference");
+                    ReferenceText := FIELDCAPTION("Your Reference");
                 IF "VAT Registration No." = '' THEN
-                  VATNoText := ''
+                    VATNoText := ''
                 ELSE
-                  VATNoText := FIELDCAPTION("VAT Registration No.");
+                    VATNoText := FIELDCAPTION("VAT Registration No.");
                 IF "Currency Code" = '' THEN BEGIN
-                  GLSetup.TESTFIELD("LCY Code");
-                  TotalText := STRSUBSTNO(Text001,GLSetup."LCY Code");
-                  TotalInclVATText := STRSUBSTNO(Text002,GLSetup."LCY Code");
-                  TotalExclVATText := STRSUBSTNO(Text007,GLSetup."LCY Code");
+                    GLSetup.TESTFIELD("LCY Code");
+                    TotalText := STRSUBSTNO(Text001, GLSetup."LCY Code");
+                    TotalInclVATText := STRSUBSTNO(Text002, GLSetup."LCY Code");
+                    TotalExclVATText := STRSUBSTNO(Text007, GLSetup."LCY Code");
                 END ELSE BEGIN
-                  TotalText := STRSUBSTNO(Text001,"Currency Code");
-                  TotalInclVATText := STRSUBSTNO(Text002,"Currency Code");
-                  TotalExclVATText := STRSUBSTNO(Text007,"Currency Code");
+                    TotalText := STRSUBSTNO(Text001, "Currency Code");
+                    TotalInclVATText := STRSUBSTNO(Text002, "Currency Code");
+                    TotalExclVATText := STRSUBSTNO(Text007, "Currency Code");
                 END;
-                FormatAddr.SalesCrMemoBillTo(CustAddr,"Sales Cr.Memo Header");
+                FormatAddr.SalesCrMemoBillTo(CustAddr, "Sales Cr.Memo Header");
                 IF "Applies-to Doc. No." = '' THEN
-                  AppliedToText := ''
+                    AppliedToText := ''
                 ELSE
-                  AppliedToText := STRSUBSTNO(Text003,"Applies-to Doc. Type","Applies-to Doc. No.");
+                    AppliedToText := STRSUBSTNO(Text003, "Applies-to Doc. Type", "Applies-to Doc. No.");
 
-                FormatAddr.SalesCrMemoShipTo(ShipToAddr,"Sales Cr.Memo Header");
+                FormatAddr.SalesCrMemoShipTo(ShipToAddr, "Sales Cr.Memo Header");
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
                 FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
-                  IF ShipToAddr[i] <> CustAddr[i] THEN
-                    ShowShippingAddr := TRUE;
+                    IF ShipToAddr[i] <> CustAddr[i] THEN
+                        ShowShippingAddr := TRUE;
 
                 ShowCashAccountingCriteria("Sales Cr.Memo Header");
 
                 IF LogInteraction THEN
-                  IF NOT CurrReport.PREVIEW THEN
-                    IF "Bill-to Contact No." <> '' THEN
-                      SegManagement.LogDocument(
-                        6,"No.",0,0,DATABASE::Contact,"Bill-to Contact No.","Salesperson Code",
-                        "Campaign No.","Posting Description",'')
-                    ELSE
-                      SegManagement.LogDocument(
-                        6,"No.",0,0,DATABASE::Customer,"Sell-to Customer No.","Salesperson Code",
-                        "Campaign No.","Posting Description",'');
+                    IF NOT CurrReport.PREVIEW THEN
+                        IF "Bill-to Contact No." <> '' THEN
+                            SegManagement.LogDocument(
+                              6, "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.", "Salesperson Code",
+                              "Campaign No.", "Posting Description", '')
+                        ELSE
+                            SegManagement.LogDocument(
+                              6, "No.", 0, 0, DATABASE::Customer, "Sell-to Customer No.", "Salesperson Code",
+                              "Campaign No.", "Posting Description", '');
             end;
         }
     }
@@ -863,15 +863,15 @@ report 50096 "Sales - Credit Memo PRUEBA"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(NoOfCopies;NoOfCopies)
+                    field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
                     }
-                    field(ShowInternalInfo;ShowInternalInfo)
+                    field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
                     }
-                    field(LogInteraction;LogInteraction)
+                    field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
@@ -907,30 +907,30 @@ report 50096 "Sales - Credit Memo PRUEBA"
         SalesSetup.GET;
 
         CASE SalesSetup."Logo Position on Documents" OF
-          SalesSetup."Logo Position on Documents"::"No Logo":
-            ;
-          SalesSetup."Logo Position on Documents"::Left:
-            BEGIN
-              CompanyInfo3.GET;
-              CompanyInfo3.CALCFIELDS(Picture);
-            END;
-          SalesSetup."Logo Position on Documents"::Center:
-            BEGIN
-              CompanyInfo1.GET;
-              CompanyInfo1.CALCFIELDS(Picture);
-            END;
-          SalesSetup."Logo Position on Documents"::Right:
-            BEGIN
-              CompanyInfo2.GET;
-              CompanyInfo2.CALCFIELDS(Picture);
-            END;
+            SalesSetup."Logo Position on Documents"::"No Logo":
+                ;
+            SalesSetup."Logo Position on Documents"::Left:
+                BEGIN
+                    CompanyInfo3.GET;
+                    CompanyInfo3.CALCFIELDS(Picture);
+                END;
+            SalesSetup."Logo Position on Documents"::Center:
+                BEGIN
+                    CompanyInfo1.GET;
+                    CompanyInfo1.CALCFIELDS(Picture);
+                END;
+            SalesSetup."Logo Position on Documents"::Right:
+                BEGIN
+                    CompanyInfo2.GET;
+                    CompanyInfo2.CALCFIELDS(Picture);
+                END;
         END;
     end;
 
     trigger OnPreReport()
     begin
         IF NOT CurrReport.USEREQUESTPAGE THEN
-          InitLogInteraction;
+            InitLogInteraction;
     end;
 
     var
@@ -959,9 +959,9 @@ report 50096 "Sales - Credit Memo PRUEBA"
         FormatAddr: Codeunit "365";
         SegManagement: Codeunit "5051";
         RespCenter: Record "5714";
-        CustAddr: array [8] of Text[50];
-        ShipToAddr: array [8] of Text[50];
-        CompanyAddr: array [8] of Text[50];
+        CustAddr: array[8] of Text[50];
+        ShipToAddr: array[8] of Text[50];
+        CompanyAddr: array[8] of Text[50];
         ReturnOrderNoText: Text[80];
         SalesPersonText: Text[30];
         VATNoText: Text[80];
@@ -1036,7 +1036,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
         VATAmountLineVATECBaseControl113CaptionLbl: Label 'Total';
         ShiptoAddressCaptionLbl: Label 'Ship-to Address';
         CACCaptionLbl: Text;
-        CACTxt: Label 'R´Š¢gimen especial del criterio de caja';
+        CACTxt: Label 'Régimen especial del criterio de caja';
 
     procedure InitLogInteraction()
     begin
@@ -1050,40 +1050,40 @@ report 50096 "Sales - Credit Memo PRUEBA"
     begin
         NextEntryNo := 1;
         IF "Sales Cr.Memo Line"."Return Receipt No." <> '' THEN
-          IF ReturnReceiptHeader.GET("Sales Cr.Memo Line"."Return Receipt No.") THEN
-            EXIT(ReturnReceiptHeader."Posting Date");
+            IF ReturnReceiptHeader.GET("Sales Cr.Memo Line"."Return Receipt No.") THEN
+                EXIT(ReturnReceiptHeader."Posting Date");
         IF "Sales Cr.Memo Header"."Return Order No." = '' THEN
-          EXIT("Sales Cr.Memo Header"."Posting Date");
+            EXIT("Sales Cr.Memo Header"."Posting Date");
 
         CASE "Sales Cr.Memo Line".Type OF
-          "Sales Cr.Memo Line".Type::Item:
-            GenerateBufferFromValueEntry("Sales Cr.Memo Line");
-          "Sales Cr.Memo Line".Type::"G/L Account","Sales Cr.Memo Line".Type::Resource,
-          "Sales Cr.Memo Line".Type::"Charge (Item)","Sales Cr.Memo Line".Type::"Fixed Asset":
-            GenerateBufferFromShipment("Sales Cr.Memo Line");
-          "Sales Cr.Memo Line".Type::" ":
-            EXIT(0D);
+            "Sales Cr.Memo Line".Type::Item:
+                GenerateBufferFromValueEntry("Sales Cr.Memo Line");
+            "Sales Cr.Memo Line".Type::"G/L Account", "Sales Cr.Memo Line".Type::Resource,
+          "Sales Cr.Memo Line".Type::"Charge (Item)", "Sales Cr.Memo Line".Type::"Fixed Asset":
+                GenerateBufferFromShipment("Sales Cr.Memo Line");
+            "Sales Cr.Memo Line".Type::" ":
+                EXIT(0D);
         END;
 
         SalesShipmentBuffer.RESET;
-        SalesShipmentBuffer.SETRANGE("Document No.","Sales Cr.Memo Line"."Document No.");
-        SalesShipmentBuffer.SETRANGE("Line No." ,"Sales Cr.Memo Line"."Line No.");
+        SalesShipmentBuffer.SETRANGE("Document No.", "Sales Cr.Memo Line"."Document No.");
+        SalesShipmentBuffer.SETRANGE("Line No.", "Sales Cr.Memo Line"."Line No.");
 
         IF SalesShipmentBuffer.FIND('-') THEN BEGIN
-          SalesShipmentBuffer2 := SalesShipmentBuffer;
-          IF SalesShipmentBuffer.NEXT = 0 THEN BEGIN
-            SalesShipmentBuffer.GET(
-              SalesShipmentBuffer2."Document No.",SalesShipmentBuffer2."Line No.",SalesShipmentBuffer2."Entry No.");
-            SalesShipmentBuffer.DELETE;
-            EXIT(SalesShipmentBuffer2."Posting Date");
-          END;
-          SalesShipmentBuffer.CALCSUMS(Quantity);
-          IF SalesShipmentBuffer.Quantity <> "Sales Cr.Memo Line".Quantity THEN BEGIN
-            SalesShipmentBuffer.DELETEALL;
-            EXIT("Sales Cr.Memo Header"."Posting Date");
-          END;
+            SalesShipmentBuffer2 := SalesShipmentBuffer;
+            IF SalesShipmentBuffer.NEXT = 0 THEN BEGIN
+                SalesShipmentBuffer.GET(
+                  SalesShipmentBuffer2."Document No.", SalesShipmentBuffer2."Line No.", SalesShipmentBuffer2."Entry No.");
+                SalesShipmentBuffer.DELETE;
+                EXIT(SalesShipmentBuffer2."Posting Date");
+            END;
+            SalesShipmentBuffer.CALCSUMS(Quantity);
+            IF SalesShipmentBuffer.Quantity <> "Sales Cr.Memo Line".Quantity THEN BEGIN
+                SalesShipmentBuffer.DELETEALL;
+                EXIT("Sales Cr.Memo Header"."Posting Date");
+            END;
         END ELSE
-          EXIT("Sales Cr.Memo Header"."Posting Date");
+            EXIT("Sales Cr.Memo Header"."Posting Date");
     end;
 
     local procedure GenerateBufferFromValueEntry(SalesCrMemoLine2: Record "115")
@@ -1095,25 +1095,25 @@ report 50096 "Sales - Credit Memo PRUEBA"
     begin
         TotalQuantity := SalesCrMemoLine2."Quantity (Base)";
         ValueEntry.SETCURRENTKEY("Document No.");
-        ValueEntry.SETRANGE("Document No.",SalesCrMemoLine2."Document No.");
-        ValueEntry.SETRANGE("Posting Date","Sales Cr.Memo Header"."Posting Date");
-        ValueEntry.SETRANGE("Item Charge No.",'');
-        ValueEntry.SETFILTER("Entry No.",'%1..',FirstValueEntryNo);
+        ValueEntry.SETRANGE("Document No.", SalesCrMemoLine2."Document No.");
+        ValueEntry.SETRANGE("Posting Date", "Sales Cr.Memo Header"."Posting Date");
+        ValueEntry.SETRANGE("Item Charge No.", '');
+        ValueEntry.SETFILTER("Entry No.", '%1..', FirstValueEntryNo);
         IF ValueEntry.FIND('-') THEN
-          REPEAT
-            IF ItemLedgerEntry.GET(ValueEntry."Item Ledger Entry No.") THEN BEGIN
-              IF SalesCrMemoLine2."Qty. per Unit of Measure" <> 0 THEN
-                Quantity := ValueEntry."Invoiced Quantity" / SalesCrMemoLine2."Qty. per Unit of Measure"
-              ELSE
-                Quantity := ValueEntry."Invoiced Quantity";
-              AddBufferEntry(
-                SalesCrMemoLine2,
-                -Quantity,
-                ItemLedgerEntry."Posting Date");
-              TotalQuantity := TotalQuantity - ValueEntry."Invoiced Quantity";
-            END;
-            FirstValueEntryNo := ValueEntry."Entry No." + 1;
-          UNTIL (ValueEntry.NEXT = 0) OR (TotalQuantity = 0);
+            REPEAT
+                IF ItemLedgerEntry.GET(ValueEntry."Item Ledger Entry No.") THEN BEGIN
+                    IF SalesCrMemoLine2."Qty. per Unit of Measure" <> 0 THEN
+                        Quantity := ValueEntry."Invoiced Quantity" / SalesCrMemoLine2."Qty. per Unit of Measure"
+                    ELSE
+                        Quantity := ValueEntry."Invoiced Quantity";
+                    AddBufferEntry(
+                      SalesCrMemoLine2,
+                      -Quantity,
+                      ItemLedgerEntry."Posting Date");
+                    TotalQuantity := TotalQuantity - ValueEntry."Invoiced Quantity";
+                END;
+                FirstValueEntryNo := ValueEntry."Entry No." + 1;
+            UNTIL (ValueEntry.NEXT = 0) OR (TotalQuantity = 0);
     end;
 
     local procedure GenerateBufferFromShipment(SalesCrMemoLine: Record "115")
@@ -1127,89 +1127,89 @@ report 50096 "Sales - Credit Memo PRUEBA"
     begin
         TotalQuantity := 0;
         SalesCrMemoHeader.SETCURRENTKEY("Return Order No.");
-        SalesCrMemoHeader.SETFILTER("No.",'..%1',"Sales Cr.Memo Header"."No.");
-        SalesCrMemoHeader.SETRANGE("Return Order No.","Sales Cr.Memo Header"."Return Order No.");
+        SalesCrMemoHeader.SETFILTER("No.", '..%1', "Sales Cr.Memo Header"."No.");
+        SalesCrMemoHeader.SETRANGE("Return Order No.", "Sales Cr.Memo Header"."Return Order No.");
         IF SalesCrMemoHeader.FIND('-') THEN
-          REPEAT
-            SalesCrMemoLine2.SETRANGE("Document No.",SalesCrMemoHeader."No.");
-            SalesCrMemoLine2.SETRANGE("Line No.",SalesCrMemoLine."Line No.");
-            SalesCrMemoLine2.SETRANGE(Type,SalesCrMemoLine.Type);
-            SalesCrMemoLine2.SETRANGE("No.",SalesCrMemoLine."No.");
-            SalesCrMemoLine2.SETRANGE("Unit of Measure Code",SalesCrMemoLine."Unit of Measure Code");
-            IF SalesCrMemoLine2.FIND('-') THEN
-              REPEAT
-                TotalQuantity := TotalQuantity + SalesCrMemoLine2.Quantity;
-              UNTIL SalesCrMemoLine2.NEXT = 0;
-          UNTIL SalesCrMemoHeader.NEXT = 0;
+            REPEAT
+                SalesCrMemoLine2.SETRANGE("Document No.", SalesCrMemoHeader."No.");
+                SalesCrMemoLine2.SETRANGE("Line No.", SalesCrMemoLine."Line No.");
+                SalesCrMemoLine2.SETRANGE(Type, SalesCrMemoLine.Type);
+                SalesCrMemoLine2.SETRANGE("No.", SalesCrMemoLine."No.");
+                SalesCrMemoLine2.SETRANGE("Unit of Measure Code", SalesCrMemoLine."Unit of Measure Code");
+                IF SalesCrMemoLine2.FIND('-') THEN
+                    REPEAT
+                        TotalQuantity := TotalQuantity + SalesCrMemoLine2.Quantity;
+                    UNTIL SalesCrMemoLine2.NEXT = 0;
+            UNTIL SalesCrMemoHeader.NEXT = 0;
 
-        ReturnReceiptLine.SETCURRENTKEY("Return Order No.","Return Order Line No.");
-        ReturnReceiptLine.SETRANGE("Return Order No.","Sales Cr.Memo Header"."Return Order No.");
-        ReturnReceiptLine.SETRANGE("Return Order Line No.",SalesCrMemoLine."Line No.");
-        ReturnReceiptLine.SETRANGE("Line No.",SalesCrMemoLine."Line No.");
-        ReturnReceiptLine.SETRANGE(Type,SalesCrMemoLine.Type);
-        ReturnReceiptLine.SETRANGE("No.",SalesCrMemoLine."No.");
-        ReturnReceiptLine.SETRANGE("Unit of Measure Code",SalesCrMemoLine."Unit of Measure Code");
-        ReturnReceiptLine.SETFILTER(Quantity,'<>%1',0);
+        ReturnReceiptLine.SETCURRENTKEY("Return Order No.", "Return Order Line No.");
+        ReturnReceiptLine.SETRANGE("Return Order No.", "Sales Cr.Memo Header"."Return Order No.");
+        ReturnReceiptLine.SETRANGE("Return Order Line No.", SalesCrMemoLine."Line No.");
+        ReturnReceiptLine.SETRANGE("Line No.", SalesCrMemoLine."Line No.");
+        ReturnReceiptLine.SETRANGE(Type, SalesCrMemoLine.Type);
+        ReturnReceiptLine.SETRANGE("No.", SalesCrMemoLine."No.");
+        ReturnReceiptLine.SETRANGE("Unit of Measure Code", SalesCrMemoLine."Unit of Measure Code");
+        ReturnReceiptLine.SETFILTER(Quantity, '<>%1', 0);
 
         IF ReturnReceiptLine.FIND('-') THEN
-          REPEAT
-            IF "Sales Cr.Memo Header"."Get Return Receipt Used" THEN
-              CorrectShipment(ReturnReceiptLine);
-            IF ABS(ReturnReceiptLine.Quantity) <= ABS(TotalQuantity - SalesCrMemoLine.Quantity) THEN
-              TotalQuantity := TotalQuantity - ReturnReceiptLine.Quantity
-            ELSE BEGIN
-              IF ABS(ReturnReceiptLine.Quantity) > ABS(TotalQuantity) THEN
-                ReturnReceiptLine.Quantity := TotalQuantity;
-              Quantity :=
-                ReturnReceiptLine.Quantity - (TotalQuantity - SalesCrMemoLine.Quantity);
+            REPEAT
+                IF "Sales Cr.Memo Header"."Get Return Receipt Used" THEN
+                    CorrectShipment(ReturnReceiptLine);
+                IF ABS(ReturnReceiptLine.Quantity) <= ABS(TotalQuantity - SalesCrMemoLine.Quantity) THEN
+                    TotalQuantity := TotalQuantity - ReturnReceiptLine.Quantity
+                ELSE BEGIN
+                    IF ABS(ReturnReceiptLine.Quantity) > ABS(TotalQuantity) THEN
+                        ReturnReceiptLine.Quantity := TotalQuantity;
+                    Quantity :=
+                      ReturnReceiptLine.Quantity - (TotalQuantity - SalesCrMemoLine.Quantity);
 
-              SalesCrMemoLine.Quantity := SalesCrMemoLine.Quantity - Quantity;
-              TotalQuantity := TotalQuantity - ReturnReceiptLine.Quantity;
+                    SalesCrMemoLine.Quantity := SalesCrMemoLine.Quantity - Quantity;
+                    TotalQuantity := TotalQuantity - ReturnReceiptLine.Quantity;
 
-              IF ReturnReceiptHeader.GET(ReturnReceiptLine."Document No.") THEN
-                AddBufferEntry(
-                  SalesCrMemoLine,
-                  -Quantity,
-                  ReturnReceiptHeader."Posting Date");
-            END;
-          UNTIL (ReturnReceiptLine.NEXT = 0) OR (TotalQuantity = 0);
+                    IF ReturnReceiptHeader.GET(ReturnReceiptLine."Document No.") THEN
+                        AddBufferEntry(
+                          SalesCrMemoLine,
+                          -Quantity,
+                          ReturnReceiptHeader."Posting Date");
+                END;
+            UNTIL (ReturnReceiptLine.NEXT = 0) OR (TotalQuantity = 0);
     end;
 
     local procedure CorrectShipment(var ReturnReceiptLine: Record "6661")
     var
         SalesCrMemoLine: Record "115";
     begin
-        SalesCrMemoLine.SETCURRENTKEY("Return Receipt No.","Return Receipt Line No.");
-        SalesCrMemoLine.SETRANGE("Return Receipt No.",ReturnReceiptLine."Document No.");
-        SalesCrMemoLine.SETRANGE("Return Receipt Line No.",ReturnReceiptLine."Line No.");
+        SalesCrMemoLine.SETCURRENTKEY("Return Receipt No.", "Return Receipt Line No.");
+        SalesCrMemoLine.SETRANGE("Return Receipt No.", ReturnReceiptLine."Document No.");
+        SalesCrMemoLine.SETRANGE("Return Receipt Line No.", ReturnReceiptLine."Line No.");
         IF SalesCrMemoLine.FIND('-') THEN
-          REPEAT
-            ReturnReceiptLine.Quantity := ReturnReceiptLine.Quantity - SalesCrMemoLine.Quantity;
-          UNTIL SalesCrMemoLine.NEXT = 0;
+            REPEAT
+                ReturnReceiptLine.Quantity := ReturnReceiptLine.Quantity - SalesCrMemoLine.Quantity;
+            UNTIL SalesCrMemoLine.NEXT = 0;
     end;
 
-    local procedure AddBufferEntry(SalesCrMemoLine: Record "115";QtyOnShipment: Decimal;PostingDate: Date)
+    local procedure AddBufferEntry(SalesCrMemoLine: Record "115"; QtyOnShipment: Decimal; PostingDate: Date)
     begin
-        SalesShipmentBuffer.SETRANGE("Document No.",SalesCrMemoLine."Document No.");
-        SalesShipmentBuffer.SETRANGE("Line No.",SalesCrMemoLine."Line No.");
-        SalesShipmentBuffer.SETRANGE("Posting Date",PostingDate);
+        SalesShipmentBuffer.SETRANGE("Document No.", SalesCrMemoLine."Document No.");
+        SalesShipmentBuffer.SETRANGE("Line No.", SalesCrMemoLine."Line No.");
+        SalesShipmentBuffer.SETRANGE("Posting Date", PostingDate);
         IF SalesShipmentBuffer.FIND('-') THEN BEGIN
-          SalesShipmentBuffer.Quantity := SalesShipmentBuffer.Quantity - QtyOnShipment;
-          SalesShipmentBuffer.MODIFY;
-          EXIT;
+            SalesShipmentBuffer.Quantity := SalesShipmentBuffer.Quantity - QtyOnShipment;
+            SalesShipmentBuffer.MODIFY;
+            EXIT;
         END;
 
         WITH SalesShipmentBuffer DO BEGIN
-          INIT;
-          "Document No." := SalesCrMemoLine."Document No.";
-          "Line No." := SalesCrMemoLine."Line No.";
-          "Entry No." := NextEntryNo;
-          Type := SalesCrMemoLine.Type;
-          "No." := SalesCrMemoLine."No.";
-          Quantity := -QtyOnShipment;
-          "Posting Date" := PostingDate;
-          INSERT;
-          NextEntryNo := NextEntryNo + 1
+            INIT;
+            "Document No." := SalesCrMemoLine."Document No.";
+            "Line No." := SalesCrMemoLine."Line No.";
+            "Entry No." := NextEntryNo;
+            Type := SalesCrMemoLine.Type;
+            "No." := SalesCrMemoLine."No.";
+            Quantity := -QtyOnShipment;
+            "Posting Date" := PostingDate;
+            INSERT;
+            NextEntryNo := NextEntryNo + 1
         END;
     end;
 
@@ -1219,19 +1219,19 @@ report 50096 "Sales - Credit Memo PRUEBA"
     begin
         GLSetup.GET;
         IF NOT GLSetup."Unrealized VAT" THEN
-          EXIT;
+            EXIT;
         CACCaptionLbl := '';
-        VATEntry.SETRANGE("Document No.",SalesCrMemoHeader."No.");
-        VATEntry.SETRANGE("Document Type",VATEntry."Document Type"::"Credit Memo");
+        VATEntry.SETRANGE("Document No.", SalesCrMemoHeader."No.");
+        VATEntry.SETRANGE("Document Type", VATEntry."Document Type"::"Credit Memo");
         IF VATEntry.FINDSET THEN
-          REPEAT
-            IF VATEntry."VAT Cash Regime" THEN
-              CACCaptionLbl := CACTxt;
-          UNTIL (VATEntry.NEXT = 0) OR (CACCaptionLbl <> '');
+            REPEAT
+                IF VATEntry."VAT Cash Regime" THEN
+                    CACCaptionLbl := CACTxt;
+            UNTIL (VATEntry.NEXT = 0) OR (CACCaptionLbl <> '');
         EXIT(CACCaptionLbl);
     end;
 
-    procedure InitializeRequest(NewNoOfCopies: Integer;NewShowInternalInfo: Boolean;NewLogInteraction: Boolean)
+    procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean)
     begin
         NoOfCopies := NewNoOfCopies;
         ShowInternalInfo := NewShowInternalInfo;

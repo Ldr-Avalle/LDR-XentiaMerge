@@ -1,41 +1,41 @@
 report 50077 "location/Item entrys"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './locationItem entrys.rdlc';
+    RDLCLayout = './src/layout/locationItem entrys.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table14)
+        dataitem(Location; Location)
         {
-            DataItemTableView = WHERE(ShopCode=FILTER(<>''),
-                                      Global Dimension 1 Code=FILTER(EUSKALTEL));
+            DataItemTableView = WHERE(ShopCode = FILTER(<> ''),
+                                      "Global Dimension 1 Code" = FILTER('EUSKALTEL'));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "Global Dimension 1 Code";
-            dataitem(DataItem1000000001;Table5802)
+            dataitem("Value Entry"; "Value Entry")
             {
-                CalcFields = Shop Code;
-                DataItemLink = Location Code=FIELD(Code);
-                DataItemTableView = SORTING(Item No.,Posting Date,Item Ledger Entry Type,Entry Type,Variance Type,Item Charge No.,Location Code,Variant Code)
-                                    WHERE(Source Type=CONST(Vendor),
-                                          Source No.=CONST(P00040));
+                CalcFields = "Shop Code";
+                DataItemLink = "Location Code" = FIELD(Code);
+                DataItemTableView = SORTING("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code")
+                                    WHERE("Source Type" = CONST(Vendor),
+                                          "Source No." = CONST('P00040'));
                 RequestFilterFields = "Posting Date";
             }
-            dataitem(DataItem1000000002;Table2000000026)
+            dataitem(Integer; Integer)
             {
                 DataItemTableView = SORTING(Number);
-                column(ValueEntryExternalDocumentNo;"Value Entry"."External Document No.")
+                column(ValueEntryExternalDocumentNo; "Value Entry"."External Document No.")
                 {
                 }
-                column(ValueEntryPostingDate;"Value Entry"."Posting Date")
+                column(ValueEntryPostingDate; "Value Entry"."Posting Date")
                 {
                 }
-                column(ItemVendorItemNo;Item."Vendor Item No.")
+                column(ItemVendorItemNo; Item."Vendor Item No.")
                 {
                 }
-                column(LocationCode;Location.Code)
+                column(LocationCode; Location.Code)
                 {
                 }
-                column(ValueEntryBufferValuedQuantity;ValueEntryBuffer."Valued Quantity")
+                column(ValueEntryBufferValuedQuantity; ValueEntryBuffer."Valued Quantity")
                 {
                 }
 
@@ -44,7 +44,7 @@ report 50077 "location/Item entrys"
                     //Integer, Body (1) - OnPreSection()
                     CalcProfitPct;
                     IF NOT Item.GET(ValueEntryBuffer."Item No.") THEN
-                      Item.INIT
+                        Item.INIT
                 end;
             }
         }
@@ -57,9 +57,9 @@ report 50077 "location/Item entrys"
         {
             area(content)
             {
-                field(PrintOnlyOnePerPage;PrintOnlyOnePerPage)
+                field(PrintOnlyOnePerPage; PrintOnlyOnePerPage)
                 {
-                    Caption = 'P´Š¢gina nueva por tienda';
+                    Caption = 'Página nueva por tienda';
                 }
             }
         }
@@ -106,10 +106,10 @@ report 50077 "location/Item entrys"
     local procedure CalcProfitPct()
     begin
         WITH ValueEntryBuffer DO BEGIN
-          IF "Sales Amount (Actual)" <> 0 THEN
-            ProfitPct := ROUND(100 * Profit / "Sales Amount (Actual)",0.1)
-          ELSE
-            ProfitPct := 0;
+            IF "Sales Amount (Actual)" <> 0 THEN
+                ProfitPct := ROUND(100 * Profit / "Sales Amount (Actual)", 0.1)
+            ELSE
+                ProfitPct := 0;
         END;
     end;
 
@@ -136,9 +136,9 @@ report 50077 "location/Item entrys"
         ExcelBuf.AddColumn("Value Entry"."Posting Date",FALSE,'',FALSE,FALSE,FALSE,'');
         ExcelBuf.AddColumn(Location.Code,FALSE,'',FALSE,FALSE,FALSE,'');
         ExcelBuf.AddColumn(Item."Vendor Item No.",FALSE,'',FALSE,FALSE,FALSE,'');*/ //comentado en 2016 es standard
-        //ExcelBuf.AddColumn(Item.Description,FALSE,'',FALSE,FALSE,FALSE,'');
-        //ExcelBuf.AddColumn(ValueEntryBuffer."Item No.",FALSE,'',FALSE,FALSE,FALSE,'');
-        
+                                                                                    //ExcelBuf.AddColumn(Item.Description,FALSE,'',FALSE,FALSE,FALSE,'');
+                                                                                    //ExcelBuf.AddColumn(ValueEntryBuffer."Item No.",FALSE,'',FALSE,FALSE,FALSE,'');
+
         /*ExcelBuf.AddColumn(-ValueEntryBuffer."Valued Quantity",FALSE,'',FALSE,FALSE,FALSE,'');*/ //comentado en 2016 es standard
 
     end;

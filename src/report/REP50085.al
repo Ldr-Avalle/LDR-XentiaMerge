@@ -1,35 +1,35 @@
 report 50085 "Control albaranes"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Control albaranes.rdlc';
+    RDLCLayout = './src/layout/Control albaranes.rdl';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table32)
+        dataitem("Item Ledger Entry"; "Item Ledger Entry")
         {
-            DataItemTableView = WHERE(Invoiced Quantity=FILTER(0));
+            DataItemTableView = WHERE("Invoiced Quantity" = FILTER(0));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "Posting Date";
-            dataitem(DataItem1000000001;Table5802)
+            dataitem("Value Entry"; "Value Entry")
             {
-                DataItemLink = Item Ledger Entry No.=FIELD(Entry No.);
-                DataItemTableView = SORTING(Document No.);
-                column(ValueEntryItemNo;"Value Entry"."Item No.")
+                DataItemLink = "Item Ledger Entry No." = FIELD("Entry No.");
+                DataItemTableView = SORTING("Document No.");
+                column(ValueEntryItemNo; "Value Entry"."Item No.")
                 {
                 }
-                column(ItemLedgerEntryPostingDate;"Item Ledger Entry"."Posting Date")
+                column(ItemLedgerEntryPostingDate; "Item Ledger Entry"."Posting Date")
                 {
                 }
-                column(ValueEntryDocumentNo;"Value Entry"."Document No.")
+                column(ValueEntryDocumentNo; "Value Entry"."Document No.")
                 {
                 }
-                column(ValueEntryDescription;"Value Entry".Description)
+                column(ValueEntryDescription; "Value Entry".Description)
                 {
                 }
-                column(ValueEntryCostAmountExpected;"Value Entry"."Cost Amount (Expected)")
+                column(ValueEntryCostAmountExpected; "Value Entry"."Cost Amount (Expected)")
                 {
                 }
-                column(TotalCost;TotalCost)
+                column(TotalCost; TotalCost)
                 {
                 }
 
@@ -41,7 +41,7 @@ report 50085 "Control albaranes"
 
             trigger OnAfterGetRecord()
             begin
-                TotalCost:=TotalCost+"Value Entry"."Cost Amount (Expected)";
+                TotalCost := TotalCost + "Value Entry"."Cost Amount (Expected)";
             end;
         }
     }
