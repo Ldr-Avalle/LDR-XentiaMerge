@@ -5,19 +5,19 @@ report 50074 IDI2
 
     dataset
     {
-        dataitem(DataItem1000000000;Table50027)
+        dataitem(IDI_LDR; IDI_LDR)
         {
-            CalcFields = Name,First Family Name,Second Family Name;
-            DataItemTableView = SORTING(Employee,A´Š¢o,Mes)
+            CalcFields = Name, First Family Name, Second Family Name;
+            DataItemTableView = SORTING(Employee, A´Š¢o, Mes)
                                 ORDER(Ascending);
-            RequestFilterFields = "A´Š¢o",Mes,Employee;
-            column(CompanyInfoPicture;CompanyInfo.Picture)
+            RequestFilterFields = "A´Š¢o", Mes, Employee;
+            column(CompanyInfoPicture; CompanyInfo.Picture)
             {
             }
-            column(CompanyInfoAddress;CompanyInfo.Address)
+            column(CompanyInfoAddress; CompanyInfo.Address)
             {
             }
-            column(IDiAnio;IDi.A´Š¢o)
+            column(IDiAnio; IDi.A´Š¢o)
             {
             }
             column(IDiMes;IDi.Mes)
