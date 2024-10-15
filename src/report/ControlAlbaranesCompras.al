@@ -1,18 +1,19 @@
-report 50090 "Control albaranes compra"
+report 50082 "Control albaranes compras"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Control albaranes compra.rdl';
+    RDLCLayout = './src/layout/Control albaranes compras.rdl';
 
     dataset
     {
-        dataitem("Albaran"; "Item Ledger Entry")
+        dataitem(Albaran; "Item Ledger Entry")
         {
+            DataItemTableView = where("Source Type" = const(Vendor));
             PrintOnlyIfDetail = true;
-            RequestFilterFields = "Posting Date", "Location Code";
+            RequestFilterFields = "Posting Date";
             dataitem(Factura; "Value Entry")
             {
-                DataItemLink = "Item Ledger Entry No." = FIELD("Entry No.");
-                DataItemTableView = SORTING("Document No.");
+                DataItemLink = "Item Ledger Entry No." = field("Entry No.");
+                DataItemTableView = sorting("Document No.");
                 RequestFilterFields = "Document No.", "Posting Date";
                 column(FacturaItemNo; Factura."Item No.")
                 {
@@ -32,16 +33,13 @@ report 50090 "Control albaranes compra"
                 column(FacturaCostAmountActual; Factura."Cost Amount (Actual)")
                 {
                 }
-                column(FacturaLocationCode; Factura."Location Code")
-                {
-                }
                 column(TotalCost; TotalCost)
                 {
                 }
 
                 trigger OnPreDataItem()
                 begin
-                    LastFieldNo := FIELDNO("Document No.");
+                    LastFieldNo := FieldNo("Document No.");
                 end;
             }
 
@@ -50,22 +48,6 @@ report 50090 "Control albaranes compra"
                 TotalCost := TotalCost + Factura."Cost Amount (Actual)";
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var

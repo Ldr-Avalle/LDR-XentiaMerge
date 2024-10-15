@@ -7,7 +7,7 @@ report 50086 "Control vencim. mayore 85 dias"
     {
         dataitem("Vendor Ledger Entry"; "Vendor Ledger Entry")
         {
-            DataItemTableView = SORTING("Vendor No.", Open, Positive, "Due Date", "Currency Code");
+            DataItemTableView = sorting("Vendor No.", Open, Positive, "Due Date", "Currency Code");
             RequestFilterFields = "Vendor No.", "Posting Date", "Due Date";
             column(VendorLedgerEntryVendorNo; "Vendor Ledger Entry"."Vendor No.")
             {
@@ -15,12 +15,12 @@ report 50086 "Control vencim. mayore 85 dias"
             column(CompanyInfoName; CompanyInfo.Name)
             {
             }
-            column(PageConstFORMATCurrReportPAGENO; PageConst + ' ' + FORMAT(CurrReport.PAGENO))
+            column(PageConstFORMATCurrReportPAGENO; PageConst + ' ' + Format(CurrReport.PageNo))
             {
             }
             dataitem(Vendor; Vendor)
             {
-                DataItemLink = "No." = FIELD("Vendor No.");
+                DataItemLink = "No." = field("Vendor No.");
                 column(VendorLedgerEntryDocumentType; "Vendor Ledger Entry"."Document Type")
                 {
                 }
@@ -59,19 +59,19 @@ report 50086 "Control vencim. mayore 85 dias"
             trigger OnAfterGetRecord()
             begin
                 diasDif := "Due Date" - "Posting Date";
-                CALCFIELDS(Amount);
+                CalcFields(Amount);
 
-                IF (diasDif <= 60) THEN
+                if (diasDif <= 60) then
                     total0a85 := total0a85 + Amount
-                ELSE IF ((diasDif >= 61) AND (diasDif < 2000)) THEN total86a180 := total86a180 + Amount;
+                else if ((diasDif >= 61) and (diasDif < 2000)) then total86a180 := total86a180 + Amount;
                 total := total + Amount;
             end;
 
             trigger OnPreDataItem()
             begin
-                LastFieldNo := FIELDNO("Vendor No.");
-                LastFieldNo := FIELDNO("Entry No.");
-                SETFILTER("Document Type", '%1|%2', "Document Type"::"Credit Memo", "Document Type"::Invoice);
+                LastFieldNo := FieldNo("Vendor No.");
+                LastFieldNo := FieldNo("Entry No.");
+                SetFilter("Document Type", '%1|%2', "Document Type"::"Credit Memo", "Document Type"::Invoice);
 
 
                 total0a85 := 0;
@@ -81,22 +81,6 @@ report 50086 "Control vencim. mayore 85 dias"
         }
     }
 
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     var
         LastFieldNo: Integer;
         FooterPrinted: Boolean;
@@ -104,8 +88,8 @@ report 50086 "Control vencim. mayore 85 dias"
         total86a180: Decimal;
         total: Decimal;
         diasDif: Decimal;
-        PageConst: Label 'P´Š¢gina';
+        PageConst: Label 'Página';
         TotalFor: Label 'Total para ';
-        CompanyInfo: Record "79";
+        CompanyInfo: Record "Company Information";
 }
 

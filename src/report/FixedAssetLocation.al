@@ -7,7 +7,7 @@ report 50036 "Fixed Asset location"
     {
         dataitem("Fixed Asset"; "Fixed Asset")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "FA Class Code", "FA Subclass Code", "Budgeted Asset";
             UseTemporary = true;
             column(DeprBookText; DeprBookText)
@@ -19,7 +19,7 @@ report 50036 "Fixed Asset location"
             dataitem("FA Depreciation Book"; "FA Depreciation Book")
             {
                 CalcFields = "Acquisition Cost", Depreciation;
-                DataItemTableView = SORTING("FA No.", "Depreciation Book Code");
+                DataItemTableView = sorting("FA No.", "Depreciation Book Code");
                 column(FixedAsset_No; "Fixed Asset"."No.")
                 {
                 }
@@ -35,93 +35,83 @@ report 50036 "Fixed Asset location"
 
                 trigger OnPreDataItem()
                 begin
-                    SETRANGE("FA No.", "Fixed Asset"."No.");
-                    SETRANGE("Depreciation Book Code", DeprBookCode);
+                    SetRange("FA No.", "Fixed Asset"."No.");
+                    SetRange("Depreciation Book Code", DeprBookCode);
                 end;
             }
 
             trigger OnAfterGetRecord()
             begin
-                IF Inactive THEN
-                    CurrReport.SKIP;
-                IF "Main Asset/Component" <> "Main Asset/Component"::" " THEN
-                    ComponentFieldname := FIELDCAPTION("Component of Main Asset")
-                ELSE
+                if Inactive then
+                    CurrReport.Skip();
+                if "Main Asset/Component" <> "Main Asset/Component"::" " then
+                    ComponentFieldname := FieldCaption("Component of Main Asset")
+                else
                     ComponentFieldname := '';
-                IF "Budgeted Asset" THEN
-                    BudgetedAssetFieldname := FIELDCAPTION("Budgeted Asset")
-                ELSE
+                if "Budgeted Asset" then
+                    BudgetedAssetFieldname := FieldCaption("Budgeted Asset")
+                else
                     BudgetedAssetFieldname := '';
-                IF "Serial No." <> '' THEN
-                    SerialNoFieldname := FIELDCAPTION("Serial No.")
-                ELSE
+                if "Serial No." <> '' then
+                    SerialNoFieldname := FieldCaption("Serial No.")
+                else
                     SerialNoFieldname := '';
 
-                IF ISSERVICETIER THEN BEGIN
-                    IF PrintOnlyOnePerPage THEN
+                if IsServiceTier then
+                    if PrintOnlyOnePerPage then
                         PageGroupNo := PageGroupNo + 1;
-                END;
-                IF ISSERVICETIER THEN
+                if IsServiceTier then
                     MainAssetComponent := "Main Asset/Component";
                 //Calcular localizaci´Š¢n
-                CALCFIELDS("Location Code");
+                CalcFields("Location Code");
             end;
 
             trigger OnPreDataItem()
             begin
-                IF ISSERVICETIER THEN
+                if IsServiceTier then
                     PageGroupNo := 1;
 
-                CurrReport.NEWPAGEPERRECORD := PrintOnlyOnePerPage;
+                CurrReport.NewPagePerRecord := PrintOnlyOnePerPage;
             end;
         }
     }
 
     requestpage
     {
-
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(DeprBookCode; DeprBookCode)
                 {
-                    Caption = 'Libro amortizaci´Š¢n';
+                    Caption = 'Libro amortización';
                 }
                 field(PrintOnlyOnePerPage; PrintOnlyOnePerPage)
                 {
-                    Caption = 'P´Š¢gina nueva por activo';
+                    Caption = 'Página nueva por activo';
                 }
             }
         }
 
-        actions
-        {
-        }
-
         trigger OnOpenPage()
         begin
-            IF DeprBookCode = '' THEN BEGIN
-                FASetup.GET;
+            if DeprBookCode = '' then begin
+                FASetup.Get();
                 DeprBookCode := FASetup."Default Depr. Book";
-            END;
+            end;
         end;
-    }
-
-    labels
-    {
     }
 
     trigger OnPreReport()
     begin
-        DeprBook.GET(DeprBookCode);
-        FAFilter := "Fixed Asset".GETFILTERS;
-        DeprBookText := STRSUBSTNO('%1%2 %3', DeprBook.TABLECAPTION, ':', DeprBookCode);
+        DeprBook.Get(DeprBookCode);
+        FAFilter := "Fixed Asset".GetFilters;
+        DeprBookText := StrSubstNo('%1%2 %3', DeprBook.TableCaption, ':', DeprBookCode);
     end;
 
     var
-        FASetup: Record "5603";
-        DeprBook: Record "5611";
+        FASetup: Record "FA Setup";
+        DeprBook: Record "Depreciation Book";
         PrintOnlyOnePerPage: Boolean;
         DeprBookCode: Code[10];
         FAFilter: Text[250];
@@ -131,6 +121,6 @@ report 50036 "Fixed Asset location"
         DeprBookText: Text[50];
         PageGroupNo: Integer;
         MainAssetComponent: Integer;
-        CompanyInfo: Record "79";
+        CompanyInfo: Record "Company Information";
 }
 

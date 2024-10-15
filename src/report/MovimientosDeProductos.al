@@ -7,15 +7,15 @@ report 50061 "Movimientos de productos"
     {
         dataitem("Item Ledger Entry"; "Item Ledger Entry")
         {
-            DataItemTableView = SORTING("Serial No.")
-                                WHERE("On Deposit" = FILTER(false),
-                                      "Document Type" = FILTER("Purchase Receipt" | "Purchase Return Shipment" | "Sales Invoice" | "Sales Credit Memo"),
-                                      "Serial No." = FILTER(<> ''),
-                                      Open = FILTER(false),
-                                      "Entry Type" = FILTER(Sale));
+            DataItemTableView = sorting("Serial No.")
+                                where("On Deposit" = filter(false),
+                                      "Document Type" = filter("Purchase Receipt" | "Purchase Return Shipment" | "Sales Invoice" | "Sales Credit Memo"),
+                                      "Serial No." = filter(<> ''),
+                                      Open = filter(false),
+                                      "Entry Type" = filter(Sale));
             RequestFilterFields = "Posting Date";
             //todo: pasar a variables
-            column(Pagina; PageConst + ' ' + FORMAT(CurrReport.PAGENO))
+            column(Pagina; PageConst + ' ' + Format(CurrReport.PageNo()))
             {
             }
             column(CompanyInfo_Name; CompanyInfo.Name)
@@ -51,25 +51,9 @@ report 50061 "Movimientos de productos"
 
             trigger OnPreDataItem()
             begin
-                LastFieldNo := FIELDNO("Entry No.");
+                LastFieldNo := FieldNo("Entry No.");
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var
@@ -77,6 +61,6 @@ report 50061 "Movimientos de productos"
         FooterPrinted: Boolean;
         PageConst: Label 'Página';
         TotalFor: Label 'Total para ';
-        CompanyInfo: Record "79";
+        CompanyInfo: Record "Company Information";
 }
 

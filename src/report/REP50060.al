@@ -49,8 +49,7 @@ report 50060 "Listado Productos"
             trigger OnAfterGetRecord()
             begin
                 //todo:cambiarlo por una variable de visibilidad
-                CurrReport.SHOWOUTPUT :=
-                 CurrReport.TOTALSCAUSEDBY = Item.FIELDNO("No.");
+                CurrReport.SHOWOUTPUT := CurrReport.TOTALSCAUSEDBY = Item.FIELDNO("No.");
             end;
 
             trigger OnPreDataItem()
@@ -58,22 +57,6 @@ report 50060 "Listado Productos"
                 LastFieldNo := FIELDNO("No.");
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var

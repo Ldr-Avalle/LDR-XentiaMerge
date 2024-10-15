@@ -9,8 +9,8 @@ report 50040 "Informe de retenciones"
     {
         dataitem("G/L Entry"; "G/L Entry")
         {
-            DataItemTableView = SORTING("G/L Account No.", "Source No.")
-                                ORDER(Ascending);
+            DataItemTableView = sorting("G/L Account No.", "Source No.")
+                                order(ascending);
             RequestFilterFields = "Document Date", "Document Type", "Source Type", "Source No.";
             column(CompanyInfo_Picture; CompanyInfo.Picture)
             {
@@ -75,20 +75,19 @@ report 50040 "Informe de retenciones"
                 PrevVendor: Code[20];
             begin
                 //inicializo amounts cuando cambian las agrupaciones
-                IF ("Source No." <> GlEntry."Source No.") THEN VendorAmount := 0;
-                IF ("Source No." <> GlEntry."Source No.") THEN VendorC := 0;
-                IF ("G/L Account No." <> GlEntry."G/L Account No.") THEN AccAmount := 0;
-                IF ("G/L Account No." <> GlEntry."G/L Account No.") THEN AccC := 0;
-                GlEntry.GET("Entry No.");
+                if ("Source No." <> GlEntry."Source No.") then VendorAmount := 0;
+                if ("Source No." <> GlEntry."Source No.") then VendorC := 0;
+                if ("G/L Account No." <> GlEntry."G/L Account No.") then AccAmount := 0;
+                if ("G/L Account No." <> GlEntry."G/L Account No.") then AccC := 0;
+                GlEntry.Get("Entry No.");
 
-                //calculo retenci´Š¢n y actualizo amounts
+                //calculo retención y actualizo amounts
                 RetentionBase := GetRetentionBase();
                 C := "Credit Amount" - "Debit Amount";
                 BaseC += C;
                 AccC += C;
                 VendorC += C;
                 BaseAmount += RetentionBase;
-                //AccAmount += RetentionBase;
                 AccAmount := AccAmount + RetentionBase;
                 VendorAmount += RetentionBase;
 
@@ -97,56 +96,27 @@ report 50040 "Informe de retenciones"
 
             trigger OnPreDataItem()
             begin
-                LastFieldNo := FIELDNO("Document Date");
-
-                /*BaseAmount := 0;
-                AccAmount := 0;
-                VendorAmount := 0;
-                BaseC := 0;
-                AccC := 0;
-                VendorC := 0;*/
-
-
-
-
-                //SETFILTER("G/L Account No.", '%1|%2|%3|%4|%5, '475100000', '475100001', '475100002');
-                SETFILTER("G/L Account No.", '%1', '4751*');
-
+                LastFieldNo := FieldNo("Document Date");
+                SetFilter("G/L Account No.", '%1', '4751*');
             end;
         }
     }
 
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     trigger OnInitReport()
     begin
-        CompanyInfo.CALCFIELDS(Picture);
+        CompanyInfo.CalcFields(Picture);
     end;
 
     var
         LastFieldNo: Integer;
         FooterPrinted: Boolean;
-        CompanyInfo: Record "79";
-        ChipbipAdmin: Record "50000";
+        CompanyInfo: Record "Company Information";
+        ChipbipAdmin: Record "User Dimensions_LDR";
         BaseAmount: Decimal;
         AccAmount: Decimal;
         VendorAmount: Decimal;
         RetentionBase: Decimal;
-        GlEntry: Record "17";
+        GlEntry: Record "G/L Entry";
         VendorC: Decimal;
         AccC: Decimal;
         BaseC: Decimal;
@@ -155,31 +125,23 @@ report 50040 "Informe de retenciones"
 
     procedure getAcreedor(VendorNo: Code[20]) nombre: Text[80]
     var
-        Vendor: Record "23";
-        PurchInvHead: Record "122";
-        PurchCrMemoHeader: Record "124";
+        Vendor: Record Vendor;
+        PurchInvHead: Record "Purch. Inv. Header";
+        PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
     begin
-        //IF PurchInvHead.GET("G/L Entry"."Document No.") THEN
-        //   IF Vendor.GET(PurchInvHead."Buy-from Vendor No.") THEN EXIT(Vendor.Name);
-
-        //IF PurchCrMemoHeader.GET("G/L Entry"."Document No.") THEN
-        //   IF Vendor.GET(PurchCrMemoHeader."Buy-from Vendor No.") THEN EXIT(Vendor.Name);
-
-        //EXIT('');
-
-        IF Vendor.GET(VendorNo) THEN
-            EXIT(Vendor.Name);
+        if Vendor.Get(VendorNo) then
+            exit(Vendor.Name);
     end;
 
     procedure getDocExterno() "no.": Code[20]
     var
-        PurchInvHead: Record "122";
-        PurchCrMemoHeader: Record "124";
+        PurchInvHead: Record "Purch. Inv. Header";
+        PurchCrMemoHeader: Record "Purch. Cr. Memo Hdr.";
     begin
-        IF PurchInvHead.GET("G/L Entry"."Document No.") THEN EXIT(PurchInvHead."Vendor Invoice No.");
-        IF PurchCrMemoHeader.GET("G/L Entry"."Document No.") THEN EXIT(PurchCrMemoHeader."Vendor Cr. Memo No.");
+        if PurchInvHead.Get("G/L Entry"."Document No.") then exit(PurchInvHead."Vendor Invoice No.");
+        if PurchCrMemoHeader.Get("G/L Entry"."Document No.") then exit(PurchCrMemoHeader."Vendor Cr. Memo No.");
 
-        EXIT('');
+        exit('');
     end;
 }
 

@@ -7,9 +7,9 @@ report 50057 "Listado Albaranes Compra y dev"
     {
         dataitem("Purch. Rcpt. Header"; "Purch. Rcpt. Header")
         {
-            DataItemTableView = SORTING("Document Date", "No.")
-                                ORDER(Ascending)
-                                WHERE("Buy-from Vendor No." = FILTER(<> 'P00040'));
+            DataItemTableView = sorting("Document Date", "No.")
+                                order(ascending)
+                                where("Buy-from Vendor No." = filter(<> 'P00040'));
             RequestFilterFields = "No.";
             column(PurchRcptHeader_No; "Purch. Rcpt. Header"."No.")
             {
@@ -31,7 +31,7 @@ report 50057 "Listado Albaranes Compra y dev"
             }
             dataitem("Return Shipment Header"; "Return Shipment Header")
             {
-                DataItemTableView = WHERE("Buy-from Vendor No." = FILTER(<> 'P00040'));
+                DataItemTableView = where("Buy-from Vendor No." = filter(<> 'P00040'));
                 column(ReturnShipmentHeader_No; "Return Shipment Header"."No.")
                 {
                 }
@@ -56,26 +56,22 @@ report 50057 "Listado Albaranes Compra y dev"
 
                 trigger OnAfterGetRecord()
                 var
-                    rec6651: Record "6651";
+                    rec6651: Record "Return Shipment Line";
                 begin
 
-                    SETFILTER("Posting Date", '%1..%2', startdate, enddate);
+                    SetFilter("Posting Date", '%1..%2', startdate, enddate);
 
-                    IF ("Return Shipment Header"."Total Devolucion" = 0) THEN BEGIN
-                        rec6651.SETRANGE("Document No.", "No.");
-                        IF pendientesFacturar THEN BEGIN
-                            rec6651.SETFILTER("Return Qty. Shipped Not Invd.", '>0');
-                            IF rec6651.COUNT = 0 THEN CurrReport.SKIP;
-                        END;
+                    if ("Return Shipment Header"."Total Devolucion" = 0) then begin
+                        rec6651.SetRange("Document No.", "No.");
+                        if pendientesFacturar then begin
+                            rec6651.SetFilter("Return Qty. Shipped Not Invd.", '>0');
+                            if rec6651.Count = 0 then CurrReport.Skip();
+                        end;
 
-                        REPEAT
+                        repeat
                             "Return Shipment Header"."Total Devolucion" := "Return Shipment Header"."Total Devolucion" + rec6651."Item Charge Base Amount"
-                         /*"Total albar´Š¢n" + rec6651.Quantity * rec6651."Unit Cost"
-                                            - (((rec6651.Quantity * rec6651."Unit Cost") * rec6651."Line Discount %")/100)
-                                            + (((rec6651.Quantity * rec6651."Unit Cost") * rec6651."VAT %")/100);*/
-
-                         UNTIL (rec6651.NEXT = 0);
-                    END;
+                        until (rec6651.Next() = 0);
+                    end;
 
                     totalAlbaranes := totalAlbaranes + "Return Shipment Header"."Total Devolucion";
 
@@ -89,25 +85,21 @@ report 50057 "Listado Albaranes Compra y dev"
 
             trigger OnAfterGetRecord()
             var
-                rec121: Record "121";
+                rec121: Record "Purch. Rcpt. Line";
             begin
 
-                SETFILTER("Posting Date", '%1..%2', startdate, enddate);
-                IF ("Purch. Rcpt. Header"."Total albaran" = 0) THEN BEGIN
-                    rec121.SETRANGE("Document No.", "No.");
-                    IF pendientesFacturar THEN BEGIN
-                        rec121.SETFILTER("Qty. Rcd. Not Invoiced", '>0');
-                        IF rec121.COUNT = 0 THEN CurrReport.SKIP;
-                    END;
+                SetFilter("Posting Date", '%1..%2', startdate, enddate);
+                if ("Purch. Rcpt. Header"."Total albaran" = 0) then begin
+                    rec121.SetRange("Document No.", "No.");
+                    if pendientesFacturar then begin
+                        rec121.SetFilter("Qty. Rcd. Not Invoiced", '>0');
+                        if rec121.Count = 0 then CurrReport.Skip();
+                    end;
 
-                    REPEAT
+                    repeat
                         "Purch. Rcpt. Header"."Total albaran" := "Purch. Rcpt. Header"."Total albaran" + rec121."Item Charge Base Amount"
-                     /*"Total albar´Š¢n" + rec121.Quantity * rec121."Unit Cost"
-                                        - (((rec121.Quantity * rec121."Unit Cost") * rec121."Line Discount %")/100)
-                                        + (((rec121.Quantity * rec121."Unit Cost") * rec121."VAT %")/100);*/
-
-                     UNTIL (rec121.NEXT = 0);
-                END;
+                    until (rec121.Next() = 0);
+                end;
 
                 totalAlbaranes := totalAlbaranes + "Purch. Rcpt. Header"."Total albaran";
 
@@ -125,7 +117,7 @@ report 50057 "Listado Albaranes Compra y dev"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 group(Opciones)
                 {
@@ -145,23 +137,15 @@ report 50057 "Listado Albaranes Compra y dev"
                 }
             }
         }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
     begin
-        recordCI.CALCFIELDS(Picture);
+        recordCI.CalcFields(Picture);
     end;
 
     var
-        recordCI: Record "79";
+        recordCI: Record "Company Information";
         totalAlbaranes: Decimal;
         pendientesFacturar: Boolean;
         startdate: Date;

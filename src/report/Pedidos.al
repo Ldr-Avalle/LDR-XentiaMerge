@@ -7,7 +7,7 @@ report 50072 Pedidos
     {
         dataitem("Purchase Line"; "Purchase Line")
         {
-            DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
+            DataItemTableView = sorting("Document Type", "Document No.", "Line No.");
             RequestFilterFields = "Document Type", "Document No.", "Qty. Rcd. Not Invoiced", "Order Date", "Return Qty. Shipped Not Invd.";
             column(PurchaseLineDocumentType; "Purchase Line"."Document Type")
             {
@@ -45,7 +45,7 @@ report 50072 Pedidos
             column(PurchaseLineReturnShpdNotInvd; "Purchase Line"."Return Shpd. Not Invd.")
             {
             }
-            column(TotalForDocumentNo; TotalFor + FIELDCAPTION("Purchase Line"."Document No."))
+            column(TotalForDocumentNo; TotalFor + FieldCaption("Purchase Line"."Document No."))
             {
             }
             column(PurchaseLineQtyRcdNotInvoiced2; "Purchase Line"."Qty. Rcd. Not Invoiced")
@@ -60,7 +60,7 @@ report 50072 Pedidos
             column(PurchaseLineReturnShpdNotInvd2; "Purchase Line"."Return Shpd. Not Invd.")
             {
             }
-            column(TotalForDocumentType; TotalFor + FIELDCAPTION("Document Type"))
+            column(TotalForDocumentType; TotalFor + FieldCaption("Document Type"))
             {
             }
             column(PurchaseLineQtyRcdNotInvoiced3; "Purchase Line"."Qty. Rcd. Not Invoiced")
@@ -78,25 +78,9 @@ report 50072 Pedidos
 
             trigger OnPreDataItem()
             begin
-                LastFieldNo := FIELDNO("Document No.");
+                LastFieldNo := FieldNo("Document No.");
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var

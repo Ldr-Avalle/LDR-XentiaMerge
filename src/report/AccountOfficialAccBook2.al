@@ -7,12 +7,12 @@ report 50065 "Account - Official Acc. Book2"
     {
         dataitem(Integer; Integer)
         {
-            DataItemTableView = SORTING(Number);
+            DataItemTableView = sorting(Number);
             dataitem("G/L Account"; "G/L Account")
             {
-                DataItemTableView = SORTING("No.")
-                                    WHERE("Account Type" = CONST(Posting));
-                column(NormalDate_OpenCloseDate; FORMAT(NORMALDATE(OpenCloseDate)))
+                DataItemTableView = sorting("No.")
+                                    where("Account Type" = const(Posting));
+                column(NormalDate_OpenCloseDate; Format(NormalDate(OpenCloseDate)))
                 {
                 }
                 column(OpenTransactDesc; OpenTransactDesc)
@@ -42,28 +42,28 @@ report 50065 "Account - Official Acc. Book2"
 
                 trigger OnAfterGetRecord()
                 begin
-                    SETRANGE("Date Filter", 0D, CLOSINGDATE(AccPeriod."Starting Date" - 1));
-                    CALCFIELDS("Balance at Date", "Add.-Currency Balance at Date");
-                    IF NOT PrintAmountsInAddCurrency THEN
-                        IF "Balance at Date" > 0 THEN BEGIN
+                    SetRange("Date Filter", 0D, ClosingDate(AccPeriod."Starting Date" - 1));
+                    CalcFields("Balance at Date", "Add.-Currency Balance at Date");
+                    if not PrintAmountsInAddCurrency then
+                        if "Balance at Date" > 0 then begin
                             DebitAmt := "Balance at Date";
                             CreditAmt := 0;
                             TotalDebitAmt := TotalDebitAmt + DebitAmt;
-                        END ELSE BEGIN
+                        end else begin
                             CreditAmt := -"Balance at Date";
                             DebitAmt := 0;
                             TotalCreditAmt := TotalCreditAmt + CreditAmt;
-                        END
-                    ELSE
-                        IF "Add.-Currency Balance at Date" > 0 THEN BEGIN
+                        end
+                    else
+                        if "Add.-Currency Balance at Date" > 0 then begin
                             DebitAmt := "Add.-Currency Balance at Date";
                             CreditAmt := 0;
                             TotalDebitAmt := TotalDebitAmt + DebitAmt;
-                        END ELSE BEGIN
+                        end else begin
                             CreditAmt := -"Add.-Currency Balance at Date";
                             DebitAmt := 0;
                             TotalCreditAmt := TotalCreditAmt + CreditAmt;
-                        END;
+                        end;
 
                     FirstPeriodDate := 99990101D;
 
@@ -75,10 +75,10 @@ report 50065 "Account - Official Acc. Book2"
 
                 trigger OnPostDataItem()
                 begin
-                    NextAccPeriod.COPYFILTERS(AccPeriod);
+                    NextAccPeriod.CopyFilters(AccPeriod);
                     NextAccPeriod := AccPeriod;
-                    IF NextAccPeriod.NEXT = 0 THEN
-                        LoopEnd := TRUE;
+                    if NextAccPeriod.Next() = 0 then
+                        LoopEnd := true;
                 end;
 
                 trigger OnPreDataItem()
@@ -89,28 +89,28 @@ report 50065 "Account - Official Acc. Book2"
 
                     // --> G/L Account, Body (2) - OnPreSection()
 
-                    IF (((DebitAmt <> 0) OR (CreditAmt <> 0)) AND NOT (TempDate <> AccPeriod."Starting Date")
-                                                              AND NOT (TempDate > ToDate)
-                                                              AND NOT FirstReg AND NOT (FromPerTransNo > 1)) THEN
-                        VerGLAccountOnPre := TRUE
-                    ELSE
-                        VerGLAccountOnPre := FALSE;
+                    if (((DebitAmt <> 0) or (CreditAmt <> 0)) and not (TempDate <> AccPeriod."Starting Date")
+                                                              and not (TempDate > ToDate)
+                                                              and not FirstReg and not (FromPerTransNo > 1)) then
+                        VerGLAccountOnPre := true
+                    else
+                        VerGLAccountOnPre := false;
 
                     // <-- G/L Account, Body (2) - OnPreSection()
                 end;
             }
             dataitem("G/L Register"; "G/L Register")
             {
-                DataItemTableView = SORTING("Posting Date");
+                DataItemTableView = sorting("Posting Date");
                 PrintOnlyIfDetail = true;
                 RequestFilterFields = "Posting Date";
                 dataitem("G/L Entry"; "G/L Entry")
                 {
-                    DataItemTableView = SORTING("Entry No.");
+                    DataItemTableView = sorting("Entry No.");
                     column(GLRegister_PeriodTransNo; "G/L Register"."Period Trans. No.")
                     {
                     }
-                    column(FORMAT_GLRegister_PostingDate; FORMAT("G/L Register"."Posting Date"))
+                    column(FORMAT_GLRegister_PostingDate; Format("G/L Register"."Posting Date"))
                     {
                     }
                     column(GLEntry_Description; "G/L Entry".Description)
@@ -146,55 +146,53 @@ report 50065 "Account - Official Acc. Book2"
 
                     trigger OnAfterGetRecord()
                     begin
-                        IF NOT GLAccount.GET("G/L Account No.") THEN
-                            GLAccount.INIT;
+                        if not GLAccount.Get("G/L Account No.") then
+                            GLAccount.Init();
 
-                        IF NOT PrintAmountsInAddCurrency THEN BEGIN
+                        if not PrintAmountsInAddCurrency then begin
                             TotalDebitAmt := TotalDebitAmt + "Debit Amount";
                             TotalCreditAmt := TotalCreditAmt + "Credit Amount";
-                        END ELSE BEGIN
+                        end else begin
                             TotalDebitAmt := TotalDebitAmt + "Add.-Currency Debit Amount";
                             TotalCreditAmt := TotalCreditAmt + "Add.-Currency Credit Amount";
-                        END;
+                        end;
 
                         TFTotalCreditAmt := TotalCreditAmt + CreditAmt;
                         TFTotalDebitAmt := TotalDebitAmt + DebitAmt;
 
                         LineID := 2;
 
-
                         // --> G/L Entry, Body (1) - OnPreSection()
-                        IF NOT (PrintAmountsInAddCurrency) THEN
-                            VerGLEntryOnPre := TRUE
-                        ELSE
-                            VerGLEntryOnPre := FALSE;
+                        if not (PrintAmountsInAddCurrency) then
+                            VerGLEntryOnPre := true
+                        else
+                            VerGLEntryOnPre := false;
                         // <-- G/L Entry, Body (1) - OnPreSection()
                     end;
 
                     trigger OnPreDataItem()
                     begin
-                        SETCURRENTKEY("Transaction No.");
-                        //SETRANGE("Transaction No.","G/L Register"."Transaction No."); // en nav 2016 este campo no se llama as´Š¢
-                        SETRANGE("Transaction No.", "G/L Register"."No."); // nombre del campo en nav 2016
+                        SetCurrentKey("Transaction No.");
+                        SetRange("Transaction No.", "G/L Register"."No.");
                     end;
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    TESTFIELD("Period Trans. No.");
-                    FirstRec := FALSE;
+                    TestField("Period Trans. No.");
+                    FirstRec := false;
                     TempDate := "Posting Date";
-                    IF TempDate > CLOSINGDATE(NextAccPeriod."Starting Date" - 1) THEN BEGIN
+                    if TempDate > ClosingDate(NextAccPeriod."Starting Date" - 1) then begin
                         OldDate := "Posting Date";
-                        CurrReport.BREAK;
-                    END;
+                        CurrReport.Break();
+                    end;
 
                     CurrTransNo := "Period Trans. No.";
-                    IF FromPerTransNo <> 0 THEN
-                        IF (CurrTransNo < FromPerTransNo) OR
+                    if FromPerTransNo <> 0 then
+                        if (CurrTransNo < FromPerTransNo) or
                            (CurrTransNo > ToPerTransNo)
-                        THEN
-                            CurrReport.BREAK;
+                        then
+                            CurrReport.Break();
 
                     TFTotalCreditAmt := TotalCreditAmt + CreditAmt;
                     TFTotalDebitAmt := TotalDebitAmt + DebitAmt;
@@ -205,19 +203,19 @@ report 50065 "Account - Official Acc. Book2"
 
                 trigger OnPreDataItem()
                 begin
-                    IF TableEnd OR LoopEnd THEN
-                        CurrReport.BREAK;
+                    if TableEnd or LoopEnd then
+                        CurrReport.Break();
 
-                    IF NOT FirstRec THEN
-                        SETFILTER("Posting Date", '>= %1 & <= %2', OldDate, ToDate);
-                    IF "G/L Register".GETFILTER("Period Trans. No.") <> '' THEN
-                        SETRANGE("Period Trans. No.", FromPerTransNo, ToPerTransNo);
+                    if not FirstRec then
+                        SetFilter("Posting Date", '>= %1 & <= %2', OldDate, ToDate);
+                    if "G/L Register".GetFilter("Period Trans. No.") <> '' then
+                        SetRange("Period Trans. No.", FromPerTransNo, ToPerTransNo);
                 end;
             }
             dataitem(GLAccount2; "G/L Account")
             {
-                DataItemTableView = SORTING("No.")
-                                    WHERE("Account Type" = CONST(Posting));
+                DataItemTableView = sorting("No.")
+                                    where("Account Type" = const(Posting));
                 column(CloseTransactDescGLAccount2; CloseTransactDesc)
                 {
                 }
@@ -239,24 +237,24 @@ report 50065 "Account - Official Acc. Book2"
 
                 trigger OnAfterGetRecord()
                 begin
-                    SETRANGE("Date Filter", 0D, CLOSINGDATE(NextAccPeriod."Starting Date" - 1));
-                    CALCFIELDS("Balance at Date", "Add.-Currency Balance at Date");
-                    IF NOT PrintAmountsInAddCurrency THEN
-                        IF "Balance at Date" < 0 THEN BEGIN
+                    SetRange("Date Filter", 0D, ClosingDate(NextAccPeriod."Starting Date" - 1));
+                    CalcFields("Balance at Date", "Add.-Currency Balance at Date");
+                    if not PrintAmountsInAddCurrency then
+                        if "Balance at Date" < 0 then begin
                             DebitAmt := -"Balance at Date";
                             CreditAmt := 0;
-                        END ELSE BEGIN
+                        end else begin
                             CreditAmt := "Balance at Date";
                             DebitAmt := 0;
-                        END
-                    ELSE
-                        IF "Add.-Currency Balance at Date" < 0 THEN BEGIN
+                        end
+                    else
+                        if "Add.-Currency Balance at Date" < 0 then begin
                             DebitAmt := -"Add.-Currency Balance at Date";
                             CreditAmt := 0;
-                        END ELSE BEGIN
+                        end else begin
                             CreditAmt := "Add.-Currency Balance at Date";
                             DebitAmt := 0;
-                        END;
+                        end;
 
                     TFTotalCreditAmt := TFTotalCreditAmt + CreditAmt;
                     TFTotalDebitAmt := TFTotalDebitAmt + DebitAmt;
@@ -266,56 +264,54 @@ report 50065 "Account - Official Acc. Book2"
 
                 trigger OnPreDataItem()
                 begin
-                    IF LoopEnd THEN
-                        CurrReport.BREAK;
+                    if LoopEnd then
+                        CurrReport.Break();
 
-                    IF TempDate <= CLOSINGDATE(NextAccPeriod."Starting Date" - 1) THEN
-                        TableEnd := TRUE;
-                    IF TableEnd AND
-                      (ToDate < CLOSINGDATE(NextAccPeriod."Starting Date" - 1))
-                    THEN BEGIN
-                        LoopEnd := TRUE;
-                        CurrReport.BREAK;
-                    END;
+                    if TempDate <= ClosingDate(NextAccPeriod."Starting Date" - 1) then
+                        TableEnd := true;
+                    if TableEnd and
+                      (ToDate < ClosingDate(NextAccPeriod."Starting Date" - 1))
+                    then begin
+                        LoopEnd := true;
+                        CurrReport.Break();
+                    end;
 
                     OpenCloseDate := NextAccPeriod."Starting Date" - 1;
                     OpenClosePerTransNo := CurrTransNo + 1;
-                    FirstReg := FALSE;
+                    FirstReg := false;
 
-                    IF AccPeriod.NEXT = 0 THEN BEGIN
-                        IF TableEnd THEN
-                            LoopEnd := TRUE
-                        ELSE
-                            //ERROR(Text1100005,"G/L Register"."Transaction No."); // en nav 2016 este campo no se llama as´Š¢
-                            ERROR(Text1100005, "G/L Register"."No."); // nombre del campo en nav 2016
-                    END ELSE
+                    if AccPeriod.Next() = 0 then begin
+                        if TableEnd then
+                            LoopEnd := true
+                        else
+                            Error(Text1100005, "G/L Register"."No.");
                         TempDate := AccPeriod."Starting Date";
 
-                    IF FromPerTransNo <> 0 THEN
-                        IF (OpenClosePerTransNo < FromPerTransNo) OR
-                           (OpenClosePerTransNo > ToPerTransNo) THEN
-                            CurrReport.BREAK;
-                end;
-            }
+                        if FromPerTransNo <> 0 then
+                            if (OpenClosePerTransNo < FromPerTransNo) or
+                               (OpenClosePerTransNo > ToPerTransNo) then
+                                CurrReport.Break();
+                    end;
+                end            }
 
             trigger OnAfterGetRecord()
             begin
-                IF LoopEnd THEN
-                    CurrReport.BREAK;
+                if LoopEnd then
+                    CurrReport.Break();
 
-                IF PrintAmountsInAddCurrency THEN
+                if PrintAmountsInAddCurrency then
                     HeaderText := Text1100004 + ' ' + GLSetup."Additional Reporting Currency"
-                ELSE BEGIN
-                    GLSetup.TESTFIELD("LCY Code");
+                else begin
+                    GLSetup.TestField("LCY Code");
                     HeaderText := Text1100004 + ' ' + GLSetup."LCY Code";
-                END;
+                end;
 
                 LineID := 0;
             end;
 
             trigger OnPreDataItem()
             begin
-                GLSetup.GET;
+                GLSetup.Get();
             end;
         }
     }
@@ -325,7 +321,7 @@ report 50065 "Account - Official Acc. Book2"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(CloseTransactDesc; CloseTransactDesc)
                 {
@@ -337,7 +333,7 @@ report 50065 "Account - Official Acc. Book2"
                 }
                 field(FirstPage; FirstPage)
                 {
-                    Caption = 'Primera p´Š¢gina';
+                    Caption = 'Primera página';
                 }
                 field(PrintAmountsInAddCurrency; PrintAmountsInAddCurrency)
                 {
@@ -345,98 +341,90 @@ report 50065 "Account - Official Acc. Book2"
                 }
             }
         }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
     begin
-        FirstRec := TRUE;
-        IF OpenTransactDesc = '' THEN
+        FirstRec := true;
+        if OpenTransactDesc = '' then
             OpenTransactDesc := Text1100000;
-        IF CloseTransactDesc = '' THEN
+        if CloseTransactDesc = '' then
             CloseTransactDesc := Text1100001;
     end;
 
     trigger OnPreReport()
     begin
         FirstPageNum := FirstPage;
-        GLDateFilter := "G/L Register".GETFILTER("Posting Date");
-        GLFilter := "G/L Register".GETFILTERS;
-        FromDate := "G/L Register".GETRANGEMIN("Posting Date");
-        ToDate := "G/L Register".GETRANGEMAX("Posting Date");
+        GLDateFilter := "G/L Register".GetFilter("Posting Date");
+        GLFilter := "G/L Register".GetFilters;
+        FromDate := "G/L Register".GetRangeMin("Posting Date");
+        ToDate := "G/L Register".GetRangeMax("Posting Date");
         InitPeriodDate := CalcPeriod(FromDate);
-        AccPeriod.RESET;
-        IF InitPeriodDate <> FromDate THEN BEGIN
-            GLentry.SETRANGE("Posting Date", InitPeriodDate, CALCDATE(Text1100002, FromDate));
-            IF GLentry.FIND('-') THEN
-                REPEAT
-                    IF NOT PrintAmountsInAddCurrency THEN BEGIN
+        AccPeriod.Reset();
+        if InitPeriodDate <> FromDate then begin
+            GLentry.SetRange("Posting Date", InitPeriodDate, CalcDate(Text1100002, FromDate));
+            if GLentry.Find('-') then
+                repeat
+                    if not PrintAmountsInAddCurrency then begin
                         TotalDebitAmt := TotalDebitAmt + GLentry."Debit Amount";
                         TotalCreditAmt := TotalCreditAmt + GLentry."Credit Amount";
-                    END ELSE BEGIN
+                    end else begin
                         TotalDebitAmt := TotalDebitAmt + GLentry."Add.-Currency Debit Amount";
                         TotalCreditAmt := TotalCreditAmt + GLentry."Add.-Currency Credit Amount";
-                    END;
-                UNTIL GLentry.NEXT = 0;
-        END;
-        GLentry.SETRANGE("Posting Date");
-        IF "G/L Register".GETFILTER("Period Trans. No.") <> '' THEN BEGIN
-            FromPerTransNo := "G/L Register".GETRANGEMIN("Period Trans. No.");
-            ToPerTransNo := "G/L Register".GETRANGEMAX("Period Trans. No.");
-        END;
+                    end;
+                until GLentry.Next() = 0;
+        end;
+        GLentry.SetRange("Posting Date");
+        if "G/L Register".GetFilter("Period Trans. No.") <> '' then begin
+            FromPerTransNo := "G/L Register".GetRangeMin("Period Trans. No.");
+            ToPerTransNo := "G/L Register".GetRangeMax("Period Trans. No.");
+        end;
 
         TempDate := FromDate;
 
-        GLReg2.RESET;
-        GLReg2.SETCURRENTKEY("Posting Date", "Period Trans. No.");
-        GLReg2.FIND('+');
-        IF GLReg2."Posting Date" < ToDate THEN BEGIN
-            AccPeriod.SETRANGE("New Fiscal Year", TRUE);
-            AccPeriod.SETFILTER("Starting Date", '>=%1', GLReg2."Posting Date");
-            IF NOT AccPeriod.FIND('-') THEN
+        GLReg2.Reset();
+        GLReg2.SetCurrentKey("Posting Date", "Period Trans. No.");
+        GLReg2.Find('+');
+        if GLReg2."Posting Date" < ToDate then begin
+            AccPeriod.SetRange("New Fiscal Year", true);
+            AccPeriod.SetFilter("Starting Date", '>=%1', GLReg2."Posting Date");
+            if not AccPeriod.Find('-') then
                 ToDate := GLReg2."Posting Date"
-            ELSE
-                ToDate := CLOSINGDATE(AccPeriod."Starting Date" - 1);
-        END;
+            else
+                ToDate := ClosingDate(AccPeriod."Starting Date" - 1);
+        end;
 
-        AccPeriod.SETRANGE("New Fiscal Year", TRUE);
-        AccPeriod.SETFILTER("Starting Date", '>= %1', FromDate);
-        IF NOT AccPeriod.FIND('-') THEN
+        AccPeriod.SetRange("New Fiscal Year", true);
+        AccPeriod.SetFilter("Starting Date", '>= %1', FromDate);
+        if not AccPeriod.Find('-') then
             AccPeriod."Starting Date" := 99991231D;
-        ELSE
-        IF FromDate < AccPeriod."Starting Date" THEN BEGIN
-            AccPeriod.SETRANGE("Starting Date");
-            AccPeriod.NEXT(-1);
-        END;
+        else
+        if FromDate < AccPeriod."Starting Date" then begin
+            AccPeriod.SetRange("Starting Date");
+            AccPeriod.Next(-1);
+        end;
 
-        IF FirstPage <> 0 THEN
+        if FirstPage <> 0 then
             FirstPage := FirstPage - 1;
 
-        GLReg2.RESET;
-        GLReg2.SETCURRENTKEY("Posting Date", "Period Trans. No.");
-        "G/L Register".COPYFILTER("Posting Date", GLReg2."Posting Date");
-        GLReg2.FIND('-');
-        GLReg2.SETRANGE("Posting Date");
-        IF GLReg2.NEXT(-1) = 0 THEN
-            FirstReg := TRUE
-        ELSE
-            FirstReg := FALSE;
+        GLReg2.Reset();
+        GLReg2.SetCurrentKey("Posting Date", "Period Trans. No.");
+        "G/L Register".CopyFilter("Posting Date", GLReg2."Posting Date");
+        GLReg2.Find('-');
+        GLReg2.SetRange("Posting Date");
+        if GLReg2.Next(-1) = 0 then
+            FirstReg := true
+        else
+            FirstReg := false;
     end;
 
     var
-        GLAccount: Record "15";
-        AccPeriod: Record "50";
-        NextAccPeriod: Record "50";
-        GLReg2: Record "45";
-        GLSetup: Record "98";
-        GLentry: Record "17";
+        GLAccount: Record "G/L Account";
+        AccPeriod: Record "Accounting Period";
+        NextAccPeriod: Record "Accounting Period";
+        GLReg2: Record "G/L Register";
+        GLSetup: Record "General Ledger Setup";
+        GLentry: Record "G/L Entry";
         GLFilter: Text[250];
         LoopEnd: Boolean;
         FirstRec: Boolean;
@@ -481,12 +469,12 @@ report 50065 "Account - Official Acc. Book2"
 
     procedure CalcPeriod(InitialDate: Date): Date
     begin
-        AccPeriod.SETRANGE("New Fiscal Year", TRUE);
-        AccPeriod.SETFILTER("Starting Date", '<=%1', InitialDate);
-        IF AccPeriod.FIND('+') THEN
-            EXIT(AccPeriod."Starting Date")
-        ELSE
-            ERROR(Text1100006);
+        AccPeriod.SetRange("New Fiscal Year", true);
+        AccPeriod.SetFilter("Starting Date", '<=%1', InitialDate);
+        if AccPeriod.Find('+') then
+            exit(AccPeriod."Starting Date")
+        else
+            Error(Text1100006);
     end;
 }
 

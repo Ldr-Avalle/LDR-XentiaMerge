@@ -7,11 +7,11 @@ report 50081 "compras sin facturar"
     {
         dataitem("Purchase Line"; "Purchase Line")
         {
-            DataItemTableView = SORTING("Document Type", "Document No.", "Line No.")
-                                WHERE("Document Type" = FILTER(Order | "Return Order"),
-                                      Type = FILTER(Item),
-                                      "Quantity Invoiced" = CONST(0),
-                                      "Buy-from Vendor No." = FILTER(<> 'P00040'));
+            DataItemTableView = sorting("Document Type", "Document No.", "Line No.")
+                                where("Document Type" = filter(Order | "Return Order"),
+                                      Type = filter(Item),
+                                      "Quantity Invoiced" = const(0),
+                                      "Buy-from Vendor No." = filter(<> 'P00040'));
             RequestFilterFields = "Order Date", "Document Type";
             column(CompanyInfoName; CompanyInfo.Name)
             {
@@ -43,23 +43,7 @@ report 50081 "compras sin facturar"
         }
     }
 
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     var
-        CompanyInfo: Record "79";
+        CompanyInfo: Record "Company Information";
 }
 

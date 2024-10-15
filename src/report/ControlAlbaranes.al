@@ -7,13 +7,13 @@ report 50085 "Control albaranes"
     {
         dataitem("Item Ledger Entry"; "Item Ledger Entry")
         {
-            DataItemTableView = WHERE("Invoiced Quantity" = FILTER(0));
+            DataItemTableView = where("Invoiced Quantity" = filter(0));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "Posting Date";
             dataitem("Value Entry"; "Value Entry")
             {
-                DataItemLink = "Item Ledger Entry No." = FIELD("Entry No.");
-                DataItemTableView = SORTING("Document No.");
+                DataItemLink = "Item Ledger Entry No." = field("Entry No.");
+                DataItemTableView = sorting("Document No.");
                 column(ValueEntryItemNo; "Value Entry"."Item No.")
                 {
                 }
@@ -35,7 +35,7 @@ report 50085 "Control albaranes"
 
                 trigger OnPreDataItem()
                 begin
-                    LastFieldNo := FIELDNO("Document No.");
+                    LastFieldNo := FieldNo("Document No.");
                 end;
             }
 
@@ -44,22 +44,6 @@ report 50085 "Control albaranes"
                 TotalCost := TotalCost + "Value Entry"."Cost Amount (Expected)";
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var

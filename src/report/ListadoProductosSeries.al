@@ -7,9 +7,9 @@ report 50062 "listado productos series"
     {
         dataitem("Item Ledger Entry"; "Item Ledger Entry")
         {
-            DataItemTableView = SORTING("Serial No.")
-                                WHERE("Global Dimension 1 Code" = FILTER('TELECABLE'),
-                                      "Document Type" = FILTER("Purchase Receipt" | "Purchase Return Shipment" | "Sales Invoice" | "Sales Credit Memo"));
+            DataItemTableView = sorting("Serial No.")
+                                where("Global Dimension 1 Code" = filter('TELECABLE'),
+                                      "Document Type" = filter("Purchase Receipt" | "Purchase Return Shipment" | "Sales Invoice" | "Sales Credit Memo"));
             RequestFilterFields = "Item No.";
             column(CompanyInfo_Name; CompanyInfo.Name)
             {
@@ -47,30 +47,14 @@ report 50062 "listado productos series"
 
             trigger OnPreDataItem()
             begin
-                LastFieldNo := FIELDNO("Item No.");
+                LastFieldNo := FieldNo("Item No.");
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var
         LastFieldNo: Integer;
         FooterPrinted: Boolean;
-        CompanyInfo: Record "79";
+        CompanyInfo: Record "Company Information";
 }
 
