@@ -1,17 +1,17 @@
-report 50021 "Abono Venta Actin"
+report 50020 "Abono Venta"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Abono Venta Actin.rdl';
-    Permissions = TableData 7190 = rimd;
+    RDLCLayout = './src/layout/Abono Venta.rdl';
+    Permissions = tabledata "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
 
     dataset
     {
         dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
-            RequestFilterHeading = 'Posted Sales Invoice';
+            RequestFilterHeading = 'Sales Cr.Memo Header';
             column(No_SalesInvHdr; "No.")
             {
             }
@@ -25,6 +25,15 @@ report 50021 "Abono Venta Actin"
             {
             }
             column(CompanyInfo_Picture; CompanyInfo.Picture)
+            {
+            }
+            column(TBAI_activated; TBAI_activated)
+            {
+            }
+            column(TBAIQR_IMAGE; "Sales Cr.Memo Header".TBAIQRBlob)
+            {
+            }
+            column(TBAIQR_StringValue; "Sales Cr.Memo Header".R_Identificador_TBAI)
             {
             }
             column(CompanyInfo_Name; CompanyInfo.Name)
@@ -60,7 +69,7 @@ report 50021 "Abono Venta Actin"
             column(SalesCrMemoHeader_DueDate; "Sales Cr.Memo Header"."Due Date")
             {
             }
-            column(SalesCrMemoHeader_DocumentDate; FORMAT("Sales Cr.Memo Header"."Document Date", 0, 4))
+            column(SalesCrMemoHeader_DocumentDate; Format("Sales Cr.Memo Header"."Document Date", 0, 4))
             {
             }
             column(recordC_PhoneNo; recordC."Phone No.")
@@ -107,8 +116,8 @@ report 50021 "Abono Venta Actin"
             }
             dataitem("Sales Cr.Memo Line"; "Sales Cr.Memo Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document No.", "Line No.");
+                DataItemLink = "Document No." = field("No.");
+                DataItemTableView = sorting("Document No.", "Line No.");
                 column(VATAmtLineVATCalcType; VATAmountLine."VAT Calculation Type")
                 {
                 }
@@ -164,19 +173,25 @@ report 50021 "Abono Venta Actin"
                     totalIva := totalIva + ("Amount Including VAT" - "Line Amount");
                     total := subtotal + totalIva;
 
-                    IF "Sales Cr.Memo Line".Type = "Sales Cr.Memo Line".Type::" " THEN
-                        VerCampo := FALSE
-                    ELSE
-                        VerCampo := TRUE;
+                    if "Sales Cr.Memo Line".Type = "Sales Cr.Memo Line".Type::" " then
+                        VerCampo := false
+                    else
+                        VerCampo := true;
                 end;
             }
 
             trigger OnAfterGetRecord()
             begin
-                recordC.GET("Sell-to Customer No.");
-                IF PaymentMethod.GET("Payment Method Code") THEN;
-                IF PaymentTerms.GET("Payment Terms Code") THEN;
-                IF SalesPurchPerson.GET("Salesperson Code") THEN;
+                recordC.Get("Sell-to Customer No.");
+                if PaymentMethod.Get("Payment Method Code") then;
+                if PaymentTerms.Get("Payment Terms Code") then;
+                if SalesPurchPerson.Get("Salesperson Code") then;
+                "Sales Cr.Memo Header".CALCFIELDS(TBAIQRBlob);
+                "Sales Cr.Memo Header".CALCFIELDS(R_Identificador_TBAI);
+                if funcionesGenericas.TBAIActivated() then
+                    TBAI_activated := false
+                else
+                    TBAI_activated := true;
             end;
         }
     }
@@ -199,37 +214,39 @@ report 50021 "Abono Venta Actin"
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
-        CompanyInfo.CALCFIELDS(Picture, "Reports Image");
+        GLSetup.Get();
+        CompanyInfo.Get();
+        SalesSetup.Get();
+        CompanyInfo.CalcFields(Picture, "Reports Image");
 
         subtotal := 0;
         totalIva := 0;
         total := 0;
 
         Userdimension := UserDims.ShopAddress("Sales Cr.Memo Header"."User ID");
+        "Sales Cr.Memo Header".CALCFIELDS(TBAIQRBlob);
+        "Sales Cr.Memo Header".CALCFIELDS(R_Identificador_TBAI);
     end;
 
     var
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        CompanyInfo1: Record "79";
-        CompanyInfo2: Record "79";
-        SalesSetup: Record "311";
-        Cust: Record "18";
-        VATAmountLine: Record "290" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        Language: Record "8";
-        CurrExchRate: Record "330";
-        SalesInvCountPrinted: Codeunit "315";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        SalesShipmentBuffer: Record "7190" temporary;
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        CompanyInfo1: Record "Company Information";
+        CompanyInfo2: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Cust: Record Customer;
+        VATAmountLine: Record "VAT Amount Line" temporary;
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        Language: Record Language;
+        CurrExchRate: Record "Currency Exchange Rate";
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -261,17 +278,17 @@ report 50021 "Abono Venta Actin"
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "325";
-        PaymentMethod: Record "289";
-        recordCI: Record "79";
-        recordC: Record "18";
-        recordSIH: Record "112";
-        rec50000: Record "50000";
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordCI: Record "Company Information";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        rec50000: Record "User Dimensions_LDR";
         subtotal: Decimal;
         totalIva: Decimal;
         total: Decimal;
-        ItemTrackingMgt: Codeunit "6500";
-        UserDims: Record "50000";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
+        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';
@@ -286,5 +303,9 @@ report 50021 "Abono Venta Actin"
         Text1100001: Label 'Total %1 Excl. VAT+EC';
         Userdimension: Code[30];
         VerCampo: Boolean;
+        TBAI_activated: Boolean;
+        //TODO: lo he metido en funciones genericas
+        //TBAIManagement: Codeunit "10700";
+        funcionesGenericas: Codeunit FuncionesGenericas;
 }
 

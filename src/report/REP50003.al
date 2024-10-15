@@ -31,13 +31,17 @@ report 50003 "Get SharePoint Contracts"
 
     trigger OnPostReport()
     begin
+        /*
+                // Close odbc connector
+                AdoRs.Close;
+                AdoConn.Close;
 
-        // Close odbc connector
-        AdoRs.Close;
-        AdoConn.Close;
+                CLEAR(AdoRs);
+                CLEAR(AdoConn);
+        */
+        OdbcConnection.Close;
+        CLEAR(OdbcConnection);
 
-        CLEAR(AdoRs);
-        CLEAR(AdoConn);
     end;
 
     trigger OnPreReport()
@@ -47,21 +51,34 @@ report 50003 "Get SharePoint Contracts"
     begin
 
         //inicializo y abro conexión
+        /*
         CLEAR(AdoConn);
         CREATE(AdoConn);
         ConnStr := 'Provider=SQLNCLI10;Server=AFMQUALITY\OFFICESERVERS;Database=intranetSercable;Uid=serviciosbdc; Pwd=1314jckr7@;';
         AdoConn.Open(ConnStr);
+        */
+
+        OdbcConnection := OdbcConnection.OdbcConnection;
+        OdbcConnection.ConnectionString := 'Provider=SQLNCLI10;Server=AFMQUALITY\OFFICESERVERS;Database=intranetSercable;Uid=serviciosbdc; Pwd=1314jckr7@;';
+        OdbcConnection.Open;
+
+
 
         ImportNewContracts();
         ImportNewContractLines();
 
         //despliego resultados
-        MESSAGE('Importaci´Š¢n completada');
+        MESSAGE('Importación completada');
     end;
 
     var
+        //todo:cambiar a dotnet
+        /*
         AdoConn: Automation;
         AdoRs: Automation;
+        */
+        OdbcConnection: DotNet : System.Data.Odbc.OdbcConnection.'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Command: DotNet : System.Data.Odbc.OdbcCommand.'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
         ConnStr: Text[200];
         OpenMethod: Integer;
         LockMethod: Integer;
@@ -84,12 +101,17 @@ report 50003 "Get SharePoint Contracts"
 
         //importo los contratos de la intranet
         //hago Select sobre una vista previamente creada con * o la consulta se pasa de 255 chars que admite Text
+        /*
         CLEAR(AdoRs);
         CREATE(AdoRs);
+        */
         Query := 'Select * From ContratosTelecable Where tp_ID > ' + FORMAT(LastContractSpID);
-        AdoRs.Open(Query, AdoConn, OpenMethod, LockMethod);
+        //AdoRs.Open(Query, AdoConn, OpenMethod, LockMethod);
+        Command := Command.OdbcCommand(Query, OdbcConnection);
 
-        IF NOT AdoRs.EOF THEN BEGIN
+
+        IF NOT AdoRs.EOF THEN
+        BEGIN
             AdoRs.MoveFirst;
             WHILE AdoRs.EOF = FALSE DO BEGIN
                 Contract.INIT;

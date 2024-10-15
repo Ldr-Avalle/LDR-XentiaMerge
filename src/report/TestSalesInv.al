@@ -1,14 +1,13 @@
 report 50007 "Test Sales Inv"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Test Sales Inv.rdlc';
+    RDLCLayout = './src/layout/Test Sales Inv.rdl';
 
     dataset
     {
         dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING("No.")
-                                ORDER(Ascending);
+            DataItemTableView = SORTING("No.") ORDER(Ascending);
             RequestFilterFields = "No.";
             column(SalesInvHeader_No; "No.")
             {
@@ -19,18 +18,6 @@ report 50007 "Test Sales Inv"
                 DataItemTableView = SORTING("Document No.", "Line No.")
                                     ORDER(Ascending);
             }
-        }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
         }
     }
 

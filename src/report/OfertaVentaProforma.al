@@ -8,8 +8,8 @@ report 50034 "Oferta venta proforma"
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = SORTING("Document Type", "No.")
-                                WHERE("Document Type" = CONST(Quote));
+            DataItemTableView = sorting("Document Type", "No.")
+                                where("Document Type" = const(Quote));
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Oferta venta';
             column(CompanyInfo_Name; CompanyInfo.Name)
@@ -51,7 +51,7 @@ report 50034 "Oferta venta proforma"
             column(SalesHeader_No; "Sales Header"."No.")
             {
             }
-            column(FechaOferta; FORMAT("Sales Header"."Order Date", 0, 4))
+            column(FechaOferta; Format("Sales Header"."Order Date", 0, 4))
             {
             }
             column(SalesHeader_ExternalDocumentNo; "Sales Header"."External Document No.")
@@ -62,66 +62,66 @@ report 50034 "Oferta venta proforma"
             }
             dataitem(CopyLoop; Integer)
             {
-                DataItemTableView = SORTING(Number);
+                DataItemTableView = sorting(Number);
                 dataitem(PageLoop; Integer)
                 {
-                    DataItemTableView = SORTING(Number)
-                                        WHERE(Number = CONST(1));
+                    DataItemTableView = sorting(Number)
+                                        where(Number = const(1));
                     dataitem(DimensionLoop1; Integer)
                     {
-                        DataItemTableView = SORTING(Number)
-                                            WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number)
+                                            where(Number = filter(1 ..));
 
                         trigger OnAfterGetRecord()
                         begin
-                            IF Number = 1 THEN BEGIN
-                                IF NOT DimSetEntry1.FIND('-') THEN
-                                    CurrReport.BREAK;
-                            END ELSE
-                                IF NOT Continue THEN
-                                    CurrReport.BREAK;
+                            if Number = 1 then begin
+                                if not DimSetEntry1.Find('-') then
+                                    CurrReport.Break();
+                            end else
+                                if not Continue then
+                                    CurrReport.Break();
 
-                            CLEAR(DimText);
-                            Continue := FALSE;
-                            REPEAT
+                            Clear(DimText);
+                            Continue := false;
+                            repeat
                                 OldDimText := DimText;
-                                IF DimText = '' THEN
-                                    DimText := STRSUBSTNO(
+                                if DimText = '' then
+                                    DimText := StrSubstNo(
                                       '%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
-                                ELSE
+                                else
                                     DimText :=
-                                      STRSUBSTNO(
+                                      StrSubstNo(
                                         '%1, %2 %3', DimText,
                                         DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
-                                IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                                if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                     DimText := OldDimText;
-                                    Continue := TRUE;
-                                    EXIT;
-                                END;
-                            UNTIL (DimSetEntry1.NEXT = 0);
+                                    Continue := true;
+                                    exit;
+                                end;
+                            until (DimSetEntry1.Next() = 0);
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            IF NOT ShowInternalInfo THEN
-                                CurrReport.BREAK;
+                            if not ShowInternalInfo then
+                                CurrReport.Break();
                         end;
                     }
                     dataitem("Sales Line"; "Sales Line")
                     {
-                        DataItemLink = "Document Type" = FIELD("Document Type"),
-                                       "Document No." = FIELD("No.");
+                        DataItemLink = "Document Type" = field("Document Type"),
+                                       "Document No." = field("No.");
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING("Document Type", "Document No.", "Line No.");
+                        DataItemTableView = sorting("Document Type", "Document No.", "Line No.");
 
                         trigger OnPreDataItem()
                         begin
-                            CurrReport.BREAK;
+                            CurrReport.Break();
                         end;
                     }
                     dataitem(RoundLoop; Integer)
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(SalesLine_Quantity; "Sales Line".Quantity)
                         {
                         }
@@ -160,92 +160,87 @@ report 50034 "Oferta venta proforma"
                         }
                         dataitem(DimensionLoop2; Integer)
                         {
-                            DataItemTableView = SORTING(Number)
-                                                WHERE(Number = FILTER(1 ..));
+                            DataItemTableView = sorting(Number)
+                                                where(Number = filter(1 ..));
 
                             trigger OnAfterGetRecord()
                             begin
-                                IF Number = 1 THEN BEGIN
-                                    IF NOT DimSetEntry2.FIND('-') THEN
-                                        CurrReport.BREAK;
-                                END ELSE
-                                    IF NOT Continue THEN
-                                        CurrReport.BREAK;
+                                if Number = 1 then begin
+                                    if not DimSetEntry2.Find('-') then
+                                        CurrReport.Break();
+                                end else
+                                    if not Continue then
+                                        CurrReport.Break();
 
-                                CLEAR(DimText);
-                                Continue := FALSE;
-                                REPEAT
+                                Clear(DimText);
+                                Continue := false;
+                                repeat
                                     OldDimText := DimText;
-                                    IF DimText = '' THEN
-                                        DimText := STRSUBSTNO(
+                                    if DimText = '' then
+                                        DimText := StrSubstNo(
                                           '%1 %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
-                                    ELSE
+                                    else
                                         DimText :=
-                                          STRSUBSTNO(
+                                          StrSubstNo(
                                             '%1, %2 %3', DimText,
                                          DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code");
-                                    IF STRLEN(DimText) > MAXSTRLEN(OldDimText) THEN BEGIN
+                                    if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                         DimText := OldDimText;
-                                        Continue := TRUE;
-                                        EXIT;
-                                    END;
-                                UNTIL (DimSetEntry2.NEXT = 0);
+                                        Continue := true;
+                                        exit;
+                                    end;
+                                until (DimSetEntry2.Next() = 0);
                             end;
 
                             trigger OnPreDataItem()
                             begin
-                                IF NOT ShowInternalInfo THEN
-                                    CurrReport.BREAK;
-
-                                //DimSetEntry2.SETRANGE("Table ID",DATABASE::"Sales Line"); --> comentado
-                                //DimSetEntry2.SETRANGE("Document Type","Sales Line"."Document Type"); --> comentado
-                                //DimSetEntry2.SETRANGE("Document No.","Sales Line"."Document No."); --> comentado
-                                //DimSetEntry2.SETRANGE("Line No.","Sales Line"."Line No."); --> comentado
+                                if not ShowInternalInfo then
+                                    CurrReport.Break();
                             end;
                         }
 
                         trigger OnAfterGetRecord()
                         begin
-                            IF Number = 1 THEN
-                                SalesLine.FIND('-')
-                            ELSE
-                                SalesLine.NEXT;
+                            if Number = 1 then
+                                SalesLine.Find('-')
+                            else
+                                SalesLine.Next();
                             "Sales Line" := SalesLine;
 
-                            IF NOT "Sales Header"."Prices Including VAT" AND
+                            if not "Sales Header"."Prices Including VAT" and
                                (SalesLine."VAT Calculation Type" = SalesLine."VAT Calculation Type"::"Full VAT")
-                            THEN
+                            then
                                 SalesLine."Line Amount" := 0;
 
-                            IF (SalesLine.Type = SalesLine.Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
+                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfo) then
                                 "Sales Line"."No." := '';
                         end;
 
                         trigger OnPostDataItem()
                         begin
-                            SalesLine.DELETEALL;
+                            SalesLine.DeleteAll();
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            MoreLines := SalesLine.FIND('+');
-                            WHILE MoreLines AND (SalesLine.Description = '') AND (SalesLine."Description 2" = '') AND
-                                  (SalesLine."No." = '') AND (SalesLine.Quantity = 0) AND
+                            MoreLines := SalesLine.Find('+');
+                            while MoreLines and (SalesLine.Description = '') and (SalesLine."Description 2" = '') and
+                                  (SalesLine."No." = '') and (SalesLine.Quantity = 0) and
                                   (SalesLine.Amount = 0)
-                            DO
-                                MoreLines := SalesLine.NEXT(-1) <> 0;
-                            IF NOT MoreLines THEN
-                                CurrReport.BREAK;
-                            SalesLine.SETRANGE("Line No.", 0, SalesLine."Line No.");
-                            SETRANGE(Number, 1, SalesLine.COUNT);
+                            do
+                                MoreLines := SalesLine.Next(-1) <> 0;
+                            if not MoreLines then
+                                CurrReport.Break();
+                            SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
+                            SetRange(Number, 1, SalesLine.Count);
                             //TODO: cambio de variable
                             //CurrReport.CREATETOTALS(SalesLine."Line Amount",SalesLine."Inv. Discount Amount",SalesLine."Pmt. Disc. Given Amount");
-                            CurrReport.CREATETOTALS(SalesLine."Line Amount", SalesLine."Inv. Discount Amount", SalesLine."Pmt. Discount Amount");
+                            CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount", SalesLine."Pmt. Discount Amount");
                         end;
                     }
                     dataitem(VATCounter; Integer)
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
 
                         trigger OnAfterGetRecord()
                         begin
@@ -254,10 +249,10 @@ report 50034 "Oferta venta proforma"
 
                         trigger OnPreDataItem()
                         begin
-                            IF (VATAmount = 0) AND (VATAmountLine."VAT %" + VATAmountLine."EC %" = 0) THEN
-                                CurrReport.BREAK;
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(
+                            if (VATAmount = 0) and (VATAmountLine."VAT %" + VATAmountLine."EC %" = 0) then
+                                CurrReport.Break();
+                            SetRange(Number, 1, VATAmountLine.Count);
+                            CurrReport.CreateTotals(
                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
                               //TODO: cambio de variable
                               //VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT+EC Base", VATAmountLine."VAT Amount",
@@ -268,74 +263,74 @@ report 50034 "Oferta venta proforma"
                     }
                     dataitem(VATCounterLCY; Integer)
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
 
                         trigger OnAfterGetRecord()
                         begin
                             VATAmountLine.GetLine(Number);
 
-                            VALVATBaseLCY := ROUND(CurrExchRate.ExchangeAmtFCYToLCY(
+                            VALVATBaseLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                                "Sales Header"."Order Date", "Sales Header"."Currency Code",
                                                //TODO: cambio de variable
                                                //VATAmountLine."VAT+EC Base", "Sales Header"."Currency Factor"));
                                                VATAmountLine."VAT Base", "Sales Header"."Currency Factor"));
-                            VALVATAmountLCY := ROUND(CurrExchRate.ExchangeAmtFCYToLCY(
+                            VALVATAmountLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                                  "Sales Header"."Order Date", "Sales Header"."Currency Code",
                                                  VATAmountLine."VAT Amount", "Sales Header"."Currency Factor"));
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            IF (NOT GLSetup."Print VAT specification in LCY") OR
-                               ("Sales Header"."Currency Code" = '') OR
-                               (VATAmountLine.GetTotalVATAmount = 0) THEN
-                                CurrReport.BREAK;
+                            if (not GLSetup."Print VAT specification in LCY") or
+                               ("Sales Header"."Currency Code" = '') or
+                               (VATAmountLine.GetTotalVATAmount() = 0) then
+                                CurrReport.Break();
 
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VALVATBaseLCY, VALVATAmountLCY);
+                            SetRange(Number, 1, VATAmountLine.Count);
+                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
 
                             CurrExchRate.FindCurrency("Sales Header"."Order Date", "Sales Header"."Currency Code", 1);
-                            VALExchRate := STRSUBSTNO(Text010, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
+                            VALExchRate := StrSubstNo(Text010, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
                         end;
                     }
                 }
 
                 trigger OnAfterGetRecord()
                 var
-                    SalesPost: Codeunit "80";
+                    SalesPost: Codeunit "Sales-Post";
                 begin
-                    CLEAR(SalesLine);
-                    CLEAR(SalesPost);
-                    SalesLine.DELETEALL;
-                    VATAmountLine.DELETEALL;
+                    Clear(SalesLine);
+                    Clear(SalesPost);
+                    SalesLine.DeleteAll();
+                    VATAmountLine.DeleteAll();
                     SalesPost.GetSalesLines("Sales Header", SalesLine, 0);
                     SalesLine.CalcVATAmountLines(0, "Sales Header", SalesLine, VATAmountLine);
                     SalesLine.UpdateVATOnLines(0, "Sales Header", SalesLine, VATAmountLine);
-                    VATAmount := VATAmountLine.GetTotalVATAmount;
-                    VATBaseAmount := VATAmountLine.GetTotalVATBase;
+                    VATAmount := VATAmountLine.GetTotalVATAmount();
+                    VATBaseAmount := VATAmountLine.GetTotalVATBase();
                     VATDiscountAmount :=
                       VATAmountLine.GetTotalVATDiscount("Sales Header"."Currency Code", "Sales Header"."Prices Including VAT");
-                    TotalAmountInclVAT := VATAmountLine.GetTotalAmountInclVAT;
-                    IF (VATAmountLine."VAT Calculation Type" = VATAmountLine."VAT Calculation Type"::"Reverse Charge VAT") AND
-                        "Sales Header"."Prices Including VAT" THEN BEGIN
-                        VATBaseAmount := VATAmountLine.GetTotalLineAmount(FALSE, "Sales Header"."Currency Code");
-                        TotalAmountInclVAT := VATAmountLine.GetTotalLineAmount(FALSE, "Sales Header"."Currency Code");
-                    END;
+                    TotalAmountInclVAT := VATAmountLine.GetTotalAmountInclVAT();
+                    if (VATAmountLine."VAT Calculation Type" = VATAmountLine."VAT Calculation Type"::"Reverse Charge VAT") and
+                        "Sales Header"."Prices Including VAT" then begin
+                        VATBaseAmount := VATAmountLine.GetTotalLineAmount(false, "Sales Header"."Currency Code");
+                        TotalAmountInclVAT := VATAmountLine.GetTotalLineAmount(false, "Sales Header"."Currency Code");
+                    end;
 
-                    CurrReport.PAGENO := 1;
+                    CurrReport.PageNo := 1;
                 end;
 
                 trigger OnPostDataItem()
                 begin
-                    IF NOT CurrReport.PREVIEW THEN
-                        SalesCountPrinted.RUN("Sales Header");
+                    if not CurrReport.Preview then
+                        SalesCountPrinted.Run("Sales Header");
                 end;
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := ABS(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopies) + 1;
                     CopyText := '';
-                    SETRANGE(Number, 1, NoOfLoops);
+                    SetRange(Number, 1, NoOfLoops);
                 end;
             }
 
@@ -343,97 +338,90 @@ report 50034 "Oferta venta proforma"
             var
                 "Sell-to Country": Text[50];
             begin
-                IF RespCenter.GET("Responsibility Center") THEN BEGIN
+                if RespCenter.Get("Responsibility Center") then begin
                     CompanyInfo."Phone No." := RespCenter."Phone No.";
                     CompanyInfo."Fax No." := RespCenter."Fax No.";
-                END;
+                end;
 
-                //IF ("Payment Method Code" = '2') THEN DatosBancos := '20480096579704000008 / 01827351380101501082 / 00496735162416149352';
+                if rec5050.Get("Sales Header"."Sell-to Contact No.") then;
+                if rec18.Get("Sell-to Customer No.") then;
 
-                IF rec5050.GET("Sales Header"."Sell-to Contact No.") THEN;
-                IF rec18.GET("Sell-to Customer No.") THEN;
-
-                //DimSetEntry1.SETRANGE("Table ID",DATABASE::"Sales Header"); --> comentado
-                //DimSetEntry1.SETRANGE("Document Type","Sales Header"."Document Type"); --> comentado
-                //DimSetEntry1.SETRANGE("Document No.","Sales Header"."No."); --> comentado
-
-                IF "Salesperson Code" = '' THEN BEGIN
-                    SalesPurchPerson.INIT;
+                if "Salesperson Code" = '' then begin
+                    SalesPurchPerson.Init();
                     SalesPersonText := '';
-                END ELSE BEGIN
-                    SalesPurchPerson.GET("Salesperson Code");
-                END;
-                IF "Your Reference" = '' THEN
+                end else
+                    SalesPurchPerson.Get("Salesperson Code");
+                if "Your Reference" = '' then
                     ReferenceText := ''
-                ELSE
-                    ReferenceText := FIELDCAPTION("Your Reference");
-                IF "VAT Registration No." = '' THEN
+                else
+                    ReferenceText := FieldCaption("Your Reference");
+                if "VAT Registration No." = '' then
                     VATNoText := ''
-                ELSE
-                    VATNoText := FIELDCAPTION("VAT Registration No.");
-                IF "Currency Code" = '' THEN BEGIN
-                    GLSetup.TESTFIELD("LCY Code");
-                    TotalText := STRSUBSTNO(Text001, GLSetup."LCY Code");
-                    TotalInclVATText := STRSUBSTNO(Text1100000, GLSetup."LCY Code");
-                    TotalExclVATText := STRSUBSTNO(Text1100001, GLSetup."LCY Code");
-                END ELSE BEGIN
-                    TotalText := STRSUBSTNO(Text001, "Currency Code");
-                    TotalInclVATText := STRSUBSTNO(Text1100000, "Currency Code");
-                    TotalExclVATText := STRSUBSTNO(Text1100001, "Currency Code");
-                END;
+                else
+                    VATNoText := FieldCaption("VAT Registration No.");
+                if "Currency Code" = '' then begin
+                    GLSetup.TestField("LCY Code");
+                    TotalText := StrSubstNo(Text001, GLSetup."LCY Code");
+                    TotalInclVATText := StrSubstNo(Text1100000, GLSetup."LCY Code");
+                    TotalExclVATText := StrSubstNo(Text1100001, GLSetup."LCY Code");
+                end else begin
+                    TotalText := StrSubstNo(Text001, "Currency Code");
+                    TotalInclVATText := StrSubstNo(Text1100000, "Currency Code");
+                    TotalExclVATText := StrSubstNo(Text1100001, "Currency Code");
+                end;
 
-                IF "Payment Terms Code" = '' THEN
-                    PaymentTerms.INIT
-                ELSE
-                    PaymentTerms.GET("Payment Terms Code");
-                IF "Payment Method Code" = '' THEN
-                    PaymentMethod.INIT
-                ELSE
-                    PaymentMethod.GET("Payment Method Code");
-                IF "Shipment Method Code" = '' THEN
-                    ShipmentMethod.INIT
-                ELSE
-                    ShipmentMethod.GET("Shipment Method Code");
+                if "Payment Terms Code" = '' then
+                    PaymentTerms.Init()
+                else
+                    PaymentTerms.Get("Payment Terms Code");
+                if "Payment Method Code" = '' then
+                    PaymentMethod.Init()
+                else
+                    PaymentMethod.Get("Payment Method Code");
+                if "Shipment Method Code" = '' then
+                    ShipmentMethod.Init()
+                else
+                    ShipmentMethod.Get("Shipment Method Code");
 
-                IF NOT CurrReport.PREVIEW THEN BEGIN
-                    IF ArchiveDocument THEN
+                if not CurrReport.Preview then begin
+                    if ArchiveDocument then
                         ArchiveManagement.StoreSalesDocument("Sales Header", LogInteraction);
 
-                    IF LogInteraction THEN BEGIN
-                        CALCFIELDS("No. of Archived Versions");
-                        IF "Bill-to Contact No." <> '' THEN
+                    if LogInteraction then begin
+                        CalcFields("No. of Archived Versions");
+                        if "Bill-to Contact No." <> '' then
                             SegManagement.LogDocument(
                               1, "No.", "Doc. No. Occurrence",
-                              "No. of Archived Versions", DATABASE::Contact, "Bill-to Contact No.",
+                              "No. of Archived Versions", Database::Contact, "Bill-to Contact No.",
                               "Salesperson Code", "Campaign No.", "Posting Description", "Opportunity No.")
 
-                        ELSE
+                        else
                             SegManagement.LogDocument(
                               1, "No.", "Doc. No. Occurrence",
-                              "No. of Archived Versions", DATABASE::Customer, "Bill-to Customer No.",
+                              "No. of Archived Versions", Database::Customer, "Bill-to Customer No.",
                               "Salesperson Code", "Campaign No.", "Posting Description", "Opportunity No.");
 
-                    END;
-                END;
-                "Sales Header".MARK(TRUE);
+                    end;
+                end;
+                "Sales Header".Mark(true);
             end;
 
             trigger OnPostDataItem()
             var
-                ToDo: Record "5080";
+                ToDo: Record "To-do";
             begin
-                "Sales Header".MARKEDONLY := TRUE;
-                COMMIT;
-                CurrReport.LANGUAGE := GLOBALLANGUAGE;
-                IF "Sales Header".FIND('-') AND ToDo.WRITEPERMISSION THEN
-                    IF NOT CurrReport.PREVIEW AND (NoOfRecords = 1) THEN
-                        IF CONFIRM(Text007) THEN
+                "Sales Header".MarkedOnly := true;
+                Commit();
+                CurrReport.Language := GlobalLanguage;
+                if "Sales Header".Find('-') and ToDo.WritePermission then
+                    if not CurrReport.Preview and (NoOfRecords = 1) then
+                        if Confirm(Text007) then
                             "Sales Header".CreateTodo;
             end;
 
             trigger OnPreDataItem()
             begin
-                NoOfRecords := COUNT;
+                NoOfRecords := Count;
             end;
         }
     }
@@ -443,7 +431,7 @@ report 50034 "Oferta venta proforma"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(NoOfCopies; NoOfCopies)
                 {
@@ -451,7 +439,7 @@ report 50034 "Oferta venta proforma"
                 }
                 field(ShowInternalInfo; ShowInternalInfo)
                 {
-                    Caption = 'Mostrar informaci´Š¢n interna';
+                    Caption = 'Mostrar información interna';
                 }
                 field(ArchiveDocument; ArchiveDocument)
                 {
@@ -460,8 +448,8 @@ report 50034 "Oferta venta proforma"
 
                     trigger OnValidate()
                     begin
-                        IF NOT ArchiveDocument THEN
-                            LogInteraction := FALSE;
+                        if not ArchiveDocument then
+                            LogInteraction := false;
                     end;
                 }
                 field(LogInteraction; LogInteraction)
@@ -471,8 +459,7 @@ report 50034 "Oferta venta proforma"
 
                     trigger OnValidate()
                     begin
-                        IF LogInteraction THEN
-                            //ArchiveDocument := RequestOptionsPage.ArchiveDocument.ENABLED;
+                        if LogInteraction then
                             ArchiveDocumentEnabled := ArchiveDocument;
                     end;
                 }
@@ -485,11 +472,8 @@ report 50034 "Oferta venta proforma"
 
         trigger OnOpenPage()
         begin
-            ArchiveDocument := ArchiveManagement.SalesDocArchiveGranule;
+            ArchiveDocument := ArchiveManagement.SalesDocArchiveGranule();
             LogInteraction := SegManagement.FindInteractTmplCode(1) <> '';
-
-            /*RequestOptionsPage.ArchiveDocument.ENABLED(ArchiveDocument);
-            RequestOptionsForm.LogInteraction.ENABLED(LogInteraction);*/
 
             ArchiveDocumentEnabled := ArchiveDocument;
             LogInteractionEnabled := LogInteraction;
@@ -497,35 +481,31 @@ report 50034 "Oferta venta proforma"
         end;
     }
 
-    labels
-    {
-    }
-
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
-        CompanyInfo.CALCFIELDS(Picture, "Reports Image");
+        GLSetup.Get();
+        CompanyInfo.Get();
+        SalesSetup.Get();
+        CompanyInfo.CalcFields(Picture, "Reports Image");
     end;
 
     var
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        SalesSetup: Record "311";
-        VATAmountLine: Record "290" temporary;
-        SalesLine: Record "37" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        RespCenter: Record "5714";
-        CurrExchRate: Record "330";
-        SalesCountPrinted: Codeunit "313";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        ArchiveManagement: Codeunit "5063";
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
+        VATAmountLine: Record "VAT Amount Line" temporary;
+        SalesLine: Record "Sales Line" temporary;
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        RespCenter: Record "Responsibility Center";
+        CurrExchRate: Record "Currency Exchange Rate";
+        SalesCountPrinted: Codeunit "Sales-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        ArchiveManagement: Codeunit ArchiveManagement;
         SalesPersonText: Text[30];
         VATNoText: Text[30];
         ReferenceText: Text[30];
@@ -554,10 +534,10 @@ report 50034 "Oferta venta proforma"
         VALVATAmountLCY: Decimal;
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
-        VATPostingSetup: Record "325";
-        PaymentMethod: Record "289";
-        rec5050: Record "5050";
-        rec18: Record "18";
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        rec5050: Record Contact;
+        rec18: Record Customer;
         DatosBancos: Text[150];
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';
@@ -566,8 +546,8 @@ report 50034 "Oferta venta proforma"
         Text006: Label 'Total %1 Excl. VAT';
         Text007: Label 'Do you want to create a follow-up to-do?';
         Text010: Label 'Exchange rate: %1/%2';
-        Text1100000: Label 'Total %1 Incl. VAT+EC';
-        Text1100001: Label 'Total %1 Excl. VAT+EC';
+        Text1100000: Label 'Total %1 Incl. VAT';
+        Text1100001: Label 'Total %1 Excl. VAT';
         [InDataSet]
         ArchiveDocumentEnabled: Boolean;
         [InDataSet]

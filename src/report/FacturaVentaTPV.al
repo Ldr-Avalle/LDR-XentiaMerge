@@ -2,13 +2,13 @@ report 50001 "Factura venta TPV"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './src/layout/Factura venta TPV.rdl';
-    Permissions = TableData 7190 = rimd;
+    Permissions = tabledata "Sales Shipment Buffer" = rimd;
 
     dataset
     {
         dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
             column(No_SalesInvHdr; "No.")
@@ -70,11 +70,11 @@ report 50001 "Factura venta TPV"
             }
             dataitem("Sales Invoice Line"; "Sales Invoice Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document No.", "Line No.");
+                DataItemLink = "Document No." = field("No.");
+                DataItemTableView = sorting("Document No.", "Line No.");
                 column(LineAmt_SalesInvoiceLine; "Line Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(Description_SalesInvLine; Description)
@@ -91,7 +91,7 @@ report 50001 "Factura venta TPV"
                 }
                 column(UnitPrice_SalesInvLine; "Unit Price")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 2;
                 }
                 column(LineDisc_SalesInvoiceLine; "Line Discount %")
@@ -100,33 +100,33 @@ report 50001 "Factura venta TPV"
                 column(VATIdent_SalesInvLine; "VAT Identifier")
                 {
                 }
-                column(PostedShipmentDate; FORMAT(PostedShipmentDate))
+                column(PostedShipmentDate; Format(PostedShipmentDate))
                 {
                 }
-                column(Type_SalesInvoiceLine; FORMAT("Sales Invoice Line".Type))
+                column(Type_SalesInvoiceLine; Format("Sales Invoice Line".Type))
                 {
                 }
                 column(InvDiscountAmount; -"Inv. Discount Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(SalesInvoiceLineAmount; Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(AmountIncludingVATAmount; "Amount Including VAT" - Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(Amount_SalesInvoiceLineIncludingVAT; "Amount Including VAT")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText)
+                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText())
                 {
                 }
                 column(TotalExclVATText; TotalExclVATText)
@@ -153,8 +153,8 @@ report 50001 "Factura venta TPV"
                 }
                 dataitem("Item Ledger Entry"; "Item Ledger Entry")
                 {
-                    DataItemLink = "Item No." = FIELD("No.");
-                    DataItemTableView = SORTING("Item No.", "Posting Date");
+                    DataItemLink = "Item No." = field("No.");
+                    DataItemTableView = sorting("Item No.", "Posting Date");
                     column(ItemLedgEntry_SerialNo; ItemLedgEntry."Serial No.")
                     {
                     }
@@ -163,50 +163,49 @@ report 50001 "Factura venta TPV"
                     var
                         encontrado: Boolean;
                     begin
-                        IF "Serial No." = '' THEN CurrReport.SKIP;
+                        if "Serial No." = '' then CurrReport.Skip();
                     end;
 
                     trigger OnPreDataItem()
                     begin
 
-                        IF "Sales Invoice Line"."Shipment No." <> '' THEN BEGIN
-                            "Item Ledger Entry".SETRANGE("Document No.", "Sales Invoice Line"."Shipment No.");
-                            "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
-                        END ELSE BEGIN
-                            "Item Ledger Entry".SETRANGE("External Document No.", "Sales Invoice Header"."External Document No.");
-                            "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
-                        END;
+                        if "Sales Invoice Line"."Shipment No." <> '' then begin
+                            "Item Ledger Entry".SetRange("Document No.", "Sales Invoice Line"."Shipment No.");
+                            "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
+                        end else begin
+                            "Item Ledger Entry".SetRange("External Document No.", "Sales Invoice Header"."External Document No.");
+                            "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Line No.");
+                        end;
                     end;
                 }
             }
 
             trigger OnAfterGetRecord()
             var
-                rec21: Record "21";
-                SalesCrMemoHeader: Record "114";
+                rec21: Record "Cust. Ledger Entry";
+                SalesCrMemoHeader: Record "Sales Cr.Memo Header";
             begin
 
-                IF ImpFactNoAbonadas THEN BEGIN
-                    SalesCrMemoHeader.SETFILTER("Corrected Invoice No.", '%1', "No.");
-                    IF SalesCrMemoHeader.COUNT > 0 THEN CurrReport.SKIP;
-                END;
+                if ImpFactNoAbonadas then begin
+                    SalesCrMemoHeader.SetFilter("Corrected Invoice No.", '%1', "No.");
+                    if SalesCrMemoHeader.Count > 0 then CurrReport.Skip();
+                end;
 
-                IF PaymentMethod.GET("Payment Method Code") THEN;
-                IF PaymentTerms.GET("Payment Terms Code") THEN;
+                if PaymentMethod.Get("Payment Method Code") then;
+                if PaymentTerms.Get("Payment Terms Code") then;
 
-                CALCFIELDS(Amount, "Amount Including VAT");
+                CalcFields(Amount, "Amount Including VAT");
 
-                recordC.GET("Bill-to Customer No.");
+                recordC.Get("Bill-to Customer No.");
             end;
         }
     }
 
     requestpage
     {
-
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(ImpFactNoAbonadas; ImpFactNoAbonadas)
                 {
@@ -214,44 +213,36 @@ report 50001 "Factura venta TPV"
                 }
             }
         }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
+        GLSetup.Get();
+        CompanyInfo.Get();
+        SalesSetup.Get();
 
-        CompanyInfo.CALCFIELDS(Picture, "Reports Image");
+        CompanyInfo.CalcFields(Picture, "Reports Image");
     end;
 
     var
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        CompanyInfo1: Record "79";
-        CompanyInfo2: Record "79";
-        SalesSetup: Record "311";
-        Cust: Record "18";
-        VATAmountLine: Record "290" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        Language: Record "8";
-        CurrExchRate: Record "330";
-        SalesInvCountPrinted: Codeunit "315";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        SalesShipmentBuffer: Record "7190" temporary;
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        CompanyInfo1: Record "Company Information";
+        CompanyInfo2: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Cust: Record Customer;
+        VATAmountLine: Record "VAT Amount Line" temporary;
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        Language: Record Language;
+        CurrExchRate: Record "Currency Exchange Rate";
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -283,14 +274,14 @@ report 50001 "Factura venta TPV"
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "325";
-        PaymentMethod: Record "289";
-        recordC: Record "18";
-        recordSIH: Record "112";
-        ItemTrackingMgt: Codeunit "6500";
-        ItemLedgEntry: Record "32" temporary;
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
+        ItemLedgEntry: Record "Item Ledger Entry" temporary;
         ImpFactNoAbonadas: Boolean;
-        UserDims: Record "50000";
+        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';

@@ -1,7 +1,7 @@
 report 50031 "17vs45 v5"
 {
-    Permissions = TableData 17 = m,
-                  TableData 45 = im;
+    Permissions = tabledata "G/L Entry" = m,
+                  tabledata "G/L Register" = im;
     ProcessingOnly = true;
 
     dataset
@@ -11,84 +11,66 @@ report 50031 "17vs45 v5"
 
             trigger OnAfterGetRecord()
             var
-                regMovCont: Record "17";
-                regMovCont2: Record "17";
-                T45: Record "45";
+                regMovCont: Record "G/L Entry";
+                regMovCont2: Record "G/L Entry";
+                T45: Record "G/L Register";
                 NumMov: Integer;
             begin
-                regMovCont.RESET;
-                regMovCont.SETCURRENTKEY("Transaction No.");
-                regMovCont.SETRANGE("Transaction No.", "G/L Register"."No.");
-                IF regMovCont.FINDSET THEN BEGIN
+                regMovCont.Reset();
+                regMovCont.SetCurrentKey("Transaction No.");
+                regMovCont.SetRange("Transaction No.", "G/L Register"."No.");
+                if regMovCont.FindSet() then begin
                     NumMov := regMovCont."Entry No.";
-                    REPEAT
-                        IF regMovCont."Entry No." <> NumMov THEN BEGIN
+                    repeat
+                        if regMovCont."Entry No." <> NumMov then begin
                             "G/L Register"."To Entry No." := NumMov - 1;
-                            "G/L Register".MODIFY;
+                            "G/L Register".Modify();
 
                             gblUltimoAsiento += 1;
-                            CLEAR(T45);
+                            Clear(T45);
                             T45."No." := gblUltimoAsiento;
                             T45."From Entry No." := regMovCont."Entry No.";
-                            REPEAT
+                            repeat
                                 regMovCont2 := regMovCont;
                                 regMovCont2."Transaction No." := gblUltimoAsiento;
-                                regMovCont2.MODIFY;
-                            UNTIL regMovCont.NEXT = 0;
+                                regMovCont2.Modify();
+                            until regMovCont.Next() = 0;
 
                             T45."To Entry No." := regMovCont."Entry No.";
                             T45."Creation Date" := "Creation Date";
                             T45."Source Code" := regMovCont."Source Code";
                             T45."User ID" := regMovCont."User ID";
                             T45."Journal Batch Name" := regMovCont."Journal Batch Name";
-                            // t45."From VAT Entry No." := TraePrimerMovIva();
-                            // t45."To VAT Entry No." := TraeUltMovIva();
                             T45."Posting Date" := regMovCont."Posting Date";
-                            T45.INSERT;
+                            T45.Insert();
 
                             gblCont += 1;
-                        END;
+                        end;
                         NumMov += 1;
-                    UNTIL regMovCont.NEXT = 0;
-                END;
+                    until regMovCont.Next() = 0;
+                end;
             end;
 
             trigger OnPostDataItem()
             begin
-                ERROR('xx');
-                MESSAGE('Se han insertado %1 contenedores', gblCont);
+                Error('xx');
+                Message('Se han insertado %1 contenedores', gblCont);
             end;
         }
     }
 
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     trigger OnPreReport()
     begin
-        gblT17.LOCKTABLE();
-        gblT45.LOCKTABLE();
-        gblT45.FINDLAST;
+        gblT17.LockTable();
+        gblT45.LockTable();
+        gblT45.FindLast();
         gblUltimoAsiento := gblT45."No.";
     end;
 
     var
         gblCont: Integer;
         gblUltimoAsiento: Integer;
-        gblT17: Record "17";
-        gblT45: Record "45";
+        gblT17: Record "G/L Entry";
+        gblT45: Record "G/L Register";
 }
 

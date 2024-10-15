@@ -4,7 +4,6 @@ report 50028 Pagos
     DefaultLayout = RDLC;
     RDLCLayout = './src/layout/Pagos.rdl';
 
-
     dataset
     {
         dataitem(Vendor; Vendor)
@@ -41,48 +40,39 @@ report 50028 Pagos
 
             trigger OnAfterGetRecord()
             var
-                rec25: Record "25";
-                rec122: Record "122";
+                rec25: Record "Vendor Ledger Entry";
+                rec122: Record "Purch. Inv. Header";
             begin
                 importeDeudaVto := 0;
-                rec25.SETRANGE("Vendor No.", "No.");
-                rec25.SETFILTER("Document Type", '%1|%2|%3', rec25."Document Type"::Invoice, rec25."Document Type"::Bill,
+                rec25.SetRange("Vendor No.", "No.");
+                rec25.SetFilter("Document Type", '%1|%2|%3', rec25."Document Type"::Invoice, rec25."Document Type"::Bill,
                       rec25."Document Type"::"Credit Memo");
-                IF ((fechaVtoDesde <> 0D) AND (fechaVtoHasta <> 0D)) THEN
-                    rec25.SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
-                ELSE BEGIN
-                    IF (fechaVtoDesde <> 0D) THEN
-                        rec25.SETFILTER("Due Date", '>%1', fechaVtoDesde)
-                    ELSE
-                        rec25.SETFILTER("Due Date", '<%1', fechaVtoHasta);
-                END;
-                rec25.SETRANGE(Open, TRUE);
-                IF rec25.FINDFIRST THEN BEGIN
-                    //recupero los datos de la 1´Š¢ factura vencida
+                if ((fechaVtoDesde <> 0D) and (fechaVtoHasta <> 0D)) then
+                    rec25.SetFilter("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
+                else
+                    if (fechaVtoDesde <> 0D) then
+                        rec25.SetFilter("Due Date", '>%1', fechaVtoDesde)
+                    else
+                        rec25.SetFilter("Due Date", '<%1', fechaVtoHasta);
+                rec25.SetRange(Open, true);
+                if rec25.FindFirst() then begin
+                    //recupero los datos de la factura vencida
                     fechaFacturaVto := rec25."Posting Date";
                     nombreFormaPago := '';
-                    IF rec122.GET(rec25."Document No.") THEN
-                        IF rec289.GET(rec122."Payment Method Code") THEN nombreFormaPago := rec289.Description;
+                    if rec122.Get(rec25."Document No.") then
+                        if rec289.Get(rec122."Payment Method Code") then nombreFormaPago := rec289.Description;
 
                     //recupero el importe de todas las facturas vencidas
-                    REPEAT
-                        rec25.CALCFIELDS("Remaining Amt. (LCY)");
+                    repeat
+                        rec25.CalcFields("Remaining Amt. (LCY)");
                         importeDeudaVto := importeDeudaVto + rec25."Remaining Amt. (LCY)";
-                    UNTIL rec25.NEXT = 0;
-                END;
+                    until rec25.Next() = 0;
+                end;
 
-                IF importeDeudaVto = 0 THEN
-                    CurrReport.SKIP
-                ELSE BEGIN
+                if importeDeudaVto = 0 then
+                    CurrReport.Skip()
+                else
                     importeDeudasVto := importeDeudasVto + importeDeudaVto;
-                    /*IF expExcel THEN insertarLineaResumen;*/
-                END;
-
-            end;
-
-            trigger OnPostDataItem()
-            begin
-                /*IF expExcel THEN insertarPieResumen;*/
 
             end;
 
@@ -131,67 +121,54 @@ report 50028 Pagos
 
                 trigger OnAfterGetRecord()
                 begin
-                    IF rec122.GET("Document No.") THEN
+                    if rec122.Get("Document No.") then
                         nFacturaProveedor := rec122."Vendor Invoice No."
-                    ELSE
+                    else
                         nFacturaProveedor := Description;
 
                     totalProveedor := totalProveedor + "Amount (LCY)";
-
-                    /*IF (expExcel AND (COUNT > 0)) THEN insertarLineaDetalle;*/
-
-                end;
-
-                trigger OnPostDataItem()
-                begin
-                    /*IF (expExcel AND (COUNT > 0)) THEN insertarPieDetalle;*/
-
                 end;
 
                 trigger OnPreDataItem()
                 var
-                    rec21: Record "21";
+                    rec21: Record "Cust. Ledger Entry";
                 begin
-                    SETRANGE("Vendor No.", "Vendor Detalle"."No.");
-                    SETFILTER("Document Type", '%1|%2|%3', "Document Type"::Invoice, "Document Type"::Bill, "Document Type"::"Credit Memo");
-                    IF ((fechaVtoDesde <> 0D) AND (fechaVtoHasta <> 0D)) THEN
-                        SETFILTER("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
-                    ELSE BEGIN
-                        IF (fechaVtoDesde <> 0D) THEN
-                            SETFILTER("Due Date", '>%1', fechaVtoDesde)
-                        ELSE
-                            SETFILTER("Due Date", '<%1', fechaVtoHasta);
-                    END;
-                    SETRANGE(Open, TRUE);
-
-                    /*IF (expExcel AND (COUNT > 0)) THEN insertarCabeceraDetalle;*/
-
+                    SetRange("Vendor No.", "Vendor Detalle"."No.");
+                    SetFilter("Document Type", '%1|%2|%3', "Document Type"::Invoice, "Document Type"::Bill, "Document Type"::"Credit Memo");
+                    if ((fechaVtoDesde <> 0D) and (fechaVtoHasta <> 0D)) then
+                        SetFilter("Due Date", '%1..%2', fechaVtoDesde, fechaVtoHasta)
+                    else
+                        if (fechaVtoDesde <> 0D) then
+                            SetFilter("Due Date", '>%1', fechaVtoDesde)
+                        else
+                            SetFilter("Due Date", '<%1', fechaVtoHasta);
+                    SetRange(Open, true);
                 end;
             }
 
             trigger OnAfterGetRecord()
             begin
-                IF rec289.GET("Payment Method Code") THEN;
+                if rec289.Get("Payment Method Code") then;
                 totalProveedor := 0;
             end;
 
             trigger OnPreDataItem()
             var
-                rec21: Record "21";
-                rec112: Record "112";
+                rec21: Record "Cust. Ledger Entry";
+                rec112: Record "Sales Invoice Header";
             begin
-                CurrReport.NEWPAGE;
-                COPYFILTERS(Vendor);
+                //todo:pasar a matrix
+                CurrReport.NewPage();
+                CopyFilters(Vendor);
             end;
         }
     }
 
     requestpage
     {
-
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(fechaVtoDesde; fechaVtoDesde)
                 {
@@ -203,53 +180,27 @@ report 50028 Pagos
                 }
             }
         }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
     begin
-        recCI.CALCFIELDS(Picture, "Reports Image");
-    end;
-
-    trigger OnPostReport()
-    begin
-        //IF expExcel THEN mostrarExcel;
-    end;
-
-    trigger OnPreReport()
-    begin
-        /*IF expExcel THEN BEGIN
-           Excel.crearExcel(FALSE);
-           Excel.nuevoWorkbook('Detalle');
-           Excel.nuevaSheet('Res´Š¢men');
-        
-           insertarCabeceraInforme;
-           insertarCabeceraResumen;
-        END;*/
-
+        recCI.CalcFields(Picture, "Reports Image");
     end;
 
     var
-        recCI: Record "79";
+        recCI: Record "Company Information";
         fechaVtoDesde: Date;
         fechaVtoHasta: Date;
         expExcel: Boolean;
-        Excel: Record "50013" temporary;
+        Excel: Record "Exp. Excel_LDR" temporary;
         excelRow: Integer;
         importeDeudaVto: Decimal;
         importeDeudasVto: Decimal;
         totalProveedor: Decimal;
         fechaFacturaVto: Date;
-        rec289: Record "289";
+        rec289: Record "Payment Method";
         nombreFormaPago: Text[30];
-        rec122: Record "122";
+        rec122: Record "Purch. Inv. Header";
         nFacturaProveedor: Text[60];
         Text000: Label 'Not Due';
         Text001: Label 'Before';
@@ -271,103 +222,5 @@ report 50028 Pagos
         Text017: Label 'Date';
         Text018: Label 'Customer Filters';
         Text019: Label 'Cust. Ledger Entry Filters';
-
-    procedure insertarCabeceraInforme()
-    begin
-        /*Excel.nuevoValor('Res´Š¢men','A1','Pagos vencimiento:',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','B1',FORMAT(fechaVtoDesde)+' - '+FORMAT(fechaVtoHasta),TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','A2','Fecha informe:',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','B2',TODAY,TRUE,FALSE,FALSE,12,2,1);*/
-
-    end;
-
-    procedure insertarCabeceraResumen()
-    begin
-        /*Excel.nuevoValor('Res´Š¢men','A4','N´Š¢',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','B4','Nombre',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','C4','Importe deuda vto.',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','D4','Fecha 1´Š¢ factura vto.',TRUE,FALSE,FALSE,12,2,1);
-        Excel.nuevoValor('Res´Š¢men','E4','Forma de pago',TRUE,FALSE,FALSE,12,2,1);
-        
-        excelRow := 5;*/
-
-    end;
-
-    procedure insertarLineaResumen()
-    begin
-        /*Excel.nuevoValor('Res´Š¢men','A' + FORMAT(excelRow),Vendor."No.",FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Res´Š¢men','B' + FORMAT(excelRow),Vendor.Name,FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Res´Š¢men','C' + FORMAT(excelRow),importeDeudaVto,FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Res´Š¢men','D' + FORMAT(excelRow),fechaFacturaVto,FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Res´Š¢men','E' + FORMAT(excelRow),rec289.Description,FALSE,FALSE,FALSE,9,1,0);
-        
-        excelRow := excelRow + 1;*/
-
-    end;
-
-    procedure insertarPieResumen()
-    begin
-        /*Excel.nuevoValor('Res´Š¢men','C' + FORMAT(excelRow),importeDeudasVto,TRUE,FALSE,FALSE,12,2,1);
-        
-        excelRow := 1;*/
-
-    end;
-
-    procedure insertarCabeceraDetalle()
-    begin
-        /*Excel.nuevoValor('Detalle','A' + FORMAT(excelRow),'No.: ' + "Vendor Detalle"."No.",TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','B' + FORMAT(excelRow),'Nombre:',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','C' + FORMAT(excelRow),"Vendor Detalle".Name,TRUE,FALSE,FALSE,10,2,1);
-        excelRow := excelRow + 1;
-        
-        Excel.nuevoValor('Detalle','A' + FORMAT(excelRow),'No.: ' + rec289.Description,TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','B' + FORMAT(excelRow),'N´Š¢ tel´Š¢fono: ',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','C' + FORMAT(excelRow),"Vendor Detalle"."Phone No.",TRUE,FALSE,FALSE,10,2,1);
-        excelRow := excelRow + 1;
-        
-        Excel.nuevoValor('Detalle','B' + FORMAT(excelRow),'Fecha fact.',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','C' + FORMAT(excelRow),'N´Š¢ fact.',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','D' + FORMAT(excelRow),'Factura prov.',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','E' + FORMAT(excelRow),'Fecha venc.',TRUE,FALSE,FALSE,10,2,1);
-        Excel.nuevoValor('Detalle','F' + FORMAT(excelRow),'Importe',TRUE,FALSE,FALSE,10,2,1);
-        
-        excelRow := excelRow + 1;*/
-
-    end;
-
-    procedure insertarLineaDetalle()
-    begin
-        /*Excel.nuevoValor('Detalle','B' + FORMAT(excelRow),"Vendor Ledger Entry Detalle"."Document Date",FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Detalle','C' + FORMAT(excelRow),"Vendor Ledger Entry Detalle"."Document No.",FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Detalle','D' + FORMAT(excelRow),nFacturaProveedor,FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Detalle','E' + FORMAT(excelRow),"Vendor Ledger Entry Detalle"."Due Date",FALSE,FALSE,FALSE,9,1,0);
-        Excel.nuevoValor('Detalle','F' + FORMAT(excelRow),"Vendor Ledger Entry Detalle"."Amount (LCY)",FALSE,FALSE,FALSE,9,1,0);
-        
-        excelRow := excelRow + 1;*/
-
-    end;
-
-    procedure insertarPieDetalle()
-    begin
-        /*Excel.nuevoValor('Detalle','F' + FORMAT(excelRow),totalProveedor,TRUE,FALSE,FALSE,10,2,1);
-        
-        excelRow := excelRow + 3;*/
-
-    end;
-
-    procedure mostrarExcel()
-    begin
-        /*Excel.ajustarColumnas('Res´Š¢men',0,25);
-        
-        Excel.ajustarColumnas('Detalle',1,18);
-        Excel.ajustarColumnas('Detalle',2,18);
-        Excel.ajustarColumnas('Detalle',3,25);
-        Excel.ajustarColumnas('Detalle',4,20);
-        Excel.ajustarColumnas('Detalle',5,15);
-        Excel.ajustarColumnas('Detalle',6,15);
-        
-        Excel.mostrarExcel(TRUE);*/
-
-    end;
 }
 

@@ -8,7 +8,7 @@ report 50000 Services
         dataitem("Cash Notes_LDR"; "Cash Notes_LDR")
         {
             RequestFilterFields = "Code", Date, "User ID", Description;
-            column(CompanyName; COMPANYNAME)
+            column(CompanyName; CompanyName)
             {
             }
             //TODO: no exite la tabla 50001
@@ -40,22 +40,6 @@ report 50000 Services
                 }
             }*/
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var

@@ -1,24 +1,24 @@
 report 50096 "Sales - Credit Memo PRUEBA"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Sales - Credit Memo PRUEBA.rdlc';
+    RDLCLayout = './src/layout/Sales - Credit Memo PRUEBA.rdl';
     Caption = 'Sales - Credit Memo';
     Permissions = TableData 7190 = rimd;
 
     dataset
     {
-        dataitem(DataItem8098; Table114)
+        dataitem("Sales Cr.Memo Header"; "Sales Cr.Memo Header")
         {
-            DataItemTableView = SORTING(No.);
+            DataItemTableView = SORTING("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Credit Memo';
             column(No_SalesCrMemoHeader; "No.")
             {
             }
-            dataitem(CopyLoop; Table2000000026)
+            dataitem(CopyLoop; Integer)
             {
                 DataItemTableView = SORTING(Number);
-                dataitem(PageLoop; Table2000000026)
+                dataitem(PageLoop; Integer)
                 {
                     DataItemTableView = SORTING(Number)
                                         WHERE(Number = CONST(1));
@@ -193,7 +193,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                     column(CACCaption; CACCaptionLbl)
                     {
                     }
-                    dataitem(DimensionLoop1; Table2000000026)
+                    dataitem(DimensionLoop1; Integer)
                     {
                         DataItemLinkReference = "Sales Cr.Memo Header";
                         DataItemTableView = SORTING(Number)
@@ -242,11 +242,11 @@ report 50096 "Sales - Credit Memo PRUEBA"
                                 CurrReport.BREAK;
                         end;
                     }
-                    dataitem(DataItem3364; Table115)
+                    dataitem("Sales Cr.Memo Line"; "Sales Cr.Memo Line")
                     {
-                        DataItemLink = Document No.=FIELD(No.);
+                        DataItemLink = "Document No." = FIELD("No.");
                         DataItemLinkReference = "Sales Cr.Memo Header";
-                        DataItemTableView = SORTING(Document No., Line No.);
+                        DataItemTableView = SORTING("Document No.", "Line No.");
                         column(LineAmt_SalesCrMemoLine; "Line Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
@@ -306,7 +306,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(PmtDiscAmt_SalesCrMemoLine; -"Pmt. Disc. Given Amount")
+                        column(PmtDiscAmt_SalesCrMemoLine; -"Pmt. Discount Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Line".GetCurrencyCode;
                             AutoFormatType = 1;
@@ -377,7 +377,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                         column(VATIdent_SalesCrMemoLineCaption; FIELDCAPTION("VAT Identifier"))
                         {
                         }
-                        dataitem("Sales Shipment Buffer"; Table2000000026)
+                        dataitem("Sales Shipment Buffer"; Integer)
                         {
                             DataItemTableView = SORTING(Number);
                             column(SalesShptBufferPostDate; FORMAT(SalesShipmentBuffer."Posting Date"))
@@ -404,7 +404,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                                 SETRANGE(Number, 1, SalesShipmentBuffer.COUNT);
                             end;
                         }
-                        dataitem(DimensionLoop2; Table2000000026)
+                        dataitem(DimensionLoop2; Integer)
                         {
                             DataItemTableView = SORTING(Number)
                                                 WHERE(Number = FILTER(1 ..));
@@ -474,10 +474,10 @@ report 50096 "Sales - Credit Memo PRUEBA"
                                 VATAmountLine."Tax Group Code" := "Tax Group Code";
                                 VATAmountLine."VAT %" := VATPostingSetup."VAT %";
                                 VATAmountLine."EC %" := VATPostingSetup."EC %";
-                                VATAmountLine."VAT+EC Base" := "Sales Cr.Memo Line".Amount;
-                                VATAmountLine."Amount Including VAT+EC" := "Sales Cr.Memo Line"."Amount Including VAT";
+                                VATAmountLine."VAT Base" := "Sales Cr.Memo Line".Amount;
+                                VATAmountLine."Amount Including VAT" := "Sales Cr.Memo Line"."Amount Including VAT";
                                 VATAmountLine."Line Amount" := "Line Amount";
-                                VATAmountLine."Pmt. Disc. Given Amount" := "Pmt. Disc. Given Amount";
+                                VATAmountLine."Pmt. Discount Amount" := "Pmt. Discount Amount";
                                 VATAmountLine.SetCurrencyCode("Sales Cr.Memo Header"."Currency Code");
                                 IF "Allow Invoice Disc." THEN
                                     VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
@@ -503,13 +503,13 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             IF NOT MoreLines THEN
                                 CurrReport.BREAK;
                             SETRANGE("Line No.", 0, "Line No.");
-                            CurrReport.CREATETOTALS(Amount, "Amount Including VAT", "Inv. Discount Amount", "Pmt. Disc. Given Amount");
+                            CurrReport.CREATETOTALS(Amount, "Amount Including VAT", "Inv. Discount Amount", "Pmt. Discount Amount");
                         end;
                     }
-                    dataitem(VATCounter; Table2000000026)
+                    dataitem(VATCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATAmtLineVATECBase; VATAmountLine."VAT+EC Base")
+                        column(VATAmtLineVATECBase; VATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
@@ -529,7 +529,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscAmtPmtDiscAmt; VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Disc. Given Amount")
+                        column(VATAmtLineInvDiscAmtPmtDiscAmt; VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Discount Amount")
                         {
                             AutoFormatExpression = "Sales Cr.Memo Header"."Currency Code";
                             AutoFormatType = 1;
@@ -595,11 +595,11 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             SETRANGE(Number, 1, VATAmountLine.COUNT);
                             CurrReport.CREATETOTALS(
                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
-                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT+EC Base", VATAmountLine."VAT Amount",
-                              VATAmountLine."EC Amount", VATAmountLine."Pmt. Disc. Given Amount");
+                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount",
+                              VATAmountLine."EC Amount", VATAmountLine."Pmt. Discount Amount");
                         end;
                     }
-                    dataitem(VATClauseEntryCounter; Table2000000026)
+                    dataitem(VATClauseEntryCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
                         column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
@@ -644,7 +644,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             CurrReport.CREATETOTALS(VATAmountLine."VAT Amount");
                         end;
                     }
-                    dataitem(VATCounterLCY; Table2000000026)
+                    dataitem(VATCounterLCY; Integer)
                     {
                         DataItemTableView = SORTING(Number);
                         column(VALSpecLCYHeader; VALSpecLCYHeader)
@@ -702,12 +702,12 @@ report 50096 "Sales - Credit Memo PRUEBA"
                             VALExchRate := STRSUBSTNO(Text010, CalculatedExchRate, CurrExchRate."Exchange Rate Amount");
                         end;
                     }
-                    dataitem(Total; Table2000000026)
+                    dataitem(Total; Integer)
                     {
                         DataItemTableView = SORTING(Number)
                                             WHERE(Number = CONST(1));
                     }
-                    dataitem(Total2; Table2000000026)
+                    dataitem(Total2; Integer)
                     {
                         DataItemTableView = SORTING(Number)
                                             WHERE(Number = CONST(1));
@@ -783,8 +783,14 @@ report 50096 "Sales - Credit Memo PRUEBA"
             }
 
             trigger OnAfterGetRecord()
+            var
+                LanguageMgt: Codeunit Language;
             begin
-                CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+                //CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                CurrReport.FormatRegion := LanguageMgt.GetFormatRegionOrDefault("Format Region");
+                FormatAddr.SetLanguageCode("Language Code");
 
                 IF RespCenter.GET("Responsibility Center") THEN BEGIN
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
@@ -830,7 +836,7 @@ report 50096 "Sales - Credit Memo PRUEBA"
                 ELSE
                     AppliedToText := STRSUBSTNO(Text003, "Applies-to Doc. Type", "Applies-to Doc. No.");
 
-                FormatAddr.SalesCrMemoShipTo(ShipToAddr, "Sales Cr.Memo Header");
+                FormatAddr.SalesCrMemoShipTo(ShipToAddr, CustAddr, "Sales Cr.Memo Header");
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
                 FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
                     IF ShipToAddr[i] <> CustAddr[i] THEN

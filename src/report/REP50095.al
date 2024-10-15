@@ -1,7 +1,7 @@
 report 50095 "Sales - Invoice PRUEBA"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Sales - Invoice PRUEBA.rdlc';
+    RDLCLayout = './src/layout/Sales - Invoice PRUEBA.rdl';
     Caption = 'Sales - Invoice';
     Permissions = TableData 7190 = rimd;
     PreviewMode = PrintLayout;
@@ -595,7 +595,7 @@ report 50095 "Sales - Invoice PRUEBA"
                             IF NOT MoreLines THEN
                                 CurrReport.BREAK;
                             SETRANGE("Line No.", 0, "Line No.");
-                            CurrReport.CREATETOTALS("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount", "Pmt. Disc. Given Amount");
+                            CurrReport.CREATETOTALS("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount", "Pmt. Discount Amount");
                         end;
                     }
                     dataitem(VATCounter; Integer)
@@ -621,7 +621,7 @@ report 50095 "Sales - Invoice PRUEBA"
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscountAmt; VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Disc. Given Amount")
+                        column(VATAmtLineInvDiscountAmt; VATAmountLine."Invoice Discount Amount" + VATAmountLine."Pmt. Discount Amount")
                         {
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
@@ -695,7 +695,7 @@ report 50095 "Sales - Invoice PRUEBA"
                               VATAmountLine."EC Amount", VATAmountLine."Pmt. Discount Amount");
                         end;
                     }
-                    dataitem(VATClauseEntryCounter; Table2000000026)
+                    dataitem(VATClauseEntryCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
                         column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
@@ -740,7 +740,7 @@ report 50095 "Sales - Invoice PRUEBA"
                             CurrReport.CREATETOTALS(VATAmountLine."VAT Amount");
                         end;
                     }
-                    dataitem(VatCounterLCY; Table2000000026)
+                    dataitem(VatCounterLCY; Integer)
                     {
                         DataItemTableView = SORTING(Number);
                         column(VALSpecLCYHeader; VALSpecLCYHeader)
@@ -801,12 +801,12 @@ report 50095 "Sales - Invoice PRUEBA"
                             VALExchRate := STRSUBSTNO(Text009, CalculatedExchRate, CurrExchRate."Exchange Rate Amount");
                         end;
                     }
-                    dataitem(Total; Table2000000026)
+                    dataitem(Total; Integer)
                     {
                         DataItemTableView = SORTING(Number)
                                             WHERE(Number = CONST(1));
                     }
-                    dataitem(Total2; Table2000000026)
+                    dataitem(Total2; Integer)
                     {
                         DataItemTableView = SORTING(Number)
                                             WHERE(Number = CONST(1));
@@ -850,7 +850,7 @@ report 50095 "Sales - Invoice PRUEBA"
                                 CurrReport.BREAK;
                         end;
                     }
-                    dataitem(LineFee; Table2000000026)
+                    dataitem(LineFee; Integer)
                     {
                         DataItemTableView = SORTING(Number)
                                             ORDER(Ascending)
@@ -909,8 +909,14 @@ report 50095 "Sales - Invoice PRUEBA"
             }
 
             trigger OnAfterGetRecord()
+            var
+                LanguageMgt: Codeunit Language;
             begin
-                CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+                //CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+
+                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                CurrReport.FormatRegion := LanguageMgt.GetFormatRegionOrDefault("Format Region");
+                FormatAddr.SetLanguageCode("Language Code");
 
                 IF RespCenter.GET("Responsibility Center") THEN BEGIN
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
@@ -971,7 +977,7 @@ report 50095 "Sales - Invoice PRUEBA"
                     ShipmentMethod.GET("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 END;
-                FormatAddr.SalesInvShipTo(ShipToAddr, "Sales Invoice Header");
+                FormatAddr.SalesInvShipTo(ShipToAddr, CustAddr, "Sales Invoice Header");
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
                 FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
                     IF ShipToAddr[i] <> CustAddr[i] THEN
@@ -1504,6 +1510,7 @@ report 50095 "Sales - Invoice PRUEBA"
         LineFeeNoteOnReportHist: Record "1053";
         CustLedgerEntry: Record "21";
         Customer: Record "18";
+        LanguageMgt: Codeunit Language;
     begin
         TempLineFeeNoteOnReportHist.DELETEALL;
         CustLedgerEntry.SETRANGE("Document Type", CustLedgerEntry."Document Type"::Invoice);
@@ -1523,7 +1530,7 @@ report 50095 "Sales - Invoice PRUEBA"
                 TempLineFeeNoteOnReportHist.INSERT;
             UNTIL LineFeeNoteOnReportHist.NEXT = 0;
         END ELSE BEGIN
-            LineFeeNoteOnReportHist.SETRANGE("Language Code", Language.GetUserLanguage);
+            LineFeeNoteOnReportHist.SetRange("Language Code", LanguageMgt.GetUserLanguageCode());
             IF LineFeeNoteOnReportHist.FINDSET THEN
                 REPEAT
                     TempLineFeeNoteOnReportHist.INIT;

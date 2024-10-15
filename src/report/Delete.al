@@ -7,38 +7,22 @@ report 50011 Delete
     {
         dataitem(Integer; Integer)
         {
-            DataItemTableView = WHERE(Number = CONST(1));
+            DataItemTableView = where(Number = const(1));
 
             trigger OnPostDataItem()
             begin
-                MESSAGE('Finish');
+                Message('Finish');
             end;
 
             trigger OnPreDataItem()
             begin
-                MESSAGE('Init');
-                GLEntry.DELETEALL;
+                Message('Init');
+                GLEntry.DeleteAll();
             end;
         }
     }
 
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
-    }
-
     var
-        GLEntry: Record "17";
+        GLEntry: Record "G/L Entry";
 }
 

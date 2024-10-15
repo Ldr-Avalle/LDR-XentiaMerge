@@ -1,195 +1,195 @@
 report 50098 RetenAlquilerProfesi
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './RetenAlquilerProfesi.rdlc';
+    RDLCLayout = './src/layout/RetenAlquilerProfesi.rdl';
     Caption = 'Retenciones de alquileres y profesionales';
 
     dataset
     {
-        dataitem(DataItem1000000000;Table17)
+        dataitem("G/L Entry"; "G/L Entry")
         {
-            DataItemTableView = WHERE(Document Type=FILTER(Invoice|Credit Memo),
-                                      Source Type=CONST(Vendor),
-                                      Source Code=CONST(" COMPRAS"));
+            DataItemTableView = WHERE("Document Type" = FILTER(Invoice | "Credit Memo"),
+                                      "Source Type" = CONST(Vendor),
+                                      "Source Code" = CONST(' COMPRAS'));
             RequestFilterFields = "Document Date";
-            column(TituloCaption;TituloCaptionLbl)
+            column(TituloCaption; TituloCaptionLbl)
             {
             }
-            column(CuentaCaption;CuentaCaptionLbl)
+            column(CuentaCaption; CuentaCaptionLbl)
             {
             }
-            column(AcreedorCaption;AcreedorCaptionLbl)
+            column(AcreedorCaption; AcreedorCaptionLbl)
             {
             }
-            column(FechaEmisionCaption;FechaEmisionCaptionLbl)
+            column(FechaEmisionCaption; FechaEmisionCaptionLbl)
             {
             }
-            column(NumDocumentCaption;NumDocumentCaptionLbl)
+            column(NumDocumentCaption; NumDocumentCaptionLbl)
             {
             }
-            column(NumDocExternoCaption;NumDocExternoCaptionLbl)
+            column(NumDocExternoCaption; NumDocExternoCaptionLbl)
             {
             }
-            column(BaseCaption;BaseCaptionLbl)
+            column(BaseCaption; BaseCaptionLbl)
             {
             }
-            column(ImporteCuotaCaption;ImporteCuotaCaptionLbl)
+            column(ImporteCuotaCaption; ImporteCuotaCaptionLbl)
             {
             }
-            column(PaginaCaption;PaginaCaptionLbl)
+            column(PaginaCaption; PaginaCaptionLbl)
             {
             }
-            column(TotalCaption;TotalCaptionLbl)
+            column(TotalCaption; TotalCaptionLbl)
             {
             }
-            column(PorcRetencionCaption;PorcRetencionCaptionLbl)
+            column(PorcRetencionCaption; PorcRetencionCaptionLbl)
             {
             }
-            column(NumCuenta;"G/L Account No.")
+            column(NumCuenta; "G/L Account No.")
             {
             }
-            column(NombreCuenta;"G/L Account Name")
+            column(NombreCuenta; "G/L Account Name")
             {
             }
-            column(CodProcedencia;"Source No.")
+            column(CodProcedencia; "Source No.")
             {
             }
-            column(FechaEmision;"Document Date")
+            column(FechaEmision; "Document Date")
             {
             }
-            column(NombreEmpresa;COMPANYNAME)
+            column(NombreEmpresa; COMPANYNAME)
             {
             }
-            column(NombreProveedors;gblRegProveedor.Name)
+            column(NombreProveedors; gblRegProveedor.Name)
             {
             }
-            column(PorcentajeIRPF;gblRegProveedor.Retenci´Š¢n)
+            column(PorcentajeIRPF; gblRegProveedor.Retencion)
             {
             }
-            column(Importe;"G/L Entry".Amount)
+            column(Importe; "G/L Entry".Amount)
             {
             }
-            column(CompanyInfo_Picture;CompanyInfo.Picture)
+            column(CompanyInfo_Picture; CompanyInfo.Picture)
             {
             }
-            dataitem(DataItem1000000001;Table122)
+            dataitem("Purch. Inv. Header"; "Purch. Inv. Header")
             {
-                DataItemLink = No.=FIELD(Document No.),
-                               Posting Date=FIELD(Posting Date);
-                DataItemTableView = SORTING(No.);
-                column(ImporteBaseFactura;BaseFactura)
+                DataItemLink = "No." = FIELD("Document No."),
+                               "Posting Date" = FIELD("Posting Date");
+                DataItemTableView = SORTING("No.");
+                column(ImporteBaseFactura; BaseFactura)
                 {
                 }
-                column(FechaEmisionFactura;"Purch. Inv. Header"."Document Date")
+                column(FechaEmisionFactura; "Purch. Inv. Header"."Document Date")
                 {
                 }
-                column(ImporteCuotaFactura;ImporteCuotaFactura)
+                column(ImporteCuotaFactura; ImporteCuotaFactura)
                 {
                 }
-                column(ContadorFilasFactura;COUNT)
+                column(ContadorFilasFactura; COUNT)
                 {
                 }
-                column(NumDocumentoFactura;"Purch. Inv. Header"."No.")
+                column(NumDocumentoFactura; "Purch. Inv. Header"."No.")
                 {
                 }
-                column(NombreProveedorFactura;gblRegProveedor.Name)
+                column(NombreProveedorFactura; gblRegProveedor.Name)
                 {
                 }
-                column(NumDocumentoExternoFactura;"Purch. Inv. Header"."Vendor Invoice No.")
+                column(NumDocumentoExternoFactura; "Purch. Inv. Header"."Vendor Invoice No.")
                 {
                 }
-                column(RetencionFactura;RetencionFactura)
+                column(RetencionFactura; RetencionFactura)
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    BaseFactura:=0;
-                    ImporteCuotaFactura:=0;
-                    RetencionFactura:=0;
+                    BaseFactura := 0;
+                    ImporteCuotaFactura := 0;
+                    RetencionFactura := 0;
 
                     LineasFacturaCompra2.RESET;
-                    LineasFacturaCompra2.SETRANGE("Document No.","Purch. Inv. Header"."No.");
-                    LineasFacturaCompra2.SETRANGE(LineasFacturaCompra2.Retenible,TRUE);
+                    LineasFacturaCompra2.SETRANGE("Document No.", "Purch. Inv. Header"."No.");
+                    LineasFacturaCompra2.SETRANGE(LineasFacturaCompra2.Retenible, TRUE);
                     IF LineasFacturaCompra2.FINDSET THEN BEGIN
-                      BaseFactura:=0;
+                        BaseFactura := 0;
                         REPEAT
-                          BaseFactura+=LineasFacturaCompra2."Line Amount";
-                        UNTIL LineasFacturaCompra2.NEXT =0;
+                            BaseFactura += LineasFacturaCompra2."Line Amount";
+                        UNTIL LineasFacturaCompra2.NEXT = 0;
                     END;
                     //IF BaseFactura = 0 THEN CurrReport.SKIP;
                     LineasFacturaCompra.RESET;
-                    LineasFacturaCompra.SETRANGE("Document No.","Purch. Inv. Header"."No.");
-                    LineasFacturaCompra.SETRANGE(LineasFacturaCompra.Type,LineasFacturaCompra.Type::"G/L Account");
-                    LineasFacturaCompra.SETRANGE("No.","G/L Entry"."G/L Account No.");
+                    LineasFacturaCompra.SETRANGE("Document No.", "Purch. Inv. Header"."No.");
+                    LineasFacturaCompra.SETRANGE(LineasFacturaCompra.Type, LineasFacturaCompra.Type::"G/L Account");
+                    LineasFacturaCompra.SETRANGE("No.", "G/L Entry"."G/L Account No.");
                     IF LineasFacturaCompra.FINDSET THEN BEGIN
-                      ImporteCuotaFactura+= LineasFacturaCompra."Line Amount";
-                      RetencionFactura+=LineasFacturaCompra.Quantity;
+                        ImporteCuotaFactura += LineasFacturaCompra."Line Amount";
+                        RetencionFactura += LineasFacturaCompra.Quantity;
                     END;
                 end;
             }
-            dataitem(DataItem1000000002;Table124)
+            dataitem("Purch. Cr. Memo Hdr."; "Purch. Cr. Memo Hdr.")
             {
-                DataItemLink = No.=FIELD(Document No.),
-                               Posting Date=FIELD(Posting Date);
-                DataItemTableView = SORTING(No.);
-                column(ImporteBaseAbono;BaseAbono)
+                DataItemLink = "No." = FIELD("Document No."),
+                               "Posting Date" = FIELD("Posting Date");
+                DataItemTableView = SORTING("No.");
+                column(ImporteBaseAbono; BaseAbono)
                 {
                 }
-                column(FechaEmisionAbono;"Purch. Cr. Memo Hdr."."Document Date")
+                column(FechaEmisionAbono; "Purch. Cr. Memo Hdr."."Document Date")
                 {
                 }
-                column(ImporteCuotaAbono;ImporteCuotaAbono)
+                column(ImporteCuotaAbono; ImporteCuotaAbono)
                 {
                 }
-                column(NumDocumentoAbono;"Purch. Cr. Memo Hdr."."No.")
+                column(NumDocumentoAbono; "Purch. Cr. Memo Hdr."."No.")
                 {
                 }
-                column(NombreProveedorAbono;gblRegProveedor.Name)
+                column(NombreProveedorAbono; gblRegProveedor.Name)
                 {
                 }
-                column(ContadorFilasAbono;COUNT)
+                column(ContadorFilasAbono; COUNT)
                 {
                 }
-                column(NumDocumentoExternoAbono;"G/L Entry"."External Document No.")
+                column(NumDocumentoExternoAbono; "G/L Entry"."External Document No.")
                 {
                 }
-                column(RetencionAbono;RetencionAbono)
+                column(RetencionAbono; RetencionAbono)
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    BaseAbono:=0;
-                    ImporteCuotaAbono:=0;
-                    RetencionAbono:=0;
+                    BaseAbono := 0;
+                    ImporteCuotaAbono := 0;
+                    RetencionAbono := 0;
 
                     LineasAbonoCompra2.RESET;
-                    LineasAbonoCompra2.SETRANGE("Document No.","Purch. Cr. Memo Hdr."."No.");
-                    LineasAbonoCompra2.SETRANGE(LineasAbonoCompra2.Retenible,TRUE);
+                    LineasAbonoCompra2.SETRANGE("Document No.", "Purch. Cr. Memo Hdr."."No.");
+                    LineasAbonoCompra2.SETRANGE(LineasAbonoCompra2.Retenible, TRUE);
                     IF LineasAbonoCompra2.FINDSET THEN BEGIN
-                      BaseAbono:=0;
+                        BaseAbono := 0;
                         REPEAT
-                          BaseAbono+=LineasAbonoCompra2.Amount;
-                        UNTIL LineasAbonoCompra2.NEXT =0;
+                            BaseAbono += LineasAbonoCompra2.Amount;
+                        UNTIL LineasAbonoCompra2.NEXT = 0;
                     END;
                     //IF BaseAbono = 0 THEN CurrReport.SKIP;
                     LineasAbonoCompra.RESET;
-                    LineasAbonoCompra.SETRANGE("Document No.","Purch. Cr. Memo Hdr."."No.");
-                    LineasAbonoCompra.SETRANGE(LineasAbonoCompra.Type,LineasAbonoCompra.Type::"G/L Account");
-                    LineasAbonoCompra.SETRANGE("No.","G/L Entry"."G/L Account No.");
+                    LineasAbonoCompra.SETRANGE("Document No.", "Purch. Cr. Memo Hdr."."No.");
+                    LineasAbonoCompra.SETRANGE(LineasAbonoCompra.Type, LineasAbonoCompra.Type::"G/L Account");
+                    LineasAbonoCompra.SETRANGE("No.", "G/L Entry"."G/L Account No.");
                     IF LineasAbonoCompra.FINDSET THEN BEGIN
-                      ImporteCuotaAbono+=LineasAbonoCompra."Line Amount";
-                      RetencionAbono+=LineasAbonoCompra.Quantity;
+                        ImporteCuotaAbono += LineasAbonoCompra."Line Amount";
+                        RetencionAbono += LineasAbonoCompra.Quantity;
                     END;
                 end;
             }
 
             trigger OnAfterGetRecord()
             begin
-                
+
                 IF gblRegProveedor.GET("G/L Entry"."Source No.") THEN;
-                
+
                 //JRG 231017 EXCLUIMOS CUENTAS SIN MARCAR
                 /*Cuenta.RESET;
                 Cuenta.SETRANGE(Cuenta."No.","G/L Entry"."G/L Account No.");
@@ -220,7 +220,7 @@ report 50098 RetenAlquilerProfesi
                 group("Filter")
                 {
                     Caption = 'Filtros';
-                    field(CuentasIRPF;gblCuentasIRPF)
+                    field(CuentasIRPF; gblCuentasIRPF)
                     {
                         Caption = 'N´Š¢ de cuenta';
 
@@ -234,14 +234,13 @@ report 50098 RetenAlquilerProfesi
 
                             pagListCuentas.SETTABLEVIEW(regCuentas);
                             pagListCuentas.LOOKUPMODE(TRUE);
-                            IF pagListCuentas.RUNMODAL = ACTION::LookupOK THEN
-                                BEGIN
-                                  pagListCuentas.GETRECORD(regCuentas);
-                                  IF gblCuentasIRPF = '' THEN
-                                      gblCuentasIRPF := regCuentas."No."
-                                  ELSE
-                                      gblCuentasIRPF += '|'+regCuentas."No.";
-                                END;
+                            IF pagListCuentas.RUNMODAL = ACTION::LookupOK THEN BEGIN
+                                pagListCuentas.GETRECORD(regCuentas);
+                                IF gblCuentasIRPF = '' THEN
+                                    gblCuentasIRPF := regCuentas."No."
+                                ELSE
+                                    gblCuentasIRPF += '|' + regCuentas."No.";
+                            END;
                         end;
                     }
                 }

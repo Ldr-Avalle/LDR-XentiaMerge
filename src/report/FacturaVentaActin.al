@@ -1,7 +1,7 @@
-report 50002 "Factura venta"
+report 50009 "Factura venta Actin"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Factura venta.rdl';
+    RDLCLayout = './src/layout/Factura venta Actin.rdl';
     Permissions = tabledata "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
 
@@ -25,15 +25,6 @@ report 50002 "Factura venta"
             {
             }
             column(CompanyInfo_Picture; CompanyInfo.Picture)
-            {
-            }
-            column(TBAI_activated; TBAI_activated)
-            {
-            }
-            column(TBAIQR_IMAGE; "Sales Invoice Header".TBAIQRBlob)
-            {
-            }
-            column(TBAIQR_StringValue; "Sales Invoice Header".R_Identificador_TBAI)
             {
             }
             column(CompanyInfo_Name; CompanyInfo.Name)
@@ -274,11 +265,6 @@ report 50002 "Factura venta"
                 rec21: Record "Cust. Ledger Entry";
                 SalesCrMemoHeader: Record "Sales Cr.Memo Header";
             begin
-                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
-                if funcionesGenericas.TBAIActivated() then
-                    TBAI_activated := false
-                else
-                    TBAI_activated := true;
 
                 if ImpFactNoAbonadas then begin
                     SalesCrMemoHeader.SetFilter("Corrected Invoice No.", '%1', "No.");
@@ -296,17 +282,11 @@ report 50002 "Factura venta"
                 if "Payment Method Code" = CompanyInfo."Bank Code" then
                     BankData := CompanyInfo.CCC1 + ' / ' + CompanyInfo.CCC2 + ' / ' + CompanyInfo.CCC3;
             end;
-
-            trigger OnPreDataItem()
-            begin
-                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
-            end;
         }
     }
 
     requestpage
     {
-
         layout
         {
             area(Content)
@@ -317,15 +297,6 @@ report 50002 "Factura venta"
                 }
             }
         }
-
-        actions
-        {
-        }
-
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
@@ -336,7 +307,6 @@ report 50002 "Factura venta"
 
         CompanyInfo.CalcFields(Picture, "Reports Image");
         CompanyInfo.CalcFields(CompanyInfo.imgReports);
-        "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
     end;
 
     var
@@ -415,9 +385,5 @@ report 50002 "Factura venta"
         LogInteractionEnable: Boolean;
         DisplayAssemblyInformation: Boolean;
         VerCampo: Boolean;
-        TBAI_activated: Boolean;
-        //TODO: lo he metido en funciones genericas
-        //TBAIManagement: Codeunit "10700";
-        funcionesGenericas: Codeunit FuncionesGenericas;
 }
 

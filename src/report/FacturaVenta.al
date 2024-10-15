@@ -1,15 +1,15 @@
-report 50009 "Factura venta Actin"
+report 50002 "Factura venta"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './src/layout/Factura venta Actin.rdlc';
-    Permissions = TableData 7190 = rimd;
+    RDLCLayout = './src/layout/Factura venta.rdl';
+    Permissions = tabledata "Sales Shipment Buffer" = rimd;
     PreviewMode = PrintLayout;
 
     dataset
     {
         dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING("No.");
+            DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
             column(No_SalesInvHdr; "No.")
@@ -25,6 +25,15 @@ report 50009 "Factura venta Actin"
             {
             }
             column(CompanyInfo_Picture; CompanyInfo.Picture)
+            {
+            }
+            column(TBAI_activated; TBAI_activated)
+            {
+            }
+            column(TBAIQR_IMAGE; "Sales Invoice Header".TBAIQRBlob)
+            {
+            }
+            column(TBAIQR_StringValue; "Sales Invoice Header".R_Identificador_TBAI)
             {
             }
             column(CompanyInfo_Name; CompanyInfo.Name)
@@ -107,11 +116,11 @@ report 50009 "Factura venta Actin"
             }
             dataitem("Sales Invoice Line"; "Sales Invoice Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                DataItemTableView = SORTING("Document No.", "Line No.");
+                DataItemLink = "Document No." = field("No.");
+                DataItemTableView = sorting("Document No.", "Line No.");
                 column(LineAmt_SalesInvoiceLine; "Line Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(Description_SalesInvLine; Description)
@@ -128,7 +137,7 @@ report 50009 "Factura venta Actin"
                 }
                 column(UnitPrice_SalesInvLine; "Unit Price")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 2;
                 }
                 column(LineDisc_SalesInvoiceLine; "Line Discount %")
@@ -137,33 +146,33 @@ report 50009 "Factura venta Actin"
                 column(VATIdent_SalesInvLine; "VAT Identifier")
                 {
                 }
-                column(PostedShipmentDate; FORMAT(PostedShipmentDate))
+                column(PostedShipmentDate; Format(PostedShipmentDate))
                 {
                 }
-                column(Type_SalesInvoiceLine; FORMAT("Sales Invoice Line".Type))
+                column(Type_SalesInvoiceLine; Format("Sales Invoice Line".Type))
                 {
                 }
                 column(InvDiscountAmount; -"Inv. Discount Amount")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(SalesInvoiceLineAmount; Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(AmountIncludingVATAmount; "Amount Including VAT" - Amount)
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
                 column(Amount_SalesInvoiceLineIncludingVAT; "Amount Including VAT")
                 {
-                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                    AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                     AutoFormatType = 1;
                 }
-                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText)
+                column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText())
                 {
                 }
                 column(TotalExclVATText; TotalExclVATText)
@@ -214,9 +223,9 @@ report 50009 "Factura venta Actin"
                 }
                 dataitem("Item Ledger Entry"; "Item Ledger Entry")
                 {
-                    DataItemLink = "Item No." = FIELD("No."),
-                                   "Document No." = FIELD("Document No."),
-                                   "Document Line No." = FIELD("Line No.");
+                    DataItemLink = "Item No." = field("No."),
+                                   "Document No." = field("Document No."),
+                                   "Document Line No." = field("Line No.");
                     column(ItemLedgEntry_SerialNo; "Item Ledger Entry"."Serial No.")
                     {
                     }
@@ -226,63 +235,71 @@ report 50009 "Factura venta Actin"
 
                     trigger OnAfterGetRecord()
                     begin
-                        IF "Item Ledger Entry"."Serial No." <> '' THEN
-                            MostrarSerie := TRUE
-                        ELSE
-                            MostrarSerie := FALSE;
+                        if "Item Ledger Entry"."Serial No." <> '' then
+                            MostrarSerie := true
+                        else
+                            MostrarSerie := false;
                     end;
 
                     trigger OnPreDataItem()
                     begin
 
-                        IF "Sales Invoice Line"."Shipment No." <> '' THEN BEGIN
-                            "Item Ledger Entry".SETRANGE("Document No.", "Sales Invoice Line"."Shipment No.");
-                            "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
-                        END ELSE BEGIN
-                            IF "Sales Invoice Line"."Job No." = '' THEN BEGIN
-                                "Item Ledger Entry".SETRANGE("Item No.", "Sales Invoice Line"."No.");
-                                "Item Ledger Entry".SETRANGE("Posting Date", "Sales Invoice Line"."Shipment Date");
-                                "Item Ledger Entry".SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
-                            END ELSE BEGIN
-                                "Item Ledger Entry".SETRANGE("Job No.", "Sales Invoice Line"."Job No.");
-                                "Item Ledger Entry".SETRANGE("Job Task No.", "Sales Invoice Line"."Job Task No.");
-                                "Item Ledger Entry".SETRANGE("Item No.", "Sales Invoice Line"."No.");
-                            END;
-                        END;
+                        if "Sales Invoice Line"."Shipment No." <> '' then begin
+                            "Item Ledger Entry".SetRange("Document No.", "Sales Invoice Line"."Shipment No.");
+                            "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Shipment Line No.");
+                        end else
+                            if "Sales Invoice Line"."Job No." = '' then begin
+                                "Item Ledger Entry".SetRange("Item No.", "Sales Invoice Line"."No.");
+                                "Item Ledger Entry".SetRange("Posting Date", "Sales Invoice Line"."Shipment Date");
+                                "Item Ledger Entry".SetRange("Document Line No.", "Sales Invoice Line"."Line No.");
+                            end else begin
+                                "Item Ledger Entry".SetRange("Job No.", "Sales Invoice Line"."Job No.");
+                                "Item Ledger Entry".SetRange("Job Task No.", "Sales Invoice Line"."Job Task No.");
+                                "Item Ledger Entry".SetRange("Item No.", "Sales Invoice Line"."No.");
+                            end;
                     end;
                 }
 
                 trigger OnAfterGetRecord()
                 begin
-                    IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::" " THEN
-                        VerCampo := FALSE
-                    ELSE
-                        VerCampo := TRUE;
+                    if "Sales Invoice Line".Type = "Sales Invoice Line".Type::" " then
+                        VerCampo := false
+                    else
+                        VerCampo := true;
                 end;
             }
 
             trigger OnAfterGetRecord()
             var
-                rec21: Record "21";
-                SalesCrMemoHeader: Record "114";
+                rec21: Record "Cust. Ledger Entry";
+                SalesCrMemoHeader: Record "Sales Cr.Memo Header";
             begin
+                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
+                if funcionesGenericas.TBAIActivated() then
+                    TBAI_activated := false
+                else
+                    TBAI_activated := true;
 
-                IF ImpFactNoAbonadas THEN BEGIN
-                    SalesCrMemoHeader.SETFILTER("Corrected Invoice No.", '%1', "No.");
-                    IF SalesCrMemoHeader.COUNT > 0 THEN CurrReport.SKIP;
-                END;
+                if ImpFactNoAbonadas then begin
+                    SalesCrMemoHeader.SetFilter("Corrected Invoice No.", '%1', "No.");
+                    if SalesCrMemoHeader.Count > 0 then CurrReport.Skip();
+                end;
 
-                IF PaymentMethod.GET("Payment Method Code") THEN;
-                IF PaymentTerms.GET("Payment Terms Code") THEN;
+                if PaymentMethod.Get("Payment Method Code") then;
+                if PaymentTerms.Get("Payment Terms Code") then;
 
-                CALCFIELDS(Amount, "Amount Including VAT");
+                CalcFields(Amount, "Amount Including VAT");
 
-                recordC.GET("Bill-to Customer No.");
+                recordC.Get("Bill-to Customer No.");
 
-                PaymentMethod.GET("Payment Method Code");
-                IF "Payment Method Code" = CompanyInfo."Bank Code" THEN BEGIN
-                    BankData := CompanyInfo.CCC1 + ' / ' + CompanyInfo.CCC2 + ' / ' + CompanyInfo.CCC3
-                END;
+                PaymentMethod.Get("Payment Method Code");
+                if "Payment Method Code" = CompanyInfo."Bank Code" then
+                    BankData := CompanyInfo.CCC1 + ' / ' + CompanyInfo.CCC2 + ' / ' + CompanyInfo.CCC3;
+            end;
+
+            trigger OnPreDataItem()
+            begin
+                "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
             end;
         }
     }
@@ -292,7 +309,7 @@ report 50009 "Factura venta Actin"
 
         layout
         {
-            area(content)
+            area(Content)
             {
                 field(ImpFactNoAbonadas; ImpFactNoAbonadas)
                 {
@@ -300,46 +317,38 @@ report 50009 "Factura venta Actin"
                 }
             }
         }
-
-        actions
-        {
-        }
-
-    }
-
-    labels
-    {
     }
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
+        GLSetup.Get();
+        CompanyInfo.Get();
+        SalesSetup.Get();
 
-        CompanyInfo.CALCFIELDS(Picture, "Reports Image");
-        CompanyInfo.CALCFIELDS(CompanyInfo.imgReports);
+        CompanyInfo.CalcFields(Picture, "Reports Image");
+        CompanyInfo.CalcFields(CompanyInfo.imgReports);
+        "Sales Invoice Header".CALCFIELDS(TBAIQRBlob);
     end;
 
     var
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        CompanyInfo1: Record "79";
-        CompanyInfo2: Record "79";
-        SalesSetup: Record "311";
-        Cust: Record "18";
-        VATAmountLine: Record "290" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        Language: Record "8";
-        CurrExchRate: Record "330";
-        SalesInvCountPrinted: Codeunit "315";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        SalesShipmentBuffer: Record "7190" temporary;
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        CompanyInfo1: Record "Company Information";
+        CompanyInfo2: Record "Company Information";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Cust: Record Customer;
+        VATAmountLine: Record "VAT Amount Line" temporary;
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        Language: Record Language;
+        CurrExchRate: Record "Currency Exchange Rate";
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -371,14 +380,14 @@ report 50009 "Factura venta Actin"
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "325";
-        PaymentMethod: Record "289";
-        recordC: Record "18";
-        recordSIH: Record "112";
-        ItemTrackingMgt: Codeunit "6500";
-        ItemLedgEntry: Record "32" temporary;
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
+        ItemLedgEntry: Record "Item Ledger Entry" temporary;
         ImpFactNoAbonadas: Boolean;
-        UserDims: Record "50000";
+        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';
@@ -397,5 +406,9 @@ report 50009 "Factura venta Actin"
         LogInteractionEnable: Boolean;
         DisplayAssemblyInformation: Boolean;
         VerCampo: Boolean;
+        TBAI_activated: Boolean;
+        //TODO: lo he metido en funciones genericas
+        //TBAIManagement: Codeunit "10700";
+        funcionesGenericas: Codeunit FuncionesGenericas;
 }
 

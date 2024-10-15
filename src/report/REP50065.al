@@ -409,7 +409,7 @@ report 50065 "Account - Official Acc. Book2"
         AccPeriod.SETRANGE("New Fiscal Year", TRUE);
         AccPeriod.SETFILTER("Starting Date", '>= %1', FromDate);
         IF NOT AccPeriod.FIND('-') THEN
-            AccPeriod."Starting Date" := 99993112D;
+            AccPeriod."Starting Date" := 99991231D;
         ELSE
         IF FromDate < AccPeriod."Starting Date" THEN BEGIN
             AccPeriod.SETRANGE("Starting Date");

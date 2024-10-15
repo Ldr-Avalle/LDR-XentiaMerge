@@ -7,27 +7,11 @@ report 50006 "Contract clearance"
     {
         dataitem("G/L Register CP"; "G/L Register CP_LDR")
         {
-            dataitem("Contract lines"; "Contract lines_LDR")
+            dataitem("Contract lines"; "Contract Lines_LDR")
             {
-                DataItemLink = Contract = FIELD("No.");
+                DataItemLink = Contract = field("No.");
             }
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 }
 

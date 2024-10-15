@@ -63,7 +63,8 @@ report 50004 "Employee aut. expirations"
                     Excel.ajustarColumnas(SheetName, 3, 50);
 
                     //almaceno el fichero
-                    IF FILE.EXISTS(FileName) THEN FILE.ERASE(FileName);
+                    //todo: por ahora no se quien ha de guardarlo y hacer esta parte
+                    //IF FILE.EXISTS(FileName) THEN FILE.ERASE(FileName);
                     Excel.guardarComo(FileName);
                     Excel.cerrarExcel(2);
 
@@ -72,11 +73,14 @@ report 50004 "Employee aut. expirations"
                     //Mail.NewMessage(RRHHSetup."Notification email", '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', FileName, FALSE);
 
                     //NewMessage(ToAddresses : Text;CcAddresses : Text;BccAddresses : Text;Subject : Text;Body : Text;AttachFilename : Text;ShowNewMailDialogOnSend : Boolean) : Boolean //funci´Š¢n en 2016
-                    Mail.NewMessage(RRHHSetup."Notification email", '', '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', FileName, FALSE);
+                    //Mail.NewMessage(RRHHSetup."Notification email", '', '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', FileName, FALSE);
+                    Mail.CreateMessage(RRHHSetup."Notification email", '', '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', false, FALSE);
+                    Mail.AttachFile(FileName);
                 END;
 
                 //destruyo el fichero
-                IF FILE.EXISTS(FileName) THEN FILE.ERASE(FileName);
+                //todo: por ahora no se quien ha de guardarlo y hacer esta parte
+                //IF FILE.EXISTS(FileName) THEN FILE.ERASE(FileName);
             end;
 
             trigger OnPreDataItem()
@@ -85,22 +89,6 @@ report 50004 "Employee aut. expirations"
                 SETFILTER("Aut. notification date", '%1', 0D);
             end;
         }
-    }
-
-    requestpage
-    {
-
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
-
-    labels
-    {
     }
 
     var
