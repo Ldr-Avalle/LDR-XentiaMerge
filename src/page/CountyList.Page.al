@@ -4,7 +4,7 @@ page 50015 "County List"
     Caption = 'Lista poblaciones';
     PageType = Card;
     SourceTable = "TBAI Alava2_LDR";
-    UsageCategory = Lists;
+    UsageCategory = Administration;
 
     layout
     {

@@ -1,4 +1,4 @@
-tableextension 50237 PurchaseHeader_LDR extends "Purchase Header"
+tableextension 50237 "PurchaseHeader_LDR" extends "Purchase Header"
 {
     DataCaptionFields = "Document Type";
     fields
@@ -28,12 +28,27 @@ tableextension 50237 PurchaseHeader_LDR extends "Purchase Header"
             OptionCaption = 'F1 Invoice,F2 Simplified Invoice,F3 Invoice issued to replace simplified invoices,F4 Invoice summary entry,F5 Imports (DUA),F6 Accounting support material,Customs - Complementary Liquidation';
         }
     }
+
+    trigger OnModify()
+    var
+        UserDimensions: Record "User Dimensions_LDR";
+    begin
+        IF UserDims.existsUser(USERID) THEN
+            TESTFIELD("Assigned User ID", USERID);
+    end;
+
+    trigger OnBeforeDelete()
+    begin
+        IF UserDims.existsUser(USERID) THEN
+            TESTFIELD("Assigned User ID", USERID);
+    end;
+
     procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
     begin
         DimMgt.GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
     end;
 
-    local procedure InitSii()
+    procedure InitSii()
     var
         GeneralLedgerSetup: Record "General Ledger Setup";
         SIIManagement: Codeunit "SII Management";

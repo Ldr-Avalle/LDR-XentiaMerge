@@ -1,4 +1,4 @@
-tableextension 50006 Employee_LDR extends "Employee"
+tableextension 50006 "Employee_LDR" extends "Employee"
 {
     fields
     {
@@ -18,8 +18,7 @@ tableextension 50006 Employee_LDR extends "Employee"
         }
         field(50002; "Contract active"; Boolean)
         {
-            CalcFormula = Exist("Employee Contract" where(Employee = field("No."),
-                                                           "Expiration date" = const()));
+            CalcFormula = Exist("Employee Contract" where(Employee = field("No."), "Expiration date" = const()));
             Caption = 'Contrato activo';
             Description = 'Sercable';
             Editable = false;
@@ -33,8 +32,7 @@ tableextension 50006 Employee_LDR extends "Employee"
         }
         field(50004; "Absence active"; Boolean)
         {
-            CalcFormula = Exist("Employee Absence" where("Employee No." = field("No."),
-                                                          "To Date" = const()));
+            CalcFormula = Exist("Employee Absence" where("Employee No." = field("No."), "To Date" = const()));
             Caption = 'Ausencia activa';
             Description = 'Sercable';
             Editable = false;
@@ -42,7 +40,7 @@ tableextension 50006 Employee_LDR extends "Employee"
         }
         field(50005; "Aut. notification date"; Date)
         {
-            Caption = 'Fecha notificaci´Š¢n autom´Š¢tica';
+            Caption = 'Fecha notificación automática';
             Description = 'Utilizado enviar email diario con las bajas para quitar permisos';
         }
         field(50006; Proyecto; Code[20])

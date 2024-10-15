@@ -1,10 +1,19 @@
 tableextension 50003 "Customer_LDR" extends Customer
 {
+    DataCaptionFields = Blocked;
+
     fields
     {
         modify("No.")
         {
             Caption = 'NIF/NIE/CIF';
+
+            trigger OnBeforeValidate()
+            begin
+                IF xRec."No." = '0' THEN
+                    FieldError("No.");
+                Validate("VAT Registration No.", "No.");
+            end;
         }
         modify("Gen. Bus. Posting Group")
         {
@@ -87,4 +96,15 @@ tableextension 50003 "Customer_LDR" extends Customer
             OptionMembers = N,S;
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        Validate("VAT Registration No.", "No.");
+        "Gen. Bus. Posting Group" := 'NACIONAL';
+        "VAT Bus. Posting Group" := 'NACIONAL';
+        "Customer Posting Group" := 'NAC';
+        "Country/Region Code" := 'ES';
+        "Payment Terms Code" := 'CON';
+        Validate("Prices Including VAT", TRUE);
+    end;
 }

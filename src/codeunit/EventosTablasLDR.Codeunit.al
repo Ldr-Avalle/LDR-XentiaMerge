@@ -87,7 +87,7 @@ codeunit 50000 "EventosTablas_LDR"
     [EventSubscriber(ObjectType::Table, Database::"G/L Entry", OnAfterCopyGLEntryFromGenJnlLine, '', false, false)]
     local procedure "G/L Entry_OnAfterCopyGLEntryFromGenJnlLine"(var GLEntry: Record "G/L Entry"; var GenJournalLine: Record "Gen. Journal Line")
     begin
-        //GLEntry.FacturaFin := GenJournalLine.FacturaFin; //TODO: Quitar comentario después de añadir campo a la línea de diario
+        GLEntry.FacturaFin := GenJournalLine.FacturaFin;
     end;
     #endregion
 
@@ -102,6 +102,26 @@ codeunit 50000 "EventosTablas_LDR"
         Rec."Country/Region Code" := 'ES';
         Rec."Payment Terms Code" := 'CON';
         Rec.Validate("Prices Including VAT", true);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::Customer, 'OnBeforeCheckIfOrderSalesLinesExist', '', true, true)]
+    local procedure OnBeforeCheckIfOrderSalesLinesExist(var Customer: Record Customer; var IsHandled: Boolean)
+    var
+        SalesOrderLine: Record "Sales Line";
+        Text000: Label 'You cannot delete %1 %2 because there is at least one outstanding Sales %3 for this customer.';
+    begin
+        IsHandled := true;
+
+        SalesOrderLine.SetCurrentKey("Document Type", "Bill-to Customer No.");
+        SalesOrderLine.SetFilter("Document Type", '%1|%2', SalesOrderLine."Document Type"::Order, SalesOrderLine."Document Type"::"Return Order");
+        SalesOrderLine.SetRange("Bill-to Customer No.", Customer."No.");
+        if SalesOrderLine.FindFirst() then
+            Error(Text000, Customer.TableCaption, Customer."No.", SalesOrderLine."Document Type");
+
+        SalesOrderLine.SetRange("Bill-to Customer No.");
+        SalesOrderLine.SetRange("Sell-to Customer No.", Customer."No.");
+        if SalesOrderLine.FindFirst() then
+            Error(Text000, Customer.TableCaption, Customer."No.", SalesOrderLine."Document Type");
     end;
 
     [EventSubscriber(ObjectType::Table, Database::Customer, 'OnBeforeValidateEvent', 'No.', true, true)]
@@ -125,7 +145,7 @@ codeunit 50000 "EventosTablas_LDR"
     [EventSubscriber(ObjectType::Table, Database::"Cust. Ledger Entry", OnAfterCopyCustLedgerEntryFromGenJnlLine, '', false, false)]
     local procedure "Cust. Ledger Entry_OnAfterCopyCustLedgerEntryFromGenJnlLine"(var CustLedgerEntry: Record "Cust. Ledger Entry"; GenJournalLine: Record "Gen. Journal Line")
     begin
-        //CustLedgerEntry.FacturaFin := GenJournalLine.FacturaFin; //TODO: Quitar comentario después de añadir campo a la línea de diario
+        CustLedgerEntry.FacturaFin := GenJournalLine.FacturaFin;
     end;
     #endregion
 
@@ -141,6 +161,61 @@ codeunit 50000 "EventosTablas_LDR"
         PurchOrderLine.SetRange("Pay-to Vendor No.", Vendor."No.");
         if PurchOrderLine.FindFirst() then
             Error(Text000, Vendor.TableCaption, Vendor."No.", PurchOrderLine."Document Type");
+    end;
+    #endregion
+
+    #region table 38 "Purchase Header"
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnBeforeOnInsert, '', false, false)]
+    local procedure OnBeforeOnInsert(var PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean)
+    var
+        CompanyInfo: Record "Company Information";
+        UserDimensions: Record "User Dimensions_LDR";
+        StandardCodesMgtGlobal: Codeunit "Standard Codes Mgt.";
+    begin
+        IsHandled := true;
+        PurchaseHeader.InitInsert();
+
+        if PurchaseHeader.GetFilter("Buy-from Vendor No.") <> '' then
+            if PurchaseHeader.GetRangeMin("Buy-from Vendor No.") = PurchaseHeader.GetRangeMax("Buy-from Vendor No.") then
+                PurchaseHeader.Validate("Buy-from Vendor No.", PurchaseHeader.GetRangeMin("Buy-from Vendor No."));
+
+        if PurchaseHeader."Buy-from Vendor No." <> '' then
+            StandardCodesMgtGlobal.CheckCreatePurchRecurringLines(PurchaseHeader);
+
+        CompanyInfo.Get;
+        PurchaseHeader."Location Code" := UserDimensions.getLocationCode(UserId);
+        PurchaseHeader."Assigned User ID" := UserId;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnAfterCheckBuyFromVendor, '', false, false)]
+    local procedure OnAfterCheckBuyFromVendor(var PurchaseHeader: Record "Purchase Header"; xPurchaseHeader: Record "Purchase Header"; Vendor: Record Vendor)
+    begin
+        Vendor.TestField("VAT Registration No.");
+        Vendor.TestField("Country/Region Code");
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnBeforeValidateEmptySellToCustomerAndLocation, '', false, false)]
+    local procedure OnBeforeValidateEmptySellToCustomerAndLocation(var PurchaseHeader: Record "Purchase Header"; Vendor: Record Vendor; var IsHandled: Boolean; var xPurchaseHeader: Record "Purchase Header")
+    begin
+        IsHandled := true;
+        PurchaseHeader.Validate("Sell-to Customer No.", '');
+
+        if PurchaseHeader."Buy-from Vendor No." <> '' then
+            PurchaseHeader.GetVend(PurchaseHeader."Buy-from Vendor No.");
+        PurchaseHeader.UpdateLocationCode(Vendor."Location Code");
+        PurchaseHeader.InitSii;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnValidateBuyFromVendorNoOnAfterUpdateBuyFromCont, '', false, false)]
+    local procedure OnValidateBuyFromVendorNoOnAfterUpdateBuyFromCont(var PurchaseHeader: Record "Purchase Header"; xPurchaseHeader: Record "Purchase Header"; CallingFieldNo: Integer; var SkipBuyFromContact: Boolean)
+    var
+        UserDims: Record "User Dimensions_LDR";
+        CompanyInfo: Record "Company Information";
+    begin
+        CompanyInfo.Get;
+        UserDims.SetRange(UserDims.Usuario, UserId);
+        if UserDims.FindFirst then
+            PurchaseHeader."Location Code" := UserDims."Location Code";
     end;
     #endregion
 

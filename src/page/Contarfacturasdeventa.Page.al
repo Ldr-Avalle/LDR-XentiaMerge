@@ -1,7 +1,7 @@
 page 50024 "Contar facturas de venta"
 {
     ApplicationArea = All;
-    Caption = 'Contar facturas de venta', Comment = 'ESP=""';
+    Caption = 'Contar facturas de venta';
     PageType = Card;
     SourceTable = "Sales Invoice Header";
     UsageCategory = Administration;
@@ -21,14 +21,14 @@ page 50024 "Contar facturas de venta"
                 field("Bill-to Customer No."; Rec."Bill-to Customer No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Bill-to Customer No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Bill-to Customer No.', Comment = 'ESP="Factura-a Nº cliente"';
+                    ToolTip = 'Especifica la factura-a nº cliente';
                 }
                 field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Posting Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Posting Date', Comment = 'ESP="Fecha registro"';
+                    ToolTip = 'Especifica la fecha registro';
                 }
             }
         }

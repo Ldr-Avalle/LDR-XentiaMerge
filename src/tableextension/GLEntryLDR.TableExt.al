@@ -89,7 +89,7 @@ tableextension 50121 "GLEntry_LDR" extends "G/L Entry"
             "Document Type"::Invoice:
                 begin
                     PurchInvLine.SetFilter("Document No.", '%1', "Document No.");
-                    //PurchInvLine.SetFilter(Retenible, '%1', true); TODO: Descomentar cuando el campo se añada a la tabla
+                    PurchInvLine.SetFilter(Retenible, '%1', true);
                     if PurchInvLine.FindFirst then begin
                         repeat
                             RetBase += PurchInvLine.Amount;
@@ -99,7 +99,7 @@ tableextension 50121 "GLEntry_LDR" extends "G/L Entry"
             "Document Type"::"Credit Memo":
                 begin
                     PurchCrMemoLine.SetFilter("Document No.", '%1', "Document No.");
-                    //PurchCrMemoLine.SetFilter(Retenible, '%1', true); TODO: Descomentar cuando el campo se añada a la tabla
+                    PurchCrMemoLine.SetFilter(Retenible, '%1', true);
                     if PurchCrMemoLine.FindFirst then begin
                         repeat
                             RetBase += -(PurchCrMemoLine.Amount);

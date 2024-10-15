@@ -15,20 +15,20 @@ page 50020 "Works List"
                 field(Code; Rec.Code)
                 {
                     ApplicationArea = All;
-                    Caption = '', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Code', Comment = 'ESP="Código"';
+                    ToolTip = 'Especifica el código';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    Caption = '', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Description', Comment = 'ESP="Descripción"';
+                    ToolTip = 'Especifica la descripción';
                 }
                 field("No. of Contracts"; Rec."No. of Contracts")
                 {
                     ApplicationArea = All;
-                    Caption = '', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'No. of Contracts', Comment = 'ESP="Nº contratos"';
+                    ToolTip = 'Especifica el nº contratos';
                 }
             }
         }

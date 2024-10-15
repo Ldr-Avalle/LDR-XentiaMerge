@@ -30,14 +30,14 @@ page 50081 "Employee List Subform IDi"
                 field("Employment Date"; Rec."Employment Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Employment Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Employment Date', Comment = 'ESP="Fecha contratación"';
+                    ToolTip = 'Especifica la fecha contratación';
                 }
                 field("Termination Date"; Rec."Termination Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Termination Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Termination Date', Comment = 'ESP="Fecha terminación"';
+                    ToolTip = 'Especifica la fecha terminación';
 
                     trigger OnLookup(var Text: Text): Boolean
                     var
@@ -56,38 +56,38 @@ page 50081 "Employee List Subform IDi"
                 field("First Family Name"; Rec."First Family Name")
                 {
                     ApplicationArea = All;
-                    Caption = 'First Family Name', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'First Family Name', Comment = 'ESP="Primer apellido"';
+                    ToolTip = 'Especifica el primer apellido';
                 }
                 field("Second Family Name"; Rec."Second Family Name")
                 {
                     ApplicationArea = All;
-                    Caption = 'Second Family Name', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Second Family Name', Comment = 'ESP="Segundo Apellido"';
+                    ToolTip = 'Especifica el segundo apellido';
                 }
                 field("Horas/IDi present."; Rec."Horas/IDi present.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Horas/IDi present.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Horas/IDi present.';
+                    ToolTip = 'Especifica las Horas/IDi present.';
                 }
                 field("Horas/IDi just."; Rec."Horas/IDi just.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Horas/IDi just.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Horas/IDi just.';
+                    ToolTip = 'Especifica Horas/IDi just.';
                 }
                 field("Cotization group"; Rec."Cotization group")
                 {
                     ApplicationArea = All;
-                    Caption = 'Cotization group', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Cotization group', Comment = 'ESP="Grupo Cotización"';
+                    ToolTip = 'Especifica el grupo cotización';
                 }
                 field("Cost/Hour"; Rec."Cost/Hour")
                 {
                     ApplicationArea = All;
-                    Caption = 'Cost/Hour', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Cost/Hour', Comment = 'ESP="Coste/Horas"';
+                    ToolTip = 'Especifica el Coste/Horas';
                     Visible = CostHourVisible;
                 }
             }
