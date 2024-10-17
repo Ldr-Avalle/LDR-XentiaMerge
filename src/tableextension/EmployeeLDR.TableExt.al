@@ -5,6 +5,54 @@ tableextension 50006 "Employee_LDR" extends "Employee"
         modify("No.")
         {
             Caption = 'No.';
+            trigger OnAfterValidate()
+            begin
+                IF rec."No." <> '' THEN
+                    rec."VAT Registration No." := rec."No.";
+            end;
+        }
+        modify("Company E-Mail")
+        {
+            trigger OnAfterValidate()
+            var
+
+                Mail: Codeunit 397;
+                RRHHSetup: Record 5218;
+                EmployeeContract: Record 50004;
+                CR: Char;
+                LF: Char;
+                Body: Text[250];
+                ContractNo: Code[20];
+                ContractCategory: Text[50];
+            BEGIN
+                RRHHSetup.GET;
+
+                IF (RRHHSetup."Notificate new Company E-mail") AND ("Company E-Mail" <> '') THEN BEGIN
+                    RRHHSetup.TESTFIELD("Notification email title");
+                    TESTFIELD(PuestoTrabajo);
+                    TESTFIELD("Global Dimension 1 Code");
+
+                    //recupero el contrato
+                    EmployeeContract.SETFILTER(Employee, '%1', "No.");
+                    EmployeeContract.SETFILTER("Expiration date", '%1', 0D);
+                    IF EmployeeContract.FINDFIRST THEN BEGIN
+                        ContractNo := EmployeeContract."No.";
+                        ContractCategory := FORMAT(EmployeeContract.Category);
+                    END;
+
+                    //defino el cuerpo con saltos de l¡nea
+                    CR := 13;
+                    LF := 10;
+                    Body := 'Empleado: ' + "No." + FORMAT(CR, 0, '<CHAR>') + FORMAT(LF, 0, '<CHAR>') +
+                      'Email empresa: ' + "Company E-Mail" + FORMAT(CR, 0, '<CHAR>') + FORMAT(LF, 0, '<CHAR>') +
+                      'Proyecto: ' + "Global Dimension 1 Code" + FORMAT(CR, 0, '<CHAR>') + FORMAT(LF, 0, '<CHAR>') +
+                      'Puesto - Contrato: ' + FORMAT(PuestoTrabajo) + ' - ' + ContractNo + '.' + ContractCategory;
+
+                    //env¡o el email                    
+                    Mail.CreateMessage(RRHHSetup."Notification email", '', RRHHSetup."Notification email title", Body, '', false, FALSE);
+                END;
+            END;
+
         }
         field(50000; "VAT Registration No."; Code[10])
         {
@@ -88,12 +136,12 @@ tableextension 50006 "Employee_LDR" extends "Employee"
             Description = 'Sercable';
             fieldClass = FlowFilter;
         }
-        field(50013; Month; Option)
+        field(50013; Month; enum Meses)
         {
             Caption = 'Mes';
             Description = 'Sercable';
             fieldClass = FlowFilter;
-            OptionMembers = Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre;
+            //OptionMembers = Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre;
         }
         field(50014; "Horas/IDi present."; Decimal)
         {
@@ -171,6 +219,11 @@ tableextension 50006 "Employee_LDR" extends "Employee"
         {
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        CreateConfidentialTags;
+    end;
 
     procedure CreateConfidentialTags()
     var

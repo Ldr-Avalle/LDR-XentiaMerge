@@ -2,10 +2,6 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
 {
     fields
     {
-        modify("Location of Service Item")
-        {
-            Caption = 'Ubicación del prod. serv.';
-        }
         field(50000; "Max. Qty. per Contract"; Integer)
         {
             BlankZero = true;
@@ -28,25 +24,21 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
                 CheckUniqueNameConditions();
             end;
         }
-        field(50002; Segment; Option)
+        field(50002; Segment; enum ServiceItemSegment)
         {
             Caption = 'Segmento';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            OptionCaption = 'Pyme,Residencial,Soho';
-            OptionMembers = " ",Pyme,Residencial,Soho;
             trigger OnValidate()
             begin
                 CheckUniqueNameConditions();
             end;
         }
-        field(50003; Type; Option)
+        field(50003; Type; enum ServiceItemType)
         {
             Caption = 'Tipo';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            OptionCaption = ' ,Fijo,Pack,Móvil';
-            OptionMembers = " ","Fixed",Pack,Mobile;
         }
         field(50004; Commission; Decimal)
         {

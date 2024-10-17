@@ -4,28 +4,33 @@ tableextension 50166 "VATEntry_LDR" extends "VAT Entry"
     {
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
-        modify("VAT Bus. Posting Group")
-        {
-            Caption = 'VAT Bus. Posting Group';
-        }
-        modify("VAT Prod. Posting Group")
-        {
-            Caption = 'VAT Prod. Posting Group';
-        }
-        modify("Reversed by Entry No.")
-        {
-            Caption = 'Reversed by Entry No.';
-        }
+        //todo:no se de donde ha salido
+        /*
         field(50199; "Transaction No. BK"; Integer)
         {
             Caption = 'Transaction No. BK';
             Editable = false;
+        }
+        */
+        field(50000; "On Deposit"; Boolean)
+        {
+            Caption = 'On Deposit';
+            Description = 'SERCABLE';
+        }
+        //todo: value entry no tiene location code
+        field(50001; "Shop Code"; Text[30])
+        {
+            //FieldClass = FlowField;
+            //CalcFormula = Lookup("User Dimensions_LDR"."Shop Code" WHERE("Location Code" = FIELD("Location Code")));
+
+            Caption = 'Shop Code';
+            Description = 'SERCABLE';
         }
     }
 }
