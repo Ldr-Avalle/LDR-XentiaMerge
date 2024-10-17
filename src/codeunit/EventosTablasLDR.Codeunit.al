@@ -156,15 +156,24 @@ codeunit 50000 "EventosTablas_LDR"
         PurchOrderLine: Record "Purchase Line";
         Text000: Label 'No puedes eliminar %1 %2 porque hay al menos una Compra %3 pendiente para este proveedor.';
     begin
+        IsHandled := true;
+
         PurchOrderLine.SetCurrentKey("Document Type", "Pay-to Vendor No.");
         PurchOrderLine.SetFilter("Document Type", '%1|%2', PurchOrderLine."Document Type"::Order, PurchOrderLine."Document Type"::"Return Order");
         PurchOrderLine.SetRange("Pay-to Vendor No.", Vendor."No.");
         if PurchOrderLine.FindFirst() then
             Error(Text000, Vendor.TableCaption, Vendor."No.", PurchOrderLine."Document Type");
+
+        PurchOrderLine.SetRange("Pay-to Vendor No.");
+        PurchOrderLine.SetRange("Buy-from Vendor No.", Vendor."No.");
+        if not PurchOrderLine.IsEmpty() then
+            Error(Text000, Vendor.TableCaption, Vendor."No.");
     end;
     #endregion
 
     #region table 38 "Purchase Header"
+    //todo: revisar si se puede eliminar t38
+    /*
     [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnBeforeOnInsert, '', false, false)]
     local procedure OnBeforeOnInsert(var PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean)
     var
@@ -186,6 +195,8 @@ codeunit 50000 "EventosTablas_LDR"
         PurchaseHeader."Location Code" := UserDimensions.getLocationCode(UserId);
         PurchaseHeader."Assigned User ID" := UserId;
     end;
+    */
+
 
     [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnAfterCheckBuyFromVendor, '', false, false)]
     local procedure OnAfterCheckBuyFromVendor(var PurchaseHeader: Record "Purchase Header"; xPurchaseHeader: Record "Purchase Header"; Vendor: Record Vendor)
@@ -194,6 +205,8 @@ codeunit 50000 "EventosTablas_LDR"
         Vendor.TestField("Country/Region Code");
     end;
 
+
+    //todo: no se de donde ha salido esto, yo lo eliminaria
     [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnBeforeValidateEmptySellToCustomerAndLocation, '', false, false)]
     local procedure OnBeforeValidateEmptySellToCustomerAndLocation(var PurchaseHeader: Record "Purchase Header"; Vendor: Record Vendor; var IsHandled: Boolean; var xPurchaseHeader: Record "Purchase Header")
     begin
@@ -203,16 +216,18 @@ codeunit 50000 "EventosTablas_LDR"
         if PurchaseHeader."Buy-from Vendor No." <> '' then
             PurchaseHeader.GetVend(PurchaseHeader."Buy-from Vendor No.");
         PurchaseHeader.UpdateLocationCode(Vendor."Location Code");
-        PurchaseHeader.InitSii;
+        //todo: revisar si se puede eliminar t38
+        //PurchaseHeader.InitSii;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnValidateBuyFromVendorNoOnAfterUpdateBuyFromCont, '', false, false)]
     local procedure OnValidateBuyFromVendorNoOnAfterUpdateBuyFromCont(var PurchaseHeader: Record "Purchase Header"; xPurchaseHeader: Record "Purchase Header"; CallingFieldNo: Integer; var SkipBuyFromContact: Boolean)
     var
         UserDims: Record "User Dimensions_LDR";
-        CompanyInfo: Record "Company Information";
+    //todo: no se usa para nada
+    //CompanyInfo: Record "Company Information";
     begin
-        CompanyInfo.Get;
+        //CompanyInfo.Get;
         UserDims.SetRange(UserDims.Usuario, UserId);
         if UserDims.FindFirst then
             PurchaseHeader."Location Code" := UserDims."Location Code";
@@ -301,6 +316,345 @@ codeunit 50000 "EventosTablas_LDR"
         if Rec.Type = Rec.Type::Empty then
             Rec.Type_LDR := Rec.Type_LDR::Payable;
         //Rec.Modify(false);
+    end;
+    #endregion
+
+    //todo:esto posiblemente haya que eliminarlo OnBeforeCreateDimensionsFromValidateBillToCustomerNo
+    #region table 36 "Sales Header"
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", 'OnBeforeCreateDimensionsFromValidateBillToCustomerNo', '', true, true)]
+    local procedure OnBeforeCreateDimensionsFromValidateBillToCustomerNo(var IsHandled: Boolean; var SalesHeader: Record "Sales Header")
+    begin
+        SalesHeader.CreateDimFromDefaultDim(SalesHeader.FieldNo("Assigned User ID"));
+    end;
+    #endregion
+
+
+    #region table 37 "Sales Line"
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnCopyFromItemOnAfterCheck', '', true, true)]
+    local procedure OnCopyFromItemOnAfterCheck(Item: Record Item; var SalesLine: Record "Sales Line")
+    begin
+        SalesLine."On Deposit" := Item."On Deposit";
+    end;
+    #endregion
+
+    #region table 37 "Sales Line"
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnValidateNoOnAfterUpdateUnitPrice', '', true, true)]
+    local procedure OnValidateNoOnAfterUpdateUnitPrice(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; var TempSalesLine: Record "Sales Line" temporary)
+    var
+        gbldimensiones: Record 50000;
+        Item: Record 27;
+        Proyecto: Code[10];
+    begin
+        Item.get(SalesLine."No.");
+        gbldimensiones.RESET;
+        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
+        IF gbldimensiones.FINDFIRST THEN
+            Proyecto := gbldimensiones."Project Dimension Value";
+
+        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
+        IF gbldimensiones.FINDFIRST THEN
+            SalesLine."Location Code" := gbldimensiones."Location Code";
+
+        IF (Proyecto = 'EUSKALTEL') AND NOT (Item."On Deposit") THEN BEGIN
+            SalesLine."Unit Price" := SalesLine."Unit Cost (LCY)";
+            SalesLine."Line Amount" := 0;
+        END;
+    end;
+    #endregion
+
+    #region table 37 "Sales Line"
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeUpdatePrePaymentAmounts', '', true, true)]
+    local procedure OnBeforeUpdatePrePaymentAmounts(var IsHandled: Boolean; var SalesLine: Record "Sales Line")
+    begin
+        IF (SalesLine."Document Type" = SalesLine."Document Type"::Invoice) AND (SalesLine."Prepayment %" <> 0) THEN
+            IsHandled := TRUE;
+    end;
+    #endregion
+
+
+    #region table 37 "Sales Line"
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", 'OnBeforeCalcPrepmtToDeduct', '', true, true)]
+    local procedure OnBeforeCalcPrepmtToDeduct(var IsHandled: Boolean; var SalesLine: Record "Sales Line")
+    var
+        SalesHeader: Record "Sales Header";
+        Currency: Record "Currency";
+    begin
+        IsHandled := TRUE;
+
+        IF (SalesLine.Quantity - SalesLine."Quantity Invoiced") <> 0 THEN BEGIN
+            SalesHeader := SalesLine.GetSalesHeader;
+            Currency.Get(SalesHeader."Currency Code");
+            IF SalesHeader."Prices Including VAT" THEN
+                SalesLine."Prepmt Amt to Deduct" :=
+                  ROUND(
+                    ROUND(((SalesLine."Prepmt. Amt. Inv." - SalesLine."Prepmt Amt Deducted") * SalesLine."Qty. to Invoice" / (SalesLine.Quantity - SalesLine."Quantity Invoiced")) /
+                    (1 + (SalesLine."VAT %" / 100)), Currency."Amount Rounding Precision") * (1 + (SalesLine."VAT %" / 100)),
+                    Currency."Amount Rounding Precision")
+            ELSE
+                SalesLine."Prepmt Amt to Deduct" :=
+                  ROUND(
+                    (SalesLine."Prepmt. Amt. Inv." - SalesLine."Prepmt Amt Deducted") *
+                    SalesLine."Qty. to Invoice" / (SalesLine.Quantity - SalesLine."Quantity Invoiced"), Currency."Amount Rounding Precision")
+        END ELSE
+            SalesLine."Prepmt Amt to Deduct" := 0
+    end;
+    #endregion
+
+    //todo:esto posiblemente haya que eliminarlo OnBeforeCreateDimensionsFromValidatePayToVendorNo
+    #region table 38 "Purchase Header"
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnBeforeCreateDimensionsFromValidatePayToVendorNo, '', false, false)]
+    local procedure OnBeforeCreateDimensionsFromValidatePayToVendorNo(var PurchaseHeader: Record "Purchase Header")
+    begin
+        PurchaseHeader.CreateDimFromDefaultDim(PurchaseHeader.FieldNo("Assigned User ID"));
+    end;
+    #endregion
+
+
+    #region table 38 "Purchase Header"
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Header", OnValidatePaymentTermsCodeOnBeforeCalcDueDate, '', false, false)]
+    local procedure OnValidatePaymentTermsCodeOnBeforeCalcDueDate(var PurchaseHeader: Record "Purchase Header"; var IsHandled: Boolean)
+    var
+        PaymentTerms: Record "Payment Terms";
+    begin
+        PurchaseHeader."Prepayment Due Date" := CalcDate(PaymentTerms."Due Date Calculation", PurchaseHeader."Document Date");
+        IF PurchaseHeader."Pay-to Vendor No." = '' Then
+            IsHandled := TRUE;
+    end;
+    #endregion
+
+    #region table 39 "Purchase Line"
+    [EventSubscriber(ObjectType::Table, Database::"Purchase Line", OnBeforeUpdatePrepmtAmounts, '', false, false)]
+    local procedure OnBeforeUpdatePrepmtAmounts(var IsHandled: Boolean; PurchaseHeader: Record "Purchase Header"; var PurchaseLine: Record "Purchase Line")
+    begin
+        IF (PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Invoice) AND (PurchaseLine."Prepayment %" <> 0) THEN
+            IsHandled := TRUE;
+    end;
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //CODEUNITS
+    //todo:pasar a la codeunit de eventos
+
+    //todo: codeunit 363 "PostSales-Delete" para mi hay que eliminarlo y tirar por el estandar
+    #region codeunit 363 "PostSales-Delete"
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"PostSales-Delete", 'OnBeforeDeleteHeader', '', true, true)]
+    local procedure OnBeforeDeleteHeaderSales(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean; var ReturnReceiptHeader: Record "Return Receipt Header"; var SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var SalesCrMemoHeaderPrepmt: Record "Sales Cr.Memo Header"; var SalesInvoiceHeader: Record "Sales Invoice Header"; var SalesInvoiceHeaderPrepmt: Record "Sales Invoice Header"; var SalesShipmentHeader: Record "Sales Shipment Header")
+    var
+        SourceCodeSetup: Record "Source Code Setup";
+        SourceCode: Record "Source Code";
+        codeunitPostSalesDelete: Codeunit "PostSales-Delete";
+        Text000: Label '¿Confirma que desea imprimir el albarán %1?';
+        Text001: Label '¿Confirma que desea imprimir la factura %1?';
+        Text002: Label '¿Confirma que desea imprimir el abono %1?';
+        Text023: Label '¿Confirma que desea imprimir la recep. devol. %1?';
+        Text054: Label '¿Desea imprimir el abono prepago %1?';
+        Text055: Label '¿Desea imprimir la factura prepago %1?';
+    begin
+        if (SalesHeader."Opportunity No." <> '') and (SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order]) then
+            codeunitPostSalesDelete.InitDeleteHeader(
+              SalesHeader, SalesShipmentHeader, SalesInvoiceHeader, SalesCrMemoHeader,
+              ReturnReceiptHeader, SalesInvoiceHeaderPrePmt, SalesCrMemoHeaderPrePmt, SourceCode.Code);
+
+        IF (SalesShipmentHeader."No." <> '') OR
+                (SalesInvoiceHeader."No." <> '') OR
+                (SalesCrMemoHeader."No." <> '') OR
+                (ReturnReceiptHeader."No." <> '') OR
+                (SalesInvoiceHeaderPrepmt."No." <> '') OR
+                (SalesCrMemoHeaderPrepmt."No." <> '')
+             THEN BEGIN
+            IF SalesShipmentHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text000, TRUE,
+                     SalesShipmentHeader."No.")
+                THEN BEGIN
+                    SalesShipmentHeader.SETRECFILTER;
+                    SalesShipmentHeader.PrintRecords(TRUE);
+                END;
+
+            IF SalesInvoiceHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text001, TRUE,
+                     SalesInvoiceHeader."No.")
+                THEN BEGIN
+                    SalesInvoiceHeader.SETRECFILTER;
+                    SalesInvoiceHeader.PrintRecords(TRUE);
+                END;
+
+            IF SalesCrMemoHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text002, TRUE,
+                     SalesCrMemoHeader."No.")
+                THEN BEGIN
+                    SalesCrMemoHeader.SETRECFILTER;
+                    SalesCrMemoHeader.PrintRecords(TRUE);
+                END;
+
+            IF ReturnReceiptHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text023, TRUE,
+                     ReturnReceiptHeader."No.")
+                THEN BEGIN
+                    ReturnReceiptHeader.SETRECFILTER;
+                    ReturnReceiptHeader.PrintRecords(TRUE);
+                END;
+
+            IF SalesInvoiceHeaderPrepmt."No." <> '' THEN
+                IF CONFIRM(
+                     Text055, TRUE,
+                     SalesInvoiceHeader."No.")
+                THEN BEGIN
+                    SalesInvoiceHeaderPrepmt.SETRECFILTER;
+                    SalesInvoiceHeaderPrepmt.PrintRecords(TRUE);
+                END;
+
+            IF SalesCrMemoHeaderPrepmt."No." <> '' THEN
+                IF CONFIRM(
+                     Text054, TRUE,
+                     SalesCrMemoHeaderPrepmt."No.")
+                THEN BEGIN
+                    SalesCrMemoHeaderPrepmt.SETRECFILTER;
+                    SalesCrMemoHeaderPrepmt.PrintRecords(TRUE);
+                END;
+        END;
+    end;
+    #endregion
+
+    #region codeunit 363 "PostSales-Delete"
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"PostSales-Delete", 'OnAfterDeleteHeader', '', true, true)]
+    local procedure OnAfterDeleteHeader(var SalesHeader: Record "Sales Header")
+    var
+        Opp: Record 5092;
+        TempOpportunityEntry: Record 5093 temporary;
+        Text040: Label 'Una oportunidad ganada está vinculada a este pedido.\Antes de poder eliminar el pedido, debe cambiar el estado a Perdida.\¿Desea cambiar el estado para esta oportunidad?';
+        Text043: Label 'Wizard Abortado';
+        Text044: Label 'No se ha cambiado el estado de la oportunidad. El programa ha anulado la eliminación del pedido.';
+    begin
+        IF (SalesHeader."Opportunity No." <> '') AND
+                   (SalesHeader."Document Type" IN [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order])
+                THEN
+            IF Opp.GET(SalesHeader."Opportunity No.") THEN BEGIN
+                IF SalesHeader."Document Type" = SalesHeader."Document Type"::Order THEN BEGIN
+                    IF NOT CONFIRM(Text040, TRUE) THEN
+                        ERROR(Text044);
+                    TempOpportunityEntry.INIT;
+                    TempOpportunityEntry.VALIDATE("Opportunity No.", Opp."No.");
+                    TempOpportunityEntry."Sales Cycle Code" := Opp."Sales Cycle Code";
+                    TempOpportunityEntry."Contact No." := Opp."Contact No.";
+                    TempOpportunityEntry."Contact Company No." := Opp."Contact Company No.";
+                    TempOpportunityEntry."Salesperson Code" := Opp."Salesperson Code";
+                    TempOpportunityEntry."Campaign No." := Opp."Campaign No.";
+                    TempOpportunityEntry."Action Taken" := TempOpportunityEntry."Action Taken"::Lost;
+                    TempOpportunityEntry.INSERT;
+                    TempOpportunityEntry.SETRANGE("Action Taken", TempOpportunityEntry."Action Taken"::Lost);
+                    PAGE.RUNMODAL(PAGE::"Close Opportunity", TempOpportunityEntry);
+                    IF Opp.GET(SalesHeader."Opportunity No.") THEN
+                        IF Opp.Status <> Opp.Status::Lost THEN
+                            ERROR(Text043);
+                END;
+                Opp."Sales Document Type" := Opp."Sales Document Type"::" ";
+                Opp."Sales Document No." := '';
+                Opp.MODIFY;
+                SalesHeader."Opportunity No." := '';
+            END;
+    end;
+    #endregion
+
+
+    //todo: codeunit 364 "PostPurch-Delete" para mi hay que eliminarlo y tirar por el estandar
+    #region codeunit 364 "PostPurch-Delete"
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"PostPurch-Delete", 'OnBeforeDeleteHeader', '', true, true)]
+    local procedure OnBeforeDeleteHeaderPurchase(var IsHandled: Boolean; var PurchCrMemoHdr: Record "Purch. Cr. Memo Hdr."; var PurchCrMemoHdrPrepmt: Record "Purch. Cr. Memo Hdr."; var PurchHeader: Record "Purchase Header"; var PurchInvHeader: Record "Purch. Inv. Header"; var PurchInvHeaderPrepmt: Record "Purch. Inv. Header"; var PurchRcptHeader: Record "Purch. Rcpt. Header"; var ReturnShipmentHeader: Record "Return Shipment Header")
+    var
+        Text000: Label '¿Confirma que desea imprimir el albarán %1?';
+        Text001: Label '¿Confirma que desea imprimir la factura %1?';
+        Text002: Label '¿Confirma que desea imprimir el abono %1?';
+        Text024: Label '¿Confirma que desea imprimir el env¡o devoluci¢n %1?';
+        Text043: Label '¿Desea imprimir la factura prepago %1?';
+        Text044: Label '¿Desea imprimir el abono prepago %1?';
+    begin
+        IF (PurchRcptHeader."No." <> '') OR
+                  (PurchInvHeader."No." <> '') OR
+                  (PurchCrMemoHdr."No." <> '') OR
+                  (ReturnShipmentHeader."No." <> '') OR
+                  (PurchInvHeaderPrepmt."No." <> '') OR
+                  (PurchCrMemoHdrPrepmt."No." <> '')
+               THEN BEGIN
+            IF PurchRcptHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text000, TRUE,
+                     PurchRcptHeader."No.")
+                THEN BEGIN
+                    PurchRcptHeader.SETRECFILTER;
+                    PurchRcptHeader.PrintRecords(TRUE);
+                END;
+
+            IF PurchInvHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text001, TRUE,
+                     PurchInvHeader."No.")
+                THEN BEGIN
+                    PurchInvHeader.SETRECFILTER;
+                    PurchInvHeader.PrintRecords(TRUE);
+                END;
+
+            IF PurchCrMemoHdr."No." <> '' THEN
+                IF CONFIRM(
+                     Text002, TRUE,
+                     PurchCrMemoHdr."No.")
+                THEN BEGIN
+                    PurchCrMemoHdr.SETRECFILTER;
+                    PurchCrMemoHdr.PrintRecords(TRUE);
+                END;
+
+            IF ReturnShipmentHeader."No." <> '' THEN
+                IF CONFIRM(
+                     Text024, TRUE,
+                     ReturnShipmentHeader."No.")
+                THEN BEGIN
+                    ReturnShipmentHeader.SETRECFILTER;
+                    ReturnShipmentHeader.PrintRecords(TRUE);
+                END;
+
+            IF PurchInvHeaderPrepmt."No." <> '' THEN
+                IF CONFIRM(
+                     Text043, TRUE,
+                     PurchInvHeader."No.")
+                THEN BEGIN
+                    PurchInvHeaderPrepmt.SETRECFILTER;
+                    PurchInvHeaderPrepmt.PrintRecords(TRUE);
+                END;
+
+            IF PurchCrMemoHdrPrepmt."No." <> '' THEN
+                IF CONFIRM(
+                     Text044, TRUE,
+                     PurchCrMemoHdrPrepmt."No.")
+                THEN BEGIN
+                    PurchCrMemoHdrPrepmt.SETRECFILTER;
+                    PurchCrMemoHdrPrepmt.PrintRecords(TRUE);
+                END;
+        END;
     end;
     #endregion
 }

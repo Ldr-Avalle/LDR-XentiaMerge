@@ -86,6 +86,7 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
             CaptionClass = '1,1,1';
             Caption = 'Cod dimensión global 1';
             DataClassification = ToBeClassified;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         field(34; "Global Dimension 2 Code"; Code[20])

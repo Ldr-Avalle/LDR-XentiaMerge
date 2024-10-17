@@ -31,19 +31,19 @@ tableextension 50174 "Item_LDR" extends "Item"
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
+            Caption = 'Grupo registro IVA prod.';
         }
         modify("Planned Order Receipt (Qty.)")
         {
-            Caption = 'Planned Order Receipt (Qty.)';
+            Caption = 'Recep. (cdad) O.P. planif.';
         }
         modify("Qty. on Component Lines")
         {
-            Caption = 'Qty. on Component Lines';
+            Caption = 'Cdad. línea componentes';
         }
         field(50000; accessories; Boolean)
         {

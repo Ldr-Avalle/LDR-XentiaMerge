@@ -12,30 +12,31 @@ tableextension 50071 "PurchCrMemoLine_LDR" extends "Purch. Cr. Memo Line"
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
+            Caption = 'Grupo registro IVA prod.';
         }
         field(50005; Retenible; Boolean)
         {
             Description = 'Indica si la línea está sujeta a retención o no';
             trigger OnValidate()
             begin
-                if (Type <> Type::"G/L Account") then Error('Solo pueden estar sujetas a retención las líneas de Cuenta');
+                if (Type <> Type::"G/L Account") then
+                    Error('Solo pueden estar sujetas a retención las líneas de Cuenta');
             end;
         }
     }

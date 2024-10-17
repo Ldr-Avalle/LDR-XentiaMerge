@@ -12,30 +12,31 @@ tableextension 50063 "PurchInvLine_LDR" extends "Purch. Inv. Line"
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
+            Caption = 'Grupo registro IVA prod.';
         }
         field(50005; Retenible; Boolean)
         {
             Description = 'Indica si la línea está sujeta a retención o no';
             trigger OnValidate()
             begin
-                IF (Type <> Type::"G/L Account") THEN ERROR('Solo pueden estar sujetas a retención las líneas de Cuenta');
+                IF (Type <> Type::"G/L Account") THEN
+                    ERROR('Solo pueden estar sujetas a retención las líneas de Cuenta');
             end;
         }
     }
@@ -45,28 +46,4 @@ tableextension 50063 "PurchInvLine_LDR" extends "Purch. Inv. Line"
         {
         }
     }
-    //Unsupported feature: Code Modification on "InitFromPurchLine(PROCEDURE 12)".
-    //procedure InitFromPurchLine();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    INIT;
-    TRANSFERFIELDS(PurchLine);
-    IF ("No." = '') AND (Type IN [Type::"G/L Account"..Type::"Charge (Item)"]) THEN
-      Type := Type::" ";
-    "Posting Date" := PurchInvHeader."Posting Date";
-    "Document No." := PurchInvHeader."No.";
-    Quantity := PurchLine."Qty. to Invoice";
-    "Quantity (Base)" := PurchLine."Qty. to Invoice (Base)";
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    INIT;
-    TRANSFERFIELDS(PurchLine);
-    #5..8
-    */
-    //end;
 }

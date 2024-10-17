@@ -12,27 +12,19 @@ tableextension 50042 SalesInvoiceLine_LDR extends "Sales Invoice Line"
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
-        }
-        modify("VAT Prod. Posting Group")
-        {
-            Caption = 'VAT Prod. Posting Group';
-        }
-        modify("Job Contract Entry No.")
-        {
-            Caption = 'Job Contract Entry No.';
+            Caption = 'Grupo registro IVA neg.';
         }
         field(50000; "Serial No."; Code[20])
         {
@@ -45,11 +37,9 @@ tableextension 50042 SalesInvoiceLine_LDR extends "Sales Invoice Line"
                 TestField(Type, Type::Item);
             end;
         }
-        field(50091; TipoNoExenta; Option)
+        field(50091; TipoNoExenta; enum TbaiTipoNoExenta)
         {
             Description = 'TBAI_AL_01 TipoNoExenta';
-            OptionCaption = 'S1 Sin inversión del sujeto pasivo,  S2 Con inversión del sujeto pasivo';
-            OptionMembers = S1,S2;
         }
     }
     keys

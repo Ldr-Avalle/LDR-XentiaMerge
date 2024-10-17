@@ -5,15 +5,15 @@ tableextension 50049 PurchRcptHeader_LDR extends "Purch. Rcpt. Header"
     {
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         field(50001; "Total albarán"; Decimal)
         {
@@ -30,4 +30,9 @@ tableextension 50049 PurchRcptHeader_LDR extends "Purch. Rcpt. Header"
         {
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        rec."Posting Hour" := Time;
+    end;
 }

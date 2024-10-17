@@ -4,15 +4,20 @@ tableextension 50164 "VendorLedgerEntry_LDR" extends "Vendor Ledger Entry"
     {
         modify("Closed by Entry No.")
         {
-            Caption = 'Closed by Entry No.';
+            Caption = 'Cerrado por nº orden.';
         }
         modify("Amount to Apply")
         {
-            Caption = 'Amount to Apply', Comment = 'ESP="Importe pendiente a liquidar"';
+            //Caption = 'Amount to Apply', Comment = 'ESP="Importe pendiente a liquidar"';
+            Caption = 'Importe pendiente a liquidar';
         }
         modify("Reversed by Entry No.")
         {
-            Caption = 'Reversed by Entry No.';
+            Caption = 'Revertido por el movimiento nº';
+        }
+        modify("Creditor No.")
+        {
+            Caption = 'Nº acreedor';
         }
         modify("Payment Reference")
         {
@@ -36,6 +41,6 @@ tableextension 50164 "VendorLedgerEntry_LDR" extends "Vendor Ledger Entry"
     }
 
     var
-        Text000: Label 'must have the same sign as %1';
-        Text001: Label 'must not be larger than %1';
+        Text000: Label 'debe tener el mismo signo que %1.';
+        Text001: Label 'no debe ser mayor que %1.';
 }

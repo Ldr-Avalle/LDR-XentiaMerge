@@ -1,12 +1,8 @@
-tableextension 50035 "SalesShipmentLine_LDR" extends "Sales Shipment Line"
+tableextension 50529 ItemJournalLine_LDR extends "Item Journal Line"
 {
     fields
     {
         modify(Description)
-        {
-            Description = 'SERCABLE';
-        }
-        modify("Description 2")
         {
             Description = 'SERCABLE';
         }
@@ -22,13 +18,9 @@ tableextension 50035 "SalesShipmentLine_LDR" extends "Sales Shipment Line"
         {
             Caption = 'Cód. provincia';
         }
-        modify("VAT Bus. Posting Group")
+        field(50000; "On Deposit"; Boolean)
         {
-            Caption = 'Grupo registro IVA neg.';
-        }
-        modify("VAT Prod. Posting Group")
-        {
-            Caption = 'Grupo registro IVA prod.';
+            Description = 'SERCABLE';
         }
     }
 }

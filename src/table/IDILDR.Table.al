@@ -28,11 +28,11 @@ table 50027 IDI_LDR
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 0;
         }
-        field(5; Mes; Option)
+        field(5; Mes; Enum "Meses")
         {
             Caption = 'Mes';
             DataClassification = ToBeClassified;
-            OptionMembers = Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre;
+            //OptionMembers = Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre;
         }
         field(6; "Coste/Hora present."; Decimal)
         {

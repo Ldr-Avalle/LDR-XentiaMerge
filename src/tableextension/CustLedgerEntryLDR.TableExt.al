@@ -25,7 +25,7 @@ tableextension 50146 CustLedgerEntry_LDR extends "Cust. Ledger Entry"
         }
         field(50199; "Transaction No. BK"; Integer)
         {
-            Caption = 'Transacción No. Bk';
+            Caption = 'Nº asiento Bk';
             DataClassification = ToBeClassified;
         }
     }

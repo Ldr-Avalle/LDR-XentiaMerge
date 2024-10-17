@@ -12,37 +12,30 @@ tableextension 50045 "SalesCrMemoLine_LDR" extends "Sales Cr.Memo Line"
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
-        }
-        modify("Job Contract Entry No.")
-        {
-            Caption = 'Job Contract Entry No.';
+            Caption = 'Grupo registro IVA prod.';
         }
         field(50000; "Serial No."; Code[20])
         {
             Description = 'SERCABLE';
             trigger OnValidate()
-            var
-                TrackingSpecification: Record "Tracking Specification";
-                TrackingSpecification2: Record "Tracking Specification";
             begin
-                TestField(Type, Type::Item);
+                rec.TestField(Type, Type::Item);
             end;
         }
     }

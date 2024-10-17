@@ -95,6 +95,7 @@ table 50009 "Employee internal historic_LDR"
         {
             Caption = 'Segmento';
             DataClassification = ToBeClassified;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
     }

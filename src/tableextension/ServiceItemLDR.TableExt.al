@@ -21,6 +21,7 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
             CaptionClass = '1,2,1';
             Description = 'Sercable';
             Editable = false;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
             trigger OnValidate()
             begin

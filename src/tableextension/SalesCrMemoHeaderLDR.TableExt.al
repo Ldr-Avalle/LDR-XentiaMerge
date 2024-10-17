@@ -6,19 +6,15 @@ tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
     {
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
-        }
-        modify("Cust. Ledger Entry No.")
-        {
-            Caption = 'Cust. Ledger Entry No.';
+            Caption = 'Grupo registro IVA neg.';
         }
         field(50000; "Descuento en factura"; Decimal)
         {
@@ -54,9 +50,9 @@ tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
             Description = 'SERCABLE';
             OptionMembers = "Rectificación íntegra","  Rectificación por diferencias ","  Rectificación por descuento por volumen de operaciones durante el periodo "," 04 Autorizadas por la Agencia Tributaria ";
         }
-        field(50007; "Reason Description"; Text[80])
+        field(50007; "Reason Description"; Text[100])
         {
-            CalcFormula = lookup("Reason Code".Description where(Code = field(Reason Code)));
+            CalcFormula = lookup("Reason Code".Description where(Code = field("Reason Code")));
             Description = 'SERCABLE';
             FieldClass = FlowField;
         }
@@ -122,6 +118,13 @@ tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
             Description = 'TBAI_AL_01';
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        rec."Posting Hour" := Time;
+    end;
+
+    /*
     procedure SendRecords()
     var
         DocumentSendingProfile: Record "Document Sending Profile";
@@ -234,4 +237,5 @@ tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
         Customer: Record Customer;
         PostSalesLinesDelete: Codeunit "PostSales-Delete";
         InvoiceNo: Text[30];
+    */
 }

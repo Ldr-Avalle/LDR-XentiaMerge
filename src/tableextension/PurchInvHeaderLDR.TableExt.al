@@ -4,19 +4,15 @@ tableextension 50056 "PurchInvHeader_LDR" extends "Purch. Inv. Header"
     {
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
-        }
-        modify("Vendor Ledger Entry No.")
-        {
-            Caption = 'Vendor Ledger Entry No.';
+            Caption = 'Grupo registro IVA neg.';
         }
         field(50008; "Posting Hour"; Time)
         {
@@ -29,6 +25,11 @@ tableextension 50056 "PurchInvHeader_LDR" extends "Purch. Inv. Header"
         {
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        rec."Posting Hour" := Time;
+    end;
 
     var
         PostPurchLinesDelete: Codeunit "PostPurch-Delete";
