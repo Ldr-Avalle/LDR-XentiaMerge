@@ -7,7 +7,7 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
         {
             trigger OnAfterValidate()
             var
-                Item: Record 27;
+                Item: Record Item;
             begin
                 if rec.Type = rec.Type::Item then begin
                     Item.GET(rec."No.");
@@ -48,13 +48,13 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
             Description = 'SERCABLE';
             trigger OnValidate()
             var
-                ReservationEntry: Record 337;
-                ReservationEntry2: Record 337;
-                Item: Record 27;
-                SalesLine: Record 37;
-                ItemLdgEntry: Record 32;
+                ReservationEntry: Record "Reservation Entry";
+                ReservationEntry2: Record "Reservation Entry";
+                Item: Record Item;
+                SalesLine: Record "Sales Line";
+                ItemLdgEntry: Record "Item Ledger Entry";
                 Text0001: Label 'El n´Š¢mero de serie especificado no se encuentra disponible';
-                PurchRcptLine: Record 121;
+                PurchRcptLine: Record "Purch. Rcpt. Line";
                 QtyToApply: Integer;
             begin
                 //compruebo que el producto tiene n´Š¢ seguimiento
@@ -64,23 +64,23 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
                 Item.TESTFIELD("Item Tracking Code");
                 //compruebo que no existe en otra l´Š¢nea no registrada
                 IF ("Document Type" IN ["Document Type"::Invoice]) THEN BEGIN
-                    SalesLine.RESET;
+                    SalesLine.RESET();
                     SalesLine.SETFILTER("Serial No.", '%1', "Serial No.");
-                    IF SalesLine.FINDFIRST THEN ERROR('Ya existe el n´Š¢ de serie en la factura %1', SalesLine."Document No.")
+                    IF SalesLine.FINDFIRST() THEN ERROR('Ya existe el n´Š¢ de serie en la factura %1', SalesLine."Document No.")
                 END;
                 //Informo el Line No. si a´Š¢n no est´Š¢ insertado el registro para mantener trazabilidad con ReservationEntry
-                SalesLine.RESET;
+                SalesLine.RESET();
                 SalesLine.SETFILTER("Document No.", '%1', "Document No.");
-                IF SalesLine.FINDLAST THEN
+                IF SalesLine.FINDLAST() THEN
                     "Line No." := SalesLine."Line No." + 10000
                 ELSE
                     "Line No." := 10000;
                 //Hago el movimiento de reserva, creo o modifico si ya existe
-                ReservationEntry.RESET;
+                ReservationEntry.RESET();
                 IF ("Serial No." <> '') THEN BEGIN
                     IF (xRec."Serial No." = '') THEN BEGIN
-                        ReservationEntry.INIT;
-                        IF ReservationEntry2.FINDLAST THEN
+                        ReservationEntry.INIT();
+                        IF ReservationEntry2.FINDLAST() THEN
                             ReservationEntry."Entry No." := ReservationEntry2."Entry No." + 1
                         ELSE
                             ReservationEntry."Entry No." := 1;
@@ -112,13 +112,13 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
                         ReservationEntry.Quantity := QtyToApply;
                         ReservationEntry."Quantity (Base)" := QtyToApply;
                         ReservationEntry."Item Tracking" := ReservationEntry."Item Tracking"::"Serial No.";
-                        IF ReservationEntry.INSERT THEN;
+                        IF ReservationEntry.INSERT() THEN;
                     END ELSE BEGIN
                         ReservationEntry.SETFILTER("Source ID", '%1', "Document No.");
                         ReservationEntry.SETFILTER("Source Ref. No.", '%1', "Line No.");
-                        IF ReservationEntry.FINDFIRST THEN BEGIN
+                        IF ReservationEntry.FINDFIRST() THEN BEGIN
                             ReservationEntry."Serial No." := "Serial No.";
-                            ReservationEntry.MODIFY;
+                            ReservationEntry.MODIFY();
                         END;
                     END;
                     //traigo el coste del producto
@@ -127,12 +127,12 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
                         ItemLdgEntry.SETFILTER("Location Code", '%1', "Location Code");
                         ItemLdgEntry.SETFILTER("Serial No.", '%1', "Serial No.");
                         ItemLdgEntry.SETFILTER("Remaining Quantity", '%1', 1);
-                        IF ItemLdgEntry.FINDFIRST = FALSE THEN
+                        IF ItemLdgEntry.FINDFIRST() = FALSE THEN
                             ERROR(Text0001)
                         ELSE BEGIN
                             PurchRcptLine.SETFILTER("Document No.", '%1', ItemLdgEntry."Document No.");
                             PurchRcptLine.SETFILTER("Line No.", '%1', ItemLdgEntry."Document Line No.");
-                            IF PurchRcptLine.FINDFIRST THEN BEGIN
+                            IF PurchRcptLine.FINDFIRST() THEN BEGIN
                                 VALIDATE("Unit Cost", PurchRcptLine."Unit Cost");
                                 VALIDATE("Unit Cost (LCY)", PurchRcptLine."Unit Cost");
                                 "Unit Price" := PurchRcptLine."Unit Cost"; //no hago validate para que no machaque el importe l´Š¢nea ya introducido
@@ -153,7 +153,7 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
         SalesLine: Record "Sales Line";
     begin
         SalesLine.SETFILTER("Document No.", '%1', rec."Document No.");
-        IF SalesLine.FINDLAST THEN
+        IF SalesLine.FINDLAST() THEN
             rec."Line No." := SalesLine."Line No." + 10000
         ELSE
             rec."Line No." := 10000;
@@ -162,7 +162,7 @@ tableextension 50227 SalesLine_LDR extends "Sales Line"
 
     trigger OnAfterModify()
     var
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
     begin
         IF UserDims.existsUser(USERID) THEN
             IF NOT (Type IN [Type::Item, Type::"Charge (Item)"]) THEN

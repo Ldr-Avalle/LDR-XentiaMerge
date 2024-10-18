@@ -18,11 +18,11 @@ tableextension 50388 TransferHeader_LDR extends "Transfer Header"
 
     local procedure ConfirmResvDateConflict()
     var
-        ResvEngMgt: Codeunit "99000831";
+        ResvEngMgt: Codeunit "Reservation Engine Mgt.";
     begin
-        IF ResvEngMgt.ResvExistsForTransHeader(Rec) THEN
-            IF NOT CONFIRM(Text005 + Text006, FALSE) THEN
-                ERROR('');
+        if ResvEngMgt.ResvExistsForTransHeader(Rec) then
+            if not Confirm(Text005 + Text006, false) then
+                Error('');
     end;
 
     var

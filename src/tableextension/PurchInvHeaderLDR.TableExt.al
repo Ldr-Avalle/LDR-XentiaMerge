@@ -1,4 +1,4 @@
-tableextension 50056 "PurchInvHeader_LDR" extends "Purch. Inv. Header"
+tableextension 50056 PurchInvHeader_LDR extends "Purch. Inv. Header"
 {
     fields
     {
@@ -28,7 +28,7 @@ tableextension 50056 "PurchInvHeader_LDR" extends "Purch. Inv. Header"
 
     trigger OnAfterInsert()
     begin
-        rec."Posting Hour" := Time;
+        Rec."Posting Hour" := Time;
     end;
 
     var

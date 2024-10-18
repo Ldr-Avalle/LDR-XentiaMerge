@@ -1,4 +1,4 @@
-tableextension 50237 "PurchaseHeader_LDR" extends "Purchase Header"
+tableextension 50237 PurchaseHeader_LDR extends "Purchase Header"
 {
     DataCaptionFields = "Document Type";
     fields
@@ -21,7 +21,7 @@ tableextension 50237 "PurchaseHeader_LDR" extends "Purchase Header"
         {
             trigger OnAfterValidate()
             begin
-                rec."VAT Country/Region Code" := rec."Buy-from Country/Region Code";
+                Rec."VAT Country/Region Code" := Rec."Buy-from Country/Region Code";
             end;
         }
         modify("Area")
@@ -36,8 +36,8 @@ tableextension 50237 "PurchaseHeader_LDR" extends "Purchase Header"
         {
             trigger OnAfterValidate()
             begin
-                IF rec."Payment Reference" <> '' THEN
-                    rec.TESTFIELD("Creditor No.");
+                if Rec."Payment Reference" <> '' then
+                    Rec.TestField("Creditor No.");
             end;
         }
         modify("Invoice Type")
@@ -52,22 +52,22 @@ tableextension 50237 "PurchaseHeader_LDR" extends "Purchase Header"
         CompanyInfo: Record "Company Information";
     begin
         CompanyInfo.Get;
-        rec."Location Code" := UserDimensions.getLocationCode(UserId);
-        rec."Assigned User ID" := UserId;
+        Rec."Location Code" := UserDimensions.getLocationCode(UserId);
+        Rec."Assigned User ID" := UserId;
     end;
 
     trigger OnModify()
     var
         UserDimensions: Record "User Dimensions_LDR";
     begin
-        IF UserDims.existsUser(USERID) THEN
-            TESTFIELD("Assigned User ID", USERID);
+        if UserDims.existsUser(UserId) then
+            TestField("Assigned User ID", UserId);
     end;
 
     trigger OnBeforeDelete()
     begin
-        IF UserDims.existsUser(USERID) THEN
-            TESTFIELD("Assigned User ID", USERID);
+        if UserDims.existsUser(UserId) then
+            TestField("Assigned User ID", UserId);
     end;
 
     procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])

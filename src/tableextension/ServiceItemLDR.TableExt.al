@@ -24,7 +24,7 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
                 CheckUniqueNameConditions();
             end;
         }
-        field(50002; Segment; enum ServiceItemSegment)
+        field(50002; Segment; Enum ServiceItemSegment)
         {
             Caption = 'Segmento';
             DataClassification = ToBeClassified;
@@ -34,7 +34,7 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
                 CheckUniqueNameConditions();
             end;
         }
-        field(50003; Type; enum ServiceItemType)
+        field(50003; Type; Enum ServiceItemType)
         {
             Caption = 'Tipo';
             DataClassification = ToBeClassified;
@@ -83,7 +83,7 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
         ServiceItem: Record "Service Item";
         Text0001: Label 'La descripción ya existe en el servicio %1';
     begin
-        if (("Shortcut Dimension 1 Code" <> '') AND (Segment <> 0)) then begin
+        if (("Shortcut Dimension 1 Code" <> '') and (Segment <> 0)) then begin
             ServiceItem.SetFilter("Shortcut Dimension 1 Code", '%1', "Shortcut Dimension 1 Code");
             ServiceItem.SetFilter(Segment, '%1', Segment);
             ServiceItem.SetFilter(Description, '%1', Description);

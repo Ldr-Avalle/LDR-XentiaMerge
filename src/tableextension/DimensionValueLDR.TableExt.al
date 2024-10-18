@@ -2,7 +2,7 @@ tableextension 50216 DimensionValue_LDR extends "Dimension Value"
 {
     trigger OnAfterInsert()
     var
-        GLSetup: Record 98;
+        GLSetup: Record "General Ledger Setup";
     begin
         //todo: no se para que vale, yo lo quitaria
         GLSetup.GET;
@@ -16,7 +16,7 @@ tableextension 50216 DimensionValue_LDR extends "Dimension Value"
 
     trigger OnAfterModify()
     var
-        GLSetup: Record 98;
+        GLSetup: Record "General Ledger Setup";
     begin
         //todo: no se para que vale, yo lo quitaria
         GLSetup.GET;

@@ -19,10 +19,10 @@ tableextension 50014 EmployeeAbsence_LDR extends "Employee Absence"
     var
         EmployeeAbsence: Record "Employee Absence";
     begin
-        EmployeeAbsence.SETFILTER("Employee No.", '%1', "Employee No.");
-        IF EmployeeAbsence.FINDLAST THEN
+        EmployeeAbsence.SetFilter("Employee No.", '%1', "Employee No.");
+        if EmployeeAbsence.FindLast then
             "Entry No." := EmployeeAbsence."Entry No." + 1
-        ELSE
+        else
             "Entry No." := 1;
     end;
 }

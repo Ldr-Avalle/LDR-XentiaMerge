@@ -1,4 +1,4 @@
-tableextension 50096 "GLAccount_LDR" extends "G/L Account"
+tableextension 50096 GLAccount_LDR extends "G/L Account"
 {
     fields
     {
@@ -24,19 +24,19 @@ tableextension 50096 "GLAccount_LDR" extends "G/L Account"
             var
                 TestNo: Integer;
             begin
-                IF (xRec."No." <> '') THEN
-                    IF (STRLEN("No.") > 5) <> (STRLEN(xRec."No.") > 5) THEN
-                        ERROR(Text1100001, FIELDNAME("Account Type"));
-                EVALUATE(TestNo, COPYSTR("No.", 1, 1));
+                if (xRec."No." <> '') then
+                    if (StrLen("No.") > 5) <> (StrLen(xRec."No.") > 5) then
+                        Error(Text1100001, FieldName("Account Type"));
+                Evaluate(TestNo, CopyStr("No.", 1, 1));
 
-                IF TestNo IN [6 .. 7] THEN BEGIN
-                    DefDim.INIT;
+                if TestNo in [6 .. 7] then begin
+                    DefDim.Init;
                     DefDim."Table ID" := 15;
                     DefDim."No." := "No.";
                     DefDim."Dimension Code" := 'Proyecto';
                     DefDim."Value Posting" := DefDim."Value Posting"::"Code Mandatory";
-                    DefDim.INSERT;
-                END;
+                    DefDim.Insert;
+                end;
             end;
         }
         field(50000; "Dimension 3 Filter"; Code[20])
@@ -50,7 +50,7 @@ tableextension 50096 "GLAccount_LDR" extends "G/L Account"
         field(50001; "Qty Mov"; Integer)
         {
             Caption = 'Movimientos';
-            CalcFormula = Count("G/L Entry" where("G/L Account No." = field("No.")));
+            CalcFormula = count("G/L Entry" where("G/L Account No." = field("No.")));
             FieldClass = FlowField;
         }
     }

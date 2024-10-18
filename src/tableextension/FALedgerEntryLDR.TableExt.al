@@ -21,9 +21,9 @@ tableextension 50365 FALedgerEntry_LDR extends "FA Ledger Entry"
         field(50000; Location; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("Default Dimension"."Dimension Value Code" WHERE("Table ID" = CONST(5600),
-                                                                                   "No." = FIELD("FA No."),
-                                                                                   "Dimension Code" = CONST('UNIDADES PRODUCCIÓN')));
+            CalcFormula = lookup("Default Dimension"."Dimension Value Code" where("Table ID" = const(5600),
+                                                                                   "No." = field("FA No."),
+                                                                                   "Dimension Code" = const('UNIDADES PRODUCCIÓN')));
             Description = 'SERCABLE';
 
         }

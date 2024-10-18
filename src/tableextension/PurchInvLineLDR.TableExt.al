@@ -1,4 +1,4 @@
-tableextension 50063 "PurchInvLine_LDR" extends "Purch. Inv. Line"
+tableextension 50063 PurchInvLine_LDR extends "Purch. Inv. Line"
 {
     fields
     {
@@ -35,8 +35,8 @@ tableextension 50063 "PurchInvLine_LDR" extends "Purch. Inv. Line"
             Description = 'Indica si la línea está sujeta a retención o no';
             trigger OnValidate()
             begin
-                IF (Type <> Type::"G/L Account") THEN
-                    ERROR('Solo pueden estar sujetas a retención las líneas de Cuenta');
+                if (Type <> Type::"G/L Account") then
+                    Error('Solo pueden estar sujetas a retención las líneas de Cuenta');
             end;
         }
     }

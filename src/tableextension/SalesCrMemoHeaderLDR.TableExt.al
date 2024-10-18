@@ -1,4 +1,4 @@
-tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
+tableextension 50043 SalesCrMemoHeader_LDR extends "Sales Cr.Memo Header"
 {
     DataCaptionFields = "Customer type";
 
@@ -121,7 +121,7 @@ tableextension 50043 "SalesCrMemoHeader_LDR" extends "Sales Cr.Memo Header"
 
     trigger OnAfterInsert()
     begin
-        rec."Posting Hour" := Time;
+        Rec."Posting Hour" := Time;
     end;
 
     /*

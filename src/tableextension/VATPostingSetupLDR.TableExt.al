@@ -1,4 +1,4 @@
-tableextension 50206 "VATPostingSetup_LDR" extends "VAT Posting Setup"
+tableextension 50206 VATPostingSetup_LDR extends "VAT Posting Setup"
 {
     fields
     {

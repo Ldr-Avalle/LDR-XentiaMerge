@@ -1,4 +1,4 @@
-tableextension 50166 "VATEntry_LDR" extends "VAT Entry"
+tableextension 50166 VATEntry_LDR extends "VAT Entry"
 {
     fields
     {

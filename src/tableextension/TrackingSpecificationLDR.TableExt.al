@@ -1,4 +1,4 @@
-tableextension 50210 "TrackingSpecification_LDR" extends "Tracking Specification"
+tableextension 50210 TrackingSpecification_LDR extends "Tracking Specification"
 {
     fields
     {

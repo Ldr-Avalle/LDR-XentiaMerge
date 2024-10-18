@@ -49,5 +49,5 @@ tableextension 50153 Vendor_LDR extends Vendor
 
     var
         Text1100000: Label 'Payment Discount (VAT Adjustment)';
-        VendVatRegNo: Record 23;
+        VendVatRegNo: Record Vendor;
 }

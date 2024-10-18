@@ -5,9 +5,9 @@ tableextension 50364 FixedAsset_LDR extends "Fixed Asset"
         field(50000; Location; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("Default Dimension"."Dimension Value Code" WHERE("Table ID" = CONST(5600),
+            CalcFormula = lookup("Default Dimension"."Dimension Value Code" where("Table ID" = const(5600),
                                                                                    "No." = field("No."),
-                                                                                   "Dimension Code" = CONST('UNIDADES PRODUCCIÓN')));
+                                                                                   "Dimension Code" = const('UNIDADES PRODUCCIÓN')));
             Caption = 'Ubicación';
             Description = 'SERCABLE';
             Editable = false;
@@ -15,20 +15,20 @@ tableextension 50364 FixedAsset_LDR extends "Fixed Asset"
         field(50001; Date; Date)
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("FA Depreciation Book"."Acquisition Date" WHERE("FA No." = FIELD("No.")));
+            CalcFormula = lookup("FA Depreciation Book"."Acquisition Date" where("FA No." = field("No.")));
             Description = 'SERCABLE';
         }
         field(50002; Proyecto; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("Default Dimension"."Dimension Value Code" WHERE("Table ID" = FILTER(5600),
-                                                                                   "No." = FIELD("No."),
-                                                                                   "Dimension Code" = FILTER('PROYECTO')));
+            CalcFormula = lookup("Default Dimension"."Dimension Value Code" where("Table ID" = filter(5600),
+                                                                                   "No." = field("No."),
+                                                                                   "Dimension Code" = filter('PROYECTO')));
         }
         field(50003; GrupoContable; Code[20])
         {
             FieldClass = FlowField;
-            CalcFormula = Lookup("FA Depreciation Book"."FA Posting Group" WHERE("FA No." = FIELD("No.")));
+            CalcFormula = lookup("FA Depreciation Book"."FA Posting Group" where("FA No." = field("No.")));
         }
     }
 }

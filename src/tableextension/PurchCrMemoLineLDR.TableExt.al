@@ -1,4 +1,4 @@
-tableextension 50071 "PurchCrMemoLine_LDR" extends "Purch. Cr. Memo Line"
+tableextension 50071 PurchCrMemoLine_LDR extends "Purch. Cr. Memo Line"
 {
     fields
     {

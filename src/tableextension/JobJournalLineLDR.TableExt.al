@@ -5,9 +5,9 @@ tableextension 50147 JobJournalLine_LDR extends "Job Journal Line"
         modify("No.")
         {
             //todo:creo que hay que eliminarlo
-            TableRelation = IF (Type = CONST(Resource)) Resource
-            ELSE IF (Type = CONST(Item)) Item WHERE(Type = CONST(Inventory))
-            ELSE IF (Type = CONST("G/L Account")) "G/L Account";
+            TableRelation = if (Type = const(Resource)) Resource
+            else if (Type = const(Item)) Item where(Type = const(Inventory))
+            else if (Type = const("G/L Account")) "G/L Account";
         }
         modify("Gen. Bus. Posting Group")
         {

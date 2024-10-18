@@ -1,4 +1,4 @@
-tableextension 50054 "PurchRcptLine_LDR" extends "Purch. Rcpt. Line"
+tableextension 50054 PurchRcptLine_LDR extends "Purch. Rcpt. Line"
 {
     fields
     {
@@ -28,7 +28,7 @@ tableextension 50054 "PurchRcptLine_LDR" extends "Purch. Rcpt. Line"
         }
         field(50001; "Vendor Shipement No."; Code[35])
         {
-            CalcFormula = Lookup("Purch. Rcpt. Header"."Vendor Shipment No." WHERE("No." = FIELD("Document No.")));
+            CalcFormula = lookup("Purch. Rcpt. Header"."Vendor Shipment No." where("No." = field("Document No.")));
             Description = 'SERCABLE';
             FieldClass = FlowField;
         }

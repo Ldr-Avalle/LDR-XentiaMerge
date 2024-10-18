@@ -1,4 +1,4 @@
-tableextension 50176 "BankAccountLedgerEntry_LDR" extends "Bank Account Ledger Entry"
+tableextension 50176 BankAccountLedgerEntry_LDR extends "Bank Account Ledger Entry"
 {
     fields
     {

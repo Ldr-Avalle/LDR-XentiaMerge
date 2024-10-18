@@ -1,16 +1,16 @@
-tableextension 50525 "GenJournalLine_LDR" extends "Gen. Journal Line"
+tableextension 50525 GenJournalLine_LDR extends "Gen. Journal Line"
 {
     fields
     {
         modify("Shortcut Dimension 1 Code")
         {
             //todo: quitaría esto
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         modify("Shortcut Dimension 2 Code")
         {
             //todo: quitaría esto
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(2));
         }
         modify("Gen. Bus. Posting Group")
         {
@@ -47,8 +47,8 @@ tableextension 50525 "GenJournalLine_LDR" extends "Gen. Journal Line"
         {
             trigger OnAfterValidate()
             begin
-                if rec."Payment Reference" <> '' then
-                    rec.TestField("Creditor No.");
+                if Rec."Payment Reference" <> '' then
+                    Rec.TestField("Creditor No.");
             end;
         }
         modify("IC Partner Transaction No.")

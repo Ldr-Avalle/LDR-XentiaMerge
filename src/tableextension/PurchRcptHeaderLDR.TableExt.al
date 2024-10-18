@@ -33,6 +33,6 @@ tableextension 50049 PurchRcptHeader_LDR extends "Purch. Rcpt. Header"
 
     trigger OnAfterInsert()
     begin
-        rec."Posting Hour" := Time;
+        Rec."Posting Hour" := Time;
     end;
 }

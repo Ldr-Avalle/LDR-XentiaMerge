@@ -1,4 +1,4 @@
-tableextension 50204 "ItemLedgerEntry_LDR" extends "Item Ledger Entry"
+tableextension 50204 ItemLedgerEntry_LDR extends "Item Ledger Entry"
 {
     fields
     {

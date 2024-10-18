@@ -1,4 +1,4 @@
-tableextension 50202 "InventorySetup_LDR" extends "Inventory Setup"
+tableextension 50202 InventorySetup_LDR extends "Inventory Setup"
 {
     fields
     {

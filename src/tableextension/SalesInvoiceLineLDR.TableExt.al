@@ -37,7 +37,7 @@ tableextension 50042 SalesInvoiceLine_LDR extends "Sales Invoice Line"
                 TestField(Type, Type::Item);
             end;
         }
-        field(50091; TipoNoExenta; enum TbaiTipoNoExenta)
+        field(50091; TipoNoExenta; Enum TbaiTipoNoExenta)
         {
             Description = 'TBAI_AL_01 TipoNoExenta';
         }

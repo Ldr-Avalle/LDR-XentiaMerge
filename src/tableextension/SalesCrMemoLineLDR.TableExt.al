@@ -1,4 +1,4 @@
-tableextension 50045 "SalesCrMemoLine_LDR" extends "Sales Cr.Memo Line"
+tableextension 50045 SalesCrMemoLine_LDR extends "Sales Cr.Memo Line"
 {
     fields
     {
@@ -35,7 +35,7 @@ tableextension 50045 "SalesCrMemoLine_LDR" extends "Sales Cr.Memo Line"
             Description = 'SERCABLE';
             trigger OnValidate()
             begin
-                rec.TestField(Type, Type::Item);
+                Rec.TestField(Type, Type::Item);
             end;
         }
     }

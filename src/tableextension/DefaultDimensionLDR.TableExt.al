@@ -1,4 +1,4 @@
-tableextension 50217 "DefaultDimension_LDR" extends "Default Dimension"
+tableextension 50217 DefaultDimension_LDR extends "Default Dimension"
 {
     fields
     {

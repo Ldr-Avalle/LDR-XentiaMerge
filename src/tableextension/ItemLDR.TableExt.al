@@ -1,4 +1,4 @@
-tableextension 50174 "Item_LDR" extends "Item"
+tableextension 50174 Item_LDR extends Item
 {
     DataCaptionFields = "Reordering Policy";
 
@@ -57,16 +57,16 @@ tableextension 50174 "Item_LDR" extends "Item"
         }
         field(50002; "Quantity returns orders"; Decimal)
         {
-            CalcFormula = Sum("Purchase Line"."Outstanding Qty. (Base)" WHERE("Document Type" = CONST("Return Order"),
-                                                                               Type = CONST(Item),
-                                                                               "No." = FIELD("No."),
-                                                                               "Shortcut Dimension 1 Code" = FIELD("Global Dimension 1 Filter"),
-                                                                               "Shortcut Dimension 2 Code" = FIELD("Global Dimension 2 Filter"),
-                                                                               "Location Code" = FIELD("Location Filter"),
-                                                                               "Drop Shipment" = FIELD("Drop Shipment Filter"),
-                                                                               "Variant Code" = FIELD("Variant Filter"),
-                                                                               "Bin Code" = FIELD("Bin Filter"),
-                                                                               "Expected Receipt Date" = FIELD("Date Filter")));
+            CalcFormula = sum("Purchase Line"."Outstanding Qty. (Base)" where("Document Type" = const("Return Order"),
+                                                                               Type = const(Item),
+                                                                               "No." = field("No."),
+                                                                               "Shortcut Dimension 1 Code" = field("Global Dimension 1 Filter"),
+                                                                               "Shortcut Dimension 2 Code" = field("Global Dimension 2 Filter"),
+                                                                               "Location Code" = field("Location Filter"),
+                                                                               "Drop Shipment" = field("Drop Shipment Filter"),
+                                                                               "Variant Code" = field("Variant Filter"),
+                                                                               "Bin Code" = field("Bin Filter"),
+                                                                               "Expected Receipt Date" = field("Date Filter")));
             DecimalPlaces = 0 : 5;
             Description = 'SERCABLE';
             FieldClass = FlowField;
@@ -79,22 +79,22 @@ tableextension 50174 "Item_LDR" extends "Item"
         UserDim: Record "User Dimensions_LDR";
         Proyecto: Code[10];
     begin
-        Proyecto := UserDim.getProjectDim(USERID);
+        Proyecto := UserDim.getProjectDim(UserId);
         "Global Dimension 1 Code" := Proyecto;
-        ConfInventario.GET;
+        ConfInventario.Get;
         "Gen. Prod. Posting Group" := ConfInventario."Grupo contable producto";
         "VAT Prod. Posting Group" := 'IVA21';
         "Inventory Posting Group" := ConfInventario."Grupo contable inventario";
         "Costing Method" := "Costing Method"::Average;
-        VALIDATE("Price Includes VAT", TRUE);
+        Validate("Price Includes VAT", true);
         "Base Unit of Measure" := 'UDS';
         "Sales Unit of Measure" := 'UDS';
         "Purch. Unit of Measure" := 'UDS';
-        ItemUnitMeasure.INIT;
+        ItemUnitMeasure.Init;
         ItemUnitMeasure."Item No." := "No.";
         ItemUnitMeasure.Code := 'UDS';
         ItemUnitMeasure."Qty. per Unit of Measure" := 1;
-        IF ItemUnitMeasure.INSERT THEN;
+        if ItemUnitMeasure.Insert then;
     end;
 
     var

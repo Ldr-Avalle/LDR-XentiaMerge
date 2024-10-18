@@ -1,4 +1,4 @@
-tableextension 50068 "PurchCrMemoHdr_LDR" extends "Purch. Cr. Memo Hdr."
+tableextension 50068 PurchCrMemoHdr_LDR extends "Purch. Cr. Memo Hdr."
 {
     fields
     {
@@ -28,9 +28,9 @@ tableextension 50068 "PurchCrMemoHdr_LDR" extends "Purch. Cr. Memo Hdr."
 
     trigger OnAfterInsert()
     begin
-        rec."Posting Hour" := Time;
+        Rec."Posting Hour" := Time;
     end;
 
     var
-        PostPurchLinesDelete: Codeunit "364";
+        PostPurchLinesDelete: Codeunit "PostPurch-Delete";
 }

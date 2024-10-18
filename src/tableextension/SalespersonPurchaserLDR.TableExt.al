@@ -1,4 +1,4 @@
-tableextension 50080 "SalespersonPurchaser_LDR" extends "Salesperson/Purchaser"
+tableextension 50080 SalespersonPurchaser_LDR extends "Salesperson/Purchaser"
 {
     fields
     {

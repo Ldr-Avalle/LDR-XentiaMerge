@@ -1,4 +1,4 @@
-tableextension 50015 "EmploymentContract_LDR" extends "Employment Contract"
+tableextension 50015 EmploymentContract_LDR extends "Employment Contract"
 {
     fields
     {

@@ -8,8 +8,8 @@ tableextension 50244 PurchaseLine_LDR extends "Purchase Line"
             var
                 gbldimensiones: Record "User Dimensions_LDR";
             begin
-                gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN
+                gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+                if gbldimensiones.FindFirst then
                     "Location Code" := gbldimensiones."Location Code";
 
             end;

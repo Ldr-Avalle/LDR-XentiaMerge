@@ -90,21 +90,19 @@ tableextension 50121 "GLEntry_LDR" extends "G/L Entry"
                 begin
                     PurchInvLine.SetFilter("Document No.", '%1', "Document No.");
                     PurchInvLine.SetFilter(Retenible, '%1', true);
-                    if PurchInvLine.FindFirst then begin
+                    if PurchInvLine.FindFirst() then
                         repeat
                             RetBase += PurchInvLine.Amount;
                         until PurchInvLine.Next() = 0;
-                    end;
                 end;
             "Document Type"::"Credit Memo":
                 begin
                     PurchCrMemoLine.SetFilter("Document No.", '%1', "Document No.");
                     PurchCrMemoLine.SetFilter(Retenible, '%1', true);
-                    if PurchCrMemoLine.FindFirst then begin
+                    if PurchCrMemoLine.FindFirst() then
                         repeat
                             RetBase += -(PurchCrMemoLine.Amount);
-                        until PurchCrMemoLine.NEXT = 0;
-                    end;
+                        until PurchCrMemoLine.NEXT() = 0;
                 end;
         end;
         exit(RetBase);

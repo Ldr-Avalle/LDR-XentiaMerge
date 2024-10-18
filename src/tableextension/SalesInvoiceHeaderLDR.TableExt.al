@@ -1,4 +1,4 @@
-tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
+tableextension 50041 SalesInvoiceHeader_LDR extends "Sales Invoice Header"
 {
     DataCaptionFields = "Customer Type";
 
@@ -64,32 +64,32 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
         {
             Description = 'TBAI_AL_01';
         }
-        field(50009; "Factura Simplificada"; enum TbaiNS)
+        field(50009; "Factura Simplificada"; Enum TbaiNS)
         {
             Caption = 'Factura Simplificada';
             Description = 'TBAI_AL_01 factura simplificada';
         }
-        field(50010; "Factura Simplificada Sustituci"; enum TbaiNS)
+        field(50010; "Factura Simplificada Sustituci"; Enum TbaiNS)
         {
             Caption = 'Factura emitida en sustitución de factura simplificada';
             Description = 'TBAI_AL_01 factura emitida en sustitución de factura simplificada';
         }
-        field(50011; "Factura 3 o dest"; enum Factura3oDest)
+        field(50011; "Factura 3 o dest"; Enum Factura3oDest)
         {
             Caption = 'Factura emitida por tercero o por destinatario';
             Description = 'TBAI_AL_01 Factura emitida por tercero o por destinatario';
         }
-        field(50012; "varios destinatarios"; enum TbaiNS)
+        field(50012; "varios destinatarios"; Enum TbaiNS)
         {
             Caption = 'Varios destinatarios';
             Description = 'TBAI_AL_01 varios destinatarios';
         }
-        field(50013; "factura rectificativa"; enum TbaiFacturaRectificativa)
+        field(50013; "factura rectificativa"; Enum TbaiFacturaRectificativa)
         {
             Caption = 'Factura rectificativa';
             Description = 'TBAI_AL_01 factura rectificativafactura rectificativa tipo';
         }
-        field(50014; "factura rectificativa tipo"; enum Tbais0SI)
+        field(50014; "factura rectificativa tipo"; Enum Tbais0SI)
         {
             Caption = 'Factura rectificativa tipo';
             Description = 'TBAI_AL_01 factura rectificativa tipo';
@@ -109,7 +109,7 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
             Caption = 'Cuota Recargo Rectificada';
             Description = 'TBAI_AL_01 ImporteRectificacionSustitutiva CuotaRecargoRectificada';
         }
-        field(50018; ClaveRegimenIvaOpTrascendencia; enum TbaiClaveRegimenIvaOpTrascen)
+        field(50018; ClaveRegimenIvaOpTrascendencia; Enum TbaiClaveRegimenIvaOpTrascen)
         {
             Caption = 'Clave Regimen Iva Op Trascendencia';
             Description = 'TBAI_AL_01 ClaveRegimenIvaOpTrascendencia';
@@ -140,7 +140,7 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
             Caption = 'Enviada a TBAI';
             Description = 'TBAI_AL_01 identificador tbai';
         }
-        field(50024; TipoRegistro; enum TbaiTipoRegistro)
+        field(50024; TipoRegistro; Enum TbaiTipoRegistro)
         {
             Caption = 'Tipo Registro TBAI';
             Description = 'TBAI_AL_01';
@@ -170,6 +170,6 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
 
     trigger OnAfterInsert()
     begin
-        rec."Posting Hour" := Time;
+        Rec."Posting Hour" := Time;
     end;
 }

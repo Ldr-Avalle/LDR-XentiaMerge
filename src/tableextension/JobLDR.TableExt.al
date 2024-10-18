@@ -164,10 +164,10 @@ tableextension 50119 Job_LDR extends "Job"
     trigger OnAfterInsert()
     var
         JobTask: Record "Job Task";
-        JobsSetup: Record 315;
+        JobsSetup: Record "Jobs Setup";
     begin
         "Job Posting Group" := JobsSetup."Job Posting Group";
-        JobTask.INIT;
+        JobTask.INIT();
         JobTask."Job No." := "No.";
         JobTask."Job Task No." := '1';
         JobTask.INSERT(FALSE);

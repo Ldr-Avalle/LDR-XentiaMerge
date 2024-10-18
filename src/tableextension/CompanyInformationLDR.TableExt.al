@@ -1,4 +1,4 @@
-tableextension 50522 "CompanyInformation_LDR" extends "Company Information"
+tableextension 50522 CompanyInformation_LDR extends "Company Information"
 {
     fields
     {
@@ -6,7 +6,7 @@ tableextension 50522 "CompanyInformation_LDR" extends "Company Information"
         {
             Description = 'SERCABLE';
         }
-        field(50001; "Reports Image"; BLOB)
+        field(50001; "Reports Image"; Blob)
         {
             Description = 'SERCABLE';
         }
@@ -115,23 +115,23 @@ tableextension 50522 "CompanyInformation_LDR" extends "Company Information"
             Caption = 'Código CCC3';
             Description = 'SERCABLE';
         }
-        field(50023; "Logo Idepa"; BLOB)
+        field(50023; "Logo Idepa"; Blob)
         {
             Description = 'SERCABLE';
         }
-        field(50024; "Logo Ministerio"; BLOB)
+        field(50024; "Logo Ministerio"; Blob)
         {
             Description = 'SERCABLE';
         }
-        field(50025; "Logo Feder"; BLOB)
+        field(50025; "Logo Feder"; Blob)
         {
             Description = 'SERCABLE';
         }
-        field(50026; imgReports; BLOB)
+        field(50026; imgReports; Blob)
         {
             Caption = 'Image Reports';
             Description = 'Imagen para mostrar en los formularios para separar secciones';
-            SubType = Bitmap;
+            Subtype = Bitmap;
         }
     }
 }

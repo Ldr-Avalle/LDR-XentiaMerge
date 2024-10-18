@@ -1,4 +1,4 @@
-tableextension 50035 "SalesShipmentLine_LDR" extends "Sales Shipment Line"
+tableextension 50035 SalesShipmentLine_LDR extends "Sales Shipment Line"
 {
     fields
     {

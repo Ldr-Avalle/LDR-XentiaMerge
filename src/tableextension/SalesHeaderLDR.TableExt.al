@@ -9,12 +9,12 @@ tableextension 50220 "SalesHeader_LDR" extends "Sales Header"
             trigger OnAfterValidate()
             var
                 CompanyInfo: Record "Company Information";
-                UserDims: Record 50000;
+                UserDims: Record "User Dimensions_LDR";
             begin
-                CompanyInfo.GET;
+                CompanyInfo.GET();
                 "Assigned User ID" := USERID;
                 UserDims.SETRANGE(UserDims.Usuario, USERID);
-                IF UserDims.FINDFIRST THEN
+                IF UserDims.FINDFIRST() THEN
                     "Location Code" := UserDims."Location Code";
             end;
         }
@@ -53,14 +53,14 @@ tableextension 50220 "SalesHeader_LDR" extends "Sales Header"
     var
         CompanyInfo: Record "Company Information";
     begin
-        CompanyInfo.GET;
+        CompanyInfo.GET();
         "Assigned User ID" := UserId;
         Rec.Validate("Prices Including VAT", true);
     end;
 
     trigger OnAfterModify()
     var
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
     begin
         IF UserDims.existsUser(USERID) THEN
             TESTFIELD("Assigned User ID", USERID);
@@ -68,9 +68,9 @@ tableextension 50220 "SalesHeader_LDR" extends "Sales Header"
 
     trigger OnAfterDelete()
     var
-        Opp: Record 5092;
-        TempOpportunityEntry: Record 5093 temporary;
-        UserDims: Record 50000;
+        Opp: Record Opportunity;
+        TempOpportunityEntry: Record "Opportunity Entry" temporary;
+        UserDims: Record "User Dimensions_LDR";
     BEGIN
 
         IF UserDims.existsUser(USERID) THEN

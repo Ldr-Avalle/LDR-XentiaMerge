@@ -1,4 +1,4 @@
-tableextension 50215 "Dimension_LDR" extends Dimension
+tableextension 50215 Dimension_LDR extends Dimension
 {
     fields
     {

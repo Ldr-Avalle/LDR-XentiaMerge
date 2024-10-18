@@ -16,16 +16,16 @@ tableextension 50006 "Employee_LDR" extends "Employee"
             trigger OnAfterValidate()
             var
 
-                Mail: Codeunit 397;
-                RRHHSetup: Record 5218;
-                EmployeeContract: Record 50004;
+                Mail: Codeunit Mail;
+                RRHHSetup: Record "Human Resources Setup";
+                EmployeeContract: Record "Employee Contract";
                 CR: Char;
                 LF: Char;
                 Body: Text[250];
                 ContractNo: Code[20];
                 ContractCategory: Text[50];
             BEGIN
-                RRHHSetup.GET;
+                RRHHSetup.GET();
 
                 IF (RRHHSetup."Notificate new Company E-mail") AND ("Company E-Mail" <> '') THEN BEGIN
                     RRHHSetup.TESTFIELD("Notification email title");
@@ -35,7 +35,7 @@ tableextension 50006 "Employee_LDR" extends "Employee"
                     //recupero el contrato
                     EmployeeContract.SETFILTER(Employee, '%1', "No.");
                     EmployeeContract.SETFILTER("Expiration date", '%1', 0D);
-                    IF EmployeeContract.FINDFIRST THEN BEGIN
+                    IF EmployeeContract.FINDFIRST() THEN BEGIN
                         ContractNo := EmployeeContract."No.";
                         ContractCategory := FORMAT(EmployeeContract.Category);
                     END;
@@ -222,7 +222,7 @@ tableextension 50006 "Employee_LDR" extends "Employee"
 
     trigger OnAfterInsert()
     begin
-        CreateConfidentialTags;
+        CreateConfidentialTags();
     end;
 
     procedure CreateConfidentialTags()
@@ -230,12 +230,12 @@ tableextension 50006 "Employee_LDR" extends "Employee"
         Confidential: Record Confidential;
         ConfidentialInfo: Record "Confidential Information";
     begin
-        if Confidential.FindFirst then
+        if Confidential.FindFirst() then
             repeat
                 ConfidentialInfo.SetFilter("Employee No.", '%1', "No.");
                 ConfidentialInfo.SetFilter("Confidential Code", '%1', Confidential.Code);
-                if NOT ConfidentialInfo.FindFirst then begin
-                    ConfidentialInfo.Init;
+                if NOT ConfidentialInfo.FindFirst() then begin
+                    ConfidentialInfo.Init();
                     ConfidentialInfo."Employee No." := "No.";
                     ConfidentialInfo."Confidential Code" := Confidential.Code;
                     ConfidentialInfo."Line No." := 10000;

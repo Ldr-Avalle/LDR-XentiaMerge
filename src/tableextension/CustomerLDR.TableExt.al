@@ -1,4 +1,4 @@
-tableextension 50003 "Customer_LDR" extends Customer
+tableextension 50003 Customer_LDR extends Customer
 {
     DataCaptionFields = Blocked;
 
@@ -10,7 +10,7 @@ tableextension 50003 "Customer_LDR" extends Customer
 
             trigger OnBeforeValidate()
             begin
-                IF xRec."No." = '0' THEN
+                if xRec."No." = '0' then
                     FieldError("No.");
                 Validate("VAT Registration No.", "No.");
             end;
@@ -73,7 +73,7 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'Sercable';
         }
-        field(50706; IDType; Enum "TbaiTiposIdentificacion")
+        field(50706; IDType; Enum TbaiTiposIdentificacion)
         {
             Caption = 'Tipo de identificación';
             DataClassification = ToBeClassified;
@@ -85,7 +85,7 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
         }
-        field(50909; "Factura Simplificada"; Enum "TbaiNS")
+        field(50909; "Factura Simplificada"; Enum TbaiNS)
         {
             DataClassification = ToBeClassified;
             Caption = 'Factura Simplificada';
@@ -101,6 +101,6 @@ tableextension 50003 "Customer_LDR" extends Customer
         "Customer Posting Group" := 'NAC';
         "Country/Region Code" := 'ES';
         "Payment Terms Code" := 'CON';
-        Validate("Prices Including VAT", TRUE);
+        Validate("Prices Including VAT", true);
     end;
 }

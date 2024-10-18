@@ -1,4 +1,4 @@
-tableextension 50150 "GenJnlAllocation_LDR" extends "Gen. Jnl. Allocation"
+tableextension 50150 GenJnlAllocation_LDR extends "Gen. Jnl. Allocation"
 {
     fields
     {

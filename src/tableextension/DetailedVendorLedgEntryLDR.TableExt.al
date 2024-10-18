@@ -1,4 +1,4 @@
-tableextension 50238 "DetailedVendorLedgEntry_LDR" extends "Detailed Vendor Ledg. Entry"
+tableextension 50238 DetailedVendorLedgEntry_LDR extends "Detailed Vendor Ledg. Entry"
 {
     fields
     {
