@@ -66,11 +66,6 @@ table 50007 "TBAI Alava2_LDR"
         field(13; C_ID_Empresa; Text[100])
         {
             Caption = 'Id. Empresa';
-            TableRelation = "Company Information".Name;
-#pragma warning disable AL0667
-            TestTableRelation = false;
-#pragma warning restore AL0667
-            ValidateTableRelation = false;
         }
         field(14; C_Admin_user; Text[100])
         {
@@ -171,7 +166,6 @@ table 50007 "TBAI Alava2_LDR"
         {
             Caption = 'Nº Serie TBAI';
             DataClassification = ToBeClassified;
-            TableRelation = "No. Series";
         }
         field(34; C_IDVersionTBAI; Code[10])
         {
@@ -277,14 +271,12 @@ table 50007 "TBAI Alava2_LDR"
             Caption = 'Nos. series 2';
             DataClassification = ToBeClassified;
             Description = 'AB_RVRREC';
-            TableRelation = "No. Series";
         }
         field(54; NS_NosSerie3; Code[10])
         {
             Caption = 'Nos. series 3';
             DataClassification = ToBeClassified;
             Description = 'AB_RVRREC';
-            TableRelation = "No. Series";
         }
         field(55; C_FechaInicioEnvioTbai; Date)
         {
@@ -296,35 +288,30 @@ table 50007 "TBAI Alava2_LDR"
             Caption = 'Nos. series 4';
             DataClassification = ToBeClassified;
             Description = 'FVR';
-            TableRelation = "No. Series";
         }
         field(57; NS_NosSerie5; Code[10])
         {
             Caption = 'Nos. series 5';
             DataClassification = ToBeClassified;
             Description = '3.V-AB+';
-            TableRelation = "No. Series";
         }
         field(58; NS_NosSerie6; Code[10])
         {
             Caption = 'Nos. series 6';
             DataClassification = ToBeClassified;
             Description = '4.TPV';
-            TableRelation = "No. Series";
         }
         field(59; NS_NosSerie7; Code[10])
         {
             Caption = 'Nos. Series 7';
             DataClassification = ToBeClassified;
             Description = 'FVRT';
-            TableRelation = "No. Series";
         }
         field(60; NS_NosSerie8; Code[10])
         {
             Caption = 'Nos. series 8';
             DataClassification = ToBeClassified;
             Description = 'AB-FVRT';
-            TableRelation = "No. Series";
         }
         field(69; AnulacionPorAbonoNo; Code[20])
         {
@@ -335,7 +322,6 @@ table 50007 "TBAI Alava2_LDR"
         {
             Caption = 'Rol Administradores/as';
             DataClassification = ToBeClassified;
-            TableRelation = "Access Control"."Role ID";
         }
         field(71; C_AutomaticSend; Boolean)
         {
@@ -351,4 +337,3 @@ table 50007 "TBAI Alava2_LDR"
         }
     }
 }
-

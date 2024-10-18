@@ -14,7 +14,6 @@ table 50008 "Employee Training_LDR"
         {
             Caption = 'Empleado';
             DataClassification = ToBeClassified;
-            TableRelation = Employee;
         }
         field(3; Date; Date)
         {
@@ -66,25 +65,4 @@ table 50008 "Employee Training_LDR"
         {
         }
     }
-
-    trigger OnInsert()
-    var
-        EmployeeTraining: Record "Employee Training_LDR";
-    begin
-        "Creation User ID" := UserId;
-        "Creation date" := Today;
-
-        EmployeeTraining.SetFilter("Employee No.", '%1', "Employee No.");
-        if EmployeeTraining.FindLast() then
-            Code := EmployeeTraining.Code + 1
-        else
-            Code := 1;
-    end;
-
-    trigger OnModify()
-    begin
-        "Last modification User ID" := UserId;
-        "Last modification date" := Today;
-    end;
 }
-

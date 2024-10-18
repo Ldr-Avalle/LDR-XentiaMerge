@@ -8,7 +8,6 @@ table 50010 "Service Prices_LDR"
         {
             Caption = 'Servicio';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Item";
         }
         field(2; "Start Date"; Date)
         {
@@ -34,4 +33,3 @@ table 50010 "Service Prices_LDR"
         }
     }
 }
-

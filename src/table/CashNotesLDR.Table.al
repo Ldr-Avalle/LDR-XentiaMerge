@@ -1,7 +1,6 @@
 table 50002 "Cash Notes_LDR"
 {
     Caption = 'Anotaciones Caja';
-    LookupPageID = "Cash Note List";
 
     fields
     {
@@ -40,29 +39,4 @@ table 50002 "Cash Notes_LDR"
         {
         }
     }
-
-    trigger OnInsert()
-    var
-        CashNotes: Record "Cash Notes_LDR";
-    begin
-        if CashNotes.FindLast() then
-            Code := IncStr(CashNotes.Code)
-        else
-            Code := 'CN001';
-
-        Date := WorkDate();
-        "User ID" := UserID();
-    end;
-
-    trigger OnModify()
-    var
-        CashArch: Record "Cash Arch_LDR";
-    begin
-        "User ID" := UserID();
-        TestField("User ID", UserID());
-        CashArch.SetFilter(CashArch.Date, '%1', Date);
-        CashArch.SetFilter(CashArch."User ID", '%1', "User ID");
-        if CashArch.FindFirst() then
-            CashArch.TestField(Registered, false);
-    end;
 }

@@ -21,4 +21,3 @@ table 50099 "IJL Serial No. Test_LDR"
         }
     }
 }
-

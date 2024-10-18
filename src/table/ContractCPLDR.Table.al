@@ -1,7 +1,6 @@
-table 90005 ContractCP_LDR
+table 90005 "ContractCP_LDR"
 {
     Caption = 'Contrato';
-    LookupPageID = "Contract List";
 
     fields
     {
@@ -85,22 +84,11 @@ table 90005 ContractCP_LDR
             CaptionClass = '1,2,1';
             Caption = 'Código Dimensión 1';
             DataClassification = ToBeClassified;
-            //todo: metería el blocked
-            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         field(17; "SharePoint ID"; Integer)
         {
             Caption = 'ID SharePoint';
             DataClassification = ToBeClassified;
-
-            trigger OnLookup()
-            var
-                ServiceMgtSetup: Record "Service Mgt. Setup";
-            begin
-                ServiceMgtSetup.Get;
-                ServiceMgtSetup.TestField("TC Contract List URL");
-                Hyperlink(ServiceMgtSetup."TC Contract List URL" + 'DispForm.aspx?ID=' + Format("SharePoint ID"));
-            end;
         }
         field(18; "SharePoint Created"; DateTime)
         {
@@ -175,46 +163,4 @@ table 90005 ContractCP_LDR
         {
         }
     }
-
-    fieldgroups
-    {
-    }
-
-    trigger OnDelete()
-    var
-        Text0001: Label 'Borrado no permitido';
-        ContractLines: Record "Contract Lines_LDR";
-    begin
-        ContractLines.SetFilter(Contract, '%1', "Nº");
-        ContractLines.DeleteAll;
-    end;
-
-    trigger OnInsert()
-    var
-        ServiceMgtSetup: Record "Service Mgt. Setup";
-#pragma warning disable AL0432
-        NoSeriesMgt: Codeunit NoSeriesManagement;
-#pragma warning restore AL0432
-    begin
-        if "Nº" = '' then begin
-            ServiceMgtSetup.Get;
-            ServiceMgtSetup.TestField("Contract Nos.");
-            "Nº" := NoSeriesMgt.GetNextNo(ServiceMgtSetup."Contract Nos.", 0D, true);
-        end;
-
-        "Creation date" := Today;
-        "Creation Time" := Time;
-        "NAV Created by" := UserId;
-        "Modification date" := Today;
-        "Modification Time" := Time;
-        "NAV Modified by" := UserId;
-    end;
-
-    trigger OnModify()
-    begin
-        "Modification date" := Today;
-        "Modification Time" := Time;
-        "NAV Modified by" := UserId;
-    end;
 }
-

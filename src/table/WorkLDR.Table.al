@@ -1,8 +1,6 @@
 table 50012 Work_LDR
 {
     Caption = 'Obra';
-    DrillDownPageID = "Works List";
-    LookupPageID = "Works List";
 
     fields
     {
@@ -21,7 +19,6 @@ table 50012 Work_LDR
         {
             Caption = 'Nº contratos';
             FieldClass = FlowField;
-            CalcFormula = Count("Employee Contract" where(Work = field(Code)));
             Editable = false;
         }
     }
@@ -32,17 +29,4 @@ table 50012 Work_LDR
         {
         }
     }
-
-    trigger OnInsert()
-    var
-        Work: Record Work_LDR;
-    begin
-        if Code = '' then begin
-            if Work.Findlast then
-                Code := IncStr(Work.Code)
-            else
-                Code := '001';
-        end;
-    end;
 }
-

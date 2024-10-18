@@ -25,13 +25,11 @@ table 50015 "Contract Errors_LDR"
         {
             Caption = 'Contrato';
             DataClassification = ToBeClassified;
-            TableRelation = "G/L Register CP_LDR";
         }
         field(5; "Contract line"; Integer)
         {
             Caption = 'Línea contrato';
             DataClassification = ToBeClassified;
-            TableRelation = "Contract Lines_LDR"."Line No." where(Contract = field(Contract));
         }
         field(6; Description; Text[100])
         {
@@ -56,11 +54,4 @@ table 50015 "Contract Errors_LDR"
         {
         }
     }
-
-    trigger OnInsert()
-    begin
-        "Creation date" := Today;
-        "Creation time" := Time;
-    end;
 }
-

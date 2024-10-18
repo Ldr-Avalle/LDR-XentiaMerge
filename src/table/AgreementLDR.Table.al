@@ -1,8 +1,6 @@
-table 50014 Agreement_LDR
+table 50014 "Agreement_LDR"
 {
     Caption = 'Convenio';
-    DrillDownPageID = "Agreement List";
-    LookupPageID = "Agreement List";
 
     fields
     {
@@ -24,17 +22,4 @@ table 50014 Agreement_LDR
         {
         }
     }
-
-    trigger OnInsert()
-    var
-        Agreement: Record Agreement_LDR;
-    begin
-        if Code = '' then begin
-            if Agreement.Findlast then
-                Code := IncStr(Agreement.Code)
-            else
-                Code := '01';
-        end;
-    end;
 }
-

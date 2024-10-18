@@ -8,7 +8,6 @@ table 50006 "Contract Lines_LDR"
         {
             Caption = 'Contrato';
             DataClassification = ToBeClassified;
-            TableRelation = "G/L Register CP_LDR";
         }
         field(2; "Line No."; Integer)
         {
@@ -19,7 +18,6 @@ table 50006 "Contract Lines_LDR"
         {
             Caption = 'Servicio';
             DataClassification = ToBeClassified;
-            TableRelation = "Service Item";
         }
         field(4; Quantity; Decimal)
         {
@@ -31,15 +29,6 @@ table 50006 "Contract Lines_LDR"
             Caption = 'Fecha activación';
             DataClassification = ToBeClassified;
             Description = 'Solo para servicios móviles';
-
-            trigger OnValidate()
-            var
-                ServiceItem: Record "Service Item";
-            begin
-                ServiceItem.Get(Service);
-                if ServiceItem.Type <> ServiceItem.Type::Mobile then
-                    ServiceItem.FieldError(Type);
-            end;
         }
         field(6; Promotion; Code[20])
         {
@@ -105,8 +94,6 @@ table 50006 "Contract Lines_LDR"
         field(16; "Service name"; Text[100])
         {
             Caption = 'Nombre servicio';
-            FieldClass = FlowField;
-            CalcFormula = Lookup("Service Item".Description where("No." = field(Service)));
             Editable = false;
         }
         field(17; "Creation date"; Date)
@@ -150,32 +137,4 @@ table 50006 "Contract Lines_LDR"
         {
         }
     }
-
-    trigger OnInsert()
-    var
-        ContractLine: Record "Contract Lines_LDR";
-    begin
-        if "Line No." = 0 then begin
-            ContractLine.SetFilter(Contract, '%1', Contract);
-            if ContractLine.FindLast then
-                "Line No." := ContractLine."Line No." + 10000
-            else
-                "Line No." := 10000;
-        end;
-
-        "Creation date" := Today;
-        "Creation time" := Time;
-        "NAV Created by" := UserId;
-        "Modification date" := Today;
-        "Modification time" := Time;
-        "NAV Modified by" := UserId;
-    end;
-
-    trigger OnModify()
-    begin
-        "Modification date" := Today;
-        "Modification time" := Time;
-        "NAV Modified by" := UserId;
-    end;
 }
-
