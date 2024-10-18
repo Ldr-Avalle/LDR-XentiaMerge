@@ -4,25 +4,6 @@ tableextension 50003 "Customer_LDR" extends Customer
 
     fields
     {
-        modify("No.")
-        {
-            Caption = 'NIF/NIE/CIF';
-
-            trigger OnBeforeValidate()
-            begin
-                IF xRec."No." = '0' THEN
-                    FieldError("No.");
-                Validate("VAT Registration No.", "No.");
-            end;
-        }
-        modify("Gen. Bus. Posting Group")
-        {
-            Caption = 'Grupo contable negocio';
-        }
-        modify("VAT Bus. Posting Group")
-        {
-            Caption = 'Grupo registro IVA neg.';
-        }
         field(50000; "Phone No. 2"; Text[30])
         {
             DataClassification = ToBeClassified;
@@ -73,11 +54,13 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'Sercable';
         }
-        field(50706; IDType; Enum "TbaiTiposIdentificacion")
+        field(50706; IDType; Option)
         {
             Caption = 'Tipo de identificación';
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
+            OptionCaption = '';
+            OptionMembers = "tipo id";
         }
         field(50707; ID_LDR; Code[20])
         {
@@ -85,22 +68,13 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
         }
-        field(50909; "Factura Simplificada"; Enum "TbaiNS")
+        field(50909; "Factura Simplificada"; Option)
         {
             DataClassification = ToBeClassified;
             Caption = 'Factura Simplificada';
             Description = 'TBAI_AL_01 factura simplificada';
+            OptionCaption = '';
+            OptionMembers = "Factura Simplificada";
         }
     }
-
-    trigger OnAfterInsert()
-    begin
-        Validate("VAT Registration No.", "No.");
-        "Gen. Bus. Posting Group" := 'NACIONAL';
-        "VAT Bus. Posting Group" := 'NACIONAL';
-        "Customer Posting Group" := 'NAC';
-        "Country/Region Code" := 'ES';
-        "Payment Terms Code" := 'CON';
-        Validate("Prices Including VAT", TRUE);
-    end;
 }

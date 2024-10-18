@@ -61,7 +61,6 @@ table 50007 "TBAI Alava2_LDR"
         {
             Caption = 'Nº Documento Dynamics Nav';
             DataClassification = ToBeClassified;
-            TableRelation = "Sales Invoice Header"."No." where("No." = field(No_Factura));
         }
         field(13; C_ID_Empresa; Text[100])
         {
@@ -264,7 +263,6 @@ table 50007 "TBAI Alava2_LDR"
             Caption = 'Nos. series 1';
             DataClassification = ToBeClassified;
             Description = 'FVR_REC';
-            TableRelation = "No. Series";
         }
         field(53; NS_NosSerie2; Code[10])
         {

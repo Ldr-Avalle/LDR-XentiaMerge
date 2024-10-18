@@ -16,8 +16,6 @@ tableextension 50016 "Payment Method" extends "Payment Method"
         {
             Caption = 'Proyecto';
             Description = 'SERCABLE';
-            //todo: pondría el block
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = FILTER(1));
         }
     }
 }

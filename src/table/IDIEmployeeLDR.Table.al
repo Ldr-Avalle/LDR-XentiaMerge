@@ -17,7 +17,6 @@ table 50026 "IDI Employee_LDR"
         {
             Caption = 'Nombre';
             Editable = false;
-            FieldClass = Flowfield;
         }
         field(4; "Second Family Name"; Text[30])
         {

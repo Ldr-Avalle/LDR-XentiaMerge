@@ -4,47 +4,23 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
 
     fields
     {
-        modify("Gen. Bus. Posting Group")
-        {
-            Caption = 'Grupo contable negocio';
-        }
-        modify("Area")
-        {
-            Caption = 'Cód. provincia';
-        }
-        modify("VAT Bus. Posting Group")
-        {
-            Caption = 'Grupo registro IVA neg.';
-        }
         field(50000; "Descuento en factura"; Decimal)
         {
-            CalcFormula = sum("Sales Invoice Line"."Inv. Discount Amount" where("Document No." = field("No.")));
             Description = 'SERCABLE';
-            FieldClass = FlowField;
         }
         field(50001; "Descuento en factura %"; Decimal)
         {
-            CalcFormula = lookup("Cust. Invoice Disc."."Discount %" where(Code = field("Bill-to Customer No.")));
             Description = 'SERCABLE';
-            FieldClass = FlowField;
         }
         field(50002; "Pmt. Disc. Given Amount"; Decimal)
         {
-            CalcFormula = sum("Sales Invoice Line"."Pmt. Discount Amount" where("Document No." = field("No.")));
             Description = 'SERCABLE';
-            FieldClass = FlowField;
         }
         field(50004; InvoiceType; Option)
         {
             Caption = 'Tipo de factura';
             Description = 'SERCABLE';
             OptionMembers = OO,CO,OC,CC;
-            trigger OnValidate()
-            var
-                Text0001: Label 'A copy can''t be requeasted without the original invoice signed.\Path: %1';
-                Text0002: Label 'Original invoice digitally signed.\Path %1';
-            begin
-            end;
         }
         field(50005; "Customer Type"; Option)
         {
@@ -64,35 +40,47 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
         {
             Description = 'TBAI_AL_01';
         }
-        field(50009; "Factura Simplificada"; enum TbaiNS)
+        field(50009; "Factura Simplificada"; Option)
         {
             Caption = 'Factura Simplificada';
             Description = 'TBAI_AL_01 factura simplificada';
+            OptionCaption = '';
+            OptionMembers = TbaiNS;
         }
-        field(50010; "Factura Simplificada Sustituci"; enum TbaiNS)
+        field(50010; "Factura Simplificada Sustituci"; Option)
         {
             Caption = 'Factura emitida en sustitución de factura simplificada';
             Description = 'TBAI_AL_01 factura emitida en sustitución de factura simplificada';
+            OptionCaption = '';
+            OptionMembers = TbaiNS;
         }
-        field(50011; "Factura 3 o dest"; enum Factura3oDest)
+        field(50011; "Factura 3 o dest"; Option)
         {
             Caption = 'Factura emitida por tercero o por destinatario';
             Description = 'TBAI_AL_01 Factura emitida por tercero o por destinatario';
+            OptionCaption = '';
+            OptionMembers = Factura3oDest;
         }
-        field(50012; "varios destinatarios"; enum TbaiNS)
+        field(50012; "varios destinatarios"; Option)
         {
             Caption = 'Varios destinatarios';
             Description = 'TBAI_AL_01 varios destinatarios';
+            OptionCaption = '';
+            OptionMembers = TbaiNS;
         }
-        field(50013; "factura rectificativa"; enum TbaiFacturaRectificativa)
+        field(50013; "factura rectificativa"; Option)
         {
             Caption = 'Factura rectificativa';
             Description = 'TBAI_AL_01 factura rectificativafactura rectificativa tipo';
+            OptionCaption = '';
+            OptionMembers = TbaiFacturaRectificativa;
         }
-        field(50014; "factura rectificativa tipo"; enum Tbais0SI)
+        field(50014; "factura rectificativa tipo"; Option)
         {
             Caption = 'Factura rectificativa tipo';
             Description = 'TBAI_AL_01 factura rectificativa tipo';
+            OptionCaption = '';
+            OptionMembers = TbaiNS;
         }
         field(50015; BaseRectificada; Decimal)
         {
@@ -109,10 +97,12 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
             Caption = 'Cuota Recargo Rectificada';
             Description = 'TBAI_AL_01 ImporteRectificacionSustitutiva CuotaRecargoRectificada';
         }
-        field(50018; ClaveRegimenIvaOpTrascendencia; enum TbaiClaveRegimenIvaOpTrascen)
+        field(50018; ClaveRegimenIvaOpTrascendencia; Option)
         {
             Caption = 'Clave Regimen Iva Op Trascendencia';
             Description = 'TBAI_AL_01 ClaveRegimenIvaOpTrascendencia';
+            OptionCaption = '';
+            OptionMembers = TbaiClaveRegimenIvaOpTrascen;
         }
         field(50019; DocNoTBAI; Code[20])
         {
@@ -124,7 +114,6 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
             Caption = 'No. Series TBAI';
             Description = 'TBAI_AL_01';
             Editable = true;
-            TableRelation = "No. Series";
         }
         field(50021; TBAIQRBlob; Blob)
         {
@@ -140,10 +129,12 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
             Caption = 'Enviada a TBAI';
             Description = 'TBAI_AL_01 identificador tbai';
         }
-        field(50024; TipoRegistro; enum TbaiTipoRegistro)
+        field(50024; TipoRegistro; Option)
         {
             Caption = 'Tipo Registro TBAI';
             Description = 'TBAI_AL_01';
+            OptionCaption = '';
+            OptionMembers = TbaiTipoRegistro;
         }
         field(50025; QR_CodeString; Text[200])
         {
@@ -167,9 +158,4 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
         {
         }
     }
-
-    trigger OnAfterInsert()
-    begin
-        rec."Posting Hour" := Time;
-    end;
 }

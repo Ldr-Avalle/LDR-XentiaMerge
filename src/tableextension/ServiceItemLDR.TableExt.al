@@ -17,28 +17,22 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
             CaptionClass = '1,2,1';
             Description = 'Sercable';
             Editable = false;
-            //todo: metería el blocked
-            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
-            trigger OnValidate()
-            begin
-                CheckUniqueNameConditions();
-            end;
         }
-        field(50002; Segment; enum ServiceItemSegment)
+        field(50002; Segment; Option)
         {
             Caption = 'Segmento';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            trigger OnValidate()
-            begin
-                CheckUniqueNameConditions();
-            end;
+            OptionCaption = '';
+            OptionMembers = ServiceItemSegment;
         }
-        field(50003; Type; enum ServiceItemType)
+        field(50003; Type; Option)
         {
             Caption = 'Tipo';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
+            OptionCaption = '';
+            OptionMembers = ServiceItemSegment;
         }
         field(50004; Commission; Decimal)
         {
@@ -77,20 +71,4 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
         {
         }
     }
-
-    procedure CheckUniqueNameConditions()
-    var
-        ServiceItem: Record "Service Item";
-        Text0001: Label 'La descripción ya existe en el servicio %1';
-    begin
-        if (("Shortcut Dimension 1 Code" <> '') AND (Segment <> 0)) then begin
-            ServiceItem.SetFilter("Shortcut Dimension 1 Code", '%1', "Shortcut Dimension 1 Code");
-            ServiceItem.SetFilter(Segment, '%1', Segment);
-            ServiceItem.SetFilter(Description, '%1', Description);
-            if ServiceItem.FindFirst then
-                repeat
-                    if ServiceItem."No." <> "No." then FieldError(Description);
-                until ServiceItem.Next() = 0;
-        end;
-    end;
 }

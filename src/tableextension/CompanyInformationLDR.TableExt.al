@@ -98,7 +98,6 @@ tableextension 50522 "CompanyInformation_LDR" extends "Company Information"
         {
             Caption = 'Código Metodo Transferencia';
             Description = 'SERCABLE';
-            TableRelation = "Payment Method".Code;
         }
         field(50020; CCC1; Text[24])
         {

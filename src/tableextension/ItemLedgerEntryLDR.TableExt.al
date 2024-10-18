@@ -2,18 +2,6 @@ tableextension 50204 "ItemLedgerEntry_LDR" extends "Item Ledger Entry"
 {
     fields
     {
-        modify(Description)
-        {
-            Description = 'Sercable';
-        }
-        modify("Area")
-        {
-            Caption = 'Cód. provincia';
-        }
-        modify("Cost Amount (Actual) (ACY)")
-        {
-            Caption = 'Importe coste (Real) (DA)';
-        }
         field(50000; "On Deposit"; Boolean)
         {
             Caption = 'En depósito';

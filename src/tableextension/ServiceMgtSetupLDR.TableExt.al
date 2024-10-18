@@ -1,4 +1,4 @@
-tableextension 50008 ServiceMgtSetup_LDR extends "Service Mgt. Setup"
+tableextension 50008 "ServiceMgtSetup_LDR" extends "Service Mgt. Setup"
 {
     fields
     {
@@ -7,14 +7,12 @@ tableextension 50008 ServiceMgtSetup_LDR extends "Service Mgt. Setup"
             Caption = 'Serie contratos';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            TableRelation = "No. Series";
         }
         field(50001; "Promotion Nos."; Code[20])
         {
             Caption = 'Serie promoción';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            TableRelation = "No. Series";
         }
         field(50002; "TC Contract List ID"; Text[80])
         {
@@ -45,7 +43,6 @@ tableextension 50008 ServiceMgtSetup_LDR extends "Service Mgt. Setup"
             Caption = 'Población Nos.';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            TableRelation = "No. Series";
         }
     }
 }

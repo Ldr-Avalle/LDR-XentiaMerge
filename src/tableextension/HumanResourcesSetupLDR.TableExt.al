@@ -7,7 +7,6 @@ tableextension 50004 HumanResourcesSetup_LDR extends "Human Resources Setup"
             Caption = 'Contrato Empleado Nos.';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            TableRelation = "No. Series";
         }
         field(50001; "Delete employee contracts"; Boolean)
         {
@@ -35,7 +34,6 @@ tableextension 50004 HumanResourcesSetup_LDR extends "Human Resources Setup"
         }
         field(50005; "Default male path image"; Text[200])
         {
-
             Caption = 'Ruta imagen variación por defecto';
             DataClassification = ToBeClassified;
             Description = 'Sercable';

@@ -1,4 +1,4 @@
-table 50012 Work_LDR
+table 50012 "Work_LDR"
 {
     Caption = 'Obra';
 
@@ -18,7 +18,6 @@ table 50012 Work_LDR
         field(3; "No. of Contracts"; Integer)
         {
             Caption = 'Nº contratos';
-            FieldClass = FlowField;
             Editable = false;
         }
     }

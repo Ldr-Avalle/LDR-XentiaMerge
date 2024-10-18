@@ -1,20 +1,10 @@
-tableextension 50146 CustLedgerEntry_LDR extends "Cust. Ledger Entry"
+tableextension 50146 "CustLedgerEntry_LDR" extends "Cust. Ledger Entry"
 {
     fields
     {
-        modify("Amount to Apply")
-        {
-            Caption = 'Importe pendiente de liquidar';
-        }
-        modify("Reversed by Entry No.")
-        {
-            Caption = 'Revertido por el movimiento Nº';
-        }
         field(50000; Name; Text[100])
         {
             Caption = 'Nombre';
-            FieldClass = FlowField;
-            CalcFormula = Lookup(Customer.Name where("No." = field("Customer No.")));
             Description = 'Sercable';
             Editable = false;
         }

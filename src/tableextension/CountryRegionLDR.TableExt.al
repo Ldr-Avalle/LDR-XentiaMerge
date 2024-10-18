@@ -1,4 +1,4 @@
-tableextension 50001 CountryRegion_LDR extends "Country/Region"
+tableextension 50001 "CountryRegion_LDR" extends "Country/Region"
 {
     fields
     {
