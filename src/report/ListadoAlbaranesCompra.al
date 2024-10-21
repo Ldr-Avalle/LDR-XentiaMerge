@@ -26,7 +26,7 @@ report 50071 "Listado Albaranes Compra"
             column(PurchRcptHeader_BuyfromVendorName; "Purch. Rcpt. Header"."Buy-from Vendor Name")
             {
             }
-            column(PurchRcptHeader_Totalalbaran; "Purch. Rcpt. Header"."Total albaran")
+            column(PurchRcptHeader_Totalalbaran; "Purch. Rcpt. Header"."Total albarán")
             {
             }
             column(totalAlbaranes; totalAlbaranes)
@@ -38,7 +38,7 @@ report 50071 "Listado Albaranes Compra"
                 rec121: Record "Purch. Rcpt. Line";
             begin
                 //??revisar esto para que actualice el total del albar´Š¢n
-                if ("Total albaran" = 0) then begin
+                if ("Total albarán" = 0) then begin
                     rec121.SetRange("Document No.", "No.");
                     if pendientesFacturar then begin
                         rec121.SetFilter("Qty. Rcd. Not Invoiced", '>0');
@@ -46,13 +46,13 @@ report 50071 "Listado Albaranes Compra"
                     end;
 
                     repeat
-                        "Total albaran" := "Total albaran" + rec121.Quantity * rec121."Unit Cost"
+                        "Total albarán" := "Total albarán" + rec121.Quantity * rec121."Unit Cost"
                                            - (((rec121.Quantity * rec121."Unit Cost") * rec121."Line Discount %") / 100)
                                            + (((rec121.Quantity * rec121."Unit Cost") * rec121."VAT %") / 100);
                     until (rec121.Next() = 0);
                 end;
 
-                totalAlbaranes := totalAlbaranes + "Total albaran";
+                totalAlbaranes := totalAlbaranes + "Total albarán";
             end;
 
             trigger OnPreDataItem()

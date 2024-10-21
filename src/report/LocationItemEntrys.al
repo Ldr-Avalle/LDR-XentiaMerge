@@ -13,7 +13,8 @@ report 50077 "location/Item entrys"
             RequestFilterFields = "Global Dimension 1 Code";
             dataitem("Value Entry"; "Value Entry")
             {
-                CalcFields = "Shop Code";
+                //todo:comentado porque no se utiliza
+                //CalcFields = "Shop Code";
                 DataItemLink = "Location Code" = field(Code);
                 DataItemTableView = sorting("Item No.", "Posting Date", "Item Ledger Entry Type", "Entry Type", "Variance Type", "Item Charge No.", "Location Code", "Variant Code")
                                     where("Source Type" = const(Vendor),

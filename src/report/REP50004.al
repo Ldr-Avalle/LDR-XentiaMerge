@@ -18,13 +18,19 @@ report 50004 "Employee aut. expirations"
 
             trigger OnPostDataItem()
             var
-                Mail: Codeunit "397";
+                //Mail: Codeunit "397";
+                EmailMessage: Codeunit "Email Message";
+                Email: Codeunit Email;
                 RRHHSetup: Record "5218";
                 Body: Text[250];
                 Fichero: File;
                 FileName: Text[100];
                 i: Integer;
                 SheetName: Text[30];
+                FormatExcel: Label 'XLSX';
+                TempBlob: Codeunit "Temp Blob";
+                AttachmentInStream: InStream;
+                AttachmentOutStream: OutStream;
             begin
 
                 RRHHSetup.GET;
@@ -74,8 +80,12 @@ report 50004 "Employee aut. expirations"
 
                     //NewMessage(ToAddresses : Text;CcAddresses : Text;BccAddresses : Text;Subject : Text;Body : Text;AttachFilename : Text;ShowNewMailDialogOnSend : Boolean) : Boolean //funci´Š¢n en 2016
                     //Mail.NewMessage(RRHHSetup."Notification email", '', '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', FileName, FALSE);
-                    Mail.CreateMessage(RRHHSetup."Notification email", '', '', 'Bajas Sercable ' + FORMAT(TODAY), 'Ver fichero adjunto', false, FALSE);
-                    Mail.AttachFile(FileName);
+                    //Mail.AttachFile(FileName);
+
+                    EmailMessage.Create(RRHHSetup."Notification email", '', 'Bajas Sercable ' + FORMAT(TODAY), true);
+                    TempBLOB.CreateInStream(AttachmentInStream);
+                    File.UploadIntoStream(FileName, AttachmentInStream);
+                    EmailMessage.AddAttachment(FileName, FormatExcel, AttachmentInStream);
                 END;
 
                 //destruyo el fichero

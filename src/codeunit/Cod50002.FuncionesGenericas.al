@@ -565,4 +565,13 @@ codeunit 50002 FuncionesGenericas
             exit(false);
     end;
 
+    PROCEDURE CreateTodo(SalesHeader: Record "Sales Header");
+    VAR
+        TempTodo: Record "To-do" temporary;
+    BEGIN
+        SalesHeader.TESTFIELD("Sell-to Contact No.");
+        TempTodo.CreateTaskFromSalesHeader(SalesHeader);
+    END;
+
+
 }

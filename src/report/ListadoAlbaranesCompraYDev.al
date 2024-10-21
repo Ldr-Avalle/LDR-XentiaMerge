@@ -23,7 +23,7 @@ report 50057 "Listado Albaranes Compra y dev"
             column(PurchRcptHeader_BuyfromVendorName; "Purch. Rcpt. Header"."Buy-from Vendor Name")
             {
             }
-            column(PurchRcptHeader_Totalalbaran; "Purch. Rcpt. Header"."Total albaran")
+            column(PurchRcptHeader_Totalalbaran; "Purch. Rcpt. Header"."Total albarán")
             {
             }
             column(PurchRcptHeader_LocationCode; "Purch. Rcpt. Header"."Location Code")
@@ -89,7 +89,7 @@ report 50057 "Listado Albaranes Compra y dev"
             begin
 
                 SetFilter("Posting Date", '%1..%2', startdate, enddate);
-                if ("Purch. Rcpt. Header"."Total albaran" = 0) then begin
+                if ("Purch. Rcpt. Header"."Total albarán" = 0) then begin
                     rec121.SetRange("Document No.", "No.");
                     if pendientesFacturar then begin
                         rec121.SetFilter("Qty. Rcd. Not Invoiced", '>0');
@@ -97,11 +97,11 @@ report 50057 "Listado Albaranes Compra y dev"
                     end;
 
                     repeat
-                        "Purch. Rcpt. Header"."Total albaran" := "Purch. Rcpt. Header"."Total albaran" + rec121."Item Charge Base Amount"
+                        "Purch. Rcpt. Header"."Total albarán" := "Purch. Rcpt. Header"."Total albarán" + rec121."Item Charge Base Amount"
                     until (rec121.Next() = 0);
                 end;
 
-                totalAlbaranes := totalAlbaranes + "Purch. Rcpt. Header"."Total albaran";
+                totalAlbaranes := totalAlbaranes + "Purch. Rcpt. Header"."Total albarán";
 
             end;
 

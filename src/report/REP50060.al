@@ -8,7 +8,7 @@ report 50060 "Listado Productos"
         dataitem(Item; Item)
         {
             DataItemTableView = SORTING("No.")
-                                WHERE("On Deposit" = FILTER(No));
+                                WHERE("On Deposit" = FILTER(false));
             PrintOnlyIfDetail = true;
             RequestFilterFields = "No.";
             column(Item_No; Item."No.")

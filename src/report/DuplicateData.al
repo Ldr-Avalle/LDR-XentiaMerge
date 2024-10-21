@@ -115,7 +115,7 @@ report 50010 "Duplicate Data"
                 end;
             end;
         }
-        dataitem("Employee internal historic"; "Employee internal historic")
+        dataitem("Employee internal historic"; "Employee internal historic_LDR")
         {
             trigger OnAfterGetRecord()
             begin
@@ -181,12 +181,12 @@ report 50010 "Duplicate Data"
                 end;
             end;
         }
-        dataitem("IDi Employee"; "IDi Employee")
+        dataitem("IDi Employee"; "IDi Employee_LDR")
         {
             trigger OnAfterGetRecord()
             begin
                 FromTable17.ChangeCompany('SERCABLE');
-                if not FromTable17.GET("Job No.", Employee) then begin
+                if not FromTable17.GET("IDi Employee"."Job No.", "IDi Employee".Employee) then begin
                     FromTable17.TRANSFERFIELDS("IDi Employee");
                     FromTable17.Insert();
                 end;

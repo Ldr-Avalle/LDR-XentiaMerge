@@ -409,6 +409,7 @@ report 50034 "Oferta venta proforma"
             trigger OnPostDataItem()
             var
                 ToDo: Record "To-do";
+                funcionesgenericas: Codeunit "FuncionesGenericas";
             begin
                 "Sales Header".MarkedOnly := true;
                 Commit();
@@ -416,7 +417,7 @@ report 50034 "Oferta venta proforma"
                 if "Sales Header".Find('-') and ToDo.WritePermission then
                     if not CurrReport.Preview and (NoOfRecords = 1) then
                         if Confirm(Text007) then
-                            "Sales Header".CreateTodo;
+                            funcionesgenericas.CreateTodo("Sales Header");
             end;
 
             trigger OnPreDataItem()

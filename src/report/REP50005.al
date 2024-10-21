@@ -48,13 +48,14 @@ report 50005 "Contract exportation"
         TemplateName := 'PlantillaExportacionTelecable.xlsx';
 
         Excel.crearExcel(FALSE);
-        IF FILE.EXISTS('C:\' + TemplateName) THEN FILE.ERASE('C:\' + TemplateName);
-        FILE.COPY('\\NavSercable\Compartida\' + TemplateName, 'C:\' + TemplateName);
+        //todo: esto no existe ahora, no se en que hay que convertirlo
+        //IF FILE.EXISTS('C:\' + TemplateName) THEN FILE.ERASE('C:\' + TemplateName);
+        //FILE.COPY('\\NavSercable\Compartida\' + TemplateName, 'C:\' + TemplateName);
         Excel.abrirExcel('C:\' + TemplateName);
     end;
 
     var
-        Excel: Record "Exp. Excel";
+        Excel: Record "Exp. Excel_LDR";
         Win: Dialog;
         winCont: Integer;
         winRef: Integer;
