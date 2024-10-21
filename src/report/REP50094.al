@@ -19,7 +19,7 @@ report 50094 "Lista empleados"
                 DataItemTableView = SORTING(Employee, "No.")
                                     ORDER(Descending);
             }
-            dataitem("Employee internal historic"; "Employee internal historic")
+            dataitem("Employee internal historic"; "Employee internal historic_LDR")
             {
                 DataItemLink = "Employee No." = FIELD("No.");
                 column(EmployeeNo; Employee."No.")

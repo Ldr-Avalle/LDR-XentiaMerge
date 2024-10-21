@@ -63,7 +63,7 @@ report 50098 RetenAlquilerProfesi
             column(NombreProveedors; gblRegProveedor.Name)
             {
             }
-            column(PorcentajeIRPF; gblRegProveedor.Retencion)
+            column(PorcentajeIRPF; gblRegProveedor.Retención)
             {
             }
             column(Importe; "G/L Entry".Amount)

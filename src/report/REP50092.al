@@ -20,7 +20,7 @@ report 50092 "Employees ONO"
             column(EmployeeSecondFamilyName; Employee."Second Family Name")
             {
             }
-            dataitem("Employee internal historic"; "Employee internal historic")
+            dataitem("Employee internal historic"; "Employee internal historic_LDR")
             {
                 DataItemLink = "Employee No." = FIELD("No.");
                 DataItemTableView = SORTING("Employee No.", "Start Date")
