@@ -75,6 +75,7 @@ table 50004 "Employee Contract"
             CalcFormula = Lookup(Employee."Global Dimension 1 Code" where("No." = field(Employee)));
             Enabled = true;
             FieldClass = FlowField;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
             Editable = false;
         }

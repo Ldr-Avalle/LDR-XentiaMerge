@@ -8,7 +8,7 @@ tableextension 50010 "Bill Group_LDR" extends "Bill Group"
         BankAccount: Record "Bank Account";
     begin
         DirectDebitCollection.CreateRecord("No.", "Bank Account No.", "Partner Type");
-        DirectDebitCollection."Source Table ID" := DATABASE::"Bill Group";
+        DirectDebitCollection."Source Table ID" := Database::"Bill Group";
         DirectDebitCollection.Modify();
         BankAccount.Get("Bank Account No.");
         Commit();
@@ -21,7 +21,7 @@ tableextension 50010 "Bill Group_LDR" extends "Bill Group"
     var
         LastError: Text;
     begin
-        if not CODEUNIT.Run(CodeunitID, DirectDebitCollectionEntry) then begin
+        if not Codeunit.Run(CodeunitID, DirectDebitCollectionEntry) then begin
             LastError := GetLastErrorText;
             DeleteDirectDebitCollection_LDR(DirectDebitCollectionNo);
             Commit();

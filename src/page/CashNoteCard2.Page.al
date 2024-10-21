@@ -16,14 +16,14 @@ page 50045 "Cash Note Card2"
                 field(Date; Rec.Date)
                 {
                     ApplicationArea = All;
-                    Caption = 'Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Date', Comment = 'ESP="Fecha"';
+                    ToolTip = 'Especifica la fecha';
                 }
                 field(Amount; Rec.Amount)
                 {
                     ApplicationArea = All;
-                    Caption = 'Amount', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Amount', Comment = 'ESP="Importe"';
+                    ToolTip = 'Especifica el importe';
                 }
                 field(Description; Rec.Description)
                 {

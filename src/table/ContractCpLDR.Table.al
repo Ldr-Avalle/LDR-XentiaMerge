@@ -85,6 +85,7 @@ table 90005 ContractCP_LDR
             CaptionClass = '1,2,1';
             Caption = 'Código Dimensión 1';
             DataClassification = ToBeClassified;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         field(17; "SharePoint ID"; Integer)

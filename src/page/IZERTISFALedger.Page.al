@@ -16,103 +16,103 @@ page 50091 "IZERTIS: FA Ledger"
                 field("Debit Amount"; Rec."Debit Amount")
                 {
                     ApplicationArea = All;
-                    Caption = 'Debit Amount', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Debit Amount', Comment = 'ESP="Importe debe"';
+                    ToolTip = 'Especifica el importe debe';
                 }
                 field("Credit Amount"; Rec."Credit Amount")
                 {
                     ApplicationArea = All;
-                    Caption = 'Credit Amount', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Credit Amount', Comment = 'ESP="Importe haber"';
+                    ToolTip = 'Especifica el importe haber';
                 }
                 field(Reversed; Rec.Reversed)
                 {
                     ApplicationArea = All;
-                    Caption = 'Reversed', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Reversed', Comment = 'ESP="Revertido"';
+                    ToolTip = 'Especifica el revertido';
                 }
                 field("Reversed by Entry No."; Rec."Reversed by Entry No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Reversed by Entry No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Reversed by Entry No.', Comment = 'ESP="Revertido por el movimiento nº"';
+                    ToolTip = 'Especifica el revertido por el movimiento nº';
                 }
                 field("Reversed Entry No."; Rec."Reversed Entry No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Reversed Entry No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Reversed Entry No.', Comment = 'ESP="Nº movimiento revertido"';
+                    ToolTip = 'Especifica el nº movimiento revertido';
                 }
                 field("Entry No."; Rec."Entry No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Entry No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Entry No.', Comment = 'ESP="Nº mov."';
+                    ToolTip = 'Especifica el nº mov.';
                 }
                 field("G/L Entry No."; Rec."G/L Entry No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'G/L Entry No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'G/L Entry No.', Comment = 'ESP="Nº mov. contabilidad"';
+                    ToolTip = 'Especifica el nº mov. contabilidad';
                 }
                 field("FA No."; Rec."FA No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'FA No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'FA No.', Comment = 'ESP="A/F Nº"';
+                    ToolTip = 'Especifica el A/F Nº';
                 }
                 field("FA Posting Date"; Rec."FA Posting Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'FA Posting Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'FA Posting Date', Comment = 'ESP="A/F Fecha registro"';
+                    ToolTip = 'Especifica el A/F Fecha registro';
                 }
                 field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Posting Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Posting Date', Comment = 'ESP="Fecha registro"';
+                    ToolTip = 'Especifica la fecha registro';
                 }
                 field("Document Type"; Rec."Document Type")
                 {
                     ApplicationArea = All;
-                    Caption = 'Document Type', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Document Type', Comment = 'ESP="Tipo documento"';
+                    ToolTip = 'Especifica el tipo documento';
                 }
                 field("Document Date"; Rec."Document Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Document Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Document Date', Comment = 'ESP="Fecha emisión documento"';
+                    ToolTip = 'Especifica la fecha emisión documento';
                 }
                 field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Document No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Document No.', Comment = 'ESP="Nº documento"';
+                    ToolTip = 'Especifica el nº documento';
                 }
                 field("External Document No."; Rec."External Document No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'External Document No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'External Document No.', Comment = 'ESP="Nº documento externo"';
+                    ToolTip = 'Especifica el nº documento externo';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    Caption = 'Description', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Description', Comment = 'ESP="Descripción"';
+                    ToolTip = 'Especifica la descripción';
                 }
                 field("Depreciation Book Code"; Rec."Depreciation Book Code")
                 {
                     ApplicationArea = All;
-                    Caption = 'Depreciation Book Code', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Depreciation Book Code', Comment = 'ESP="Cód. libro amortización"';
+                    ToolTip = 'Especifica el cód. libro amortización';
                 }
                 field("FA Posting Category"; Rec."FA Posting Category")
                 {
                     ApplicationArea = All;
-                    Caption = 'FA Posting Category', Comment = 'ESP=""';
+                    Caption = 'FA Posting Category', Comment = 'ESP="A/F Categoría registro"';
                     ToolTip = 'Especifica';
                 }
                 field("FA Posting Type"; Rec."FA Posting Type")

@@ -5,52 +5,96 @@ tableextension 50237 PurchaseHeader_LDR extends "Purchase Header"
     {
         modify("Shortcut Dimension 1 Code")
         {
+            //todo: esto yo lo quitaria
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         modify("Shortcut Dimension 2 Code")
         {
+            //todo: esto yo lo quitaria
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(2));
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
+        }
+        modify("Buy-from Country/Region Code")
+        {
+            trigger OnAfterValidate()
+            begin
+                Rec."VAT Country/Region Code" := Rec."Buy-from Country/Region Code";
+            end;
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
+        }
+        modify("Payment Reference")
+        {
+            trigger OnAfterValidate()
+            begin
+                if Rec."Payment Reference" <> '' then
+                    Rec.TestField("Creditor No.");
+            end;
         }
         modify("Invoice Type")
         {
+            //todo: esto yo lo quitaria
             OptionCaption = 'F1 Invoice,F2 Simplified Invoice,F3 Invoice issued to replace simplified invoices,F4 Invoice summary entry,F5 Imports (DUA),F6 Accounting support material,Customs - Complementary Liquidation';
         }
     }
+
+    trigger OnAfterInsert()
+    var
+        CompanyInfo: Record "Company Information";
+    begin
+        CompanyInfo.Get;
+        Rec."Location Code" := UserDimensions.getLocationCode(UserId);
+        Rec."Assigned User ID" := UserId;
+    end;
+
+    trigger OnModify()
+    var
+        UserDimensions: Record "User Dimensions_LDR";
+    begin
+        if UserDims.existsUser(UserId) then
+            TestField("Assigned User ID", UserId);
+    end;
+
+    trigger OnBeforeDelete()
+    begin
+        if UserDims.existsUser(UserId) then
+            TestField("Assigned User ID", UserId);
+    end;
+
     procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
     begin
         DimMgt.GetShortcutDimensions("Dimension Set ID", ShortcutDimCode);
     end;
 
-    local procedure InitSii()
-    var
-        GeneralLedgerSetup: Record "General Ledger Setup";
-        SIIManagement: Codeunit "SII Management";
-    begin
-        GeneralLedgerSetup.Get();
-        if GeneralLedgerSetup."VAT Cash Regime" then
-            "Special Scheme Code" := "Special Scheme Code"::"07 Special Cash"
-        else
-            if "Buy-from Vendor No." <> '' then
-                if Vend.Get("Buy-from Vendor No.") then
-                    if Vend."No." <> '' then
-                        if SIIManagement.VendorIsIntraCommunity(Vend."No.") then
-                            "Special Scheme Code" := "Special Scheme Code"::"09 Intra-Community Acquisition"
-                        else
-                            "Special Scheme Code" := "Special Scheme Code"::"01 General";
-    end;
-
+    //todo: revisar si se puede eliminar t38
+    /*
+        procedure InitSii()
+        var
+            GeneralLedgerSetup: Record "General Ledger Setup";
+            SIIManagement: Codeunit "SII Management";
+        begin
+            GeneralLedgerSetup.Get();
+            if GeneralLedgerSetup."VAT Cash Regime" then
+                "Special Scheme Code" := "Special Scheme Code"::"07 Special Cash"
+            else
+                if "Buy-from Vendor No." <> '' then
+                    if Vend.Get("Buy-from Vendor No.") then
+                        if Vend."No." <> '' then
+                            if SIIManagement.VendorIsIntraCommunity(Vend."No.") then
+                                "Special Scheme Code" := "Special Scheme Code"::"09 Intra-Community Acquisition"
+                            else
+                                "Special Scheme Code" := "Special Scheme Code"::"01 General";
+        end;
+    */
     var
         Vend: Record Vendor;
         UserDimensions: Record "User Dimensions_LDR";

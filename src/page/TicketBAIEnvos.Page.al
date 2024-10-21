@@ -1,7 +1,7 @@
 page 50032 "Ticket BAI Envíos"
 {
     ApplicationArea = All;
-    Caption = 'Ticket BAI Envíos', Comment = 'ESP=""';
+    Caption = 'Ticket BAI Envíos';
     DelayedInsert = false;
     DeleteAllowed = false;
     Editable = false;
@@ -20,97 +20,97 @@ page 50032 "Ticket BAI Envíos"
                 field(Correcto; Rec.Correcto)
                 {
                     ApplicationArea = All;
-                    Caption = 'Correcto', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Correcto';
+                    ToolTip = 'Especifica el correcto';
                 }
                 field(No_Factura; Rec.No_Factura)
                 {
                     ApplicationArea = All;
-                    Caption = 'No_Factura', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'No_Factura';
+                    ToolTip = 'Especifica el No_Factura';
                 }
                 field(No_Factura_tbai; Rec.No_Factura_tbai)
                 {
                     ApplicationArea = All;
-                    Caption = 'No_Factura_tbai', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'No_Factura_tbai';
+                    ToolTip = 'Especifica el No_Factura_tbai';
                 }
                 field(R_Codigo; Rec.R_Codigo)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_Codigo', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_Codigo';
+                    ToolTip = 'Especifica  el R_Codigo';
                 }
                 field(R_Descripcion; Rec.R_Descripcion)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_Descripcion', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_Descripcion';
+                    ToolTip = 'Especifica la R_Descripcion';
                 }
                 field(R_Descripcion_detallada; Rec.R_Descripcion_detallada)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_Descripcion_detallada', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_Descripcion_detallada';
+                    ToolTip = 'Especifica la R_Descripcion_detallada';
                 }
                 field(R_FechaRecepcion; Rec.R_FechaRecepcion)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_FechaRecepcion', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_FechaRecepcion';
+                    ToolTip = 'Especifica la R_FechaRecepcion';
                 }
                 field(R_Identificador_TBAI; Rec.R_Identificador_TBAI)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_Identificador_TBAI', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_Identificador_TBAI';
+                    ToolTip = 'Especifica el R_Identificador_TBAI';
                 }
                 field(R_Estado; Rec.R_Estado)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_Estado', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_Estado';
+                    ToolTip = 'Especifica el R_Estado';
                 }
                 field(R_SignatureValue; Rec.R_SignatureValue)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_SignatureValue', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'R_SignatureValue';
+                    ToolTip = 'Especifica el R_SignatureValue';
                 }
                 field(QR_CodeString; Rec.QR_CodeString)
                 {
                     ApplicationArea = All;
-                    Caption = 'QR_CodeString', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'QR_CodeString';
+                    ToolTip = 'Especifica el QR_CodeString';
                 }
                 field(PreviousDocNo; Rec.PreviousDocNo)
                 {
                     ApplicationArea = All;
-                    Caption = 'PreviousDocNo', Comment = 'ESP=""';
+                    Caption = 'PreviousDocNo';
                     ToolTip = 'Especifica';
                 }
                 field(R_DocNoTBAI; Rec.R_DocNoTBAI)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_DocNoTBAI', Comment = 'ESP=""';
+                    Caption = 'R_DocNoTBAI';
                     ToolTip = 'Especifica';
                 }
                 field(R_DocNoNAV; Rec.R_DocNoNAV)
                 {
                     ApplicationArea = All;
-                    Caption = 'R_DocNoNAV', Comment = 'ESP=""';
+                    Caption = 'R_DocNoNAV';
                     ToolTip = 'Especifica';
                 }
                 field(SignedXMLDocname; Rec.SignedXMLDocname)
                 {
                     ApplicationArea = All;
-                    Caption = 'SignedXMLDocname', Comment = 'ESP=""';
+                    Caption = 'SignedXMLDocname';
                     ToolTip = 'Especifica';
                 }
                 field(NavXMLDocName; Rec.NavXMLDocName)
                 {
                     ApplicationArea = All;
-                    Caption = 'NavXMLDocName', Comment = 'ESP=""';
+                    Caption = 'NavXMLDocName';
                     ToolTip = 'Especifica';
                 }
             }

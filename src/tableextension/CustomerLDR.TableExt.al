@@ -1,18 +1,27 @@
-tableextension 50003 "Customer_LDR" extends Customer
+tableextension 50003 Customer_LDR extends Customer
 {
+    DataCaptionFields = Blocked;
+
     fields
     {
         modify("No.")
         {
             Caption = 'NIF/NIE/CIF';
+
+            trigger OnBeforeValidate()
+            begin
+                if xRec."No." = '0' then
+                    FieldError("No.");
+                Validate("VAT Registration No.", "No.");
+            end;
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         field(50000; "Phone No. 2"; Text[30])
         {
@@ -64,13 +73,11 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'Sercable';
         }
-        field(50706; IDType; Option)
+        field(50706; IDType; Enum TbaiTiposIdentificacion)
         {
             Caption = 'Tipo de identificación';
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
-            OptionCaption = ', 02: NIF-IVA,03: Pasaporte,04: Documento oficial deidentificación expedido por el país o territorio de residencia,05: Certificado de residencia, 06: Otro documento probatorio';
-            OptionMembers = ,"NIF-IVA",Pasaporte,"Documento oficial deidentificación expedido por el país o territorio de residencia","Certificado de residencia","Otro documento probatorio";
         }
         field(50707; ID_LDR; Code[20])
         {
@@ -78,13 +85,22 @@ tableextension 50003 "Customer_LDR" extends Customer
             DataClassification = ToBeClassified;
             Description = 'TBAI_AL_01';
         }
-        field(50909; "Factura Simplificada"; Option)
+        field(50909; "Factura Simplificada"; Enum TbaiNS)
         {
             DataClassification = ToBeClassified;
             Caption = 'Factura Simplificada';
             Description = 'TBAI_AL_01 factura simplificada';
-            OptionCaption = 'No,Sí';
-            OptionMembers = N,S;
         }
     }
+
+    trigger OnAfterInsert()
+    begin
+        Validate("VAT Registration No.", "No.");
+        "Gen. Bus. Posting Group" := 'NACIONAL';
+        "VAT Bus. Posting Group" := 'NACIONAL';
+        "Customer Posting Group" := 'NAC';
+        "Country/Region Code" := 'ES';
+        "Payment Terms Code" := 'CON';
+        Validate("Prices Including VAT", true);
+    end;
 }

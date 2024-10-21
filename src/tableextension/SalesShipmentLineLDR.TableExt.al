@@ -1,4 +1,4 @@
-tableextension 50035 "SalesShipmentLine_LDR" extends "Sales Shipment Line"
+tableextension 50035 SalesShipmentLine_LDR extends "Sales Shipment Line"
 {
     fields
     {
@@ -10,33 +10,25 @@ tableextension 50035 "SalesShipmentLine_LDR" extends "Sales Shipment Line"
         {
             Description = 'SERCABLE';
         }
-        modify("Item Shpt. Entry No.")
-        {
-            Caption = 'Item Shpt. Entry No.';
-        }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("Area")
         {
-            Caption = 'Area';
+            Caption = 'Cód. provincia';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
-        }
-        modify("Job Contract Entry No.")
-        {
-            Caption = 'Job Contract Entry No.';
+            Caption = 'Grupo registro IVA prod.';
         }
     }
 }

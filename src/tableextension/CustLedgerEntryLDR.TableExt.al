@@ -14,7 +14,7 @@ tableextension 50146 CustLedgerEntry_LDR extends "Cust. Ledger Entry"
         {
             Caption = 'Nombre';
             FieldClass = FlowField;
-            CalcFormula = Lookup(Customer.Name where("No." = field("Customer No.")));
+            CalcFormula = lookup(Customer.Name where("No." = field("Customer No.")));
             Description = 'Sercable';
             Editable = false;
         }
@@ -25,7 +25,7 @@ tableextension 50146 CustLedgerEntry_LDR extends "Cust. Ledger Entry"
         }
         field(50199; "Transaction No. BK"; Integer)
         {
-            Caption = 'Transacción No. Bk';
+            Caption = 'Nº asiento Bk';
             DataClassification = ToBeClassified;
         }
     }

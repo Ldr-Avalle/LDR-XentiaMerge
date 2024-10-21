@@ -2,10 +2,6 @@ tableextension 50008 ServiceMgtSetup_LDR extends "Service Mgt. Setup"
 {
     fields
     {
-        modify("Logo Position on Documents")
-        {
-            Caption = 'Posición logo documentos';
-        }
         field(50000; "Contract Nos."; Code[20])
         {
             Caption = 'Serie contratos';

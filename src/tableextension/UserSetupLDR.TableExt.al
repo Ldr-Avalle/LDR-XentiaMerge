@@ -1,4 +1,4 @@
-tableextension 50568 "UserSetup_LDR" extends "User Setup"
+tableextension 50568 UserSetup_LDR extends "User Setup"
 {
     fields
     {

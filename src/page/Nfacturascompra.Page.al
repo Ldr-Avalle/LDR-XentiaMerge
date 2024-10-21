@@ -1,7 +1,7 @@
 page 50023 "Nº facturas compra"
 {
     ApplicationArea = All;
-    Caption = 'Nº facturas compra', Comment = 'ESP=""';
+    Caption = 'Nº facturas compra';
     PageType = Card;
     SourceTable = "Purch. Inv. Header";
     UsageCategory = Administration;
@@ -21,14 +21,14 @@ page 50023 "Nº facturas compra"
                 field("Pay-to Vendor No."; Rec."Pay-to Vendor No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Pay-to Vendor No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Pay-to Vendor No.', Comment = 'ESP="Pago-a Nº proveedor"';
+                    ToolTip = 'Especifica el pago-a nº proveedor';
                 }
                 field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Posting Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Posting Date', Comment = 'ESP="Fecha registro"';
+                    ToolTip = 'Especifica la fecha registro';
                 }
             }
         }

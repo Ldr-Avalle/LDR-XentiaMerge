@@ -1,42 +1,55 @@
-tableextension 50525 "GenJournalLine_LDR" extends "Gen. Journal Line"
+tableextension 50525 GenJournalLine_LDR extends "Gen. Journal Line"
 {
     fields
     {
         modify("Shortcut Dimension 1 Code")
         {
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1));
+            //todo: quitaría esto
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
         modify("Shortcut Dimension 2 Code")
         {
-            TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(2));
+            //todo: quitaría esto
+            TableRelation = "Dimension Value".Code where("Global Dimension No." = const(2));
         }
         modify("Gen. Bus. Posting Group")
         {
-            Caption = 'Gen. Bus. Posting Group';
+            Caption = 'Grupo contable negocio';
         }
         modify("Gen. Prod. Posting Group")
         {
-            Caption = 'Gen. Prod. Posting Group';
+            Caption = 'Grupo contable producto';
         }
         modify("VAT Bus. Posting Group")
         {
-            Caption = 'VAT Bus. Posting Group';
+            Caption = 'Grupo registro IVA neg.';
         }
         modify("VAT Prod. Posting Group")
         {
-            Caption = 'VAT Prod. Posting Group';
+            Caption = 'Grupo registro IVA prod.';
         }
         modify("Bal. VAT Bus. Posting Group")
         {
-            Caption = 'Bal. VAT Bus. Posting Group';
+            Caption = 'Gr. registro IVA neg. contrap.';
         }
         modify("Bal. VAT Prod. Posting Group")
         {
-            Caption = 'Bal. VAT Prod. Posting Group';
+            Caption = 'Gr. registro IVA prod. contrp.';
         }
+        //todo: se va a eliminar
+        /*
         modify("IC Partner G/L Acc. No.")
         {
             Caption = 'IC Partner G/L Acc. No.';
+        }
+        */
+        modify("Payment Reference")
+        {
+            trigger OnAfterValidate()
+            begin
+                if Rec."Payment Reference" <> '' then
+                    Rec.TestField("Creditor No.");
+            end;
         }
         modify("IC Partner Transaction No.")
         {
@@ -53,6 +66,10 @@ tableextension 50525 "GenJournalLine_LDR" extends "Gen. Journal Line"
         modify("FA Error Entry No.")
         {
             Caption = 'FA Error Entry No.';
+        }
+        field(50099; FacturaFin; Code[20])
+        {
+            Caption = 'Factura Fin';
         }
     }
 

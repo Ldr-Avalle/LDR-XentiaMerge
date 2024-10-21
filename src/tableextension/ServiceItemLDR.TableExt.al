@@ -2,10 +2,6 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
 {
     fields
     {
-        modify("Location of Service Item")
-        {
-            Caption = 'Ubicación del prod. serv.';
-        }
         field(50000; "Max. Qty. per Contract"; Integer)
         {
             BlankZero = true;
@@ -21,31 +17,28 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
             CaptionClass = '1,2,1';
             Description = 'Sercable';
             Editable = false;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
             trigger OnValidate()
             begin
                 CheckUniqueNameConditions();
             end;
         }
-        field(50002; Segment; Option)
+        field(50002; Segment; Enum ServiceItemSegment)
         {
             Caption = 'Segmento';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            OptionCaption = 'Pyme,Residencial,Soho';
-            OptionMembers = " ",Pyme,Residencial,Soho;
             trigger OnValidate()
             begin
                 CheckUniqueNameConditions();
             end;
         }
-        field(50003; Type; Option)
+        field(50003; Type; Enum ServiceItemType)
         {
             Caption = 'Tipo';
             DataClassification = ToBeClassified;
             Description = 'Sercable';
-            OptionCaption = ' ,Fijo,Pack,Móvil';
-            OptionMembers = " ","Fixed",Pack,Mobile;
         }
         field(50004; Commission; Decimal)
         {
@@ -90,7 +83,7 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
         ServiceItem: Record "Service Item";
         Text0001: Label 'La descripción ya existe en el servicio %1';
     begin
-        if (("Shortcut Dimension 1 Code" <> '') AND (Segment <> 0)) then begin
+        if (("Shortcut Dimension 1 Code" <> '') and (Segment <> 0)) then begin
             ServiceItem.SetFilter("Shortcut Dimension 1 Code", '%1', "Shortcut Dimension 1 Code");
             ServiceItem.SetFilter(Segment, '%1', Segment);
             ServiceItem.SetFilter(Description, '%1', Description);

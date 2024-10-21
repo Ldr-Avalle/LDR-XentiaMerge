@@ -16,68 +16,68 @@ page 50049 "SalesCost Item Ledger Entry"
                 field("Entry No."; Rec."Entry No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Entry No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Entry No.', Comment = 'ESP="Nº mov."';
+                    ToolTip = 'Especifica el nº mov.';
                 }
                 field("Posting Date"; Rec."Posting Date")
                 {
                     ApplicationArea = All;
-                    Caption = 'Posting Date', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Posting Date', Comment = 'ESP="Fecha registro"';
+                    ToolTip = 'Especifica la fecha registro';
                 }
                 field("Item No."; Rec."Item No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Item No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Item No.', Comment = 'ESP="Nº producto"';
+                    ToolTip = 'Especifica el nº producto';
                 }
                 field(Description; Rec.Description)
                 {
                     ApplicationArea = All;
-                    Caption = 'Description', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Description', Comment = 'ESP="Descripción"';
+                    ToolTip = 'Especifica la descripción';
                 }
                 field("Serial No."; Rec."Serial No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Serial No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Serial No.', Comment = 'ESP="Nº serie"';
+                    ToolTip = 'Especifica el nº serie';
                 }
                 field("Document No."; Rec."Document No.")
                 {
                     ApplicationArea = All;
-                    Caption = 'Document No.', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Document No.', Comment = 'ESP="Nº documento"';
+                    ToolTip = 'Especifica el nº documento';
                 }
                 field("Location Code"; Rec."Location Code")
                 {
                     ApplicationArea = All;
-                    Caption = 'Location Code', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Location Code', Comment = 'ESP="Cód. almacén"';
+                    ToolTip = 'Especifica el cód. almacén';
                 }
                 field(Quantity; Rec.Quantity)
                 {
                     ApplicationArea = All;
-                    Caption = 'Quantity', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Quantity', Comment = 'ESP="Cantidad"';
+                    ToolTip = 'Especifica la cantidad';
                 }
                 field("Sales Amount (Actual)"; Rec."Sales Amount (Actual)")
                 {
                     ApplicationArea = All;
-                    Caption = 'Sales Amount (Actual)', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Sales Amount (Actual)', Comment = 'ESP="Importe ventas (Real)"';
+                    ToolTip = 'Especifica el importe ventas (Real)';
                 }
                 field("Purch. Rcpt. Cost"; Rec."Purch. Rcpt. Cost")
                 {
                     ApplicationArea = All;
-                    Caption = 'Purch. Rcpt. Cost', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Purch. Rcpt. Cost', Comment = 'ESP="Coste albarán"';
+                    ToolTip = 'Especifica el coste albarán';
                 }
                 field("Purch. Inv. Cost"; Rec."Purch. Inv. Cost")
                 {
                     ApplicationArea = All;
-                    Caption = 'Purch. Inv. Cost', Comment = 'ESP=""';
-                    ToolTip = 'Especifica';
+                    Caption = 'Purch. Inv. Cost', Comment = 'ESP="Coste factura"';
+                    ToolTip = 'Especifica el coste factura';
                 }
             }
         }

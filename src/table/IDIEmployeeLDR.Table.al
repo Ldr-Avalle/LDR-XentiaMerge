@@ -120,6 +120,7 @@ table 50026 "IDI Employee_LDR"
             Editable = false;
             FieldClass = Flowfield;
             OptionMembers = " ","Asesor comercial pyme","Asesor comercial residencial","Asesor comercial empresa","Aytdte. dependienta","Dependienta pdv.","Jefe proyecto","Responsable pdv.","Responsable pyme","Jefe secci´Š¢n","Director de Operaciones",Becario;
+            //todo: metería el blocked
             TableRelation = "Dimension Value".Code where("Global Dimension No." = const(1));
         }
 #pragma warning disable AL0717
