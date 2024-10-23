@@ -20,7 +20,7 @@ table 50003 "Cash Arch_LDR"
             Caption = 'Importe inicial';
             DataClassification = ToBeClassified;
         }
-        field(4; "end cash"; Decimal)
+        field(4; "End cash"; Decimal)
         {
             Caption = 'Importe final';
             DataClassification = ToBeClassified;
@@ -164,7 +164,7 @@ table 50003 "Cash Arch_LDR"
         {
             Caption = 'Ventas';
             Editable = false;
-
+            FieldClass = FlowField;
         }
         field(29; Title; Option)
         {

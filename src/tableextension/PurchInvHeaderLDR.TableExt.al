@@ -9,8 +9,8 @@ tableextension 50056 "PurchInvHeader_LDR" extends "Purch. Inv. Header"
     }
     keys
     {
-        key(Key10; "Document Date", "No.")
-        {
-        }
+        // key(Key10; "Document Date", "No.")
+        // {
+        // }
     }
 }

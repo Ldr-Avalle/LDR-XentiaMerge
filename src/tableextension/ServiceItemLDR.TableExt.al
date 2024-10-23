@@ -46,6 +46,12 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
             DataClassification = ToBeClassified;
             Description = 'Sercable';
         }
+        field(50006; Blocked; Boolean)
+        {
+            Caption = 'Bloqueado';
+            DataClassification = ToBeClassified;
+            Description = 'Sercable';
+        }
         field(50007; "Services per unit"; Integer)
         {
             Caption = 'Servicios por unidad';
@@ -67,8 +73,8 @@ tableextension 50005 ServiceItem_LDR extends "Service Item"
         key(Key3; Type)
         {
         }
-        key(Key10; Blocked)
-        {
-        }
+        // key(Key10; Blocked)
+        // {
+        // }
     }
 }

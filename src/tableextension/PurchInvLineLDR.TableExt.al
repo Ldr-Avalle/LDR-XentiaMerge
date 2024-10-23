@@ -10,8 +10,8 @@ tableextension 50063 "PurchInvLine_LDR" extends "Purch. Inv. Line"
 
     keys
     {
-        key(Key7; "VAT Prod. Posting Group")
-        {
-        }
+        // key(Key7; "VAT Prod. Posting Group")
+        // {
+        // }
     }
 }

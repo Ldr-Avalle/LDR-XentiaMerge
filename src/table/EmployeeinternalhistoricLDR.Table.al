@@ -60,11 +60,13 @@ table 50009 "Employee internal historic_LDR"
         {
             Caption = 'Nombre empleado';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(19; "Employee 2º Name"; Text[30])
         {
             Caption = '2º Nombre empleado';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(20; Segmento; Code[20])
         {

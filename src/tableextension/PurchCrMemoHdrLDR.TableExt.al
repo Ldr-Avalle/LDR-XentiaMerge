@@ -9,8 +9,8 @@ tableextension 50068 "PurchCrMemoHdr_LDR" extends "Purch. Cr. Memo Hdr."
     }
     keys
     {
-        key(Key9; "Document Date", "No.")
-        {
-        }
+        // key(Key9; "Document Date", "No.")
+        // {
+        // }
     }
 }

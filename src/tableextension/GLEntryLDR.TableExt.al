@@ -35,12 +35,12 @@ tableextension 50121 "GLEntry_LDR" extends "G/L Entry"
     }
     keys
     {
-        key(Key20; "G/L Account No.", "Document Date", "Document No.")
-        {
-        }
-        key(Key21; "G/L Account No.", "Source No.")
-        {
-            SumIndexFields = Amount, "Debit Amount", "Credit Amount", "Additional-Currency Amount", "Add.-Currency Debit Amount", "Add.-Currency Credit Amount";
-        }
+        // key(Key20; "G/L Account No.", "Document Date", "Document No.")
+        // {
+        // }
+        // key(Key21; "G/L Account No.", "Source No.")
+        // {
+        //     SumIndexFields = Amount, "Debit Amount", "Credit Amount", "Additional-Currency Amount", "Add.-Currency Debit Amount", "Add.-Currency Credit Amount";
+        // }
     }
 }

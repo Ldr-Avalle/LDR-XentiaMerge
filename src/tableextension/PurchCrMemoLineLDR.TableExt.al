@@ -9,8 +9,8 @@ tableextension 50071 "PurchCrMemoLine_LDR" extends "Purch. Cr. Memo Line"
     }
     keys
     {
-        key(Key6; "VAT Prod. Posting Group")
-        {
-        }
+        // key(Key6; "VAT Prod. Posting Group")
+        // {
+        // }
     }
 }

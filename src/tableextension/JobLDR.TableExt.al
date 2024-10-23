@@ -6,11 +6,11 @@ tableextension 50119 "Job_LDR" extends "Job"
         {
             Description = 'SERCABLE';
         }
-        field(50001; "Payment Terms Code_LDR"; Code[10])
+        field(50001; "Payment Terms Code"; Code[10])
         {
             Description = 'SERCABLE';
         }
-        field(50002; "Payment Method Code_LDR"; Code[10])
+        field(50002; "Payment Method Code"; Code[10])
         {
             Description = 'SERCABLE';
         }

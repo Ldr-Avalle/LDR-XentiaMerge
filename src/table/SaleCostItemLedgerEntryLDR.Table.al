@@ -1,8 +1,6 @@
 table 50028 "SaleCost Item Ledger Entry_LDR"
 {
     Caption = 'Mov. producto coste venta';
-    DrillDownPageID = "Item Ledger Entries";
-    LookupPageID = "Item Ledger Entries";
 
     fields
     {
@@ -116,7 +114,7 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
         {
             Caption = 'Country/Region Code';
         }
-        field(59; "Entry/exit Point"; Code[10])
+        field(59; "Entry/Exit Point"; Code[10])
         {
             Caption = 'Entry/exit Point';
         }
@@ -145,6 +143,7 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
             Caption = 'Reserved Quantity';
             DecimalPlaces = 0 : 5;
             Editable = false;
+            FieldClass = FlowField;
         }
         field(79; "Document Type"; Option)
         {
@@ -243,67 +242,77 @@ table 50028 "SaleCost Item Ledger Entry_LDR"
             AutoFormatType = 1;
             Caption = 'Cost Amount (Expected)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5804; "Cost Amount (Actual)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Cost Amount (Actual)';
             Editable = true;
+            FieldClass = FlowField;
         }
         field(5805; "Cost Amount (Non-Invtbl.)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Cost Amount (Non-Invtbl.)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5806; "Cost Amount (Expected) (ACY)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Cost Amount (Expected) (ACY)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5807; "Cost Amount (Actual) (ACY)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Cost Amount (Actual) (ACY)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5808; "Cost Amount (Non-Invtbl.)(ACY)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Cost Amount (Non-Invtbl.)(ACY)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5813; "Purchase Amount (Expected)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Purchase Amount (Expected)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5814; "Purchase Amount (Actual)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Purchase Amount (Actual)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5815; "Sales Amount (Expected)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Sales Amount (Expected)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5816; "Sales Amount (Actual)"; Decimal)
         {
             AutoFormatType = 1;
             Caption = 'Sales Amount (Actual)';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(5817; Correction; Boolean)
         {
             Caption = 'Correction';
             DataClassification = ToBeClassified;
         }
-        field(5818; "Shipped Qty. not Returned"; Decimal)
+        field(5818; "Shipped Qty. Not Returned"; Decimal)
         {
             Caption = 'Shipped Qty. not Returned';
             DataClassification = ToBeClassified;

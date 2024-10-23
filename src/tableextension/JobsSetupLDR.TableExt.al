@@ -74,7 +74,7 @@ tableextension 50007 JobsSetup_LDR extends "Jobs Setup"
             DataClassification = ToBeClassified;
             Description = 'Sercable';
         }
-        field(50058; "Max. IDI hours per month"; Decimal)
+        field(50058; "Máx. IDi hours per month"; Decimal)
         {
             Caption = 'Máx. horas IDI por mes';
             DataClassification = ToBeClassified;

@@ -15,8 +15,8 @@ tableextension 50042 SalesInvoiceLine_LDR extends "Sales Invoice Line"
     }
     keys
     {
-        key(Key12; "VAT Prod. Posting Group")
-        {
-        }
+        // key(Key12; "VAT Prod. Posting Group")
+        // {
+        // }
     }
 }

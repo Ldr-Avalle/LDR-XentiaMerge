@@ -19,6 +19,7 @@ table 50004 "Employee Contract"
         {
             Caption = 'Nombre';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(4; "Date of hire"; Date)
         {
@@ -52,6 +53,7 @@ table 50004 "Employee Contract"
             Caption = 'Proyecto';
             Enabled = true;
             Editable = false;
+            FieldClass = FlowField;
         }
         field(10; Segment; Code[20])
         {
@@ -141,21 +143,25 @@ table 50004 "Employee Contract"
         {
             Caption = 'Nombre empleado 2';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(26; "Grounds for Term. Name"; Text[100])
         {
             Caption = ' Nombre del motivo';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(27; "Employee Name3"; Text[50])
         {
             Caption = 'Nombre empleado 3';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(28; Salario; Text[100])
         {
             Caption = 'Salario';
             Editable = false;
+            FieldClass = FlowField;
         }
     }
 

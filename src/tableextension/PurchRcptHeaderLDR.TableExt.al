@@ -15,8 +15,8 @@ tableextension 50049 "PurchRcptHeader_LDR" extends "Purch. Rcpt. Header"
 
     keys
     {
-        key(Key7; "Document Date", "No.")
-        {
-        }
+        // key(Key7; "Document Date", "No.")
+        // {
+        // }
     }
 }

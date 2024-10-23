@@ -120,9 +120,9 @@ tableextension 50006 "Employee_LDR" extends "Employee"
     }
     keys
     {
-        key(Key10; Name, "First Family Name", "Second Family Name")
-        {
-        }
+        // key(Key10; Name, "First Family Name", "Second Family Name")
+        // {
+        // }
         key(Key2; Usuario)
         {
         }

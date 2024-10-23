@@ -1,4 +1,4 @@
-table 90005 "ContractCP_LDR"
+table 50001 "ContractCP_LDR"
 {
     Caption = 'Contrato';
 
@@ -34,7 +34,7 @@ table 90005 "ContractCP_LDR"
             Caption = 'Comercial';
             DataClassification = ToBeClassified;
         }
-        field(7; Nif; Text[10])
+        field(7; NIF; Text[10])
         {
             Caption = 'Nif';
             DataClassification = ToBeClassified;
@@ -127,7 +127,7 @@ table 90005 "ContractCP_LDR"
             Caption = 'Fecha creación';
             DataClassification = ToBeClassified;
         }
-        field(25; "Creation Time"; Time)
+        field(25; "Creation time"; Time)
         {
             Caption = 'Hora creación';
             DataClassification = ToBeClassified;
@@ -137,7 +137,7 @@ table 90005 "ContractCP_LDR"
             Caption = 'Fecha modificación';
             DataClassification = ToBeClassified;
         }
-        field(27; "Modification Time"; Time)
+        field(27; "Modification time"; Time)
         {
             Caption = 'Hora modificación';
             DataClassification = ToBeClassified;

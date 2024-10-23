@@ -1,7 +1,6 @@
 table 50005 "G/L Register CP_LDR"
 {
     Caption = 'G/L Register';
-    LookupPageID = "G/L Registers";
 
     fields
     {
@@ -72,16 +71,19 @@ table 50005 "G/L Register CP_LDR"
             Caption = 'Fecha registro en mov. cont';
             Description = 'Sercable';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(50001; "Num Asiento en Mov cont"; Integer)
         {
             Caption = 'Nº asiento en mov. cont';
             Editable = false;
+            FieldClass = FlowField;
         }
         field(50002; "Fecha Asiento en Mov conta"; Date)
         {
             Caption = 'Fecha asiento en mov. cont';
             Editable = false;
+            FieldClass = FlowField;
         }
     }
 

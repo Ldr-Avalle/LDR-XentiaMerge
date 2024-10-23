@@ -151,11 +151,11 @@ tableextension 50041 "SalesInvoiceHeader_LDR" extends "Sales Invoice Header"
     }
     keys
     {
-        key(Key14; "Document Date", "No.")
-        {
-        }
-        key(Ke15; "VAT Bus. Posting Group")
-        {
-        }
+        // key(Key14; "Document Date", "No.")
+        // {
+        // }
+        // key(Ke15; "VAT Bus. Posting Group")
+        // {
+        // }
     }
 }

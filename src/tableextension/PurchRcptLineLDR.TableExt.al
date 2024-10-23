@@ -9,8 +9,8 @@ tableextension 50054 "PurchRcptLine_LDR" extends "Purch. Rcpt. Line"
     }
     keys
     {
-        key(Key8; "VAT Prod. Posting Group")
-        {
-        }
+        // key(Key8; "VAT Prod. Posting Group")
+        // {
+        // }
     }
 }

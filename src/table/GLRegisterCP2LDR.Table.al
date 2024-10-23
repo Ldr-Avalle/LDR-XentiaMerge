@@ -1,7 +1,6 @@
 table 50029 "G/L Register CP2_LDR"
 {
     Caption = 'G/L Register';
-    LookupPageID = "G/L Registers";
 
     fields
     {

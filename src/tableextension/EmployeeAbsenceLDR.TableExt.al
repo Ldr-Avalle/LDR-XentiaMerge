@@ -11,8 +11,8 @@ tableextension 50014 EmployeeAbsence_LDR extends "Employee Absence"
 
     keys
     {
-        key(Key10; "Employee No.", "Entry No.")
-        {
-        }
+        // key(Key10; "Employee No.", "Entry No.")
+        // {
+        // }
     }
 }
