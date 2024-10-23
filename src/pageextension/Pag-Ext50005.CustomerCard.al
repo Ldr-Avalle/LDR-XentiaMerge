@@ -1,5 +1,6 @@
 pageextension 50005 "Customer Card" extends "Customer Card"
 {
+    //todo:todo lo relacionado con las visibilidades de los campos no lo he puesto porque en teoria no se necesita
     layout
     {
 

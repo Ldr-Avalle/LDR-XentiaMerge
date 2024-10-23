@@ -53,9 +53,69 @@ pageextension 50007 "Vendor List" extends "Vendor List"
         {
             Visible = ProveedorVisible;
         }
+        modify(Dimensions)
+        {
+            Visible = false;
+        }
+        modify(DimensionsSingle)
+        {
+            Visible = false;
+        }
+        modify(DimensionsMultiple)
+        {
+            Visible = false;
+        }
+        modify("Bank Accounts")
+        {
+            Visible = false;
+        }
+        modify(OrderAddresses)
+        {
+            Visible = false;
+        }
+        modify("P&ayment Days")
+        {
+            Visible = false;
+        }
+        modify("Non-Pa&yment Periods")
+        {
+            Visible = false;
+        }
+        modify("Item Refe&rences")
+        {
+            Visible = false;
+        }
         modify(Purchases)
         {
             Visible = ComprasVisible;
+        }
+        modify(Items)
+        {
+            Visible = false;
+        }
+        modify("Invoice &Discounts")
+        {
+            Visible = false;
+        }
+        modify(PriceLists)
+        {
+            Visible = false;
+        }
+        modify(DiscountLines)
+        {
+            Visible = false;
+        }
+        modify("Prepa&yment Percentages")
+        {
+            Visible = false;
+        }
+        modify(Quotes)
+        {
+            Visible = false;
+        }
+        modify("Blanket Orders")
+        {
+            Visible = false;
         }
     }
     trigger OnOpenPage()

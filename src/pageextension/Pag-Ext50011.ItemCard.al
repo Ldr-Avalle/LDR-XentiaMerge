@@ -1,4 +1,4 @@
-/*
+
 pageextension 50011 "Item Card" extends "Item Card"
 {
     layout
@@ -25,13 +25,128 @@ pageextension 50011 "Item Card" extends "Item Card"
         }
         modify("Created From Nonstock Item")
         {
-            Visible = CreatedFromNonstockItemVisible;
+            Visible = false;
         }
         modify("Item Category Code")
         {
             Visible = ItemCategoryCodeVisible;
         }
+        modify("Service Item Group")
+        {
+            Visible = false;
+        }
+        modify("Blocked")
+        {
+            Editable = BlockedEditable;
+        }
+        modify("Last Date Modified")
+        {
+            Visible = LastDateModifiedVisible;
+        }
+        modify("Costing Method")
+        {
+            Visible = CostingMethodVisible;
+        }
+        modify("Cost is Adjusted")
+        {
+            Visible = CostisAdjustedVisible;
+        }
+        modify("Cost is Posted to G/L")
+        {
+            Visible = CostisPostedtoGLVisible;
+        }
+        modify("Standard Cost")
+        {
+            Visible = StandardCostVisible;
+        }
+        modify("Overhead Rate")
+        {
+            Visible = OverheadRateVisible;
+        }
+        modify("Indirect Cost %")
+        {
+            Visible = IndirectCostVisible;
+        }
+        modify("Last Direct Cost")
+        {
+            Visible = LastDirectCostVisible;
+        }
+        modify("Price/Profit Calculation")
+        {
+            Visible = PriceProfitCalculationVisible;
+        }
+        modify("Profit %")
+        {
+            Visible = ProfitVisible;
+        }
+        modify("Gen. Prod. Posting Group")
+        {
+            Visible = GenProdPostingGroupVisible;
+        }
+        modify("VAT Prod. Posting Group")
+        {
+            Visible = VATProdPostingGroupVisible;
+        }
+        modify("Inventory Posting Group")
+        {
+            Visible = InventoryPostingGroupVisible;
+        }
+        modify("Sales Unit of Measure")
+        {
+            Visible = SalesUnitofMeasureVisible;
+        }
+        modify("Replenishment System")
+        {
+            Visible = ReplenishmentSystemVisible;
+        }
+        modify("Lead Time Calculation")
+        {
+            Visible = LeadTimeCalculationVisible;
+        }
+        modify("Vendor No.")
+        {
+            Visible = VendorNoVisible;
+        }
+        modify("Purch. Unit of Measure")
+        {
+            Visible = PurchUnitofMeasureVisible;
+        }
+        modify("Reordering Policy")
+        {
+            Visible = ReorderingPolicyVisible;
+        }
+        modify("Serial Nos.")
+        {
+            Visible = SerialNosVisible;
+        }
+        modify("Lot Nos.")
+        {
+            Visible = LotNosVisible;
+        }
+        addlast(Control61)
+        {
+            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            {
+                ApplicationArea = All;
+            }
+            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+            {
+                ApplicationArea = All;
+            }
+        }
+        addlast(Purchase)
+        {
+            field("On Deposit"; Rec."On Deposit")
+            {
+                ApplicationArea = All;
+            }
+            field("Quantity returns orders"; Rec."Quantity returns orders")
+            {
+                ApplicationArea = All;
+            }
+        }
     }
+
     trigger OnAfterGetRecord()
     var
         UserDim: Record 50000;
@@ -81,5 +196,37 @@ pageextension 50011 "Item Card" extends "Item Card"
         ComprasVisible := show;
         AccionesVisible := show;
     end;
+
+    var
+        StandardCostVisible: Boolean;
+        CostisAdjustedVisible: Boolean;
+        CostisPostedtoGLVisible: Boolean;
+        OverheadRateVisible: Boolean;
+        IndirectCostVisible: Boolean;
+        PriceProfitCalculationVisible: Boolean;
+        ItemCategoryCodeVisible: Boolean;
+        GenProdPostingGroupVisible: Boolean;
+        VATProdPostingGroupVisible: Boolean;
+        InventoryPostingGroupVisible: Boolean;
+        SalesUnitofMeasureVisible: Boolean;
+        ProfitVisible: Boolean;
+        CostingMethodVisible: Boolean;
+        ProductGroupCodeVisible: Boolean;
+        LastDateModifiedVisible: Boolean;
+        VendorNoVisible: Boolean;
+        AutomaticExtTextsVisible: Boolean;
+        ReorderingPolicyVisible: Boolean;
+        LotNosVisible: Boolean;
+        ReplenishmentSystemVisible: Boolean;
+        PurchUnitofMeasureVisible: Boolean;
+        LeadTimeCalculationVisible: Boolean;
+        SerialNosVisible: Boolean;
+        ShelfNoVisible: Boolean;
+        LastDirectCostVisible: Boolean;
+        UnitCostVisible: Boolean;
+        BlockedEditable: Boolean;
+        BaseUnitofMeasureEditable: Boolean;
+        VentasVisible: Boolean;
+        ComprasVisible: Boolean;
+        AccionesVisible: Boolean;
 }
-*/

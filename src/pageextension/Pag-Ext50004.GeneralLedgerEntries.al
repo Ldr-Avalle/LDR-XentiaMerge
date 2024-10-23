@@ -21,6 +21,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
             field("Document Date"; Rec."Document Date")
             {
                 ApplicationArea = All;
+                Editable = false;
             }
         }
         addlast(Control1)
