@@ -1,17 +1,7 @@
-pageextension 50015 "Sales Quote" extends "Sales Quote"
+pageextension 50016 "Sales Order" extends "Sales Order"
 {
     layout
     {
-        modify("Shortcut Dimension 1 Code")
-        {
-            ApplicationArea = all;
-            Visible = ShowDim_1;
-        }
-        modify("Shortcut Dimension 2 Code")
-        {
-            ApplicationArea = all;
-            Visible = ShowDim_2;
-        }
         addafter("Shortcut Dimension 2 Code")
         {
             field(ShortcutDimCode3; ShortcutDimCode[3])
@@ -87,6 +77,55 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
                 end;
             }
         }
+        modify("Shortcut Dimension 1 Code")
+        {
+            ApplicationArea = all;
+            Visible = ShowDim_1;
+        }
+        modify("Shortcut Dimension 2 Code")
+        {
+            ApplicationArea = all;
+            Visible = ShowDim_2;
+        }
+    }
+
+    actions
+    {
+        modify(Post)
+        {
+            trigger OnBeforeAction()
+            begin
+                ValidateDim;
+            end;
+        }
+        modify("Post and Print Prepmt. Invoic&e")
+        {
+            trigger OnBeforeAction()
+            begin
+                ValidateDim;
+            end;
+        }
+        modify("Post and Print Prepmt. Cr. Mem&o")
+        {
+            trigger OnBeforeAction()
+            begin
+                ValidateDim;
+            end;
+        }
+        modify(PostAndNew)
+        {
+            trigger OnBeforeAction()
+            begin
+                ValidateDim;
+            end;
+        }
+        modify(PostAndSend)
+        {
+            trigger OnBeforeAction()
+            begin
+                ValidateDim;
+            end;
+        }
     }
 
     trigger OnOpenPage()
@@ -150,12 +189,7 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
                 ShowDim_8 := TRUE;
     end;
 
-    trigger OnAfterGetRecord()
-    begin
-        rec.ShowDocDim();
-    end;
-
-    LOCAL PROCEDURE ValidateDim();
+    PROCEDURE ValidateDim();
     BEGIN
         IF (ShowDim_1) AND (rec."Shortcut Dimension 1 Code" = '') THEN BEGIN
             msg := STRSUBSTNO(Text50000, 1);
@@ -213,5 +247,7 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
         ShowDim_8: Boolean;
         msg: Text;
         Text50000: Label 'El valor de la dimension %1 no puede estar vacio';
+        OpenPostedSalesOrderQst: Label 'El pedido se registró y se movió a la ventana de facturas de venta registradas.\\¿Quiere abrir la factura registrada?';
+        OperationDescription: Text[500];
 
 }
