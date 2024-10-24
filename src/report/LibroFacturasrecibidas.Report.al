@@ -414,7 +414,7 @@ report 50035 "Libro Facturas recibidas"
         PurchLine7: Record "Purch. Inv. Line";
         CRLine: Record "Purch. Cr. Memo Line";
         CRLine2: Record "Purch. Cr. Memo Line";
-        filtroTipoFecha: Option " ",Registro,"Emisi´Š¢n",Vencimiento;
+        filtroTipoFecha: Option " ",Registro,"Emisión",Vencimiento;
         fechaDesde: Date;
         fechaHasta: Date;
         totalIvaLinea: Decimal;

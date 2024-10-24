@@ -47,4 +47,3 @@ report 50030 "Test 17vs45"
         regMovCont: Record "G/L Entry";
         Salto: Integer;
 }
-

@@ -229,11 +229,21 @@ report 50020 "Abono Venta"
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
         Language: Record Language;
+        CalculatedExchRate: Decimal;
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordCI: Record "Company Information";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        rec50000: Record "User Dimensions_LDR";
+        UserDims: Record "User Dimensions_LDR";
         CurrExchRate: Record "Currency Exchange Rate";
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
+        funcionesGenericas: Codeunit FuncionesGenericas;
         SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
         FormatAddr: Codeunit "Format Address";
         SegManagement: Codeunit SegManagement;
-        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -264,18 +274,9 @@ report 50020 "Abono Venta"
         VALVATAmountLCY: Decimal;
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
-        CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "VAT Posting Setup";
-        PaymentMethod: Record "Payment Method";
-        recordCI: Record "Company Information";
-        recordC: Record Customer;
-        recordSIH: Record "Sales Invoice Header";
-        rec50000: Record "User Dimensions_LDR";
         subtotal: Decimal;
         totalIva: Decimal;
         total: Decimal;
-        ItemTrackingMgt: Codeunit "Item Tracking Management";
-        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';
@@ -291,7 +292,6 @@ report 50020 "Abono Venta"
         Userdimension: Code[30];
         VerCampo: Boolean;
         TBAI_activated: Boolean;
-        //TODO: lo he metido en funciones genericas
-        //TBAIManagement: Codeunit "10700";
-        funcionesGenericas: Codeunit FuncionesGenericas;
+    //TODO: lo he metido en funciones genericas
+    //TBAIManagement: Codeunit "10700";
 }

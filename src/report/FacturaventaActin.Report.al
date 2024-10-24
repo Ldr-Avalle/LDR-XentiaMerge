@@ -334,6 +334,7 @@ report 50009 "Factura venta Actin"
         recordC: Record Customer;
         recordSIH: Record "Sales Invoice Header";
         ItemLedgEntry: Record "Item Ledger Entry" temporary;
+        UserDims: Record "User Dimensions_LDR";
         ItemTrackingMgt: Codeunit "Item Tracking Management";
         SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
         FormatAddr: Codeunit "Format Address";
@@ -370,7 +371,6 @@ report 50009 "Factura venta Actin"
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
         ImpFactNoAbonadas: Boolean;
-        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson', Comment = 'ESP="Vendedor"';
         Text001: Label 'Total %1', Comment = 'ESP="Total %1"';
         Text002: Label 'Total %1 Incl. VAT', Comment = 'ESP="Total %1 IVA incl."';
@@ -389,4 +389,3 @@ report 50009 "Factura venta Actin"
         DisplayAssemblyInformation: Boolean;
         VerCampo: Boolean;
 }
-

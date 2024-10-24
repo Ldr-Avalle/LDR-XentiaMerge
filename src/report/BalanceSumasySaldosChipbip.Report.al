@@ -434,6 +434,7 @@ report 50052 "Balance Sumas y Saldos Chipbip"
     end;
 
     var
+        CompanyInfo: Record "Company Information";
         GLSetup: Record "General Ledger Setup";
         GLAcc: Record "G/L Account";
         GLAcc2: Record "G/L Account";
@@ -500,7 +501,6 @@ report 50052 "Balance Sumas y Saldos Chipbip"
         AcumBalanceatDateCaptionLbl: Label 'Acum. Balance at Date', Comment = 'ESP="Saldo acum. a fecha"';
         TotalCaptionLbl: Label 'Total. . . . . . . . ';
         BlankLineNo: Integer;
-        CompanyInfo: Record "Company Information";
 
     procedure StartingPeriod(Date: Date): Date
     var

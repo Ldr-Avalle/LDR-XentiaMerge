@@ -15,6 +15,7 @@ report 50021 "Abono Venta Actin"
             DataItemTableView = sorting("No.");
             RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
             RequestFilterHeading = 'Posted Sales Invoice';
+
             column(No_SalesInvHdr; "No.")
             {
             }
@@ -209,14 +210,22 @@ report 50021 "Abono Venta Actin"
         SalesSetup: Record "Sales & Receivables Setup";
         Cust: Record Customer;
         VATAmountLine: Record "VAT Amount Line" temporary;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
         Language: Record Language;
         CurrExchRate: Record "Currency Exchange Rate";
+        VATPostingSetup: Record "VAT Posting Setup";
+        PaymentMethod: Record "Payment Method";
+        recordCI: Record "Company Information";
+        recordC: Record Customer;
+        recordSIH: Record "Sales Invoice Header";
+        rec50000: Record "User Dimensions_LDR";
+        UserDims: Record "User Dimensions_LDR";
+        ItemTrackingMgt: Codeunit "Item Tracking Management";
         SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
         FormatAddr: Codeunit "Format Address";
         SegManagement: Codeunit SegManagement;
-        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -248,17 +257,9 @@ report 50021 "Abono Venta Actin"
         VALSpecLCYHeader: Text[80];
         VALExchRate: Text[50];
         CalculatedExchRate: Decimal;
-        VATPostingSetup: Record "VAT Posting Setup";
-        PaymentMethod: Record "Payment Method";
-        recordCI: Record "Company Information";
-        recordC: Record Customer;
-        recordSIH: Record "Sales Invoice Header";
-        rec50000: Record "User Dimensions_LDR";
         subtotal: Decimal;
         totalIva: Decimal;
         total: Decimal;
-        ItemTrackingMgt: Codeunit "Item Tracking Management";
-        UserDims: Record "User Dimensions_LDR";
         Text000: Label 'Salesperson';
         Text001: Label 'Total %1';
         Text002: Label 'Total %1 Incl. VAT';

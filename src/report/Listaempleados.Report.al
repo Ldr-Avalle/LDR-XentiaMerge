@@ -1,7 +1,10 @@
 report 50094 "Lista empleados"
 {
+    ApplicationArea = All;
+    Caption = 'Lista empleados';
     DefaultLayout = RDLC;
     RDLCLayout = './src/layout/Lista empleados.rdl';
+    UsageCategory = ReportsAndAnalysis;
 
     dataset
     {

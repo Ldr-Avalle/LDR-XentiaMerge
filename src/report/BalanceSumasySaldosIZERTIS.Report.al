@@ -1,8 +1,10 @@
 report 50083 "Balance Sumas y Saldos IZERTIS"
 {
+    ApplicationArea = All;
+    Caption = 'Trial Balance', Comment = 'ESP="Balance sumas y saldos"';
     DefaultLayout = RDLC;
     RDLCLayout = './src/layout/Balance Sumas y Saldos IZERTIS.rdl';
-    Caption = 'Trial Balance', Comment = 'ESP="Balance sumas y saldos"';
+    UsageCategory = ReportsAndAnalysis;
 
     dataset
     {

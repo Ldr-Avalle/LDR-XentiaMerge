@@ -88,6 +88,7 @@ report 50086 "Control vencim. mayore 85 dias"
     }
 
     var
+        CompanyInfo: Record "Company Information";
         LastFieldNo: Integer;
         FooterPrinted: Boolean;
         total0a85: Decimal;
@@ -96,5 +97,4 @@ report 50086 "Control vencim. mayore 85 dias"
         diasDif: Decimal;
         PageConst: Label 'Página';
         TotalFor: Label 'Total para ';
-        CompanyInfo: Record "Company Information";
 }

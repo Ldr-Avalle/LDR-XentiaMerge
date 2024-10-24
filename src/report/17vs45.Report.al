@@ -28,7 +28,6 @@ report 50029 "17vs45"
 
             trigger OnPreDataItem()
             begin
-
                 n := Count;
                 v.Open('@1@@@@@@@@@@@@@@@@@@@\' +
                        '@2@@@@@@@@@@@@@@@@@@@');
@@ -78,11 +77,11 @@ report 50029 "17vs45"
     end;
 
     var
+        gblT45: Record "G/L Register";
+        gblT17: Record "G/L Entry";
         i: Integer;
         n: Integer;
         v: Dialog;
-        gblT45: Record "G/L Register";
-        gblT17: Record "G/L Entry";
 
     local procedure TraePrimerMovIva(): Integer
     var
