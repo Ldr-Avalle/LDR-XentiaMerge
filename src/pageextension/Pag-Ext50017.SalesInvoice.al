@@ -399,7 +399,7 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
     }
     trigger OnAfterGetRecord()
     begin
-        rec.ShowDocDim();
+        ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
@@ -524,7 +524,13 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         CurrPage.UPDATE;
     END;
 
+    procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
+    begin
+        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", ShortcutDimCode);
+    end;
+
     var
+        DimMgt: Codeunit DimensionManagement;
         GeneralLedgerSetup: Record 98;
         Dimension: Record 348;
         codCli: Code[20];

@@ -399,7 +399,7 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
 
     trigger OnAfterGetRecord()
     begin
-        rec.ShowDocDim();
+        ShowShortcutDimCode(ShortcutDimCode);
     end;
 
     trigger OnOpenPage()
@@ -566,7 +566,13 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         CurrPage.UPDATE;
     END;
 
+    procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
+    begin
+        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", ShortcutDimCode);
+    end;
+
     var
+        DimMgt: Codeunit DimensionManagement;
         ExternalDocumentNoVisible: Boolean;
         SalespersonCodeVisible: Boolean;
         LocationCodeVisible: Boolean;
