@@ -152,10 +152,10 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
 
     trigger OnAfterGetRecord()
     begin
-        rec.ShowDocDim();
+        ShowShortcutDimCode(ShortcutDimCode);
     end;
 
-    LOCAL PROCEDURE ValidateDim();
+    PROCEDURE ValidateDim();
     BEGIN
         IF (ShowDim_1) AND (rec."Shortcut Dimension 1 Code" = '') THEN BEGIN
             msg := STRSUBSTNO(Text50000, 1);
@@ -195,7 +195,13 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
         END;
     END;
 
+    procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
+    begin
+        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", ShortcutDimCode);
+    end;
+
     var
+        DimMgt: Codeunit DimensionManagement;
         GeneralLedgerSetup: Record 98;
         Dimension: Record 348;
         codCli: Code[20];
