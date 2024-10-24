@@ -126,14 +126,19 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify("Sell-to Contact")
         {
             Visible = true;
+            ApplicationArea = all;
+
         }
         modify("External Document No.")
         {
             Visible = ExternalDocumentNoVisible;
+            ApplicationArea = all;
+
         }
         modify("Salesperson Code")
         {
             Visible = SalespersonCodeVisible;
+            ApplicationArea = all;
         }
         modify("Prices Including VAT")
         {
@@ -147,106 +152,132 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify("Bill-to Name")
         {
             Visible = BilltoNameVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to Address")
         {
             Visible = BilltoAddressVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to Address 2")
         {
             Visible = BilltoAddress2Visible;
+            ApplicationArea = all;
         }
         modify("Bill-to Post Code")
         {
             Visible = BilltoPostCodeVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to City")
         {
             Visible = BilltoCityVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to County")
         {
             Visible = BilltoCountyVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to Country/Region Code")
         {
             Visible = BilltoCountryVisible;
+            ApplicationArea = all;
         }
         modify("Bill-to Contact No.")
         {
             Visible = BilltoContactVisible;
+            ApplicationArea = all;
         }
         modify("Payment Terms Code")
         {
             Visible = PaymentTermsCodeVisible;
+            ApplicationArea = all;
         }
         modify("Due Date")
         {
             Visible = DueDateVisible;
+            ApplicationArea = all;
         }
         modify("Payment Discount %")
         {
             Visible = PaymentDiscountVisible;
+            ApplicationArea = all;
         }
         modify("Pmt. Discount Date")
         {
             Visible = PmtDiscountDateVisible;
+            ApplicationArea = all;
         }
         modify("VAT Bus. Posting Group")
         {
             Visible = VATBusPostingGroupVisible;
+            ApplicationArea = all;
         }
         modify("Location Code")
         {
             Visible = LocationCodeVisible;
+            ApplicationArea = all;
         }
         modify("Shipment Date")
         {
             Visible = ShipmentDateVisible;
+            ApplicationArea = all;
         }
         modify("Cust. Bank Acc. Code")
         {
             Visible = CustBankAccCodeVisible;
+            ApplicationArea = all;
         }
         modify("Currency Code")
         {
             Visible = CurrencyCodeVisible;
+            ApplicationArea = all;
         }
         modify("EU 3-Party Trade")
         {
             Visible = EU3PartyTradeVisible;
+            ApplicationArea = all;
         }
         modify("Transaction Type")
         {
             Visible = TransactionTypeVisible;
+            ApplicationArea = all;
         }
         modify("Transaction Specification")
         {
             Visible = TransactionSpecificationVisible;
+            ApplicationArea = all;
         }
         modify("Transport Method")
         {
             Visible = TransportMethodVisible;
+            ApplicationArea = all;
         }
         modify("Exit Point")
         {
             Visible = ExitPointVisible;
+            ApplicationArea = all;
         }
         modify("Area")
         {
             Visible = AreaVisible;
+            ApplicationArea = all;
         }
         modify("Applies-to Doc. Type")
         {
             Visible = AppliesToDocTypeVisible;
+            ApplicationArea = all;
         }
         modify("Applies-to Doc. No.")
         {
             Visible = AppliesToDocNoVisible;
+            ApplicationArea = all;
         }
         modify("Applies-to ID")
         {
             Visible = AppliesToIDVisible;
+            ApplicationArea = all;
         }
         modify("Shortcut Dimension 1 Code")
         {
@@ -265,30 +296,37 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify("Credit Memo")
         {
             Visible = AbonoVisible;
+
         }
         modify("F&unctions")
         {
             Visible = AccionesVisible;
+
         }
         modify(CalculateInvoiceDiscount)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify(ApplyEntries)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify(GetStdCustSalesCodes)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify("Move Negative Lines")
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify(SendApprovalRequest)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify(SendApprovalRequest_Promoted)
         {
@@ -297,6 +335,7 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify(CancelApprovalRequest)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         modify(CancelApprovalRequest_Promoted)
         {
@@ -305,6 +344,7 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify(Post)
         {
             Visible = false;
+            ApplicationArea = all;
         }
         addafter(Post)
         {

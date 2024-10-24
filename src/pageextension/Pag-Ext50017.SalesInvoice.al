@@ -178,10 +178,12 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         modify("External Document No.")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Salesperson Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Posting No.")
         {
@@ -190,122 +192,152 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         modify("Bill-to Contact No.")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to Name")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to Address")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to Address 2")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to Post Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to City")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to County")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Bill-to Country/Region Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Name")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Address")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Address 2")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Post Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to City")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to County")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Country/Region Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Ship-to Contact")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Shipment Method Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Shipping Agent Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Package Tracking No.")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Shipment Date")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Applies-to Doc. Type")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Applies-to Doc. No.")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Cust. Bank Acc. Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Currency Code")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("EU 3-Party Trade")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Transaction Type")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Transaction Specification")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Transport Method")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify("Exit Point")
         {
             Visible = show;
+            ApplicationArea = all;
         }
         modify(SalesLines)
         {
