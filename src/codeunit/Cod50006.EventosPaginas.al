@@ -17,4 +17,13 @@ codeunit 50006 EventosPaginas
         end;
     #endregion
     */
+
+
+    #region page 5703 "Location Card"
+    [EventSubscriber(ObjectType::Page, Page::"Location Card", 'OnAfterUpdateEnabled', '', false, false)]
+    local procedure OnAfterUpdateEnabled(Location: Record Location; sender: Page "Location Card")
+    begin
+        Location."Use Put-away Worksheet" := Location."Directed Put-away and Pick" OR (Location."Require Put-away" AND NOT Location."Use As In-Transit" AND NOT Location."Bin Mandatory");
+    end;
+    #endregion
 }
