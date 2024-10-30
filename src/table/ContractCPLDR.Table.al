@@ -1,4 +1,4 @@
-table 90005 ContractCP_LDR
+table 90005 "ContractCP_LDR"
 {
     Caption = 'Contrato';
     LookupPageID = "Contract List";
@@ -182,7 +182,7 @@ table 90005 ContractCP_LDR
 
     trigger OnDelete()
     var
-        Text0001: Label 'Borrado no permitido';
+        //Text0001: Label 'Borrado no permitido';
         ContractLines: Record "Contract Lines_LDR";
     begin
         ContractLines.SetFilter(Contract, '%1', "Nº");

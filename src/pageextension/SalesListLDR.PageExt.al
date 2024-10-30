@@ -1,10 +1,10 @@
-pageextension 50019 "Sales List" extends "Sales List"
+pageextension 50019 "Sales List_LDR" extends "Sales List"
 {
     layout
     {
         addafter("Sell-to Customer Name")
         {
-            field("Posting No."; Rec."Posting No.")
+            field("Posting No._LDR"; Rec."Posting No.")
             {
                 ApplicationArea = All;
             }
@@ -12,12 +12,12 @@ pageextension 50019 "Sales List" extends "Sales List"
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.RESET;
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN
-            rec.SETRANGE("Assigned User ID", USERID);
+        gbldimensiones.Reset;
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst then
+            Rec.SetRange("Assigned User ID", UserId);
     end;
 
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

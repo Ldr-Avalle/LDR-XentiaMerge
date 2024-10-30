@@ -1,10 +1,10 @@
-pageextension 50023 "Purchase Order" extends "Purchase Order"
+pageextension 50023 "Purchase Order_LDR" extends "Purchase Order"
 {
     layout
     {
         addafter("Buy-from Contact")
         {
-            field("Posting No. Series"; Rec."Posting No. Series")
+            field("Posting No. Series_LDR"; Rec."Posting No. Series")
             {
                 ApplicationArea = All;
             }
@@ -12,73 +12,79 @@ pageextension 50023 "Purchase Order" extends "Purchase Order"
         addafter("Shortcut Dimension 2 Code")
         {
 
-            field(ShortcutDimCode3; ShortcutDimCode[3])
+            field(ShortcutDimCode3_LDR; ShortcutDimCode[3])
             {
                 CaptionClass = '1,2,3';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_3;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
                 end;
             }
-            field(ShortcutDimCode4; ShortcutDimCode[4])
+            field(ShortcutDimCode4_LDR; ShortcutDimCode[4])
             {
                 CaptionClass = '1,2,4';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_4;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
                 end;
             }
-            field(ShortcutDimCode5; ShortcutDimCode[5])
+            field(ShortcutDimCode5_LDR; ShortcutDimCode[5])
             {
                 CaptionClass = '1,2,5';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_5;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
                 end;
             }
-            field(ShortcutDimCode6; ShortcutDimCode[6])
+            field(ShortcutDimCode6_LDR; ShortcutDimCode[6])
             {
                 CaptionClass = '1,2,6';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_6;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
                 end;
             }
-            field(ShortcutDimCode7; ShortcutDimCode[7])
+            field(ShortcutDimCode7_LDR; ShortcutDimCode[7])
             {
                 CaptionClass = '1,2,7';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_7;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
                 end;
             }
-            field(ShortcutDimCode8; ShortcutDimCode[8])
+            field(ShortcutDimCode8_LDR; ShortcutDimCode[8])
             {
                 CaptionClass = '1,2,8';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_8;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
@@ -638,6 +644,7 @@ pageextension 50023 "Purchase Order" extends "Purchase Order"
         ShiptoCodeVisible: Boolean;
         EntryPointVisible: Boolean;
         VendorBankAccCodeVisible: Boolean;
+        /*
         BizTalkPurchaseOrderVisible: Boolean;
         DateSentVisible: Boolean;
         TimeSentVisible: Boolean;
@@ -647,6 +654,7 @@ pageextension 50023 "Purchase Order" extends "Purchase Order"
         TimeReceivedVisible: Boolean;
         BizTalkPurchaseReceiptVisible: Boolean;
         BizTalkPurchaseInvoiceVisible: Boolean;
+        */
         PrepaymentVisible: Boolean;
         CompressPrepaymentVisible: Boolean;
         PrepmtPaymentTermsCodeVisible: Boolean;
@@ -658,11 +666,11 @@ pageextension 50023 "Purchase Order" extends "Purchase Order"
         PaymentMethodCodeVisible: Boolean;
         GeneralLedgerSetup: Record 98;
         Dimension: Record 348;
-        codCli: Code[20];
-        show: Boolean;
+        //codCli: Code[20];
+        //show: Boolean;
         ShortcutDimCode: ARRAY[8] OF Code[20];
-        ShowDim: ARRAY[8] OF Boolean;
-        i: Integer;
+        //ShowDim: ARRAY[8] OF Boolean;
+        //i: Integer;
         ShowDim_1: Boolean;
         ShowDim_2: Boolean;
         ShowDim_3: Boolean;
@@ -673,5 +681,5 @@ pageextension 50023 "Purchase Order" extends "Purchase Order"
         ShowDim_8: Boolean;
         msg: Text;
         Text50000: Label 'El valor de la dimension %1 no puede estar vacio';
-        OperationDescription: Text[500];
+    //OperationDescription: Text[500];
 }

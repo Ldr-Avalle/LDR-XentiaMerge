@@ -1,4 +1,4 @@
-pageextension 50069 "Item Tracing" extends "Item Tracing"
+pageextension 50069 "Item Tracing_LDR" extends "Item Tracing"
 {
     layout
     {
@@ -17,11 +17,11 @@ pageextension 50069 "Item Tracing" extends "Item Tracing"
     }
     trigger OnOpenPage()
     var
-        UserDim: Record 50000;
+        UserDim: Record "User Dimensions_LDR";
     begin
-        VariantFilterVisible := (NOT UserDim.existsUser(USERID));
-        LotNoFilterVisible := (NOT UserDim.existsUser(USERID));
-        ShowComponentsVisible := (NOT UserDim.existsUser(USERID));
+        VariantFilterVisible := (not UserDim.existsUser(UserId));
+        LotNoFilterVisible := (not UserDim.existsUser(UserId));
+        ShowComponentsVisible := (not UserDim.existsUser(UserId));
     end;
 
     var

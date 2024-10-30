@@ -1,10 +1,10 @@
-pageextension 50072 "Get Return Shipment Lines" extends "Get Return Shipment Lines"
+pageextension 50072 "Get Return Shipment Lines_LDR" extends "Get Return Shipment Lines"
 {
     layout
     {
         addafter("No.")
         {
-            field("Posting Date"; Rec."Posting Date")
+            field("Posting Date_LDR"; Rec."Posting Date")
             {
                 ApplicationArea = All;
             }
@@ -12,7 +12,7 @@ pageextension 50072 "Get Return Shipment Lines" extends "Get Return Shipment Lin
             {
                 ApplicationArea = All;
             }
-            field("Unit Cost"; Rec."Unit Cost")
+            field("Unit Cost_LDR"; Rec."Unit Cost")
             {
                 ApplicationArea = All;
             }

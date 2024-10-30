@@ -1,4 +1,4 @@
-pageextension 50021 "Sales Invoice Subform" extends "Sales Invoice Subform"
+pageextension 50021 "Sales Invoice Subform_LDR" extends "Sales Invoice Subform"
 {
     layout
     {
@@ -6,20 +6,20 @@ pageextension 50021 "Sales Invoice Subform" extends "Sales Invoice Subform"
         {
             trigger OnBeforeValidate()
             begin
-                rec.ShowShortcutDimCode(ShortcutDimCode);
+                Rec.ShowShortcutDimCode(ShortcutDimCode);
             end;
         }
         modify(Quantity)
         {
             trigger OnAfterValidate()
             begin
-                gbldimensiones.RESET;
-                gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN BEGIN
+                gbldimensiones.Reset();
+                gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+                if gbldimensiones.FindFirst() then begin
                     Rec."Location Code" := gbldimensiones."Location Code";
-                    rec.MODIFY;
-                    CurrPage.UPDATE;
-                END;
+                    Rec.Modify();
+                    CurrPage.Update();
+                end;
             end;
         }
         modify("Location Code")
@@ -33,7 +33,7 @@ pageextension 50021 "Sales Invoice Subform" extends "Sales Invoice Subform"
             ApplicationArea = All;
             trigger OnAfterValidate()
             begin
-                RedistributeTotalsOnAfterValidate;
+                RedistributeTotalsOnAfterValidate();
             end;
         }
         modify("Qty. to Assign")
@@ -49,9 +49,9 @@ pageextension 50021 "Sales Invoice Subform" extends "Sales Invoice Subform"
     }
     trigger OnNewRecord(BelowXrec: Boolean)
     begin
-        rec.Type := rec.Type::Item;
+        Rec.Type := Rec.Type::Item;
     end;
 
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

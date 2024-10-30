@@ -1,49 +1,52 @@
-pageextension 50076 "Bookkeeper Role Center" extends "Bookkeeper Role Center"
+pageextension 50076 "Bookkeeper Role Center_LDR" extends "Bookkeeper Role Center"
 {
     actions
     {
         addafter("G/L Registers")
         {
-            action(InformeRetenciones)
+            action(InformeRetenciones_LDR)
             {
                 Caption = 'Informe de Retenciones';
                 Image = Report;
-                RunObject = report 50040;
+                RunObject = report "Informe de retenciones";
+                ApplicationArea = All;
             }
-            action(AlbaranesCompraMes)
+            action(AlbaranesCompraMes_LDR)
             {
                 Caption = 'Albaranes compra facturados mes diferente';
                 Image = Shipment;
-                RunObject = report 50090;
+                RunObject = report "Control albaranes compra";
+                ApplicationArea = All;
             }
-            action(AlbaranesSinFacturar)
+            action(AlbaranesSinFacturar_LDR)
             {
                 Caption = 'Albaranes sin facturar';
                 Image = Shipment;
-                RunObject = report 50057;
+                RunObject = report "Listado Albaranes Compra y dev";
+                ApplicationArea = All;
             }
         }
         addafter("Bill Group - Export Formats")
         {
-            action(RemesaExportarN19)
+            action(RemesaExportarN19_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N19';
-                RunObject = report 7000092;
+                RunObject = report "Bill group - Export N19";
                 Image = Report;
             }
-            action(RemesaExportarN32)
+            action(RemesaExportarN32_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N32';
-                RunObject = report 7000093;
+                RunObject = report "Bill group - Export N32";
                 Image = Report;
             }
-            action(RemesaExportarN58)
+            action(RemesaExportarN58_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N58';
-                RunObject = report 7000091;
+                RunObject = report "Bill group - Export N58";
                 Image = Report;
             }
         }

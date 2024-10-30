@@ -1,15 +1,16 @@
-pageextension 50090 "User Card" extends "User Card"
+pageextension 50090 "User Card_LDR" extends "User Card"
 {
     actions
     {
         addafter(ChangeWebServiceAccessKey)
         {
-            action(Dimension)
+            action(Dimension_LDR)
             {
                 Caption = 'Dimension';
-                RunObject = Page 540;
-                RunPageLink = "Table ID" = CONST(2000000120), "No." = field("User Name");
+                RunObject = page "Default Dimensions";
+                RunPageLink = "Table ID" = const(2000000120), "No." = field("User Name");
                 Image = Dimensions;
+                ApplicationArea = All;
             }
         }
     }

@@ -1,4 +1,4 @@
-pageextension 50087 "Service Orders" extends "Service Orders"
+pageextension 50087 "Service Orders_LDR" extends "Service Orders"
 {
     layout
     {

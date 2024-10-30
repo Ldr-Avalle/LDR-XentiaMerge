@@ -1,10 +1,10 @@
-pageextension 50026 "Purchase List" extends "Purchase List"
+pageextension 50026 "Purchase List_LDR" extends "Purchase List"
 {
     layout
     {
         addafter("Buy-from Contact")
         {
-            field(Amount; Rec.Amount)
+            field(Amount_LDR; Rec.Amount)
             {
                 ApplicationArea = All;
             }
@@ -30,13 +30,13 @@ pageextension 50026 "Purchase List" extends "Purchase List"
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.RESET;
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN
-            rec.SETRANGE("Assigned User ID", USERID);
+        gbldimensiones.Reset();
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst() then
+            Rec.SetRange("Assigned User ID", UserId);
     end;
 
-    VAR
-        DimMgt: Codeunit 408;
-        gbldimensiones: Record 50000;
+    var
+        DimMgt: Codeunit DimensionManagement;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

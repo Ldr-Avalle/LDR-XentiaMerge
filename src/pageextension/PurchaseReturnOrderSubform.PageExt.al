@@ -14,13 +14,13 @@ pageextension 50071 "Purchase Return Order Subform" extends "Purchase Return Ord
         {
             trigger OnAfterValidate()
             begin
-                gbldimensiones.RESET;
-                gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN BEGIN
+                gbldimensiones.Reset();
+                gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+                if gbldimensiones.FindFirst() then begin
                     Rec."Location Code" := gbldimensiones."Location Code";
-                    rec.MODIFY;
-                    CurrPage.UPDATE;
-                END;
+                    Rec.Modify();
+                    CurrPage.Update();
+                end;
             end;
         }
         modify("Location Code")
@@ -49,5 +49,5 @@ pageextension 50071 "Purchase Return Order Subform" extends "Purchase Return Ord
         }
     }
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

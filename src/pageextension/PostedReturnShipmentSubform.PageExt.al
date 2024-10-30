@@ -4,7 +4,7 @@ pageextension 50073 "Posted Return Shipment Subform" extends "Posted Return Ship
     {
         addafter("Quantity Invoiced")
         {
-            field("Unit Cost (LCY)"; Rec."Unit Cost (LCY)")
+            field("Unit Cost (LCY)_LDR"; Rec."Unit Cost (LCY)")
             {
                 ApplicationArea = All;
             }

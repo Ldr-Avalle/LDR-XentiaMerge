@@ -1,4 +1,4 @@
-pageextension 50088 "Service Invoices" extends "Service Invoices"
+pageextension 50088 "Service Invoices_LDR" extends "Service Invoices"
 {
     layout
     {

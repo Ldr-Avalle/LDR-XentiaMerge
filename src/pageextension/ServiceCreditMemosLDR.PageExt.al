@@ -1,4 +1,4 @@
-pageextension 50089 "Service Credit Memos" extends "Service Credit Memos"
+pageextension 50089 "Service Credit Memos_LDR" extends "Service Credit Memos"
 {
     layout
     {

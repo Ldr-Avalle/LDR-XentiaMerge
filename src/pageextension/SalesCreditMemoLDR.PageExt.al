@@ -1,102 +1,108 @@
-pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
+pageextension 50018 "Sales Credit Memo_LDR" extends "Sales Credit Memo"
 {
     layout
     {
         addafter("Assigned User ID")
         {
-            field("Amount Including VAT"; Rec."Amount Including VAT")
+            field("Amount Including VAT_LDR"; Rec."Amount Including VAT")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
-            field("Posting No."; Rec."Posting No.")
+            field("Posting No._LDR"; Rec."Posting No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
         }
         addafter("Corrected Invoice No.")
         {
-            field("Shipping No."; Rec."Shipping No.")
+            field("Shipping No._LDR"; Rec."Shipping No.")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
-            field("Posting No. Series"; Rec."Posting No. Series")
+            field("Posting No. Series_LDR"; Rec."Posting No. Series")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
         }
         addafter("Shortcut Dimension 2 Code")
         {
 
-            field(ShortcutDimCode3; ShortcutDimCode[3])
+            field(ShortcutDimCode3_LDR; ShortcutDimCode[3])
             {
                 CaptionClass = '1,2,3';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(3),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_3;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
+                    Rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
                 end;
             }
-            field(ShortcutDimCode4; ShortcutDimCode[4])
+            field(ShortcutDimCode4_LDR; ShortcutDimCode[4])
             {
                 CaptionClass = '1,2,4';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(4),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_4;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
+                    Rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
                 end;
             }
-            field(ShortcutDimCode5; ShortcutDimCode[5])
+            field(ShortcutDimCode5_LDR; ShortcutDimCode[5])
             {
                 CaptionClass = '1,2,5';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(5),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_5;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
+                    Rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
                 end;
             }
-            field(ShortcutDimCode6; ShortcutDimCode[6])
+            field(ShortcutDimCode6_LDR; ShortcutDimCode[6])
             {
                 CaptionClass = '1,2,6';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(6),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_6;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
+                    Rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
                 end;
             }
-            field(ShortcutDimCode7; ShortcutDimCode[7])
+            field(ShortcutDimCode7_LDR; ShortcutDimCode[7])
             {
                 CaptionClass = '1,2,7';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(7),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_7;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
+                    Rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
                 end;
             }
-            field(ShortcutDimCode8; ShortcutDimCode[8])
+            field(ShortcutDimCode8_LDR; ShortcutDimCode[8])
             {
                 CaptionClass = '1,2,8';
-                TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
-                                                            "Dimension Value Type" = CONST(Standard),
-                                                            Blocked = CONST(false));
+                TableRelation = "Dimension Value".Code where("Global Dimension No." = const(8),
+                                                            "Dimension Value Type" = const(Standard),
+                                                            Blocked = const(false));
                 Visible = ShowDim_8;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
-                    rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
+                    Rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
                 end;
             }
         }
@@ -104,19 +110,19 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         {
             trigger OnAfterValidate()
             begin
-                gbldimensiones.RESET;
-                gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN BEGIN
+                gbldimensiones.Reset;
+                gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+                if gbldimensiones.FindFirst then begin
                     Rec."Location Code" := gbldimensiones."Location Code";
                     Rec."Shortcut Dimension 1 Code" := gbldimensiones."Segmento Dimension Value";
                     Rec."Shortcut Dimension 2 Code" := gbldimensiones."Unidades Prod  Dimension Value";
                     ShortcutDimCode[3] := gbldimensiones."Project Dimension Value";
-                    rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
+                    Rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
                     ShortcutDimCode[4] := gbldimensiones."Provincias Dimension Value";
-                    rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
-                    rec.MODIFY;
-                    CurrPage.UPDATE;
-                END;
+                    Rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
+                    Rec.Modify;
+                    CurrPage.Update;
+                end;
             end;
         }
         modify("Sell-to Customer No.")
@@ -126,19 +132,19 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify("Sell-to Contact")
         {
             Visible = true;
-            ApplicationArea = all;
+            ApplicationArea = All;
 
         }
         modify("External Document No.")
         {
             Visible = ExternalDocumentNoVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
 
         }
         modify("Salesperson Code")
         {
             Visible = SalespersonCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Prices Including VAT")
         {
@@ -152,141 +158,141 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify("Bill-to Name")
         {
             Visible = BilltoNameVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to Address")
         {
             Visible = BilltoAddressVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to Address 2")
         {
             Visible = BilltoAddress2Visible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to Post Code")
         {
             Visible = BilltoPostCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to City")
         {
             Visible = BilltoCityVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to County")
         {
             Visible = BilltoCountyVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to Country/Region Code")
         {
             Visible = BilltoCountryVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Bill-to Contact No.")
         {
             Visible = BilltoContactVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Payment Terms Code")
         {
             Visible = PaymentTermsCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Due Date")
         {
             Visible = DueDateVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Payment Discount %")
         {
             Visible = PaymentDiscountVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Pmt. Discount Date")
         {
             Visible = PmtDiscountDateVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("VAT Bus. Posting Group")
         {
             Visible = VATBusPostingGroupVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Location Code")
         {
             Visible = LocationCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Shipment Date")
         {
             Visible = ShipmentDateVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Cust. Bank Acc. Code")
         {
             Visible = CustBankAccCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Currency Code")
         {
             Visible = CurrencyCodeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("EU 3-Party Trade")
         {
             Visible = EU3PartyTradeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Transaction Type")
         {
             Visible = TransactionTypeVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Transaction Specification")
         {
             Visible = TransactionSpecificationVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Transport Method")
         {
             Visible = TransportMethodVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Exit Point")
         {
             Visible = ExitPointVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Area")
         {
             Visible = AreaVisible;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Applies-to Doc. Type")
         {
-            Visible = AppliesToDocTypeVisible;
-            ApplicationArea = all;
+            Visible = AppliestoDocTypeVisible;
+            ApplicationArea = All;
         }
         modify("Applies-to Doc. No.")
         {
-            Visible = AppliesToDocNoVisible;
-            ApplicationArea = all;
+            Visible = AppliestoDocNoVisible;
+            ApplicationArea = All;
         }
         modify("Applies-to ID")
         {
-            Visible = AppliesToIDVisible;
-            ApplicationArea = all;
+            Visible = AppliestoIDVisible;
+            ApplicationArea = All;
         }
         modify("Shortcut Dimension 1 Code")
         {
-            ApplicationArea = all;
+            ApplicationArea = All;
             Visible = ShowDim_1;
         }
         modify("Shortcut Dimension 2 Code")
         {
-            ApplicationArea = all;
+            ApplicationArea = All;
             Visible = ShowDim_2;
 
         }
@@ -306,27 +312,27 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify(CalculateInvoiceDiscount)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify(ApplyEntries)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify(GetStdCustSalesCodes)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify("Move Negative Lines")
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify(SendApprovalRequest)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify(SendApprovalRequest_Promoted)
         {
@@ -335,7 +341,7 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify(CancelApprovalRequest)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         modify(CancelApprovalRequest_Promoted)
         {
@@ -344,7 +350,7 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         modify(Post)
         {
             Visible = false;
-            ApplicationArea = all;
+            ApplicationArea = All;
         }
         addafter(Post)
         {
@@ -353,32 +359,32 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
                 ApplicationArea = Basic, Suite;
                 Caption = 'P&ost';
                 Image = PostOrder;
-                ShortCutKey = 'F9';
+                ShortcutKey = 'F9';
                 ToolTip = 'Finalize the document or journal by posting the amounts and quantities to the related accounts in your company books.';
 
                 trigger OnAction()
-                VAR
-                    PurchaseHeader: Record 38;
-                    ApprovalMgt: Codeunit 1535;
+                var
+                    PurchaseHeader: Record "Purchase Header";
+                    ApprovalMgt: Codeunit "Approvals Mgmt.";
                     proyecto: Code[10];
-                    UserDim: Record 50000;
-                    PaymentMethod: Record 289;
+                    UserDim: Record "User Dimensions_LDR";
+                    PaymentMethod: Record "Payment Method";
                     Text001: Label 'ESP="La forma de pago elegida no es la correcta"';
-                BEGIN
+                begin
 
                     ValidateDim;
 
-                    proyecto := UserDim.getProjectDim(USERID);
-                    IF proyecto <> '' THEN BEGIN
-                        PaymentMethod.GET(rec."Payment Method Code");
-                        IF PaymentMethod.Project <> proyecto THEN
-                            MESSAGE(Text001)
+                    proyecto := UserDim.getProjectDim(UserId);
+                    if proyecto <> '' then begin
+                        PaymentMethod.Get(Rec."Payment Method Code");
+                        if PaymentMethod.Project <> proyecto then
+                            Message(Text001)
 
-                        ELSE IF ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) THEN CODEUNIT.RUN(CODEUNIT::"Sales-Post (Yes/No)", Rec);
-                    END;
-                    IF proyecto = '' THEN
-                        IF ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) THEN CODEUNIT.RUN(CODEUNIT::"Sales-Post (Yes/No)", Rec);
-                END;
+                        else if ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) then Codeunit.Run(Codeunit::"Sales-Post (Yes/No)", Rec);
+                    end;
+                    if proyecto = '' then
+                        if ApprovalMgt.PrePostApprovalCheckPurch(PurchaseHeader) then Codeunit.Run(Codeunit::"Sales-Post (Yes/No)", Rec);
+                end;
             }
         }
         modify(TestReport)
@@ -406,113 +412,113 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
     begin
         SetVisibildad();
 
-        GeneralLedgerSetup.GET;
+        GeneralLedgerSetup.Get;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 1 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_1 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 1 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_1 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 2 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_2 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 2 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_2 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 3 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_3 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 3 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_3 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 4 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_4 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 4 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_4 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 5 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_5 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 5 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_5 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 6 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_6 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 6 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_6 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 7 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_7 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 7 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_7 := true;
 
-        Dimension.RESET;
-        Dimension.SETCURRENTKEY(Code);
-        Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 8 Code");
-        IF Dimension.FINDSET THEN
-            IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
-                ShowDim_8 := TRUE;
+        Dimension.Reset;
+        Dimension.SetCurrentKey(Code);
+        Dimension.SetRange(Code, GeneralLedgerSetup."Shortcut Dimension 8 Code");
+        if Dimension.FindSet then
+            if Dimension."Use Dimension" = Dimension."Use Dimension"::Sales then
+                ShowDim_8 := true;
     end;
 
 
-    PROCEDURE ValidateDim();
-    BEGIN
-        IF (ShowDim_1) AND (rec."Shortcut Dimension 1 Code" = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 1);
-            ERROR(msg);
-        END;
+    procedure ValidateDim();
+    begin
+        if (ShowDim_1) and (Rec."Shortcut Dimension 1 Code" = '') then begin
+            msg := StrSubstNo(Text50000, 1);
+            Error(msg);
+        end;
 
-        IF (ShowDim_2) AND (rec."Shortcut Dimension 2 Code" = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 2);
-            ERROR(msg);
-        END;
+        if (ShowDim_2) and (Rec."Shortcut Dimension 2 Code" = '') then begin
+            msg := StrSubstNo(Text50000, 2);
+            Error(msg);
+        end;
 
-        IF (ShowDim_3) AND (ShortcutDimCode[3] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 3);
-            ERROR(msg);
-        END;
+        if (ShowDim_3) and (ShortcutDimCode[3] = '') then begin
+            msg := StrSubstNo(Text50000, 3);
+            Error(msg);
+        end;
 
-        IF (ShowDim_4) AND (ShortcutDimCode[4] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 4);
-            ERROR(msg);
-        END;
+        if (ShowDim_4) and (ShortcutDimCode[4] = '') then begin
+            msg := StrSubstNo(Text50000, 4);
+            Error(msg);
+        end;
 
-        IF (ShowDim_5) AND (ShortcutDimCode[5] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 5);
-            ERROR(msg);
-        END;
-        IF (ShowDim_6) AND (ShortcutDimCode[6] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 6);
-            ERROR(msg);
-        END;
-        IF (ShowDim_7) AND (ShortcutDimCode[7] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 7);
-            ERROR(msg);
-        END;
-        IF (ShowDim_8) AND (ShortcutDimCode[8] = '') THEN BEGIN
-            msg := STRSUBSTNO(Text50000, 8);
-            ERROR(msg);
-        END;
-    END;
+        if (ShowDim_5) and (ShortcutDimCode[5] = '') then begin
+            msg := StrSubstNo(Text50000, 5);
+            Error(msg);
+        end;
+        if (ShowDim_6) and (ShortcutDimCode[6] = '') then begin
+            msg := StrSubstNo(Text50000, 6);
+            Error(msg);
+        end;
+        if (ShowDim_7) and (ShortcutDimCode[7] = '') then begin
+            msg := StrSubstNo(Text50000, 7);
+            Error(msg);
+        end;
+        if (ShowDim_8) and (ShortcutDimCode[8] = '') then begin
+            msg := StrSubstNo(Text50000, 8);
+            Error(msg);
+        end;
+    end;
 
-    LOCAL PROCEDURE SetVisibildad();
-    VAR
-        UserDims: Record 50000;
+    local procedure SetVisibildad();
+    var
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
-    BEGIN
+    begin
 
-        show := TRUE;
+        show := true;
 
         ExternalDocumentNoVisible := show;
         SalespersonCodeVisible := show;
@@ -556,19 +562,19 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         AbonoVisible := show;
         AccionesVisible := show;
 
-        IF UserDims.existsUser(USERID)
-           THEN
-            rec.SETFILTER("Assigned User ID", '%1', USERID);
-    END;
+        if UserDims.existsUser(UserId)
+           then
+            Rec.SetFilter("Assigned User ID", '%1', UserId);
+    end;
 
-    PROCEDURE PricesIncludingVATOnAfterValid();
-    BEGIN
-        CurrPage.UPDATE;
-    END;
+    procedure PricesIncludingVATOnAfterValid();
+    begin
+        CurrPage.Update;
+    end;
 
     procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
     begin
-        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", ShortcutDimCode);
+        DimMgt.GetShortcutDimensions(Rec."Dimension Set ID", ShortcutDimCode);
     end;
 
     var
@@ -614,13 +620,13 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         ShortcutDimension2CodeVisible: Boolean;
         AbonoVisible: Boolean;
         AccionesVisible: Boolean;
-        GeneralLedgerSetup: Record 98;
-        Dimension: Record 348;
-        codCli: Code[20];
-        show: Boolean;
-        ShortcutDimCode: ARRAY[8] OF Code[20];
-        ShowDim: ARRAY[8] OF Boolean;
-        i: Integer;
+        GeneralLedgerSetup: Record "General Ledger Setup";
+        Dimension: Record Dimension;
+        //codCli: Code[20];
+        //show: Boolean;
+        ShortcutDimCode: array[8] of Code[20];
+        //ShowDim: array[8] of Boolean;
+        //i: Integer;
         ShowDim_1: Boolean;
         ShowDim_2: Boolean;
         ShowDim_3: Boolean;
@@ -631,17 +637,19 @@ pageextension 50018 "Sales Credit Memo" extends "Sales Credit Memo"
         ShowDim_8: Boolean;
         msg: Text;
         Text50000: Label 'El valor de la dimension %1 no puede estar vacio';
-        gbldimensiones: Record 50000;
-        OperationDescription: Text[500];
-        TicketBAI: Codeunit 10700;
-        TBAIActivated: Boolean;
-        facturarectificativa: Boolean;
-        Factura3odest: Boolean;
-        FacturaSimplificadaSustituci: Boolean;
-        FacturaSimplificada: Boolean;
-        SerieFacturaAnterior_: Text;
-        NumFacturaAnterior_: Code[20];
-        FechaExpedicionFacturaAnterior_: Text;
-        SignatureValueFirmaFacturaAnterior_: Text;
-        TBAIManagement: Codeunit 10700;
+        gbldimensiones: Record "User Dimensions_LDR";
+    /*
+    OperationDescription: Text[500];
+    TicketBAI: Codeunit "Due Date-Adjust";
+    TBAIActivated: Boolean;
+    facturarectificativa: Boolean;
+    Factura3odest: Boolean;
+    FacturaSimplificadaSustituci: Boolean;
+    FacturaSimplificada: Boolean;
+    SerieFacturaAnterior_: Text;
+    NumFacturaAnterior_: Code[20];
+    FechaExpedicionFacturaAnterior_: Text;
+    SignatureValueFirmaFacturaAnterior_: Text;
+    TBAIManagement: Codeunit "Due Date-Adjust";
+    */
 }

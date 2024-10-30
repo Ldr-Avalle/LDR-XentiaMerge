@@ -1,4 +1,4 @@
-pageextension 50085 "Purchase Return Order List" extends "Purchase Return Order List"
+pageextension 50085 "Purchase Return Order List_LDR" extends "Purchase Return Order List"
 {
     layout
     {

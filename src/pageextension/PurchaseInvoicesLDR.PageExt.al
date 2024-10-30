@@ -1,4 +1,4 @@
-pageextension 50082 "Purchase Invoices" extends "Purchase Invoices"
+pageextension 50082 "Purchase Invoices_LDR" extends "Purchase Invoices"
 {
     layout
     {

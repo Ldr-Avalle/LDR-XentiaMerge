@@ -1,4 +1,4 @@
-pageextension 50083 "Purchase Credit Memos" extends "Purchase Credit Memos"
+pageextension 50083 "Purchase Credit Memos_LDR" extends "Purchase Credit Memos"
 {
     layout
     {

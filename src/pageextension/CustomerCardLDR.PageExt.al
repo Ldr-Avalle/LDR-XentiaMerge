@@ -44,8 +44,8 @@ pageextension 50005 "Customer Card_LDR" extends "Customer Card"
     }
     trigger OnOpenPage()
     VAR
-        MapMgt: Codeunit "Online Map Management";
-        CRMIntegrationManagement: Codeunit "CRM Integration Management";
+    //MapMgt: Codeunit "Online Map Management";
+    //CRMIntegrationManagement: Codeunit "CRM Integration Management";
     BEGIN
         ActivateFields();
         //todo: no se si se necesita algo de esto
@@ -59,8 +59,8 @@ pageextension 50005 "Customer Card_LDR" extends "Customer Card"
 
     trigger OnAfterGetRecord()
     VAR
-        UserDims: Record "User Dimensions_LDR";
-        show: Boolean;
+    //UserDims: Record "User Dimensions_LDR";
+    //show: Boolean;
     BEGIN
         ActivateFields();
         //todo: no se si se necesita algo de esto
@@ -74,8 +74,8 @@ pageextension 50005 "Customer Card_LDR" extends "Customer Card"
 
     trigger OnAfterGetCurrRecord()
     var
-        UserDims: Record "User Dimensions_LDR";
-        show: Boolean;
+    //UserDims: Record "User Dimensions_LDR";
+    //show: Boolean;
     begin
         //todo: no se si se necesita algo de esto
         /*
@@ -89,6 +89,6 @@ pageextension 50005 "Customer Card_LDR" extends "Customer Card"
 
 
     var
-        TBAIActivated: Boolean;
-        TBAIManagement: Codeunit "Due Date-Adjust";
+    //TBAIActivated: Boolean;
+    //TBAIManagement: Codeunit "Due Date-Adjust";
 }

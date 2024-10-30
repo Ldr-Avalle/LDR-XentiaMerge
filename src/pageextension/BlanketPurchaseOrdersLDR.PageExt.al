@@ -1,4 +1,4 @@
-pageextension 50084 "Blanket Purchase Orders" extends "Blanket Purchase Orders"
+pageextension 50084 "Blanket Purchase Orders_LDR" extends "Blanket Purchase Orders"
 {
     layout
     {

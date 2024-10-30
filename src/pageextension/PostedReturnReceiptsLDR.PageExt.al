@@ -1,4 +1,4 @@
-pageextension 50074 "Posted Return Receipts" extends "Posted Return Receipts"
+pageextension 50074 "Posted Return Receipts_LDR" extends "Posted Return Receipts"
 {
     trigger OnOpenPage()
     begin
@@ -9,5 +9,5 @@ pageextension 50074 "Posted Return Receipts" extends "Posted Return Receipts"
     end;
 
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

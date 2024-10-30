@@ -1,4 +1,4 @@
-pageextension 50086 "Service Quotes" extends "Service Quotes"
+pageextension 50086 "Service Quotes_LDR" extends "Service Quotes"
 {
     layout
     {

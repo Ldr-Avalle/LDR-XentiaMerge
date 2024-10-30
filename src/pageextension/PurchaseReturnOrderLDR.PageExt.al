@@ -1,14 +1,14 @@
-pageextension 50070 "Purchase Return Order" extends "Purchase Return Order"
+pageextension 50070 "Purchase Return Order_LDR" extends "Purchase Return Order"
 {
     layout
     {
         addafter("Job Queue Status")
         {
-            field("Return Shipment No."; Rec."Return Shipment No.")
+            field("Return Shipment No._LDR"; Rec."Return Shipment No.")
             {
                 ApplicationArea = All;
             }
-            field(Amount; Rec.Amount)
+            field(Amount_LDR; Rec.Amount)
             {
                 ApplicationArea = All;
             }
@@ -240,7 +240,7 @@ pageextension 50070 "Purchase Return Order" extends "Purchase Return Order"
         userDims: Record 50000;
         Show: Boolean;
     begin
-        UpdateInfoPanel;
+        UpdateInfoPanel();
         Show := NOT userDims.existsUser(USERID);
 
         NoofArchivedVersionsVisible := Show;
@@ -345,6 +345,6 @@ pageextension 50070 "Purchase Return Order" extends "Purchase Return Order"
         DevolucionVisible: Boolean;
         AccionesVisible: Boolean;
         ImprimirVisible: Boolean;
-        OperationDescription: Text[500];
+    //OperationDescription: Text[500];
 }
 

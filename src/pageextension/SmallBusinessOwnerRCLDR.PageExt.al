@@ -1,28 +1,28 @@
-pageextension 50077 "Small Business Owner RC" extends "Small Business Owner RC"
+pageextension 50077 "Small Business Owner RC_LDR" extends "Small Business Owner RC"
 {
     actions
     {
         addbefore("Bill Group - Export Factoring")
         {
-            action(RemesaExportarN19)
+            action(RemesaExportarN19_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N19';
-                RunObject = report 7000092;
+                RunObject = report "Bill group - Export N19";
                 Image = Report;
             }
-            action(RemesaExportarN32)
+            action(RemesaExportarN32_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N32';
-                RunObject = report 7000093;
+                RunObject = report "Bill group - Export N32";
                 Image = Report;
             }
-            action(RemesaExportarN58)
+            action(RemesaExportarN58_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Remesa - Exportar N58';
-                RunObject = report 7000091;
+                RunObject = report "Bill group - Export N58";
                 Image = Report;
             }
         }
