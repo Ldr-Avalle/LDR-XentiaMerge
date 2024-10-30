@@ -1,14 +1,14 @@
-pageextension 50061 "FA Depreciation Books" extends "FA Depreciation Books"
+pageextension 50061 "FA Depreciation Books_LDR" extends "FA Depreciation Books"
 {
     layout
     {
         addafter("No. of Depreciation Months")
         {
-            field("Acquisition Cost"; Rec."Acquisition Cost")
+            field("Acquisition Cost_LDR"; Rec."Acquisition Cost")
             {
                 ApplicationArea = All;
             }
-            field(Depreciation; Rec.Depreciation)
+            field(Depreciation_LDR; Rec.Depreciation)
             {
                 ApplicationArea = All;
             }

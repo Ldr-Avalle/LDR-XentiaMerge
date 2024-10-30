@@ -1,49 +1,49 @@
-pageextension 50050 "Jobs Setup" extends "Jobs Setup"
+pageextension 50050 "Jobs Setup_LDR" extends "Jobs Setup"
 {
     layout
     {
         addbefore("Automatic Update Job Item Cost")
         {
-            field("Aut. Post Products Usage"; Rec."Aut. Post Products Usage")
+            field("Aut. Post Products Usage_LDR"; Rec."Aut. Post Products Usage")
             {
                 ApplicationArea = All;
             }
-            field(NombreSeccionConsolidacionProy; Rec.NombreSeccionConsolidacionProy)
+            field(NombreSeccionConsolidacionProy_LDR; Rec.NombreSeccionConsolidacionProy)
             {
                 ApplicationArea = All;
             }
-            field(NombreLibroConsolidacion; Rec.NombreLibroConsolidacion)
+            field(NombreLibroConsolidacion_LDR; Rec.NombreLibroConsolidacion)
             {
                 ApplicationArea = All;
             }
-            field(NombreLibroConsolidacionProy; Rec.NombreLibroConsolidacionProy)
+            field(NombreLibroConsolidacionProy_LDR; Rec.NombreLibroConsolidacionProy)
             {
                 ApplicationArea = All;
             }
-            field(NombreSeccionConsolidacion; Rec.NombreSeccionConsolidacion)
+            field(NombreSeccionConsolidacion_LDR; Rec.NombreSeccionConsolidacion)
             {
                 ApplicationArea = All;
             }
-            field(LibroAjusteProy; Rec.LibroAjusteProy)
+            field(LibroAjusteProy_LDR; Rec.LibroAjusteProy)
             {
                 ApplicationArea = All;
             }
-            field(SeccionAjusteProy; Rec.SeccionAjusteProy)
+            field(SeccionAjusteProy_LDR; Rec.SeccionAjusteProy)
             {
                 ApplicationArea = All;
             }
         }
         addafter("Job Nos.")
         {
-            field("Job Posting Group"; Rec."Job Posting Group")
+            field("Job Posting Group_LDR"; Rec."Job Posting Group")
             {
                 ApplicationArea = All;
             }
-            field("Cost Transfer Account Item"; Rec."Cost Transfer Account Item")
+            field("Cost Transfer Account Item_LDR"; Rec."Cost Transfer Account Item")
             {
                 ApplicationArea = All;
             }
-            field("Max. IDI hours per month"; Rec."Max. IDI hours per month")
+            field("Max. IDI hours per month_LDR"; Rec."Max. IDI hours per month")
             {
                 ApplicationArea = All;
             }

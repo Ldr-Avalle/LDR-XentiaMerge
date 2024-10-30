@@ -4,7 +4,7 @@ pageextension 50039 "Posted Purchase Rcpt. Subform" extends "Posted Purchase Rcp
     {
         addafter("Quantity Invoiced")
         {
-            field("Unit Cost (LCY)"; Rec."Unit Cost (LCY)")
+            field("Unit Cost (LCY)_LDR"; Rec."Unit Cost (LCY)")
             {
                 ApplicationArea = All;
             }

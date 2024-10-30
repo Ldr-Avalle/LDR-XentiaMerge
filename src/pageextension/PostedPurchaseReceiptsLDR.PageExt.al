@@ -1,17 +1,17 @@
-pageextension 50042 "Posted Purchase Receipts" extends "Posted Purchase Receipts"
+pageextension 50042 "Posted Purchase Receipts_LDR" extends "Posted Purchase Receipts"
 {
     layout
     {
         addafter("Posting Date")
         {
-            field("Order Date"; Rec."Order Date")
+            field("Order Date_LDR"; Rec."Order Date")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Shipment Method Code")
         {
-            field("Vendor Shipment No."; Rec."Vendor Shipment No.")
+            field("Vendor Shipment No._LDR"; Rec."Vendor Shipment No.")
             {
                 ApplicationArea = All;
             }
@@ -19,12 +19,12 @@ pageextension 50042 "Posted Purchase Receipts" extends "Posted Purchase Receipts
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.RESET;
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN
-            rec.SETRANGE("User ID", USERID);
+        gbldimensiones.Reset();
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst() then
+            Rec.SetRange("User ID", UserId);
     end;
 
-    VAR
-        gbldimensiones: Record 50000;
+    var
+        gbldimensiones: Record "User Dimensions_LDR";
 }

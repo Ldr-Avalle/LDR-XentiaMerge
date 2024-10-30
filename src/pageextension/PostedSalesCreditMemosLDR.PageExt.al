@@ -1,24 +1,24 @@
-pageextension 50041 "Posted Sales Credit Memos" extends "Posted Sales Credit Memos"
+pageextension 50041 "Posted Sales Credit Memos_LDR" extends "Posted Sales Credit Memos"
 {
     layout
     {
         addafter("Sell-to Customer Name")
         {
-            field("User ID"; Rec."User ID")
+            field("User ID_LDR"; Rec."User ID")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Posting Date")
         {
-            field("Payment Method Code"; Rec."Payment Method Code")
+            field("Payment Method Code_LDR"; Rec."Payment Method Code")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Document Exchange Status")
         {
-            field("Invoice Type"; Rec."Invoice Type")
+            field("Invoice Type_LDR"; Rec."Invoice Type")
             {
                 ApplicationArea = All;
             }
@@ -26,12 +26,12 @@ pageextension 50041 "Posted Sales Credit Memos" extends "Posted Sales Credit Mem
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.RESET;
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN
-            rec.SETRANGE("User ID", USERID);
+        gbldimensiones.Reset();
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst() then
+            Rec.SetRange("User ID", UserId);
     end;
 
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

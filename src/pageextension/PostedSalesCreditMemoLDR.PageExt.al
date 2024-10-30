@@ -1,17 +1,17 @@
-pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo"
+pageextension 50037 "Posted Sales Credit Memo_LDR" extends "Posted Sales Credit Memo"
 {
     layout
     {
         addafter("Corrected Invoice No.")
         {
-            field("User ID"; Rec."User ID")
+            field("User ID_LDR"; Rec."User ID")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Bill-to Contact")
         {
-            field("Prices Including VAT"; Rec."Prices Including VAT")
+            field("Prices Including VAT_LDR"; Rec."Prices Including VAT")
             {
                 ApplicationArea = All;
             }
@@ -65,13 +65,13 @@ pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo
         }
         modify("Applies-to Doc. Type")
         {
-            Visible = AppliesToDocTypeVisible;
-            ApplicationArea = all;
+            Visible = AppliestoDocTypeVisible;
+            ApplicationArea = All;
         }
         modify("Applies-to Doc. No.")
         {
-            Visible = AppliesToDocNoVisible;
-            ApplicationArea = all;
+            Visible = AppliestoDocNoVisible;
+            ApplicationArea = All;
         }
         modify("Cust. Bank Acc. Code")
         {
@@ -84,7 +84,7 @@ pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo
     /*
     actions{
         addafter(ActivityLog){
-            action(CrearFacturaeFirmado)
+            action(CrearFacturaeFirmado_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Crear Facturae Firmado';
@@ -100,10 +100,10 @@ pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo
     */
     trigger OnAfterGetCurrRecord()
     var
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
     begin
-        show := NOT UserDims.existsUser(USERID);
+        show := not UserDims.existsUser(UserId);
         BilltoCustomerNoVisible := show;
         BilltoNameVisible := show;
         BilltoPostCodeVisible := show;
@@ -117,9 +117,9 @@ pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo
         CustBankAccCodeVisible := show;
         AppliestoDocTypeVisible := show;
         AppliestoDocNoVisible := show;
-        IF UserDims.existsUser(USERID) THEN
-            rec.SETFILTER("User ID", '%1', USERID);
-    END;
+        if UserDims.existsUser(UserId) then
+            Rec.SetFilter("User ID", '%1', UserId);
+    end;
 
     var
         BilltoCustomerNoVisible: Boolean;
@@ -135,5 +135,5 @@ pageextension 50037 "Posted Sales Credit Memo" extends "Posted Sales Credit Memo
         CustBankAccCodeVisible: Boolean;
         AppliestoDocTypeVisible: Boolean;
         AppliestoDocNoVisible: Boolean;
-        OperationDescription: Text[500];
+    //OperationDescription: Text[500];
 }

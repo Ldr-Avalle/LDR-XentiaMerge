@@ -1,43 +1,43 @@
-pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
+pageextension 50035 "Posted Sales Invoice_LDR" extends "Posted Sales Invoice"
 {
     layout
     {
         addafter("Responsibility Center")
         {
-            field("User ID"; Rec."User ID")
+            field("User ID_LDR"; Rec."User ID")
             {
                 ApplicationArea = All;
             }
-            field("No. Series"; Rec."No. Series")
+            field("No. Series_LDR"; Rec."No. Series")
             {
                 ApplicationArea = All;
             }
-            field("Amount Including VAT"; Rec."Amount Including VAT")
+            field("Amount Including VAT_LDR"; Rec."Amount Including VAT")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Succeeded VAT Registration No.")
         {
-            field(FacturaFin; Rec.FacturaFin)
+            field(FacturaFin_LDR; Rec.FacturaFin)
             {
                 ApplicationArea = All;
             }
         }
         addafter("EU 3-Party Trade")
         {
-            group(Facturae)
+            group(Facturae_LDR)
             {
                 Caption = 'Facturae';
-                field(InvoiceType; Rec.InvoiceType)
+                field(InvoiceType_LDR; Rec.InvoiceType)
                 {
                     ApplicationArea = All;
                 }
-                field("Start Date"; Rec."Start Date")
+                field("Start Date_LDR"; Rec."Start Date")
                 {
                     ApplicationArea = All;
                 }
-                field("End Date"; Rec."End Date")
+                field("End Date_LDR"; Rec."End Date")
                 {
                     ApplicationArea = All;
                 }
@@ -110,7 +110,7 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
     {
         addafter(FindCorrectiveInvoices)
         {
-            action(crearFacturae)
+            action(crearFacturae_LDR)
             {
                 Caption = 'Crear Facturae';
                 ApplicationArea = All;
@@ -119,7 +119,7 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
                     rec.CreateFacturae(FALSE, FALSE);
                 end;
             }
-            action(crearFacturaeFirmado)
+            action(crearFacturaeFirmado_LDR)
             {
                 Caption = 'Crear Facturae Firmado';
                 ApplicationArea = All;
@@ -128,7 +128,7 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
                     rec.CreateFacturae(TRUE, FALSE);
                 end;
             }
-            action(crearFacturaeFirmadoEnviar)
+            action(crearFacturaeFirmadoEnviar_LDR)
             {
                 Caption = 'Crear Facturae Firmado y Enviar';
                 ApplicationArea = All;
@@ -137,7 +137,7 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
                     rec.CreateFacturae(TRUE, true);
                 end;
             }
-            action(crearFacturaeFirmadoEnviarPDF)
+            action(crearFacturaeFirmadoEnviarPDF_LDR)
             {
                 Caption = 'Crear Facturae Firmado y Enviar';
                 ApplicationArea = All;
@@ -152,9 +152,9 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
     trigger OnAfterGetCurrRecord()
     var
         show: Boolean;
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
     begin
-        show := NOT UserDims.existsUser(USERID);
+        show := not UserDims.existsUser(UserId);
 
         BilltoCustomerNoVisible := show;
         BilltoNameVisible := show;
@@ -170,8 +170,8 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
         PaymentTermsCodeVisible := show;
         PricesIncludingVATVisible := show;
 
-        IF UserDims.existsUser(USERID) THEN rec.SETFILTER("User ID", '%1', USERID);
-    END;
+        if UserDims.existsUser(UserId) then Rec.SetFilter("User ID", '%1', UserId);
+    end;
 
     var
         BilltoCustomerNoVisible: Boolean;
@@ -187,15 +187,17 @@ pageextension 50035 "Posted Sales Invoice" extends "Posted Sales Invoice"
         DueDateVisible: Boolean;
         PaymentTermsCodeVisible: Boolean;
         PricesIncludingVATVisible: Boolean;
-        OperationDescription: Text[500];
-        TicketBAI: Codeunit 10700;
-        TBAIActivated: Boolean;
-        facturarectificativa: Boolean;
-        Factura3odest: Boolean;
-        FacturaSimplificadaSustituci: Boolean;
-        FacturaSimplificada: Boolean;
-        SerieFacturaAnterior_: Text;
-        NumFacturaAnterior_: Code[20];
-        FechaExpedicionFacturaAnterior_: Text;
-        SignatureValueFirmaFacturaAnterior_: Text;
+    /*
+    OperationDescription: Text[500];
+    TicketBAI: Codeunit "Due Date-Adjust";
+    TBAIActivated: Boolean;
+    facturarectificativa: Boolean;
+    Factura3odest: Boolean;
+    FacturaSimplificadaSustituci: Boolean;
+    FacturaSimplificada: Boolean;
+    SerieFacturaAnterior_: Text;
+    NumFacturaAnterior_: Code[20];
+    FechaExpedicionFacturaAnterior_: Text;
+    SignatureValueFirmaFacturaAnterior_: Text;
+    */
 }

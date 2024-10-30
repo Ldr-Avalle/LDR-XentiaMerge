@@ -1,18 +1,18 @@
-pageextension 50034 "User Setup" extends "User Setup"
+pageextension 50034 "User Setup_LDR" extends "User Setup"
 {
     layout
     {
         addafter("Time Sheet Admin.")
         {
-            field("E-Mail"; Rec."E-Mail")
+            field("E-Mail_LDR"; Rec."E-Mail")
             {
                 ApplicationArea = All;
             }
-            field("Approver ID"; Rec."Approver ID")
+            field("Approver ID_LDR"; Rec."Approver ID")
             {
                 ApplicationArea = All;
             }
-            field(VerInfoConfidencial; Rec.VerInfoConfidencial)
+            field(VerInfoConfidencial_LDR; Rec.VerInfoConfidencial)
             {
                 ApplicationArea = All;
             }

@@ -1,17 +1,17 @@
-pageextension 50038 "Posted Purchase Receipt" extends "Posted Purchase Receipt"
+pageextension 50038 "Posted Purchase Receipt_LDR" extends "Posted Purchase Receipt"
 {
     layout
     {
         addafter("No. Printed")
         {
-            field("Order Date"; Rec."Order Date")
+            field("Order Date_LDR"; Rec."Order Date")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Responsibility Center")
         {
-            field("User ID"; Rec."User ID")
+            field("User ID_LDR"; Rec."User ID")
             {
                 ApplicationArea = All;
             }
@@ -57,7 +57,7 @@ pageextension 50038 "Posted Purchase Receipt" extends "Posted Purchase Receipt"
             ApplicationArea = All;
             Visible = PaytoVendorNoVisible;
         }
-        modify("Pay-to Contact No.")
+        modify("Pay-to Contact no.")
         {
             ApplicationArea = All;
             Visible = PaytoContactnoVisible;
@@ -184,11 +184,11 @@ pageextension 50038 "Posted Purchase Receipt" extends "Posted Purchase Receipt"
         }
     }
     trigger OnAfterGetCurrRecord()
-    VAR
+    var
         show: Boolean;
-        UserDims: Record 50000;
-    BEGIN
-        show := NOT UserDims.existsUser(USERID);
+        UserDims: Record "User Dimensions_LDR";
+    begin
+        show := not UserDims.existsUser(UserId);
 
         LocationCodeVisible := show;
         BuyfromContactNoVisible := show;
@@ -225,8 +225,8 @@ pageextension 50038 "Posted Purchase Receipt" extends "Posted Purchase Receipt"
         ExpectedReceiptDateVisible := show;
         VendorBankAccCodeVisible := show;
 
-        IF UserDims.existsUser(USERID) THEN rec.SETFILTER("User ID", '%1', USERID);
-    END;
+        if UserDims.existsUser(UserId) then Rec.SetFilter("User ID", '%1', UserId);
+    end;
 
     var
         LocationCodeVisible: Boolean;

@@ -1,10 +1,10 @@
-pageextension 50031 "Sales Cr. Memo Subform" extends "Sales Cr. Memo Subform"
+pageextension 50031 "Sales Cr. Memo Subform_LDR" extends "Sales Cr. Memo Subform"
 {
     layout
     {
         addafter(Quantity)
         {
-            field("Serial No."; Rec."Serial No.")
+            field("Serial No._LDR"; Rec."Serial No.")
             {
                 ApplicationArea = All;
             }
@@ -13,12 +13,12 @@ pageextension 50031 "Sales Cr. Memo Subform" extends "Sales Cr. Memo Subform"
         {
             trigger OnAfterValidate()
             begin
-                gbldimensiones.RESET;
+                gbldimensiones.RESET();
                 gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN BEGIN
+                IF gbldimensiones.FINDFIRST() THEN BEGIN
                     Rec."Location Code" := gbldimensiones."Location Code";
-                    rec.MODIFY;
-                    CurrPage.UPDATE;
+                    rec.MODIFY();
+                    CurrPage.UPDATE();
                 END;
             end;
         }

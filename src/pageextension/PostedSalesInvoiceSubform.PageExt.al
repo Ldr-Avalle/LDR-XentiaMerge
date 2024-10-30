@@ -4,18 +4,18 @@ pageextension 50036 "Posted Sales Invoice Subform" extends "Posted Sales Invoice
     {
         addbefore("VAT %")
         {
-            field("VAT Calculation Type"; Rec."VAT Calculation Type")
+            field("VAT Calculation Type_LDR"; Rec."VAT Calculation Type")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Unit Price")
         {
-            field(Amount; Rec.Amount)
+            field(Amount_LDR; Rec.Amount)
             {
                 ApplicationArea = All;
             }
-            field("Serial No."; Rec."Serial No.")
+            field("Serial No._LDR"; Rec."Serial No.")
             {
                 ApplicationArea = All;
             }

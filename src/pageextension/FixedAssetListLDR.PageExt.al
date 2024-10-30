@@ -1,40 +1,40 @@
-pageextension 50060 "Fixed Asset List" extends "Fixed Asset List"
+pageextension 50060 "Fixed Asset List_LDR" extends "Fixed Asset List"
 {
     layout
     {
         addafter("No.")
         {
-            field("Serial No."; Rec."Serial No.")
+            field("Serial No._LDR"; Rec."Serial No.")
             {
                 ApplicationArea = All;
             }
         }
         addafter(Description)
         {
-            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+            field("Global Dimension 2 Code_LDR"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
             }
-            field("Location Code"; Rec."Location Code")
+            field("Location Code_LDR"; Rec."Location Code")
             {
                 ApplicationArea = All;
             }
-            field(Date; Rec.Date)
+            field(Date_LDR; Rec.Date)
             {
                 ApplicationArea = All;
             }
         }
         addafter("Search Description")
         {
-            field(Proyecto; Rec.Proyecto)
+            field(Proyecto_LDR; Rec.Proyecto)
             {
                 ApplicationArea = All;
             }
-            field("FA Posting Group"; Rec."FA Posting Group")
+            field("FA Posting Group_LDR"; Rec."FA Posting Group")
             {
                 ApplicationArea = All;
             }

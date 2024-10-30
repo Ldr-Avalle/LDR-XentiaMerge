@@ -1,4 +1,4 @@
-pageextension 50030 "Job Card" extends "Job Card"
+pageextension 50030 "Job Card_LDR" extends "Job Card"
 {
     layout
     {
@@ -7,7 +7,7 @@ pageextension 50030 "Job Card" extends "Job Card"
             Editable = CurrencyCodeEditable;
             trigger OnAfterValidate()
             begin
-                CurrencyCheck;
+                CurrencyCheck();
             end;
         }
         modify("Invoice Currency Code")
@@ -15,7 +15,7 @@ pageextension 50030 "Job Card" extends "Job Card"
             Editable = InvoiceCurrencyCodeEditable;
             trigger OnAfterValidate()
             begin
-                CurrencyCheck;
+                CurrencyCheck();
             end;
         }
     }
@@ -27,7 +27,7 @@ pageextension 50030 "Job Card" extends "Job Card"
 
     trigger OnAfterGetRecord()
     begin
-        CurrencyCheck;
+        CurrencyCheck();
     end;
 
     LOCAL PROCEDURE CurrencyCheck();

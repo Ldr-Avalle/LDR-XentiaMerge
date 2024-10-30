@@ -1,10 +1,10 @@
-pageextension 50043 "Posted Purchase Invoices" extends "Posted Purchase Invoices"
+pageextension 50043 "Posted Purchase Invoices_LDR" extends "Posted Purchase Invoices"
 {
     layout
     {
         addafter("Shipment Method Code")
         {
-            field("Invoice Type"; Rec."Invoice Type")
+            field("Invoice Type_LDR"; Rec."Invoice Type")
             {
                 ApplicationArea = All;
             }

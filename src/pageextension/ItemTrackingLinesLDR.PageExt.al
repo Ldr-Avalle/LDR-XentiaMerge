@@ -1,4 +1,4 @@
-pageextension 50068 "Item Tracking Lines" extends "Item Tracking Lines"
+pageextension 50068 "Item Tracking Lines_LDR" extends "Item Tracking Lines"
 {
     trigger OnNewRecord(BelowxRec: Boolean)
     begin

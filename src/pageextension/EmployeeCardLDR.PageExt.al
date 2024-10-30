@@ -1,22 +1,22 @@
-pageextension 50055 "Employee Card" extends "Employee Card"
+pageextension 50055 "Employee Card_LDR" extends "Employee Card"
 {
     layout
     {
         addafter("Second Family Name")
         {
-            field("Work position"; Rec."Work position")
+            field("Work position_LDR"; Rec."Work position")
             {
                 ApplicationArea = All;
                 Visible = false;
             }
-            field(PuestoTrabajo; Rec.PuestoTrabajo)
+            field(PuestoTrabajo_LDR; Rec.PuestoTrabajo)
             {
                 ApplicationArea = All;
             }
         }
         addafter(County)
         {
-            field(ProvinciaProyecto; Rec.ProvinciaProyecto)
+            field(ProvinciaProyecto_LDR; Rec.ProvinciaProyecto)
             {
                 ApplicationArea = All;
                 trigger OnValidate()
@@ -24,32 +24,32 @@ pageextension 50055 "Employee Card" extends "Employee Card"
                     CurrPage.Update();
                 end;
             }
-            field(NombreProvinciaProyecto; Rec.NombreProvinciaProyecto)
+            field(NombreProvinciaProyecto_LDR; Rec.NombreProvinciaProyecto)
             {
                 ApplicationArea = All;
             }
         }
         addafter(Gender)
         {
-            field("Contract active"; Rec."Contract active")
+            field("Contract active_LDR"; Rec."Contract active")
             {
                 ApplicationArea = All;
             }
-            field("Absence active"; Rec."Absence active")
+            field("Absence active_LDR"; Rec."Absence active")
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
             }
-            field(Usuario; Rec.Usuario)
+            field(Usuario_LDR; Rec.Usuario)
             {
                 ApplicationArea = All;
             }
             //todo:se ha sustituido por image y tiene funcionalidad estandar
             /*
-            field(Picture; Rec.Picture)
+            field(Picture_LDR; Rec.Picture)
             {
                 ApplicationArea = All;
                 trigger OnValidate()
@@ -72,11 +72,11 @@ pageextension 50055 "Employee Card" extends "Employee Card"
 
         addafter("Union Membership No.")
         {
-            field("VAT Registration No."; Rec."VAT Registration No.")
+            field("VAT Registration No._LDR"; Rec."VAT Registration No.")
             {
                 ApplicationArea = All;
             }
-            group(Contratos)
+            group(Contratos_LDR)
             {
                 Caption = 'Contratos';
                 part(Contract; 50001)
@@ -86,7 +86,7 @@ pageextension 50055 "Employee Card" extends "Employee Card"
                     UpdatePropagation = Both;
                 }
             }
-            group(Formacion)
+            group(Formacion_LDR)
             {
                 Caption = 'Formacion';
                 part(Formation; 50008)
@@ -96,7 +96,7 @@ pageextension 50055 "Employee Card" extends "Employee Card"
                     UpdatePropagation = Both;
                 }
             }
-            group(Ausencias)
+            group(Ausencias_LDR)
             {
                 Caption = 'Ausencias';
                 part(Absences; 50022)
@@ -116,32 +116,31 @@ pageextension 50055 "Employee Card" extends "Employee Card"
         }
         addafter("Co&nfidential Info. Overview")
         {
-            action(HistoricoInterno)
+            action(HistoricoInterno_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Histórico Interno';
-                RunObject = Page 50009;
+                RunObject = page 50009;
                 RunPageLink = "Employee No." = field("No.");
             }
         }
     }
     trigger OnOpenPage()
     begin
-        gblVisibleInfoConfidencial := TRUE;
-        IF ConfUsuario.GET(USERID) THEN BEGIN
-            IF ConfUsuario.VerInfoConfidencial THEN
-                gblVisibleInfoConfidencial := FALSE
-            ELSE
-                gblVisibleInfoConfidencial := TRUE;
-        end;
+        gblVisibleInfoConfidencial := true;
+        if ConfUsuario.Get(UserId) then
+            if ConfUsuario.VerInfoConfidencial then
+                gblVisibleInfoConfidencial := false
+            else
+                gblVisibleInfoConfidencial := true;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        rec.SetRange("No.");
+        Rec.SetRange("No.");
     end;
 
     var
         gblVisibleInfoConfidencial: Boolean;
-        ConfUsuario: Record 91;
+        ConfUsuario: Record "User Setup";
 }

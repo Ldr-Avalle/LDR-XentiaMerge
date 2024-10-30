@@ -1,10 +1,10 @@
-pageextension 50053 "Dimension List" extends "Dimension List"
+pageextension 50053 "Dimension List_LDR" extends "Dimension List"
 {
     layout
     {
         addafter(Name)
         {
-            field("Use Dimension"; Rec."Use Dimension")
+            field("Use Dimension_LDR"; Rec."Use Dimension")
             {
                 ApplicationArea = All;
             }

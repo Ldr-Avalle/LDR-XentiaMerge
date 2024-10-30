@@ -1,4 +1,4 @@
-pageextension 50027 "Purchase Order Subform" extends "Purchase Order Subform"
+pageextension 50027 "Purchase Order Subform_LDR" extends "Purchase Order Subform"
 {
     layout
     {
@@ -6,13 +6,13 @@ pageextension 50027 "Purchase Order Subform" extends "Purchase Order Subform"
         {
             trigger OnAfterValidate()
             begin
-                gbldimensiones.RESET;
-                gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-                IF gbldimensiones.FINDFIRST THEN BEGIN
+                gbldimensiones.Reset();
+                gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+                if gbldimensiones.FindFirst() then begin
                     Rec."Location Code" := gbldimensiones."Location Code";
-                    rec.MODIFY;
-                    CurrPage.UPDATE;
-                END;
+                    Rec.Modify();
+                    CurrPage.Update();
+                end;
             end;
         }
         modify("Qty. to Invoice")
@@ -35,15 +35,15 @@ pageextension 50027 "Purchase Order Subform" extends "Purchase Order Subform"
         }
     }
     trigger OnOpenPage()
-    VAR
-        UserDims: Record 50000;
+    var
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
-    BEGIN
+    begin
         //nuevo
-        show := NOT UserDims.existsUser(USERID);
+        show := not UserDims.existsUser(UserId);
         QtytoInvoiceVisible := show;
         QuantityInvoicedVisible := show;
-    END;
+    end;
 
     trigger OnAfterGetRecord()
     begin
@@ -52,14 +52,14 @@ pageextension 50027 "Purchase Order Subform" extends "Purchase Order Subform"
 
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
-        rec.Type := rec.Type::Item;
+        Rec.Type := Rec.Type::Item;
     end;
 
     var
         QtytoInvoiceVisible: Boolean;
         QuantityInvoicedVisible: Boolean;
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
         dimension3: Code[30];
-        dimension4: Code[30];
+    //dimension4: Code[30];
 
 }

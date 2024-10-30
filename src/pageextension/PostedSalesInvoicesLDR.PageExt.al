@@ -1,21 +1,21 @@
-pageextension 50040 "Posted Sales Invoices" extends "Posted Sales Invoices"
+pageextension 50040 "Posted Sales Invoices_LDR" extends "Posted Sales Invoices"
 {
     layout
     {
         addafter("Payment Terms Code")
         {
-            field("Payment Method Code"; Rec."Payment Method Code")
+            field("Payment Method Code_LDR"; Rec."Payment Method Code")
             {
                 ApplicationArea = All;
             }
-            field("User ID"; Rec."User ID")
+            field("User ID_LDR"; Rec."User ID")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Document Exchange Status")
         {
-            field("Invoice Type"; Rec."Invoice Type")
+            field("Invoice Type_LDR"; Rec."Invoice Type")
             {
                 ApplicationArea = All;
             }
@@ -23,11 +23,11 @@ pageextension 50040 "Posted Sales Invoices" extends "Posted Sales Invoices"
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN
-            rec.SETRANGE("User ID", USERID);
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst() then
+            Rec.SetRange("User ID", UserId);
     end;
 
     var
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

@@ -1,10 +1,10 @@
-pageextension 50047 "Payment Methods" extends "Payment Methods"
+pageextension 50047 "Payment Methods_LDR" extends "Payment Methods"
 {
     layout
     {
         addafter("Bal. Account No.")
         {
-            field(Project; Rec.Project)
+            field(Project_LDR; Rec.Project)
             {
                 ApplicationArea = All;
             }
@@ -18,15 +18,15 @@ pageextension 50047 "Payment Methods" extends "Payment Methods"
         }
     }
     trigger OnAfterGetRecord()
-    VAR
-        UserDimensions: Record 50000;
-    BEGIN
-        proyecto := UserDim.getProjectDim(USERID);
-        IF proyecto <> '' THEN
-            rec.SETFILTER(Project, '%1', proyecto);
-    END;
+    var
+    //UserDimensions: Record "User Dimensions_LDR";
+    begin
+        proyecto := UserDim.getProjectDim(UserId);
+        if proyecto <> '' then
+            Rec.SetFilter(Project, '%1', proyecto);
+    end;
 
-    VAR
+    var
         proyecto: Text[30];
-        UserDim: Record 50000;
+        UserDim: Record "User Dimensions_LDR";
 }

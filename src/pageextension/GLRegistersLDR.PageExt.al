@@ -1,15 +1,15 @@
-pageextension 50033 "G/L Registers" extends "G/L Registers"
+pageextension 50033 "G/L Registers_LDR" extends "G/L Registers"
 {
     Editable = true;
     layout
     {
         addafter("To VAT Entry No.")
         {
-            field("Fecha registro en Mov cont"; Rec."Fecha registro en Mov cont")
+            field("Fecha registro en Mov cont_LDR"; Rec."Fecha registro en Mov cont")
             {
                 ApplicationArea = All;
             }
-            field("Num Asiento en Mov cont"; Rec."Num Asiento en Mov cont")
+            field("Num Asiento en Mov cont_LDR"; Rec."Num Asiento en Mov cont")
             {
                 ApplicationArea = All;
             }
@@ -19,11 +19,11 @@ pageextension 50033 "G/L Registers" extends "G/L Registers"
     {
         addafter(ReverseRegister)
         {
-            action(AsignarNAsientoPeriodo)
+            action(AsignarNAsientoPeriodo_LDR)
             {
                 Caption = 'Asignar N° Asiento y Periodo';
                 ApplicationArea = All;
-                RunObject = report 10700;
+                RunObject = report "Set Period Trans. Nos.";
                 Image = NumberSetup;
             }
         }

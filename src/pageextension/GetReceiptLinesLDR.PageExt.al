@@ -1,25 +1,24 @@
-pageextension 50063 "Get Receipt Lines" extends "Get Receipt Lines"
+pageextension 50063 "Get Receipt Lines_LDR" extends "Get Receipt Lines"
 {
     layout
     {
         addafter("Variant Code")
         {
-            field("Vendor Shipement No."; Rec."Vendor Shipement No.")
+            field("Vendor Shipement No._LDR"; Rec."Vendor Shipement No.")
             {
                 ApplicationArea = All;
             }
         }
         addafter(Description)
         {
-            field("Unit Cost"; Rec."Unit Cost")
+            field("Unit Cost_LDR"; Rec."Unit Cost")
             {
                 ApplicationArea = All;
             }
-
         }
         addafter("Unit of Measure")
         {
-            field("Posting Date"; Rec."Posting Date")
+            field("Posting Date_LDR"; Rec."Posting Date")
             {
                 ApplicationArea = All;
             }

@@ -1,91 +1,91 @@
-pageextension 50056 "Employee List" extends "Employee List"
+pageextension 50056 "Employee List_LDR" extends "Employee List"
 {
     layout
     {
         addafter("First Family Name")
         {
-            field("Work position"; Rec."Work position")
+            field("Work position_LDR"; Rec."Work position")
             {
                 ApplicationArea = All;
             }
-            field(PuestoTrabajo; Rec.PuestoTrabajo)
+            field(PuestoTrabajo_LDR; Rec.PuestoTrabajo)
             {
                 ApplicationArea = All;
             }
-            field(ProyectoEmpleado; Rec.ProyectoEmpleado)
+            field(ProyectoEmpleado_LDR; Rec.ProyectoEmpleado)
             {
                 ApplicationArea = All;
             }
-            field(NSS; Rec.NSS)
+            field(NSS_LDR; Rec.NSS)
             {
                 ApplicationArea = All;
             }
-            field(FechaVencimientoContrato; Rec.FechaVencimientoContrato)
+            field(FechaVencimientoContrato_LDR; Rec.FechaVencimientoContrato)
             {
                 ApplicationArea = All;
             }
-            field(FechaLastContrato; Rec.FechaLastContrato)
+            field(FechaLastContrato_LDR; Rec.FechaLastContrato)
             {
                 ApplicationArea = All;
             }
-            field(DiasAlta; TraeDiasAlta())
+            field(DiasAlta_LDR; TraeDiasAlta())
             {
                 Caption = 'Dias Alta';
                 ApplicationArea = All;
             }
-            field("Contract active"; Rec."Contract active")
+            field("Contract active_LDR"; Rec."Contract active")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Country/Region Code")
         {
-            field(NombreProvinciaProyecto; Rec.NombreProvinciaProyecto)
+            field(NombreProvinciaProyecto_LDR; Rec.NombreProvinciaProyecto)
             {
                 ApplicationArea = All;
             }
         }
         addafter("Mobile Phone No.")
         {
-            field("Company E-Mail"; Rec."Company E-Mail")
+            field("Company E-Mail_LDR"; Rec."Company E-Mail")
             {
                 ApplicationArea = All;
             }
         }
         addafter("E-Mail")
         {
-            field(City; Rec.City)
+            field(City_LDR; Rec.City)
             {
                 ApplicationArea = All;
             }
-            field(County; Rec.County)
+            field(County_LDR; Rec.County)
             {
                 ApplicationArea = All;
             }
-            field(Address; Rec.Address)
+            field(Address_LDR; Rec.Address)
             {
                 ApplicationArea = All;
             }
-            field("Employment Date"; Rec."Employment Date")
+            field("Employment Date_LDR"; Rec."Employment Date")
             {
                 ApplicationArea = All;
             }
-            field(Proyecto; Rec.Proyecto)
+            field(Proyecto_LDR; Rec.Proyecto)
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+            field("Global Dimension 2 Code_LDR"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
             }
         }
         addafter(Comment)
         {
-            field(Usuario; Rec.Usuario)
+            field(Usuario_LDR; Rec.Usuario)
             {
                 ApplicationArea = All;
             }
@@ -104,56 +104,56 @@ pageextension 50056 "Employee List" extends "Employee List"
         }
         addafter("Co&nfidential Information")
         {
-            action(HistoricoInterno)
+            action(HistoricoInterno_LDR)
             {
                 Caption = 'Historico Interno';
-                RunObject = Page 50009;
-                RunPageLink = "Employee No." = FIELD("No.");
+                RunObject = page "Employee internal historic";
+                RunPageLink = "Employee No." = field("No.");
+                ApplicationArea = All;
             }
         }
     }
     trigger OnOpenPage()
     begin
-        gblVisibleInfoConfidencial := TRUE;
-        IF ConfUsuario.GET(USERID) THEN BEGIN
-            IF ConfUsuario.VerInfoConfidencial THEN
-                gblVisibleInfoConfidencial := FALSE
-            ELSE
-                gblVisibleInfoConfidencial := TRUE;
-        END;
+        gblVisibleInfoConfidencial := true;
+        if ConfUsuario.Get(UserId) then
+            if ConfUsuario.VerInfoConfidencial then
+                gblVisibleInfoConfidencial := false
+            else
+                gblVisibleInfoConfidencial := true;
     end;
 
     trigger OnAfterGetRecord()
     begin
-        ContractEmployee.SETRANGE(Employee, rec."No.");
-        IF ContractEmployee.FINDLAST THEN
+        ContractEmployee.SetRange(Employee, Rec."No.");
+        if ContractEmployee.FindLast() then
             FechaBajaContrato := ContractEmployee."Expiration date";
 
     end;
 
-    LOCAL PROCEDURE TraeDiasAlta(): Integer;
-    VAR
-        regContrato: Record 50004;
-    BEGIN
-        regContrato.RESET;
-        regContrato.SETRANGE(Employee, rec."No.");
-        IF regContrato.FINDLAST THEN BEGIN
-            IF regContrato."Date of hire" = 0D THEN
-                EXIT(0);
+    local procedure TraeDiasAlta(): Integer;
+    var
+        regContrato: Record "Employee Contract";
+    begin
+        regContrato.Reset();
+        regContrato.SetRange(Employee, Rec."No.");
+        if regContrato.FindLast() then begin
+            if regContrato."Date of hire" = 0D then
+                exit(0);
 
-            IF regContrato."Expiration date" <> 0D THEN
-                EXIT(regContrato."Expiration date" - regContrato."Date of hire" + 1)
-            ELSE
-                EXIT(TODAY - regContrato."Date of hire" + 1);
-        END;
-        EXIT(0);
-    END;
+            if regContrato."Expiration date" <> 0D then
+                exit(regContrato."Expiration date" - regContrato."Date of hire" + 1)
+            else
+                exit(Today - regContrato."Date of hire" + 1);
+        end;
+        exit(0);
+    end;
 
-    VAR
-        Project: Code[20];
+    var
+        //Project: Code[20];
         FechaBajaContrato: Date;
-        ContractEmployee: Record 50004;
+        ContractEmployee: Record "Employee Contract";
         gblVisibleInfoConfidencial: Boolean;
-        ConfUsuario: Record 91;
+        ConfUsuario: Record "User Setup";
 
 }
