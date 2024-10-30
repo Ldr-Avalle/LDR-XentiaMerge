@@ -1,10 +1,10 @@
-pageextension 50007 "Vendor List" extends "Vendor List"
+pageextension 50007 "Vendor List_LDR" extends "Vendor List"
 {
     layout
     {
         addlast(Control1)
         {
-            field("Net Change"; Rec."Net Change")
+            field("Net Change_LDR"; Rec."Net Change")
             {
                 ApplicationArea = All;
             }
@@ -12,31 +12,31 @@ pageextension 50007 "Vendor List" extends "Vendor List"
             {
                 ApplicationArea = All;
             }
-            field("VAT Registration No."; Rec."VAT Registration No.")
+            field("VAT Registration No._LDR"; Rec."VAT Registration No.")
             {
                 ApplicationArea = All;
             }
-            field(Address; Rec.Address)
+            field(Address_LDR; Rec.Address)
             {
                 ApplicationArea = All;
             }
-            field("Address 2"; Rec."Address 2")
+            field("Address 2_LDR"; Rec."Address 2")
             {
                 ApplicationArea = All;
             }
-            field("City"; Rec."City")
+            field(City_LDR; Rec.City)
             {
                 ApplicationArea = All;
             }
-            field(Balance; Rec.Balance)
+            field(Balance_LDR; Rec.Balance)
             {
                 ApplicationArea = All;
             }
-            field("Invoice Amounts"; Rec."Invoice Amounts")
+            field("Invoice Amounts_LDR"; Rec."Invoice Amounts")
             {
                 ApplicationArea = All;
             }
-            field("Cr. Memo Amounts"; Rec."Cr. Memo Amounts")
+            field("Cr. Memo Amounts_LDR"; Rec."Cr. Memo Amounts")
             {
                 ApplicationArea = All;
             }
@@ -120,24 +120,23 @@ pageextension 50007 "Vendor List" extends "Vendor List"
     }
     trigger OnOpenPage()
     begin
-        gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
-        IF gbldimensiones.FINDFIRST THEN BEGIN
-            rec.SETFILTER("No. Series", '%1', 'PROV');
-        END;
+        gbldimensiones.SetRange(gbldimensiones.Usuario, UserId);
+        if gbldimensiones.FindFirst() then
+            Rec.SetFilter("No. Series", '%1', 'PROV');
     end;
 
     trigger OnAfterGetCurrRecord()
     begin
-        IF UserDims.existsUser(USERID) THEN BEGIN
-            rec.SETFILTER("No. Series", '%1', 'PROV');
-            ProveedorVisible := FALSE;
-            ComprasVisible := FALSE;
+        if UserDims.existsUser(UserId) then begin
+            Rec.SetFilter("No. Series", '%1', 'PROV');
+            ProveedorVisible := false;
+            ComprasVisible := false;
         end;
     end;
 
-    Var
-        UserDims: Record 50000;
+    var
+        UserDims: Record "User Dimensions_LDR";
         ProveedorVisible: Boolean;
         ComprasVisible: Boolean;
-        gbldimensiones: Record 50000;
+        gbldimensiones: Record "User Dimensions_LDR";
 }

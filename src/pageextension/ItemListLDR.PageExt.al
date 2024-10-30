@@ -1,46 +1,50 @@
-pageextension 50012 "Item List" extends "Item List"
+pageextension 50012 "Item List_LDR" extends "Item List"
 {
     layout
     {
         addafter("Created From Nonstock Item")
         {
-            field("On Deposit"; Rec."On Deposit")
+            field("On Deposit_LDR"; Rec."On Deposit")
             {
                 ApplicationArea = All;
                 Caption = 'En Depósito';
                 ToolTip = 'Indica si el artículo está en depósito.';
             }
-            field("Net Invoiced Qty."; Rec."Net Invoiced Qty.")
+            field("Net Invoiced Qty._LDR"; Rec."Net Invoiced Qty.")
             {
                 ApplicationArea = All;
                 Caption = 'Cantidad Facturada Neta';
                 ToolTip = 'Cantidad neta facturada del artículo.';
             }
-            field(Inventory; Rec.Inventory)
+            field(Inventory_LDR; Rec.Inventory)
             {
                 ApplicationArea = All;
                 Caption = 'Inventario';
                 ToolTip = 'Indica si el artículo es un artículo de inventario.';
             }
-            field("Location Filter"; Rec."Location Filter")
+            /*
+            field("Location Filter_LDR"; Rec."Location Filter")
             {
                 ApplicationArea = All;
                 Caption = 'Filtro de Ubicación';
                 ToolTip = 'Filtro de ubicación del artículo.';
             }
+            */
         }
         addafter("Substitutes Exist")
         {
-            field("Global Dimension 1 Filter"; Rec."Global Dimension 1 Filter")
+            /*
+            field("Global Dimension 1 Filter_LDR"; Rec."Global Dimension 1 Filter")
             {
                 ApplicationArea = All;
                 Caption = 'Proyecto';
                 ToolTip = 'Proyecto del artículo.';
             }
+            */
         }
         addafter("Assembly BOM")
         {
-            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
                 Caption = 'Proyecto';
@@ -96,13 +100,13 @@ pageextension 50012 "Item List" extends "Item List"
         }
         addafter("&Bin Contents")
         {
-            action("Bin Contents")
+            action("Bin Contents_LDR")
             {
                 ApplicationArea = Warehouse;
                 Caption = 'Contenidos Ubicación';
                 Image = BinContent;
-                RunObject = Page "Bin Content";
-                RunPageLink = "Item No." = field("No."), "Unit of Measure Code" = FIELD("Base Unit of Measure");
+                RunObject = page "Bin Content";
+                RunPageLink = "Item No." = field("No."), "Unit of Measure Code" = field("Base Unit of Measure");
                 RunPageView = sorting("Item No.");
                 ToolTip = 'View the quantities of the item in each bin where it exists. You can see all the important parameters relating to bin content, and you can modify certain bin content parameters in this window.';
             }
@@ -125,12 +129,12 @@ pageextension 50012 "Item List" extends "Item List"
         }
     }
     trigger OnAfterGetRecord()
-    VAR
-        UserDim: Record 50000;
+    var
+        UserDim: Record "User Dimensions_LDR";
         Proyecto: Code[10];
-    BEGIN
-        Proyecto := UserDim.getProjectDim(USERID);
-        IF Proyecto <> '' THEN
-            rec.SETFILTER("Global Dimension 1 Code", '%1|%2', Proyecto, '');
-    END;
+    begin
+        Proyecto := copystr(UserDim.getProjectDim(UserId), 1, 10);
+        if Proyecto <> '' then
+            Rec.SetFilter("Global Dimension 1 Code", '%1|%2', Proyecto, '');
+    end;
 }

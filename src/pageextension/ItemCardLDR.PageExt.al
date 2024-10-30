@@ -1,5 +1,5 @@
 
-pageextension 50011 "Item Card" extends "Item Card"
+pageextension 50011 "Item Card_LDR" extends "Item Card"
 {
     layout
     {
@@ -35,7 +35,7 @@ pageextension 50011 "Item Card" extends "Item Card"
         {
             Visible = false;
         }
-        modify("Blocked")
+        modify(Blocked)
         {
             Editable = BlockedEditable;
         }
@@ -125,22 +125,22 @@ pageextension 50011 "Item Card" extends "Item Card"
         }
         addlast(Control61)
         {
-            field("Global Dimension 1 Code"; Rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 2 Code"; Rec."Global Dimension 2 Code")
+            field("Global Dimension 2 Code_LDR"; Rec."Global Dimension 2 Code")
             {
                 ApplicationArea = All;
             }
         }
         addlast(Purchase)
         {
-            field("On Deposit"; Rec."On Deposit")
+            field("On Deposit_LDR"; Rec."On Deposit")
             {
                 ApplicationArea = All;
             }
-            field("Quantity returns orders"; Rec."Quantity returns orders")
+            field("Quantity returns orders_LDR"; Rec."Quantity returns orders")
             {
                 ApplicationArea = All;
             }
@@ -149,20 +149,20 @@ pageextension 50011 "Item Card" extends "Item Card"
 
     trigger OnAfterGetRecord()
     var
-        UserDim: Record 50000;
+        UserDim: Record "User Dimensions_LDR";
         Proyecto: Code[10];
     begin
-        Proyecto := UserDim.getProjectDim(USERID);
-        IF Proyecto <> '' THEN
-            rec.SETFILTER("Global Dimension 1 Code", '%1|%2', Proyecto, '');
+        Proyecto := UserDim.getProjectDim(UserId);
+        if Proyecto <> '' then
+            Rec.SetFilter("Global Dimension 1 Code", '%1|%2', Proyecto, '');
     end;
 
     trigger OnAfterGetCurrRecord()
     var
         show: Boolean;
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
     begin
-        show := NOT UserDims.existsUser(USERID);
+        show := not UserDims.existsUser(UserId);
 
         StandardCostVisible := show;
         CostisAdjustedVisible := show;

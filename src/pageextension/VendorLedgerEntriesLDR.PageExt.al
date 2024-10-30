@@ -1,10 +1,10 @@
-pageextension 50010 "Vendor Ledger Entries" extends "Vendor Ledger Entries"
+pageextension 50010 "Vendor Ledger Entries_LDR" extends "Vendor Ledger Entries"
 {
     layout
     {
         addafter("Vendor No.")
         {
-            field(Name; Rec.Name)
+            field(Name_LDR; Rec.Name)
             {
                 ApplicationArea = All;
             }

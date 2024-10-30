@@ -1,4 +1,4 @@
-pageextension 50005 "Customer Card" extends "Customer Card"
+pageextension 50005 "Customer Card_LDR" extends "Customer Card"
 {
     //todo:todo lo relacionado con las visibilidades de los campos no lo he puesto porque en teoria no se necesita
     layout
@@ -6,34 +6,34 @@ pageextension 50005 "Customer Card" extends "Customer Card"
 
         addlast(General)
         {
-            field("Excluir del 347"; Rec."Excluir del 347")
+            field("Excluir del 347_LDR"; Rec."Excluir del 347")
             {
                 ApplicationArea = All;
             }
-            group(facturae)
+            group(facturae_LDR)
             {
                 Caption = 'Facturae';
-                field("Facturae allowed"; Rec."Facturae allowed")
+                field("Facturae allowed_LDR"; Rec."Facturae allowed")
                 {
                     ApplicationArea = All;
                 }
-                field("Facturae Type"; Rec."Facturae Type")
+                field("Facturae Type_LDR"; Rec."Facturae Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Customer Type"; Rec."Customer Type")
+                field("Customer Type_LDR"; Rec."Customer Type")
                 {
                     ApplicationArea = All;
                 }
-                field("Accounting office"; Rec."Accounting office")
+                field("Accounting office_LDR"; Rec."Accounting office")
                 {
                     ApplicationArea = All;
                 }
-                field("Management agency"; Rec."Management agency")
+                field("Management agency_LDR"; Rec."Management agency")
                 {
                     ApplicationArea = All;
                 }
-                field("Transaction unit"; Rec."Transaction unit")
+                field("Transaction unit_LDR"; Rec."Transaction unit")
                 {
                     ApplicationArea = All;
                 }
@@ -44,10 +44,10 @@ pageextension 50005 "Customer Card" extends "Customer Card"
     }
     trigger OnOpenPage()
     VAR
-        MapMgt: Codeunit 802;
-        CRMIntegrationManagement: Codeunit 5330;
+        MapMgt: Codeunit "Online Map Management";
+        CRMIntegrationManagement: Codeunit "CRM Integration Management";
     BEGIN
-        ActivateFields;
+        ActivateFields();
         //todo: no se si se necesita algo de esto
         /*
                 CRMIntegrationEnabled := CRMIntegrationManagement.IsCRMIntegrationEnabled;
@@ -59,10 +59,10 @@ pageextension 50005 "Customer Card" extends "Customer Card"
 
     trigger OnAfterGetRecord()
     VAR
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
     BEGIN
-        ActivateFields;
+        ActivateFields();
         //todo: no se si se necesita algo de esto
         /*
         gbldimensiones.SETRANGE(gbldimensiones.Usuario, USERID);
@@ -74,7 +74,7 @@ pageextension 50005 "Customer Card" extends "Customer Card"
 
     trigger OnAfterGetCurrRecord()
     var
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
     begin
         //todo: no se si se necesita algo de esto
@@ -90,5 +90,5 @@ pageextension 50005 "Customer Card" extends "Customer Card"
 
     var
         TBAIActivated: Boolean;
-        TBAIManagement: Codeunit 10700;
+        TBAIManagement: Codeunit "Due Date-Adjust";
 }

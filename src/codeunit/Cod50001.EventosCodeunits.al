@@ -66,15 +66,16 @@ codeunit 50001 EventosCodeunits
     end;
     #endregion
 
-    #region codeunit 80 Sales-Post
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostItemJnlLineOnAfterPrepareItemJnlLine, '', false, false)]
-    local procedure OnPostItemJnlLineOnAfterPrepareItemJnlLine(SalesHeader: Record "Sales Header"; var ItemJournalLine: Record "Item Journal Line")
-    begin
-        //todo:he mirado el codigo 1000 veces y este campo en sales header no existe
-        //ItemJournalLine."On Deposit" := SalesHeader."On Deposit";
-    end;
-    #endregion
-
+    //todo:he mirado el codigo 1000 veces y este campo en sales header no existe
+    /*
+        #region codeunit 80 Sales-Post
+        [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnPostItemJnlLineOnAfterPrepareItemJnlLine, '', false, false)]
+        local procedure OnPostItemJnlLineOnAfterPrepareItemJnlLine(SalesHeader: Record "Sales Header"; var ItemJournalLine: Record "Item Journal Line")
+        begin        
+            //ItemJournalLine."On Deposit" := SalesHeader."On Deposit";
+        end;
+        #endregion
+    */
     #region codeunit 825 Sales Post Invoice Events
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Post Invoice Events", OnPostLedgerEntryOnBeforeGenJnlPostLine, '', false, false)]
     local procedure OnPostLedgerEntryOnBeforeGenJnlPostLine(SalesHeader: Record "Sales Header"; var GenJnlLine: Record "Gen. Journal Line")

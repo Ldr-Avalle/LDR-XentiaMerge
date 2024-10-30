@@ -1,21 +1,21 @@
-pageextension 50017 "Sales Invoice" extends "Sales Invoice"
+pageextension 50017 "Sales Invoice_LDR" extends "Sales Invoice"
 {
     layout
     {
         addafter("Sell-to Customer No.")
         {
-            field(codCli; codCli)
+            field(codCli_LDR; codCli)
             {
                 ApplicationArea = all;
                 Visible = DocNoVisible;
                 Caption = 'CIF Cliente';
                 trigger OnValidate()
                 VAR
-                    Cust: Record 18;
+                    Cust: Record Customer;
                 BEGIN
                     //nuevo
                     //CARLOS COSME
-                    IF codCli <> '' THEN BEGIN
+                    IF codCli <> '' THEN
                         IF Cust.GET(codCli) = FALSE THEN BEGIN
                             IF CONFIRM('No existe ning£n cliente con ese CIF.\¨Lo quiere crear?') THEN BEGIN
                                 Cust.INIT;
@@ -26,13 +26,12 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
                             END;
                         END ELSE
                             rec.VALIDATE("Sell-to Customer No.", codCli);
-                    END;
                     CodClienOnAfterValidate;
                 END;
 
                 trigger OnLookup(var text: Text): Boolean
                 VAR
-                    Customer: Record 18;
+                    Customer: Record Customer;
                 BEGIN
                     //nuevo
                     //CARLOS COSME - si no existe el cliente abro la ficha
@@ -48,24 +47,24 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         }
         addafter("Posting No.")
         {
-            field("Posting No. Series"; Rec."Posting No. Series")
+            field("Posting No. Series_LDR"; Rec."Posting No. Series")
             {
                 ApplicationArea = all;
             }
             /*
-            field("Prices Including VAT"; Rec."Prices Including VAT")
+            field("Prices Including VAT_LDR"; Rec."Prices Including VAT")
             {
                 ApplicationArea = all;
             }
             */
-            field("Amount Including VAT"; Rec."Amount Including VAT")
+            field("Amount Including VAT_LDR"; Rec."Amount Including VAT")
             {
                 ApplicationArea = all;
             }
         }
         addafter("Succeeded VAT Registration No.")
         {
-            field(FacturaFin; Rec.FacturaFin)
+            field(FacturaFin_LDR; Rec.FacturaFin)
             {
                 ApplicationArea = all;
             }
@@ -73,73 +72,79 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         addafter("Shortcut Dimension 2 Code")
         {
 
-            field(ShortcutDimCode3; ShortcutDimCode[3])
+            field(ShortcutDimCode3_LDR; ShortcutDimCode[3])
             {
                 CaptionClass = '1,2,3';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_3;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
                 end;
             }
-            field(ShortcutDimCode4; ShortcutDimCode[4])
+            field(ShortcutDimCode4_LDR; ShortcutDimCode[4])
             {
                 CaptionClass = '1,2,4';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_4;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
                 end;
             }
-            field(ShortcutDimCode5; ShortcutDimCode[5])
+            field(ShortcutDimCode5_LDR; ShortcutDimCode[5])
             {
                 CaptionClass = '1,2,5';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_5;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
                 end;
             }
-            field(ShortcutDimCode6; ShortcutDimCode[6])
+            field(ShortcutDimCode6_LDR; ShortcutDimCode[6])
             {
                 CaptionClass = '1,2,6';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_6;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
                 end;
             }
-            field(ShortcutDimCode7; ShortcutDimCode[7])
+            field(ShortcutDimCode7_LDR; ShortcutDimCode[7])
             {
                 CaptionClass = '1,2,7';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_7;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
                 end;
             }
-            field(ShortcutDimCode8; ShortcutDimCode[8])
+            field(ShortcutDimCode8_LDR; ShortcutDimCode[8])
             {
                 CaptionClass = '1,2,8';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_8;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
@@ -148,8 +153,9 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         }
         addlast(General)
         {
-            field("Factura Simplificada"; Rec."Factura Simplificada")
+            field("Factura Simplificada_LDR"; Rec."Factura Simplificada")
             {
+                ApplicationArea = all;
                 trigger OnValidate()
                 BEGIN
                     IF rec."Factura Simplificada" = Rec."Factura Simplificada"::N THEN
@@ -349,7 +355,7 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
     {
         addafter(Post)
         {
-            action(Finalizar)
+            action(Finalizar_LDR)
             {
                 ApplicationArea = Basic, Suite;
                 Caption = 'Finalizar';
@@ -409,7 +415,7 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
 
     trigger OnAfterGetCurrRecord()
     var
-        UserDims: Record 50000;
+        UserDims: Record "User Dimensions_LDR";
     begin
         codCli := rec."Sell-to Customer No.";
         IF UserDims.existsUser(USERID) THEN
@@ -531,14 +537,14 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
 
     var
         DimMgt: Codeunit DimensionManagement;
-        GeneralLedgerSetup: Record 98;
-        Dimension: Record 348;
+        GeneralLedgerSetup: Record "General Ledger Setup";
+        Dimension: Record Dimension;
         codCli: Code[20];
         DocNoVisible: Boolean;
         show: Boolean;
         ShortcutDimCode: ARRAY[8] OF Code[20];
-        ShowDim: ARRAY[8] OF Boolean;
-        i: Integer;
+        //ShowDim: ARRAY[8] OF Boolean;
+        //i: Integer;
         ShowDim_1: Boolean;
         ShowDim_2: Boolean;
         ShowDim_3: Boolean;
@@ -549,16 +555,16 @@ pageextension 50017 "Sales Invoice" extends "Sales Invoice"
         ShowDim_8: Boolean;
         Text50000: Label 'El valor de la dimension %1 no puede estar vacio';
         msg: Text;
-        OperationDescription: Text[500];
-        TicketBAI: Codeunit 10700;
-        TBAIActivated: Boolean;
-        facturarectificativa: Boolean;
-        Factura3odest: Boolean;
-        FacturaSimplificadaSustituci: Boolean;
+        //OperationDescription: Text[500];
+        //TicketBAI: Codeunit "Due Date-Adjust";
+        //TBAIActivated: Boolean;
+        //facturarectificativa: Boolean;
+        //Factura3odest: Boolean;
+        //FacturaSimplificadaSustituci: Boolean;
         FacturaSimplificada: Boolean;
-        SerieFacturaAnterior_: Text;
-        NumFacturaAnterior_: Code[20];
-        FechaExpedicionFacturaAnterior_: Text;
-        SignatureValueFirmaFacturaAnterior_: Text;
-        TBAIManagement: Codeunit 10700;
+    //SerieFacturaAnterior_: Text;
+    //NumFacturaAnterior_: Code[20];
+    //FechaExpedicionFacturaAnterior_: Text;
+    //SignatureValueFirmaFacturaAnterior_: Text;
+    //TBAIManagement: Codeunit "Due Date-Adjust";
 }

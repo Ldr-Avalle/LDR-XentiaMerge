@@ -1,10 +1,10 @@
-pageextension 50013 "Item Ledger Entries" extends "Item Ledger Entries"
+pageextension 50013 "Item Ledger Entries_LDR" extends "Item Ledger Entries"
 {
     layout
     {
         addafter("Item No.")
         {
-            field("On Deposit"; Rec."On Deposit")
+            field("On Deposit_LDR"; Rec."On Deposit")
             {
                 ApplicationArea = All;
                 Caption = 'En Depósito';
@@ -39,16 +39,16 @@ pageextension 50013 "Item Ledger Entries" extends "Item Ledger Entries"
     }
 
     trigger OnOpenPage()
-    VAR
-        UserDims: Record 50000;
+    var
+        UserDims: Record "User Dimensions_LDR";
         show: Boolean;
-    BEGIN
-        show := NOT UserDims.existsUser(USERID);
+    begin
+        show := not UserDims.existsUser(UserId);
         MovimientoVisible := show;
         LiquidacionVisible := show;
         AccionesVisible := show;
         NavegarVisible := show;
-    END;
+    end;
 
     var
         MovimientoVisible: Boolean;

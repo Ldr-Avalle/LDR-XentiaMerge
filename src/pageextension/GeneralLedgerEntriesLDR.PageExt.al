@@ -1,24 +1,24 @@
-pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
+pageextension 50004 "General Ledger Entries_LDR" extends "General Ledger Entries"
 {
     layout
     {
         addafter("Document Type")
         {
-            field("Transaction No."; Rec."Transaction No.")
+            field("Transaction No._LDR"; Rec."Transaction No.")
             {
                 ApplicationArea = All;
             }
         }
         addafter("Bill No.")
         {
-            field(Punteado; Rec.Punteado)
+            field(Punteado_LDR; Rec.Punteado)
             {
                 ApplicationArea = All;
             }
         }
         addafter("Document No.")
         {
-            field("Document Date"; Rec."Document Date")
+            field("Document Date_LDR"; Rec."Document Date")
             {
                 ApplicationArea = All;
                 Editable = false;
@@ -26,7 +26,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
         }
         addlast(Control1)
         {
-            field(GetBase; Rec.GetBase)
+            field(GetBase_LDR; Rec.GetBase())
             {
                 ApplicationArea = All;
             }
@@ -42,7 +42,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
     {
         addafter("Value Entries")
         {
-            action(ExportToExcel)
+            action(ExportToExcel_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Export to Excel';
@@ -51,7 +51,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
                 PromotedIsBig = true;
                 trigger OnAction()
                 VAR
-                    Excel: Record 50013;
+                    Excel: Record "Exp. Excel_LDR";
                     acumulado: Decimal;
                     i: Integer;
                 BEGIN
@@ -78,12 +78,12 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
                             acumulado += rec.Amount;
                             Excel.nuevoValor(CurrPage.CAPTION, 'F' + FORMAT(i), acumulado, FALSE, FALSE, FALSE, 10, 1, 0);
                             i += 1;
-                        UNTIL rec.NEXT = 0;
+                        UNTIL rec.NEXT() = 0;
                     END;
                     Excel.mostrarExcel(TRUE);
                 END;
             }
-            action(Opciones)
+            action(Opciones_LDR)
             {
                 ApplicationArea = All;
                 Caption = 'Opciones';
@@ -95,7 +95,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
                         Opciones::"No punteados":
                             rec.SETRANGE(Punteado, FALSE);
                         Opciones::Todos:
-                            rec.RESET;
+                            rec.RESET();
                     END;
                 end;
             }
@@ -131,7 +131,7 @@ pageextension 50004 "General Ledger Entries" extends "General Ledger Entries"
 
     PROCEDURE getDocExterno() "no.": Code[20];
     VAR
-        PurchInvHead: Record 122;
+        PurchInvHead: Record "Purch. Inv. Header";
     BEGIN
         IF PurchInvHead.GET(rec."Document No.") THEN
             EXIT(PurchInvHead."Vendor Invoice No.");

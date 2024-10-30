@@ -1,14 +1,14 @@
-pageextension 50001 "Location List" extends "Location List"
+pageextension 50001 "Location List_LDR" extends "Location List"
 {
     layout
     {
         addlast(Control1)
         {
-            field("Shop Code"; rec.ShopCode)
+            field("Shop Code_LDR"; Rec.ShopCode)
             {
                 ApplicationArea = All;
             }
-            field("Global Dimension 1 Code"; rec."Global Dimension 1 Code")
+            field("Global Dimension 1 Code_LDR"; Rec."Global Dimension 1 Code")
             {
                 ApplicationArea = All;
             }

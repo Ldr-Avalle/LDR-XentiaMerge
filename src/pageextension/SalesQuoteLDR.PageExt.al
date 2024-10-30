@@ -1,4 +1,4 @@
-pageextension 50015 "Sales Quote" extends "Sales Quote"
+pageextension 50015 "Sales Quote_LDR" extends "Sales Quote"
 {
     layout
     {
@@ -14,73 +14,79 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
         }
         addafter("Shortcut Dimension 2 Code")
         {
-            field(ShortcutDimCode3; ShortcutDimCode[3])
+            field(ShortcutDimCode3_LDR; ShortcutDimCode[3])
             {
                 CaptionClass = '1,2,3';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(3),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_3;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(3, ShortcutDimCode[3]);
                 end;
             }
-            field(ShortcutDimCode4; ShortcutDimCode[4])
+            field(ShortcutDimCode4_LDR; ShortcutDimCode[4])
             {
                 CaptionClass = '1,2,4';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(4),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_4;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(4, ShortcutDimCode[4]);
                 end;
             }
-            field(ShortcutDimCode5; ShortcutDimCode[5])
+            field(ShortcutDimCode5_LDR; ShortcutDimCode[5])
             {
                 CaptionClass = '1,2,5';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(5),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_5;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(5, ShortcutDimCode[5]);
                 end;
             }
-            field(ShortcutDimCode6; ShortcutDimCode[6])
+            field(ShortcutDimCode6_LDR; ShortcutDimCode[6])
             {
                 CaptionClass = '1,2,6';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(6),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_6;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(6, ShortcutDimCode[6]);
                 end;
             }
-            field(ShortcutDimCode7; ShortcutDimCode[7])
+            field(ShortcutDimCode7_LDR; ShortcutDimCode[7])
             {
                 CaptionClass = '1,2,7';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(7),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_7;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(7, ShortcutDimCode[7]);
                 end;
             }
-            field(ShortcutDimCode8; ShortcutDimCode[8])
+            field(ShortcutDimCode8_LDR; ShortcutDimCode[8])
             {
                 CaptionClass = '1,2,8';
                 TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(8),
                                                             "Dimension Value Type" = CONST(Standard),
                                                             Blocked = CONST(false));
                 Visible = ShowDim_8;
+                ApplicationArea = All;
                 trigger OnValidate()
                 begin
                     rec.ValidateShortcutDimCode(8, ShortcutDimCode[8]);
@@ -91,61 +97,61 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
 
     trigger OnOpenPage()
     begin
-        GeneralLedgerSetup.GET;
+        GeneralLedgerSetup.GET();
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 1 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_1 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 2 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_2 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 3 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_3 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 4 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_4 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 5 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_5 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 6 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_6 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 7 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_7 := TRUE;
 
-        Dimension.RESET;
+        Dimension.RESET();
         Dimension.SETCURRENTKEY(Code);
         Dimension.SETRANGE(Code, GeneralLedgerSetup."Shortcut Dimension 8 Code");
-        IF Dimension.FINDSET THEN
+        IF Dimension.FINDSET() THEN
             IF Dimension."Use Dimension" = Dimension."Use Dimension"::Sales THEN
                 ShowDim_8 := TRUE;
     end;
@@ -195,20 +201,20 @@ pageextension 50015 "Sales Quote" extends "Sales Quote"
         END;
     END;
 
-    procedure ShowShortcutDimCode(var ShortcutDimCode: array[8] of Code[20])
+    procedure ShowShortcutDimCode(var loc_ShortcutDimCode: array[8] of Code[20])
     begin
-        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", ShortcutDimCode);
+        DimMgt.GetShortcutDimensions(rec."Dimension Set ID", loc_ShortcutDimCode);
     end;
 
     var
         DimMgt: Codeunit DimensionManagement;
         GeneralLedgerSetup: Record 98;
         Dimension: Record 348;
-        codCli: Code[20];
-        show: Boolean;
+        //codCli: Code[20];
+        //show: Boolean;
         ShortcutDimCode: ARRAY[8] OF Code[20];
-        ShowDim: ARRAY[8] OF Boolean;
-        i: Integer;
+        //ShowDim: ARRAY[8] OF Boolean;
+        //i: Integer;
         ShowDim_1: Boolean;
         ShowDim_2: Boolean;
         ShowDim_3: Boolean;

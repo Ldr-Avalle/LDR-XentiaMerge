@@ -1,10 +1,10 @@
-pageextension 50006 "Vendor Card" extends "Vendor Card"
+pageextension 50006 "Vendor Card_LDR" extends "Vendor Card"
 {
     layout
     {
         addlast(General)
         {
-            field("No. Series"; Rec."No. Series")
+            field("No. Series_LDR"; Rec."No. Series")
             {
                 ApplicationArea = All;
             }
@@ -12,15 +12,15 @@ pageextension 50006 "Vendor Card" extends "Vendor Card"
             {
                 ApplicationArea = All;
             }
-            field("No.Cuenta"; Rec."No.Cuenta")
+            field("No.Cuenta_LDR"; Rec."No.Cuenta")
             {
                 ApplicationArea = All;
             }
-            field("Net Change"; Rec."Net Change")
+            field("Net Change_LDR"; Rec."Net Change")
             {
                 ApplicationArea = All;
             }
-            field("Excluir del 347"; Rec."Excluir del 347")
+            field("Excluir del 347_LDR"; Rec."Excluir del 347")
             {
                 ApplicationArea = All;
             }

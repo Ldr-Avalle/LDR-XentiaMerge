@@ -1,26 +1,26 @@
-pageextension 50008 "Customer List" extends "Customer List"
+pageextension 50008 "Customer List_LDR" extends "Customer List"
 {
     layout
     {
         addafter(Name)
         {
-            field(City; Rec.City)
+            field(City_LDR; Rec.City)
             {
                 ApplicationArea = All;
             }
-            field("Invoice Amounts"; Rec."Invoice Amounts")
+            field("Invoice Amounts_LDR"; Rec."Invoice Amounts")
             {
                 ApplicationArea = All;
             }
-            field("Cr. Memo Amounts"; Rec."Cr. Memo Amounts")
+            field("Cr. Memo Amounts_LDR"; Rec."Cr. Memo Amounts")
             {
                 ApplicationArea = All;
             }
-            field(Balance; Rec.Balance)
+            field(Balance_LDR; Rec.Balance)
             {
                 ApplicationArea = All;
             }
-            field("Net Change"; Rec."Net Change")
+            field("Net Change_LDR"; Rec."Net Change")
             {
                 ApplicationArea = All;
             }

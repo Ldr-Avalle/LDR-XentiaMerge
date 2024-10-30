@@ -1,16 +1,16 @@
-pageextension 50014 "General Journal" extends "General Journal"
+pageextension 50014 "General Journal_LDR" extends "General Journal"
 {
     layout
     {
         addafter("Posting Date")
         {
-            field("Payment Method Code"; Rec."Payment Method Code")
+            field("Payment Method Code_LDR"; Rec."Payment Method Code")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
-            field("Pmt. Discount Date"; Rec."Pmt. Discount Date")
+            field("Pmt. Discount Date_LDR"; Rec."Pmt. Discount Date")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
             }
         }
         modify("Transaction No.")
